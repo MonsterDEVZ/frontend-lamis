@@ -1,0 +1,1720 @@
+{
+  "sectionTitle": {
+    "id": "1:4164",
+    "name": "Коллекции мебели для ванн LAMIS",
+    "type": "TEXT",
+    "bounds": {
+      "x": 335.0,
+      "y": 1300.0,
+      "width": 420.0,
+      "height": 112.0
+    },
+    "textStyle": {
+      "fontFamily": "Inter",
+      "fontSize": 43.29999923706055,
+      "fontWeight": 700,
+      "lineHeight": 56.0,
+      "letterSpacing": 0.0,
+      "textAlign": "LEFT"
+    },
+    "text": "Коллекции мебели для ванн LAMIS",
+    "color": {
+      "r": 29,
+      "g": 29,
+      "b": 29,
+      "hex": "#1d1d1d"
+    },
+    "fills": [
+      {
+        "type": "SOLID",
+        "color": {
+          "r": 29,
+          "g": 29,
+          "b": 29,
+          "a": 1.0,
+          "hex": "#1d1d1d"
+        }
+      }
+    ]
+  },
+  "collectionItems": [
+    {
+      "id": "1:4167",
+      "name": "Frame 7",
+      "type": "FRAME",
+      "bounds": {
+        "x": 335.0,
+        "y": 1452.0,
+        "width": 1250.0,
+        "height": 936.638427734375
+      },
+      "layout": {
+        "mode": "HORIZONTAL",
+        "itemSpacing": 20.0,
+        "padding": {
+          "top": null,
+          "bottom": null,
+          "left": null,
+          "right": null
+        },
+        "primaryAxisAlign": null,
+        "counterAxisAlign": null
+      },
+      "children": [
+        {
+          "id": "1:4168",
+          "name": "Item",
+          "type": "INSTANCE",
+          "bounds": {
+            "x": 335.0,
+            "y": 1452.0,
+            "width": 615.0,
+            "height": 458.3192138671875
+          },
+          "layout": {
+            "mode": "HORIZONTAL",
+            "itemSpacing": 10.0,
+            "padding": {
+              "top": 20.0,
+              "bottom": 20.0,
+              "left": 30.0,
+              "right": 30.0
+            },
+            "primaryAxisAlign": null,
+            "counterAxisAlign": "MAX"
+          },
+          "borderRadius": 16.0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 217,
+                "g": 217,
+                "b": 217,
+                "a": 1.0,
+                "hex": "#d9d9d9"
+              }
+            },
+            {
+              "type": "IMAGE",
+              "imageRef": "5065076cb222575d61ba7fe8a0c1859a2440534b",
+              "scaleMode": "FILL"
+            },
+            {
+              "type": "IMAGE",
+              "imageRef": "16d4d5bd0ae4f2a146ec2586f146646700bed66a",
+              "scaleMode": "STRETCH"
+            }
+          ],
+          "children": [
+            {
+              "id": "I1:4168;82:88",
+              "name": "Larima",
+              "type": "TEXT",
+              "bounds": {
+                "x": 365.0,
+                "y": 1851.3192138671875,
+                "width": 105.0,
+                "height": 39.0
+              },
+              "textStyle": {
+                "fontFamily": "Inter",
+                "fontSize": 32.0,
+                "fontWeight": 700,
+                "lineHeight": 38.727272033691406,
+                "letterSpacing": 0.0,
+                "textAlign": "LEFT"
+              },
+              "text": "Ламис",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "hex": "#ffffff"
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1.0,
+                    "hex": "#ffffff"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "1:4169",
+          "name": "Item",
+          "type": "INSTANCE",
+          "bounds": {
+            "x": 970.0,
+            "y": 1452.0,
+            "width": 615.0,
+            "height": 458.3192138671875
+          },
+          "layout": {
+            "mode": "HORIZONTAL",
+            "itemSpacing": 10.0,
+            "padding": {
+              "top": 20.0,
+              "bottom": 20.0,
+              "left": 30.0,
+              "right": 30.0
+            },
+            "primaryAxisAlign": null,
+            "counterAxisAlign": "MAX"
+          },
+          "borderRadius": 16.0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 241,
+                "g": 241,
+                "b": 241,
+                "a": 1.0,
+                "hex": "#f1f1f1"
+              }
+            },
+            {
+              "type": "IMAGE",
+              "imageRef": "59247c5659350b445a0a23a5adaee9586e638895",
+              "scaleMode": "FILL"
+            },
+            {
+              "type": "IMAGE",
+              "imageRef": "5e10ab5489e3303d2b0986ea2e5b3181e66d2e4f",
+              "scaleMode": "FILL"
+            },
+            {
+              "type": "IMAGE",
+              "imageRef": "1ee3db94cf429e820afa9f04b84437b5929812bc",
+              "scaleMode": "FILL"
+            },
+            {
+              "type": "IMAGE",
+              "imageRef": "cd999cdd75aef7b6f409c165deaf534b98902768",
+              "scaleMode": "FILL"
+            }
+          ],
+          "children": [
+            {
+              "id": "I1:4169;82:88",
+              "name": "Larima",
+              "type": "TEXT",
+              "bounds": {
+                "x": 1000.0,
+                "y": 1851.3192138671875,
+                "width": 75.0,
+                "height": 39.0
+              },
+              "textStyle": {
+                "fontFamily": "Inter",
+                "fontSize": 32.0,
+                "fontWeight": 700,
+                "lineHeight": 38.727272033691406,
+                "letterSpacing": 0.0,
+                "textAlign": "LEFT"
+              },
+              "text": "Nora",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "hex": "#ffffff"
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1.0,
+                    "hex": "#ffffff"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "1:4170",
+          "name": "Item",
+          "type": "INSTANCE",
+          "bounds": {
+            "x": 335.0,
+            "y": 1930.3192138671875,
+            "width": 615.0,
+            "height": 458.3192138671875
+          },
+          "layout": {
+            "mode": "HORIZONTAL",
+            "itemSpacing": 10.0,
+            "padding": {
+              "top": 20.0,
+              "bottom": 20.0,
+              "left": 30.0,
+              "right": 30.0
+            },
+            "primaryAxisAlign": null,
+            "counterAxisAlign": "MAX"
+          },
+          "borderRadius": 16.0,
+          "fills": [
+            {
+              "type": "IMAGE",
+              "imageRef": "96ad54204e8f242f85cafe13992389f89688d5c7",
+              "scaleMode": "STRETCH"
+            },
+            {
+              "type": "IMAGE",
+              "imageRef": "d8179a00e58dba78bcbabfb95ed883fd11c19151",
+              "scaleMode": "STRETCH"
+            }
+          ],
+          "children": [
+            {
+              "id": "I1:4170;82:88",
+              "name": "Larima",
+              "type": "TEXT",
+              "bounds": {
+                "x": 365.0,
+                "y": 2329.638427734375,
+                "width": 113.0,
+                "height": 39.0
+              },
+              "textStyle": {
+                "fontFamily": "Inter",
+                "fontSize": 32.0,
+                "fontWeight": 700,
+                "lineHeight": 38.727272033691406,
+                "letterSpacing": 0.0,
+                "textAlign": "LEFT"
+              },
+              "text": "Akcent",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "hex": "#ffffff"
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1.0,
+                    "hex": "#ffffff"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "1:4171",
+          "name": "Item",
+          "type": "INSTANCE",
+          "bounds": {
+            "x": 970.0,
+            "y": 1930.3192138671875,
+            "width": 615.0,
+            "height": 458.3192138671875
+          },
+          "layout": {
+            "mode": "HORIZONTAL",
+            "itemSpacing": 10.0,
+            "padding": {
+              "top": 20.0,
+              "bottom": 20.0,
+              "left": 30.0,
+              "right": 30.0
+            },
+            "primaryAxisAlign": null,
+            "counterAxisAlign": "MAX"
+          },
+          "borderRadius": 16.0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 241,
+                "g": 241,
+                "b": 241,
+                "a": 1.0,
+                "hex": "#f1f1f1"
+              }
+            },
+            {
+              "type": "IMAGE",
+              "imageRef": "5065076cb222575d61ba7fe8a0c1859a2440534b",
+              "scaleMode": "FILL"
+            },
+            {
+              "type": "IMAGE",
+              "imageRef": "b1714816f75fb84cf7dd6ce1bee1b0aa6a5698da",
+              "scaleMode": "FILL"
+            },
+            {
+              "type": "IMAGE",
+              "imageRef": "c5e5ef5d86287488a4a638a13190db60da2263bf",
+              "scaleMode": "FILL"
+            }
+          ],
+          "children": [
+            {
+              "id": "I1:4171;82:88",
+              "name": "Larima",
+              "type": "TEXT",
+              "bounds": {
+                "x": 1000.0,
+                "y": 2329.638427734375,
+                "width": 157.0,
+                "height": 39.0
+              },
+              "textStyle": {
+                "fontFamily": "Inter",
+                "fontSize": 32.0,
+                "fontWeight": 700,
+                "lineHeight": 38.727272033691406,
+                "letterSpacing": 0.0,
+                "textAlign": "LEFT"
+              },
+              "text": "Andalusia",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "hex": "#ffffff"
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1.0,
+                    "hex": "#ffffff"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1:4168",
+      "name": "Item",
+      "type": "INSTANCE",
+      "bounds": {
+        "x": 335.0,
+        "y": 1452.0,
+        "width": 615.0,
+        "height": 458.3192138671875
+      },
+      "layout": {
+        "mode": "HORIZONTAL",
+        "itemSpacing": 10.0,
+        "padding": {
+          "top": 20.0,
+          "bottom": 20.0,
+          "left": 30.0,
+          "right": 30.0
+        },
+        "primaryAxisAlign": null,
+        "counterAxisAlign": "MAX"
+      },
+      "borderRadius": 16.0,
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 217,
+            "g": 217,
+            "b": 217,
+            "a": 1.0,
+            "hex": "#d9d9d9"
+          }
+        },
+        {
+          "type": "IMAGE",
+          "imageRef": "5065076cb222575d61ba7fe8a0c1859a2440534b",
+          "scaleMode": "FILL"
+        },
+        {
+          "type": "IMAGE",
+          "imageRef": "16d4d5bd0ae4f2a146ec2586f146646700bed66a",
+          "scaleMode": "STRETCH"
+        }
+      ],
+      "children": [
+        {
+          "id": "I1:4168;82:88",
+          "name": "Larima",
+          "type": "TEXT",
+          "bounds": {
+            "x": 365.0,
+            "y": 1851.3192138671875,
+            "width": 105.0,
+            "height": 39.0
+          },
+          "textStyle": {
+            "fontFamily": "Inter",
+            "fontSize": 32.0,
+            "fontWeight": 700,
+            "lineHeight": 38.727272033691406,
+            "letterSpacing": 0.0,
+            "textAlign": "LEFT"
+          },
+          "text": "Ламис",
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "hex": "#ffffff"
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1:4169",
+      "name": "Item",
+      "type": "INSTANCE",
+      "bounds": {
+        "x": 970.0,
+        "y": 1452.0,
+        "width": 615.0,
+        "height": 458.3192138671875
+      },
+      "layout": {
+        "mode": "HORIZONTAL",
+        "itemSpacing": 10.0,
+        "padding": {
+          "top": 20.0,
+          "bottom": 20.0,
+          "left": 30.0,
+          "right": 30.0
+        },
+        "primaryAxisAlign": null,
+        "counterAxisAlign": "MAX"
+      },
+      "borderRadius": 16.0,
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 241,
+            "g": 241,
+            "b": 241,
+            "a": 1.0,
+            "hex": "#f1f1f1"
+          }
+        },
+        {
+          "type": "IMAGE",
+          "imageRef": "59247c5659350b445a0a23a5adaee9586e638895",
+          "scaleMode": "FILL"
+        },
+        {
+          "type": "IMAGE",
+          "imageRef": "5e10ab5489e3303d2b0986ea2e5b3181e66d2e4f",
+          "scaleMode": "FILL"
+        },
+        {
+          "type": "IMAGE",
+          "imageRef": "1ee3db94cf429e820afa9f04b84437b5929812bc",
+          "scaleMode": "FILL"
+        },
+        {
+          "type": "IMAGE",
+          "imageRef": "cd999cdd75aef7b6f409c165deaf534b98902768",
+          "scaleMode": "FILL"
+        }
+      ],
+      "children": [
+        {
+          "id": "I1:4169;82:88",
+          "name": "Larima",
+          "type": "TEXT",
+          "bounds": {
+            "x": 1000.0,
+            "y": 1851.3192138671875,
+            "width": 75.0,
+            "height": 39.0
+          },
+          "textStyle": {
+            "fontFamily": "Inter",
+            "fontSize": 32.0,
+            "fontWeight": 700,
+            "lineHeight": 38.727272033691406,
+            "letterSpacing": 0.0,
+            "textAlign": "LEFT"
+          },
+          "text": "Nora",
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "hex": "#ffffff"
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1:4170",
+      "name": "Item",
+      "type": "INSTANCE",
+      "bounds": {
+        "x": 335.0,
+        "y": 1930.3192138671875,
+        "width": 615.0,
+        "height": 458.3192138671875
+      },
+      "layout": {
+        "mode": "HORIZONTAL",
+        "itemSpacing": 10.0,
+        "padding": {
+          "top": 20.0,
+          "bottom": 20.0,
+          "left": 30.0,
+          "right": 30.0
+        },
+        "primaryAxisAlign": null,
+        "counterAxisAlign": "MAX"
+      },
+      "borderRadius": 16.0,
+      "fills": [
+        {
+          "type": "IMAGE",
+          "imageRef": "96ad54204e8f242f85cafe13992389f89688d5c7",
+          "scaleMode": "STRETCH"
+        },
+        {
+          "type": "IMAGE",
+          "imageRef": "d8179a00e58dba78bcbabfb95ed883fd11c19151",
+          "scaleMode": "STRETCH"
+        }
+      ],
+      "children": [
+        {
+          "id": "I1:4170;82:88",
+          "name": "Larima",
+          "type": "TEXT",
+          "bounds": {
+            "x": 365.0,
+            "y": 2329.638427734375,
+            "width": 113.0,
+            "height": 39.0
+          },
+          "textStyle": {
+            "fontFamily": "Inter",
+            "fontSize": 32.0,
+            "fontWeight": 700,
+            "lineHeight": 38.727272033691406,
+            "letterSpacing": 0.0,
+            "textAlign": "LEFT"
+          },
+          "text": "Akcent",
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "hex": "#ffffff"
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1:4171",
+      "name": "Item",
+      "type": "INSTANCE",
+      "bounds": {
+        "x": 970.0,
+        "y": 1930.3192138671875,
+        "width": 615.0,
+        "height": 458.3192138671875
+      },
+      "layout": {
+        "mode": "HORIZONTAL",
+        "itemSpacing": 10.0,
+        "padding": {
+          "top": 20.0,
+          "bottom": 20.0,
+          "left": 30.0,
+          "right": 30.0
+        },
+        "primaryAxisAlign": null,
+        "counterAxisAlign": "MAX"
+      },
+      "borderRadius": 16.0,
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 241,
+            "g": 241,
+            "b": 241,
+            "a": 1.0,
+            "hex": "#f1f1f1"
+          }
+        },
+        {
+          "type": "IMAGE",
+          "imageRef": "5065076cb222575d61ba7fe8a0c1859a2440534b",
+          "scaleMode": "FILL"
+        },
+        {
+          "type": "IMAGE",
+          "imageRef": "b1714816f75fb84cf7dd6ce1bee1b0aa6a5698da",
+          "scaleMode": "FILL"
+        },
+        {
+          "type": "IMAGE",
+          "imageRef": "c5e5ef5d86287488a4a638a13190db60da2263bf",
+          "scaleMode": "FILL"
+        }
+      ],
+      "children": [
+        {
+          "id": "I1:4171;82:88",
+          "name": "Larima",
+          "type": "TEXT",
+          "bounds": {
+            "x": 1000.0,
+            "y": 2329.638427734375,
+            "width": 157.0,
+            "height": 39.0
+          },
+          "textStyle": {
+            "fontFamily": "Inter",
+            "fontSize": 32.0,
+            "fontWeight": 700,
+            "lineHeight": 38.727272033691406,
+            "letterSpacing": 0.0,
+            "textAlign": "LEFT"
+          },
+          "text": "Andalusia",
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "hex": "#ffffff"
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I1:4698;89:541",
+      "name": "LAMIS",
+      "type": "TEXT",
+      "bounds": {
+        "x": 2699.0,
+        "y": 2058.95703125,
+        "width": 128.0,
+        "height": 40.0
+      },
+      "textStyle": {
+        "fontFamily": "Inter",
+        "fontSize": 40.156864166259766,
+        "fontWeight": 700,
+        "lineHeight": 40.0,
+        "letterSpacing": 0.0,
+        "textAlign": "LEFT"
+      },
+      "text": "LAMIS",
+      "color": {
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        "hex": "#ffffff"
+      },
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 1.0,
+            "hex": "#ffffff"
+          }
+        }
+      ]
+    },
+    {
+      "id": "I1:4698;89:466",
+      "name": "Item → Link",
+      "type": "FRAME",
+      "bounds": {
+        "x": 2699.0,
+        "y": 2122.95703125,
+        "width": 32.0,
+        "height": 32.0
+      },
+      "children": [
+        {
+          "id": "I1:4698;89:467",
+          "name": "Background",
+          "type": "RECTANGLE",
+          "bounds": {
+            "x": 2701.999755859375,
+            "y": 2121.956787109375,
+            "width": 33.91000007510138,
+            "height": 33.91000770449682
+          },
+          "borderRadius": 29.0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ]
+        },
+        {
+          "id": "I1:4698;89:468",
+          "name": "mdi:instagram",
+          "type": "FRAME",
+          "bounds": {
+            "x": 2710.0,
+            "y": 2129.95703125,
+            "width": 18.0,
+            "height": 18.0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "I1:4698;89:469",
+              "name": "Vector",
+              "type": "VECTOR",
+              "bounds": {
+                "x": 2711.5,
+                "y": 2131.45703125,
+                "width": 14.999999046325684,
+                "height": 14.999999046325684
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 1.0,
+                    "hex": "#000000"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I1:4698;89:470",
+      "name": "Item → Link",
+      "type": "FRAME",
+      "bounds": {
+        "x": 2795.0,
+        "y": 2122.95703125,
+        "width": 32.0,
+        "height": 32.0
+      },
+      "children": [
+        {
+          "id": "I1:4698;89:770",
+          "name": "Background",
+          "type": "RECTANGLE",
+          "bounds": {
+            "x": 2794.026123046875,
+            "y": 2122.000732421875,
+            "width": 33.91000007510138,
+            "height": 33.91000770449682
+          },
+          "borderRadius": 63.0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ]
+        },
+        {
+          "id": "I1:4698;89:472",
+          "name": "line-md:youtube",
+          "type": "FRAME",
+          "bounds": {
+            "x": 2802.0,
+            "y": 2129.95703125,
+            "width": 18.0,
+            "height": 18.0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "I1:4698;89:473",
+              "name": "Vector",
+              "type": "VECTOR",
+              "bounds": {
+                "x": 2809.5,
+                "y": 2136.33203125,
+                "width": 4.5,
+                "height": 5.250000953674316
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 1.0,
+                    "hex": "#000000"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "I1:4698;89:474",
+              "name": "Vector",
+              "type": "VECTOR",
+              "bounds": {
+                "x": 2804.25,
+                "y": 2133.70703125,
+                "width": 13.5,
+                "height": 10.500001907348633
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I1:4698;89:475",
+      "name": "Item → Link",
+      "type": "FRAME",
+      "bounds": {
+        "x": 2747.0,
+        "y": 2122.95703125,
+        "width": 32.0,
+        "height": 32.0
+      },
+      "children": [
+        {
+          "id": "I1:4698;89:768",
+          "name": "Background",
+          "type": "RECTANGLE",
+          "bounds": {
+            "x": 2746.026123046875,
+            "y": 2122.000732421875,
+            "width": 33.91000007510138,
+            "height": 33.91000770449682
+          },
+          "borderRadius": 29.0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ]
+        },
+        {
+          "id": "I1:4698;89:477",
+          "name": "SVG",
+          "type": "FRAME",
+          "bounds": {
+            "x": 2756.0,
+            "y": 2131.95703125,
+            "width": 14.0,
+            "height": 14.0
+          },
+          "children": [
+            {
+              "id": "I1:4698;89:478",
+              "name": "path1",
+              "type": "VECTOR",
+              "bounds": {
+                "x": 2756.0,
+                "y": 2132.530029296875,
+                "width": 14.001326560974121,
+                "height": 12.843551635742188
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 1.0,
+                    "hex": "#000000"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I1:4698;89:480",
+      "name": "info@lamis.kg",
+      "type": "TEXT",
+      "bounds": {
+        "x": 2699.0,
+        "y": 2178.95703125,
+        "width": 89.0,
+        "height": 20.0
+      },
+      "textStyle": {
+        "fontFamily": "Inter",
+        "fontSize": 13.300000190734863,
+        "fontWeight": 500,
+        "lineHeight": 20.0,
+        "letterSpacing": 0.0,
+        "textAlign": "LEFT"
+      },
+      "text": "info@lamis.kg",
+      "color": {
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        "hex": "#ffffff"
+      },
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 1.0,
+            "hex": "#ffffff"
+          }
+        }
+      ]
+    },
+    {
+      "id": "I1:4729;89:541",
+      "name": "LAMIS",
+      "type": "TEXT",
+      "bounds": {
+        "x": 4817.0,
+        "y": 2058.95703125,
+        "width": 128.0,
+        "height": 40.0
+      },
+      "textStyle": {
+        "fontFamily": "Inter",
+        "fontSize": 40.156864166259766,
+        "fontWeight": 700,
+        "lineHeight": 40.0,
+        "letterSpacing": 0.0,
+        "textAlign": "LEFT"
+      },
+      "text": "LAMIS",
+      "color": {
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        "hex": "#ffffff"
+      },
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 1.0,
+            "hex": "#ffffff"
+          }
+        }
+      ]
+    },
+    {
+      "id": "I1:4729;89:466",
+      "name": "Item → Link",
+      "type": "FRAME",
+      "bounds": {
+        "x": 4817.0,
+        "y": 2122.95703125,
+        "width": 32.0,
+        "height": 32.0
+      },
+      "children": [
+        {
+          "id": "I1:4729;89:467",
+          "name": "Background",
+          "type": "RECTANGLE",
+          "bounds": {
+            "x": 4820.0,
+            "y": 2121.956787109375,
+            "width": 33.91000007510138,
+            "height": 33.91000770449682
+          },
+          "borderRadius": 29.0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ]
+        },
+        {
+          "id": "I1:4729;89:468",
+          "name": "mdi:instagram",
+          "type": "FRAME",
+          "bounds": {
+            "x": 4828.0,
+            "y": 2129.95703125,
+            "width": 18.0,
+            "height": 18.0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "I1:4729;89:469",
+              "name": "Vector",
+              "type": "VECTOR",
+              "bounds": {
+                "x": 4829.5,
+                "y": 2131.45703125,
+                "width": 14.999999046325684,
+                "height": 14.999999046325684
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 1.0,
+                    "hex": "#000000"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I1:4729;89:470",
+      "name": "Item → Link",
+      "type": "FRAME",
+      "bounds": {
+        "x": 4913.0,
+        "y": 2122.95703125,
+        "width": 32.0,
+        "height": 32.0
+      },
+      "children": [
+        {
+          "id": "I1:4729;89:770",
+          "name": "Background",
+          "type": "RECTANGLE",
+          "bounds": {
+            "x": 4912.0263671875,
+            "y": 2122.000732421875,
+            "width": 33.91000007510138,
+            "height": 33.91000770449682
+          },
+          "borderRadius": 63.0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ]
+        },
+        {
+          "id": "I1:4729;89:472",
+          "name": "line-md:youtube",
+          "type": "FRAME",
+          "bounds": {
+            "x": 4920.0,
+            "y": 2129.95703125,
+            "width": 18.0,
+            "height": 18.0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "I1:4729;89:473",
+              "name": "Vector",
+              "type": "VECTOR",
+              "bounds": {
+                "x": 4927.5,
+                "y": 2136.33203125,
+                "width": 4.5,
+                "height": 5.250000953674316
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 1.0,
+                    "hex": "#000000"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "I1:4729;89:474",
+              "name": "Vector",
+              "type": "VECTOR",
+              "bounds": {
+                "x": 4922.25,
+                "y": 2133.70703125,
+                "width": 13.5,
+                "height": 10.500001907348633
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I1:4729;89:475",
+      "name": "Item → Link",
+      "type": "FRAME",
+      "bounds": {
+        "x": 4865.0,
+        "y": 2122.95703125,
+        "width": 32.0,
+        "height": 32.0
+      },
+      "children": [
+        {
+          "id": "I1:4729;89:768",
+          "name": "Background",
+          "type": "RECTANGLE",
+          "bounds": {
+            "x": 4864.0263671875,
+            "y": 2122.000732421875,
+            "width": 33.91000007510138,
+            "height": 33.91000770449682
+          },
+          "borderRadius": 29.0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ]
+        },
+        {
+          "id": "I1:4729;89:477",
+          "name": "SVG",
+          "type": "FRAME",
+          "bounds": {
+            "x": 4874.0,
+            "y": 2131.95703125,
+            "width": 14.0,
+            "height": 14.0
+          },
+          "children": [
+            {
+              "id": "I1:4729;89:478",
+              "name": "path1",
+              "type": "VECTOR",
+              "bounds": {
+                "x": 4874.0,
+                "y": 2132.530029296875,
+                "width": 14.001326560974121,
+                "height": 12.843551635742188
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 1.0,
+                    "hex": "#000000"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I1:4729;89:480",
+      "name": "info@lamis.kg",
+      "type": "TEXT",
+      "bounds": {
+        "x": 4817.0,
+        "y": 2178.95703125,
+        "width": 89.0,
+        "height": 20.0
+      },
+      "textStyle": {
+        "fontFamily": "Inter",
+        "fontSize": 13.300000190734863,
+        "fontWeight": 500,
+        "lineHeight": 20.0,
+        "letterSpacing": 0.0,
+        "textAlign": "LEFT"
+      },
+      "text": "info@lamis.kg",
+      "color": {
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        "hex": "#ffffff"
+      },
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 1.0,
+            "hex": "#ffffff"
+          }
+        }
+      ]
+    },
+    {
+      "id": "I1:5136;89:434",
+      "name": "Copyright 2025. LAMIS",
+      "type": "TEXT",
+      "bounds": {
+        "x": 10238.0,
+        "y": 1882.95703125,
+        "width": 204.47000122070312,
+        "height": 30.0
+      },
+      "textStyle": {
+        "fontFamily": "Inter",
+        "fontSize": 13.100000381469727,
+        "fontWeight": 500,
+        "lineHeight": 30.0,
+        "letterSpacing": 0.0,
+        "textAlign": "LEFT"
+      },
+      "text": "Copyright 2025. LAMIS",
+      "color": {
+        "r": 135,
+        "g": 135,
+        "b": 135,
+        "hex": "#878787"
+      },
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 135,
+            "g": 135,
+            "b": 135,
+            "a": 1.0,
+            "hex": "#878787"
+          }
+        }
+      ]
+    },
+    {
+      "id": "I1:5136;89:444",
+      "name": "Производитель оставляет за собой право в любой момент вносить изменения в комплектацию, дизайн и характеристики товара, не ухудшающие его качество.  Актуальная информация о продукции LAMIS ® – на сайте бренда lamis.kg",
+      "type": "TEXT",
+      "bounds": {
+        "x": 10334.0,
+        "y": 1939.95703125,
+        "width": 1028.9200439453125,
+        "height": 40.0
+      },
+      "textStyle": {
+        "fontFamily": "Inter",
+        "fontSize": 12.800000190734863,
+        "fontWeight": 500,
+        "lineHeight": 19.600000381469727,
+        "letterSpacing": 0.0,
+        "textAlign": "CENTER"
+      },
+      "text": "Производитель оставляет за собой право в любой момент вносить изменения в комплектацию, дизайн и характеристики товара, не ухудшающие его качество.  Актуальная информация о продукции LAMIS ® – на сайте бренда lamis.kg",
+      "color": {
+        "r": 135,
+        "g": 135,
+        "b": 135,
+        "hex": "#878787"
+      },
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 135,
+            "g": 135,
+            "b": 135,
+            "a": 1.0,
+            "hex": "#878787"
+          }
+        }
+      ]
+    },
+    {
+      "id": "I1:5136;89:541",
+      "name": "LAMIS",
+      "type": "TEXT",
+      "bounds": {
+        "x": 10223.0,
+        "y": 1487.95703125,
+        "width": 128.0,
+        "height": 40.0
+      },
+      "textStyle": {
+        "fontFamily": "Inter",
+        "fontSize": 40.156864166259766,
+        "fontWeight": 700,
+        "lineHeight": 40.0,
+        "letterSpacing": 0.0,
+        "textAlign": "LEFT"
+      },
+      "text": "LAMIS",
+      "color": {
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        "hex": "#ffffff"
+      },
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 1.0,
+            "hex": "#ffffff"
+          }
+        }
+      ]
+    },
+    {
+      "id": "I1:5136;89:466",
+      "name": "Item → Link",
+      "type": "FRAME",
+      "bounds": {
+        "x": 10223.0,
+        "y": 1551.95703125,
+        "width": 32.0,
+        "height": 32.0
+      },
+      "children": [
+        {
+          "id": "I1:5136;89:467",
+          "name": "Background",
+          "type": "RECTANGLE",
+          "bounds": {
+            "x": 10226.0,
+            "y": 1550.956787109375,
+            "width": 33.91000007510229,
+            "height": 33.91000770449682
+          },
+          "borderRadius": 29.0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ]
+        },
+        {
+          "id": "I1:5136;89:468",
+          "name": "mdi:instagram",
+          "type": "FRAME",
+          "bounds": {
+            "x": 10234.0,
+            "y": 1558.95703125,
+            "width": 18.0,
+            "height": 18.0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "I1:5136;89:469",
+              "name": "Vector",
+              "type": "VECTOR",
+              "bounds": {
+                "x": 10235.5,
+                "y": 1560.45703125,
+                "width": 14.999999046325684,
+                "height": 14.999999046325684
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 1.0,
+                    "hex": "#000000"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I1:5136;89:470",
+      "name": "Item → Link",
+      "type": "FRAME",
+      "bounds": {
+        "x": 10319.0,
+        "y": 1551.95703125,
+        "width": 32.0,
+        "height": 32.0
+      },
+      "children": [
+        {
+          "id": "I1:5136;89:770",
+          "name": "Background",
+          "type": "RECTANGLE",
+          "bounds": {
+            "x": 10318.0263671875,
+            "y": 1551.000732421875,
+            "width": 33.91000007510229,
+            "height": 33.91000770449682
+          },
+          "borderRadius": 63.0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ]
+        },
+        {
+          "id": "I1:5136;89:472",
+          "name": "line-md:youtube",
+          "type": "FRAME",
+          "bounds": {
+            "x": 10326.0,
+            "y": 1558.95703125,
+            "width": 18.0,
+            "height": 18.0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1.0,
+                "hex": "#ffffff"
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "I1:5136;89:473",
+              "name": "Vector",
+              "type": "VECTOR",
+              "bounds": {
+                "x": 10333.5,
+                "y": 1565.33203125,
+                "width": 4.5,
+                "height": 5.250000953674316
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 1.0,
+                    "hex": "#000000"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "I1:5136;89:474",
+              "name": "Vector",
+              "type": "VECTOR",
+              "bounds": {
+                "x": 10328.25,
+                "y": 1562.70703125,
+                "width": 13.5,
+                "height": 10.500001907348633
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
