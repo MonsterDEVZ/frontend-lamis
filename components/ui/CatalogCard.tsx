@@ -3,26 +3,31 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import MyIcon from '@/public/icon/heart.svg';
 
-interface CatalogCardProps {
+interface IProps {
   category: string;
   name: string;
   price: number;
   status?: string;
   image: string;
   hoverImage: string;
+  colors?: string[];
 }
 
-const CatalogCard: React.FC<CatalogCardProps> = ({
+const CatalogCard: React.FC<IProps> = ({
   category,
   name,
   price,
   status,
   image,
   hoverImage,
+  colors,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [activeColor, setActiveColor] = useState<string | undefined>(colors && colors.length > 0 ? colors[0] : undefined);
 
   const formattedPrice = `${price.toLocaleString('ru-RU')}`;
+
+  const isHexColor = (str: string) => /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(str);
 
   return (
     <div
@@ -80,6 +85,31 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
             {name}
           </h3>
         </div>
+
+        {colors && colors.length > 0 && (
+          <div className="flex space-x-2 mt-2">
+            {colors.map((color, index) => (
+              <div
+                key={index}
+                className={`w-6 h-6 rounded-full cursor-pointer flex-shrink-0
+                  ${activeColor === color ? 'border-2 border-[#009B3E]' : ''}
+                `}
+                style={isHexColor(color) ? { backgroundColor: color } : {}}
+                onClick={() => setActiveColor(color)}
+              >
+                {!isHexColor(color) && (
+                  <Image
+                    src={color}
+                    alt={`Color ${index}`}
+                    width={24}
+                    height={24}
+                    className="rounded-full"
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+        )}
 
         <p className="mt-auto text-lg font-medium text-gray-900">
           {formattedPrice} <u>C</u>
