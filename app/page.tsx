@@ -1,8 +1,8 @@
-import Header from '@/components/Header';
-import HeroSection from '@/components/HeroSection';
-import WaterHeatersSection from '@/components/WaterHeatersSection';
-import CollectionsSection from '@/components/CollectionsSection';
-import ReviewsSection from '@/components/ReviewsSection';
+import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
+import WaterHeatersSection from "@/components/WaterHeatersSection";
+import CollectionsSection from "@/components/CollectionsSection";
+import ReviewsSection from "@/components/ReviewsSection";
 
 export default function HomePage() {
   return (
