@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Heart, GitCompare } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { cn } from '@/styles';
-import { useFavoritesStore } from '@/store/favoritesStore';
+import { useFavoritesStoreHydrated } from '@/hooks/useFavoritesStoreHydrated';
 
 interface IProps {
   category: string;
@@ -32,11 +32,10 @@ const CatalogCard: React.FC<IProps> = ({
   slug,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [isCompared, setIsCompared] = useState(false);
 
-  const { toggleFavorite, isFavorite } = useFavoritesStore();
+  const { toggleFavorite, isFavorite, isHydrated } = useFavoritesStoreHydrated();
   const productId = String(id || `${category}-${name}`);
-  const isFav = isFavorite(productId);
+  const isFav = isHydrated ? isFavorite(productId) : false;
 
   const formattedPrice = `${price.toLocaleString('ru-RU')}`;
   const productSlug = slug || `product-${productId}`;
@@ -47,15 +46,9 @@ const CatalogCard: React.FC<IProps> = ({
     toggleFavorite(productId);
   };
 
-  const handleCompareClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsCompared(!isCompared);
-  };
-
   return (
     <div
-      className="relative bg-white group cursor-pointer transition-all duration-300 hover:shadow-lg rounded-lg overflow-hidden"
+      className="relative bg-white group cursor-pointer transition-all duration-300 rounded-lg overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -112,6 +105,7 @@ const CatalogCard: React.FC<IProps> = ({
         {/* Add to Favorites */}
         <button
           onClick={handleFavoriteClick}
+          title={isFav ? 'Удалить из избранного' : 'Добавить в избранное'}
           className={cn(
             'flex items-center justify-center w-10 h-10 rounded-full border transition-all duration-200',
             isFav
@@ -121,20 +115,6 @@ const CatalogCard: React.FC<IProps> = ({
           aria-label={isFav ? 'Удалить из избранного' : 'Добавить в избранное'}
         >
           <Heart size={18} fill={isFav ? 'currentColor' : 'none'} />
-        </button>
-
-        {/* Add to Compare */}
-        <button
-          onClick={handleCompareClick}
-          className={cn(
-            'flex items-center justify-center w-10 h-10 rounded-full border transition-all duration-200',
-            isCompared
-              ? 'bg-[#009B3E] border-[#009B3E] text-white'
-              : 'border-gray-300 text-gray-600 hover:border-[#009B3E] hover:text-[#009B3E]'
-          )}
-          aria-label={isCompared ? 'Убрать из сравнения' : 'Добавить к сравнению'}
-        >
-          <GitCompare size={18} />
         </button>
       </div>
 

@@ -7,14 +7,14 @@ import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Menu, X, Search, Heart } from 'lucide-react';
 import Nav from './Nav';
-import { useFavoritesStore } from '@/store/favoritesStore';
+import { useFavoritesStoreHydrated } from '@/hooks/useFavoritesStoreHydrated';
 import { useScroll } from '@/hooks/useScroll';
 import { cn } from '@/styles';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { favorites } = useFavoritesStore();
+  const { favorites, isHydrated } = useFavoritesStoreHydrated();
   const favoritesCount = favorites.length;
 
   // Use scroll hook to track scroll position and direction
@@ -131,7 +131,7 @@ export default function Header() {
               aria-label="Wishlist"
             >
               <Heart size={20} />
-              {favoritesCount > 0 && (
+              {isHydrated && favoritesCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-[#009B3E] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full pointer-events-none">
                   {favoritesCount}
                 </span>
