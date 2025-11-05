@@ -16,21 +16,24 @@ const slides = [
     image: '/images/hero/slide_1.png',
     title: 'Мебель для ванн',
     subtitle: 'LAMIS',
-    description: 'Мы делаем лучшие достижения в мире сантехники доступными каждому. Техника создаётся в Италии и Германии — там, где рождаются стандарты дизайна, надёжности и комфорта.',
+    description:
+      'Мы делаем лучшие достижения в мире сантехники доступными каждому. Техника создаётся в Италии и Германии — там, где рождаются стандарты дизайна, надёжности и комфорта.',
   },
   {
     id: 2,
     image: '/images/hero/slide_2.png',
     title: 'Водонагреватели',
     subtitle: 'BLESK',
-    description: 'Надежные водонагреватели для вашего дома. Современные технологии и европейское качество по доступной цене.',
+    description:
+      'Надежные водонагреватели для вашего дома. Современные технологии и европейское качество по доступной цене.',
   },
   {
     id: 3,
     image: '/images/hero/slide_3.png',
     title: 'Сантехника',
     subtitle: 'CAISER',
-    description: 'Премиальная сантехника для ванной комнаты. Инновационный дизайн и безупречное качество из Германии.',
+    description:
+      'Премиальная сантехника для ванной комнаты. Инновационный дизайн и безупречное качество из Германии.',
   },
 ];
 
@@ -46,7 +49,7 @@ export default function HeroSlider() {
         if (prev >= 100) {
           return 0;
         }
-        return prev + (100 / (autoplayDelay / 50));
+        return prev + 100 / (autoplayDelay / 50);
       });
     }, 50);
 
@@ -54,7 +57,10 @@ export default function HeroSlider() {
   }, [activeIndex]);
 
   return (
-    <section className="relative w-full overflow-hidden" style={{ height: 'calc(100vh - 110px)', minHeight: '600px' }}>
+    <section
+      className="relative w-full overflow-hidden"
+      style={{ height: 'calc(100vh - 110px)', minHeight: '600px' }}
+    >
       <Swiper
         modules={[Autoplay, EffectFade]}
         effect="fade"
@@ -96,7 +102,9 @@ export default function HeroSlider() {
                 <div className="inline-flex flex-col gap-8">
                   {/* Main Heading */}
                   <h1 className="text-white font-bold text-[56px] leading-[1.2] tracking-[-0.02em] mb-0">
-                    {slide.title}<br />{slide.subtitle}
+                    {slide.title}
+                    <br />
+                    {slide.subtitle}
                   </h1>
 
                   {/* Description */}
@@ -105,9 +113,7 @@ export default function HeroSlider() {
                   </p>
 
                   {/* CTA Button */}
-                  <CTAButton className="w-48">
-                    Подробнее
-                  </CTAButton>
+                  <CTAButton className="w-48">Подробнее</CTAButton>
                 </div>
               </div>
             </div>

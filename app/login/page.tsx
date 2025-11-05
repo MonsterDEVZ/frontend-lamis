@@ -68,9 +68,7 @@ export default function LoginPage() {
         <Card>
           <CardHeader>
             <CardTitle>Вход в аккаунт</CardTitle>
-            <CardDescription>
-              Войдите для доступа к вашему профилю
-            </CardDescription>
+            <CardDescription>Войдите для доступа к вашему профилю</CardDescription>
           </CardHeader>
 
           <CardContent>
@@ -99,12 +97,7 @@ export default function LoginPage() {
                 disabled={isLoading}
               />
 
-              <Button
-                type="submit"
-                variant="primary"
-                isLoading={isLoading}
-                className="w-full"
-              >
+              <Button type="submit" variant="primary" isLoading={isLoading} className="w-full">
                 {isLoading ? 'Вход...' : 'Войти'}
               </Button>
 

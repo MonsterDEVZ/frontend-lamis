@@ -9,10 +9,7 @@ interface FeatureCardProps {
 
 export default function FeatureCard({ title, description, icon }: FeatureCardProps) {
   return (
-    <div
-      className="rounded-2xl p-8 flex flex-col"
-      style={{ backgroundColor: '#F3F4F6' }}
-    >
+    <div className="rounded-2xl p-8 flex flex-col" style={{ backgroundColor: '#F3F4F6' }}>
       {/* Icon */}
       <div
         className="rounded-full mb-6 flex items-center justify-center"
@@ -22,12 +19,7 @@ export default function FeatureCard({ title, description, icon }: FeatureCardPro
           backgroundColor: '#FFFFFF',
         }}
       >
-        <Image
-          src={icon}
-          alt=""
-          width={32}
-          height={32}
-        />
+        <Image src={icon} alt="" width={32} height={32} />
       </div>
 
       {/* Title */}

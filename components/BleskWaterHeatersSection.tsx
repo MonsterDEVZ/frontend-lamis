@@ -35,7 +35,7 @@ export default function BleskWaterHeatersSection() {
       <div className="max-w-[1250px] mx-auto px-6 lg:px-12">
         {/* Section Title */}
         <h2 className="text-3xl md:text-[44px] font-bold text-gray-900 mb-12">
-          Водонагреватели <br/> Blesk
+          Водонагреватели <br /> Blesk
         </h2>
 
         {/* Grid of Cards */}

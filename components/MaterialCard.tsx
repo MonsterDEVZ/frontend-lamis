@@ -13,13 +13,7 @@ export default function MaterialCard({ title, description, fileInfo, image }: Ma
     <div className="flex flex-col h-[340px] bg-gray-50 rounded-2xl overflow-hidden">
       {/* Image */}
       <div className="relative h-[150px]">
-        <Image
-          src={image}
-          alt={title}
-          fill
-          className="object-cover"
-          quality={100}
-        />
+        <Image src={image} alt={title} fill className="object-cover" quality={100} />
       </div>
 
       {/* Content */}
@@ -34,9 +28,7 @@ export default function MaterialCard({ title, description, fileInfo, image }: Ma
           </p>
         )}
 
-        <p className="mt-auto text-xs text-gray-400">
-          {fileInfo}
-        </p>
+        <p className="mt-auto text-xs text-gray-400">{fileInfo}</p>
       </div>
     </div>
   );

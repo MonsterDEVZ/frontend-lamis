@@ -91,6 +91,7 @@ frontend-lamis/
 Используется **Zod** для валидации:
 
 **Регистрация:**
+
 - Email должен быть валидным
 - Пароль минимум 8 символов
 - Пароль должен содержать заглавную букву
@@ -98,12 +99,14 @@ frontend-lamis/
 - Подтверждение пароля должно совпадать
 
 **Вход:**
+
 - Email должен быть валидным
 - Пароль обязателен
 
 ### State Management
 
 **Zustand store** управляет:
+
 - `isAuthenticated` - статус аутентификации
 - `user` - данные пользователя
 - `accessToken` - JWT access токен
@@ -114,17 +117,20 @@ frontend-lamis/
 ### Защита роутов
 
 **Middleware** (`middleware.ts`) автоматически:
+
 1. Проверяет наличие токена перед доступом к защищенным роутам
 2. Редиректит на `/login` если пользователь не аутентифицирован
 3. Сохраняет redirect URL для возврата после входа
 
 Защищенные роуты:
+
 - `/profile/*`
 - `/dashboard/*`
 
 ## 🎨 UI Components
 
 ### Button
+
 ```tsx
 <Button variant="primary" isLoading={loading}>
   Отправить
@@ -134,25 +140,20 @@ frontend-lamis/
 **Варианты:** `primary`, `secondary`, `outline`
 
 ### Input
+
 ```tsx
-<Input
-  label="Email"
-  type="email"
-  error={errors.email?.message}
-  {...register('email')}
-/>
+<Input label="Email" type="email" error={errors.email?.message} {...register('email')} />
 ```
 
 ### Card
+
 ```tsx
 <Card>
   <CardHeader>
     <CardTitle>Заголовок</CardTitle>
     <CardDescription>Описание</CardDescription>
   </CardHeader>
-  <CardContent>
-    Содержимое
-  </CardContent>
+  <CardContent>Содержимое</CardContent>
 </Card>
 ```
 

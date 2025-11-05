@@ -1,7 +1,7 @@
-"use client";
-import React, { useState } from "react";
-import Image from "next/image";
-import MyIcon from "@/public/icon/heart.svg";
+'use client';
+import React, { useState } from 'react';
+import Image from 'next/image';
+import MyIcon from '@/public/icon/heart.svg';
 
 interface CatalogCardProps {
   category: string;
@@ -22,7 +22,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const formattedPrice = `${price.toLocaleString("ru-RU")}`;
+  const formattedPrice = `${price.toLocaleString('ru-RU')}`;
 
   return (
     <div
@@ -33,7 +33,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
       {status && (
         <div
           className="absolute top-2.5 left-2.5 z-10 flex items-center px-3 py-0.5 text-sm font-medium text-white rounded-full"
-          style={{ backgroundColor: "#E0398D" }}
+          style={{ backgroundColor: '#E0398D' }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -51,8 +51,8 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
 
       <div
         className={
-          "absolute bottom-0.5 right-0 hover:[&_path]:fill-[#009B3E] transition-colors" +
-          (isHovered ? " opacity-100" : " opacity-0")
+          'absolute bottom-0.5 right-0 hover:[&_path]:fill-[#009B3E] transition-colors' +
+          (isHovered ? ' opacity-100' : ' opacity-0')
         }
       >
         <MyIcon className="" />
@@ -65,8 +65,8 @@ const CatalogCard: React.FC<CatalogCardProps> = ({
           layout="fill"
           objectFit="contain"
           className={
-            "absolute top-0 left-0 transition-all w-full h-full bg-gray-100 z-20" +
-            (isHovered ? " opacity-100" : " opacity-0")
+            'absolute top-0 left-0 transition-all w-full h-full bg-gray-100 z-20' +
+            (isHovered ? ' opacity-100' : ' opacity-0')
           }
         />
 

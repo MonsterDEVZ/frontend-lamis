@@ -1,6 +1,7 @@
 # Коллекции мебели для ванн LAMIS - Complete Specification
 
 ## Section Overview
+
 This is the Collections section located at y=1300px in the Figma design.
 
 ---
@@ -8,15 +9,18 @@ This is the Collections section located at y=1300px in the Figma design.
 ## 1. SECTION TITLE
 
 ### Text Content
+
 **"Коллекции мебели для ванн LAMIS"**
 
 ### Position
+
 - **X**: 335px
 - **Y**: 1300px
 - **Width**: 420px
 - **Height**: 112px
 
 ### Typography
+
 - **Font Family**: Inter
 - **Font Size**: 43.3px (43.29999923706055px)
 - **Font Weight**: 700 (Bold)
@@ -26,6 +30,7 @@ This is the Collections section located at y=1300px in the Figma design.
 - **Color**: #1d1d1d (RGB: 29, 29, 29)
 
 ### Spacing
+
 - **Margin Bottom**: ~140px (distance to first collection item at y=1452px)
 
 ---
@@ -33,6 +38,7 @@ This is the Collections section located at y=1300px in the Figma design.
 ## 2. COLLECTIONS GRID LAYOUT
 
 ### Container Specifications
+
 - **Type**: Frame 7 (id: 1:4167)
 - **Position**:
   - X: 335px
@@ -42,6 +48,7 @@ This is the Collections section located at y=1300px in the Figma design.
   - Height: 936.64px
 
 ### Grid Structure
+
 - **Layout Mode**: HORIZONTAL (Flexbox row)
 - **Item Spacing**: 20px (gap between cards)
 - **Grid Pattern**: 2x2 grid
@@ -50,6 +57,7 @@ This is the Collections section located at y=1300px in the Figma design.
 - **Row Spacing**: ~478.32px (calculated from positions)
 
 ### Grid Calculations
+
 - **Card Width**: 615px
 - **Card Height**: 458.32px
 - **Horizontal Gap**: 20px
@@ -62,11 +70,13 @@ This is the Collections section located at y=1300px in the Figma design.
 ## 3. COLLECTION CARD SPECIFICATIONS
 
 ### Card Dimensions
+
 - **Width**: 615px
 - **Height**: 458.32px (458.3192138671875px)
 - **Aspect Ratio**: ~1.34:1 (landscape)
 
 ### Card Styling
+
 - **Border Radius**: 16px
 - **Padding**:
   - Top: 20px
@@ -75,12 +85,15 @@ This is the Collections section located at y=1300px in the Figma design.
   - Right: 30px
 
 ### Card Layout
+
 - **Layout Mode**: HORIZONTAL
 - **Item Spacing**: 10px
 - **Content Alignment**: MAX (items aligned to bottom)
 
 ### Card Background
+
 Each card has multiple layers:
+
 1. **Solid Color Background** (fallback):
    - Varies per card (#d9d9d9, #f1f1f1, etc.)
 2. **Background Image** (main product image)
@@ -92,14 +105,17 @@ Each card has multiple layers:
 ## 4. INDIVIDUAL COLLECTION CARDS
 
 ### Card 1: Ламис
+
 **Position**: Top-left (335px, 1452px)
 
 **Background Layers**:
+
 1. Solid color: #d9d9d9 (RGB: 217, 217, 217)
 2. Image: `5065076cb222575d61ba7fe8a0c1859a2440534b` (FILL)
 3. Overlay image: `16d4d5bd0ae4f2a146ec2586f146646700bed66a` (STRETCH)
 
 **Text Label**:
+
 - Content: "Ламис"
 - Position: Bottom-left (aligned with padding)
   - X: 365px (30px from card edge)
@@ -115,9 +131,11 @@ Each card has multiple layers:
 ---
 
 ### Card 2: Nora
+
 **Position**: Top-right (970px, 1452px)
 
 **Background Layers**:
+
 1. Solid color: #f1f1f1 (RGB: 241, 241, 241)
 2. Multiple images layered:
    - `59247c5659350b445a0a23a5adaee9586e638895` (FILL)
@@ -126,6 +144,7 @@ Each card has multiple layers:
    - `cd999cdd75aef7b6f409c165deaf534b98902768` (FILL)
 
 **Text Label**:
+
 - Content: "Nora"
 - Position: Bottom-left
   - X: 1000px (30px from card edge)
@@ -141,13 +160,16 @@ Each card has multiple layers:
 ---
 
 ### Card 3: Akcent
+
 **Position**: Bottom-left (335px, 1930.32px)
 
 **Background Layers**:
+
 1. Image: `96ad54204e8f242f85cafe13992389f89688d5c7` (STRETCH)
 2. Overlay image: `d8179a00e58dba78bcbabfb95ed883fd11c19151` (STRETCH)
 
 **Text Label**:
+
 - Content: "Akcent"
 - Position: Bottom-left
   - X: 365px (30px from card edge)
@@ -163,9 +185,11 @@ Each card has multiple layers:
 ---
 
 ### Card 4: Andalusia
+
 **Position**: Bottom-right (970px, 1930.32px)
 
 **Background Layers**:
+
 1. Solid color: #f1f1f1 (RGB: 241, 241, 241)
 2. Multiple images:
    - `5065076cb222575d61ba7fe8a0c1859a2440534b` (FILL)
@@ -173,6 +197,7 @@ Each card has multiple layers:
    - `c5e5ef5d86287488a4a638a13190db60da2263bf` (FILL)
 
 **Text Label**:
+
 - Content: "Andalusia"
 - Position: Bottom-left
   - X: 1000px (30px from card edge)
@@ -190,17 +215,20 @@ Each card has multiple layers:
 ## 5. RESPONSIVE BREAKPOINTS (Suggested)
 
 ### Desktop (1920px)
+
 - Container: 1250px width
 - Grid: 2 columns
 - Gap: 20px
 
 ### Tablet (768px - 1024px)
+
 - Container: ~700px width
 - Grid: 2 columns (smaller cards)
 - Gap: 16px
 - Card size: ~340px × 255px
 
 ### Mobile (< 768px)
+
 - Container: Full width minus padding
 - Grid: 1 column
 - Gap: 16px
@@ -214,6 +242,7 @@ All collection images have been downloaded to:
 **Directory**: `/Users/new/Desktop/Проекты/Lamis/e-commerce/public/collections/`
 
 ### Image Files:
+
 1. **Item_1:4168.png** - Ламис collection (721 KB)
 2. **Item_1:4169.png** - Nora collection (777 KB)
 3. **Item_1:4170.png** - Akcent collection (659 KB)
@@ -226,6 +255,7 @@ All images are exported at 2x scale (Retina) in PNG format.
 ## 7. IMPLEMENTATION NOTES
 
 ### HTML Structure
+
 ```html
 <section class="collections-section">
   <h2 class="collections-title">Коллекции мебели для ванн LAMIS</h2>
@@ -251,6 +281,7 @@ All images are exported at 2x scale (Retina) in PNG format.
 ```
 
 ### CSS/Tailwind Styling
+
 ```css
 .collections-section {
   padding: 0 335px; /* Align with design */
@@ -306,6 +337,7 @@ All images are exported at 2x scale (Retina) in PNG format.
 ```
 
 ### Tailwind Classes
+
 ```
 Section Title: text-[43.3px] font-bold leading-[56px] text-[#1d1d1d]
 Grid: grid grid-cols-2 gap-5 w-[1250px]
@@ -318,7 +350,9 @@ Card Name: text-[32px] font-bold leading-[38.73px] text-white z-10
 ## 8. ADDITIONAL CONSIDERATIONS
 
 ### Text Overlay / Gradient
+
 The design likely has a gradient overlay on the images to ensure text readability. Consider adding:
+
 ```css
 .collection-card::before {
   content: '';
@@ -327,24 +361,28 @@ The design likely has a gradient overlay on the images to ensure text readabilit
   left: 0;
   right: 0;
   height: 50%;
-  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
   z-index: 1;
 }
 ```
 
 ### Hover Effects
+
 Consider adding interactive states:
+
 - Scale: `transform: scale(1.02)`
 - Brightness: `filter: brightness(1.1)`
 - Shadow: `box-shadow: 0 8px 24px rgba(0,0,0,0.15)`
 
 ### Accessibility
+
 - Add `alt` text to images
 - Use semantic HTML (`<section>`, `<h2>`)
 - Ensure sufficient color contrast for text
 - Add focus states for keyboard navigation
 
 ### "Показать еще" Button
+
 Not found in the extracted section. If needed, check for a button element below the grid at y > 2400px.
 
 ---
@@ -352,11 +390,13 @@ Not found in the extracted section. If needed, check for a button element below 
 ## 9. FILE REFERENCES
 
 ### JSON Specifications
+
 - **Detailed Specs**: `/Users/new/Desktop/Проекты/Lamis/e-commerce/public/collections_detailed_spec.json`
 - **Summary Report**: `/Users/new/Desktop/Проекты/Lamis/e-commerce/public/collections_report.json`
 - **Full Figma Data**: `/Users/new/Desktop/Проекты/Lamis/e-commerce/public/figma_full_data.json`
 
 ### Figma File
+
 - **File Key**: pbfBbexsMbbDtZStbolrzP
 - **Section Node ID**: 1:4164 (title), 1:4167 (grid container)
 - **Collection Card IDs**: 1:4168, 1:4169, 1:4170, 1:4171
@@ -366,6 +406,7 @@ Not found in the extracted section. If needed, check for a button element below 
 ## 10. SUMMARY
 
 This section showcases 4 bathroom furniture collections in a clean 2x2 grid layout:
+
 1. **Ламис** (top-left)
 2. **Nora** (top-right)
 3. **Akcent** (bottom-left)

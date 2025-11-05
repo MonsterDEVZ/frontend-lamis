@@ -10,7 +10,7 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="relative z-50 w-full justify-center flex flex-col fixed bg-black" >
+    <header className="relative z-50 w-full justify-center flex flex-col fixed bg-black">
       {/* Top Bar */}
       <div className="border-b border-white/10 w-full">
         <div className="mx-auto flex items-stretch justify-between max-w-[1250px] h-10 px-5">
@@ -58,17 +58,8 @@ export default function Header() {
       <div className="mx-auto max-w-[1250px] w-full">
         <div className="flex items-center justify-between relative px-5" style={{ height: '70px' }}>
           {/* Logo */}
-          <Link
-            href="/"
-            className="hover:opacity-80 transition-opacity"
-          >
-            <Image
-              src="/logo.svg"
-              alt="LAMIS"
-              width={156}
-              height={32}
-              priority
-            />
+          <Link href="/" className="hover:opacity-80 transition-opacity">
+            <Image src="/logo.svg" alt="LAMIS" width={156} height={32} priority />
           </Link>
 
           {/* Desktop Navigation - Centered */}

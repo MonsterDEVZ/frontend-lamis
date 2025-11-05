@@ -1,66 +1,64 @@
-"use client";
+'use client';
 
-import { type FC, useState, useMemo, useCallback, useEffect } from "react";
-import type { Swiper as SwiperType } from "swiper";
+import { type FC, useState, useMemo, useCallback, useEffect } from 'react';
+import type { Swiper as SwiperType } from 'swiper';
 // @ts-ignore
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay } from "swiper/modules";
-import CatalogCard from "./ui/CatalogCard";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Autoplay } from 'swiper/modules';
+import CatalogCard from './ui/CatalogCard';
 
 // @ts-ignore
-import "swiper/css";
+import 'swiper/css';
 // @ts-ignore
-import "swiper/css/navigation";
+import 'swiper/css/navigation';
 
+// Example Usage
 // prettier-ignore
 const sampleProducts = [
   // Сантехника Caizer
-  { category: "Сантехника Caizer", name: "Унитаз-компакт Caizer PRO", price: 14490, status: "Новинка", image: "/plumbing_section/caizer/3012.png", hoverImage: "/plumbing_section/caizer/3012 улучшенный.jpeg" },
-  { category: "Сантехника Caizer", name: "Подвесной унитаз Caizer Wall", price: 19990, image: "/plumbing_section/caizer/3014.png", hoverImage: "/plumbing_section/caizer/3014 улучшенный.jpeg" },
-  { category: "Сантехника Caizer", name: "Раковина встраиваемая Caizer Drop", price: 7800, image: "/plumbing_section/caizer/3016.png", hoverImage: "/plumbing_section/caizer/3016 улучшенный.jpeg" },
-  { category: "Сантехника Caizer", name: "Смеситель для раковины Caizer Flow", price: 6500, status: "Хит", image: "/plumbing_section/caizer/3030.png", hoverImage: "/plumbing_section/caizer/3030 улучшенный.jpeg" },
-  { category: "Сантехника Caizer", name: "Душевая система Caizer Rain", price: 25900, image: "/plumbing_section/caizer/3037.png", hoverImage: "/plumbing_section/caizer/3037 улучшенный.jpeg" },
-  { category: "Сантехника Caizer", name: "Ванна акриловая Caizer Wave", price: 32000, image: "/plumbing_section/caizer/3038.png", hoverImage: "/plumbing_section/caizer/3038 улучшенный.jpeg" },
+  { category: "caizer_plumbing", name: "Унитаз-компакт Caizer PRO", price: 14490, status: "Новинка", image: "/plumbing_section/caizer/3012.png", hoverImage: "/plumbing_section/caizer/3012 улучшенный.jpeg" },
+  { category: "caizer_plumbing", name: "Подвесной унитаз Caizer Wall", price: 19990, image: "/plumbing_section/caizer/3014.png", hoverImage: "/plumbing_section/caizer/3014 улучшенный.jpeg" },
+  { category: "caizer_plumbing", name: "Раковина встраиваемая Caizer Drop", price: 7800, image: "/plumbing_section/caizer/3016.png", hoverImage: "/plumbing_section/caizer/3016 улучшенный.jpeg" },
+  { category: "caizer_plumbing", name: "Смеситель для раковины Caizer Flow", price: 6500, status: "Хит", image: "/plumbing_section/caizer/3030.png", hoverImage: "/plumbing_section/caizer/3030 улучшенный.jpeg" },
+  { category: "caizer_plumbing", name: "Душевая система Caizer Rain", price: 25900, image: "/plumbing_section/caizer/3037.png", hoverImage: "/plumbing_section/caizer/3037 улучшенный.jpeg" },
+  { category: "caizer_plumbing", name: "Ванна акриловая Caizer Wave", price: 32000, image: "/plumbing_section/caizer/3038.png", hoverImage: "/plumbing_section/caizer/3038 улучшенный.jpeg" },
 
   // Умные водонагреватели
-  { category: "Умные водонагреватели", name: "Водонагреватель Smart 50л", price: 18500, status: "Новинка", image: "/plumbing_section/caizer/3012.png", hoverImage: "/plumbing_section/caizer/3014.png" },
-  { category: "Умные водонагреватели", name: "Проточный водонагреватель Smart Flow", price: 12300, image: "/plumbing_section/caizer/3014.png", hoverImage: "/plumbing_section/caizer/3016.png" },
-  { category: "Умные водонагреватели", name: "Водонагреватель Smart 80л Wi-Fi", price: 24000, status: "Хит", image: "/plumbing_section/caizer/3016.png", hoverImage: "/plumbing_section/caizer/3030.png" },
-  { category: "Умные водонагреватели", name: "Компактный водонагреватель 15л", price: 9800, image: "/plumbing_section/caizer/3030.png", hoverImage: "/plumbing_section/caizer/3037.png" },
+  { category: "water_heaters", name: "Водонагреватель Smart 50л", price: 18500, status: "Новинка", image: "/plumbing_section/caizer/caizer-product-1.png", hoverImage: "/plumbing_section/caizer/caizer-product-2.png" },
+  { category: "water_heaters", name: "Проточный водонагреватель Smart Flow", price: 12300, image: "/plumbing_section/caizer/caizer-product-2.png", hoverImage: "/plumbing_section/caizer/caizer-product-3.png" },
+  { category: "water_heaters", name: "Водонагреватель Smart 80л Wi-Fi", price: 24000, status: "Хит", image: "/plumbing_section/caizer/caizer-product-3.png", hoverImage: "/plumbing_section/caizer/caizer-product-4.png" },
+  { category: "water_heaters", name: "Компактный водонагреватель 15л", price: 9800, image: "/plumbing_section/caizer/caizer-product-4.png", hoverImage: "/plumbing_section/caizer/caizer-product-1.png" },
 
   // Зеркала Lamis
-  { category: "Зеркала Lamis", name: "Зеркало Lamis с LED-подсветкой 80см", price: 8900, status: "Хит", image: "/plumbing_section/caizer/3012.png", hoverImage: "/plumbing_section/caizer/3014.png" },
-  { category: "Зеркала Lamis", name: "Зеркальный шкаф Lamis 60см", price: 13400, image: "/plumbing_section/caizer/3014.png", hoverImage: "/plumbing_section/caizer/3016.png" },
-  { category: "Зеркала Lamis", name: "Круглое зеркало Lamis 70см", price: 9900, status: "Новинка", image: "/plumbing_section/caizer/3016.png", hoverImage: "/plumbing_section/caizer/3030.png" },
-  { category: "Зеркала Lamis", name: "Зеркало Lamis с полкой и подсветкой", price: 11500, image: "/plumbing_section/caizer/3030.png", hoverImage: "/plumbing_section/caizer/3037.png" },
-  { category: "Зеркала Lamis", name: "Зеркало косметическое Lamis x5", price: 4500, image: "/plumbing_section/caizer/3037.png", hoverImage: "/plumbing_section/caizer/3038.png" },
+  { category: "lamis_mirrors", name: "Зеркало Lamis с LED-подсветкой 80см", price: 8900, status: "Хит", image: "/plumbing_section/caizer/caizer-product-1.png", hoverImage: "/plumbing_section/caizer/caizer-product-2.png" },
+  { category: "lamis_mirrors", name: "Зеркальный шкаф Lamis 60см", price: 13400, image: "/plumbing_section/caizer/caizer-product-2.png", hoverImage: "/plumbing_section/caizer/caizer-product-3.png" },
+  { category: "lamis_mirrors", name: "Круглое зеркало Lamis 70см", price: 9900, status: "Новинка", image: "/plumbing_section/caizer/caizer-product-3.png", hoverImage: "/plumbing_section/caizer/caizer-product-4.png" },
+  { category: "lamis_mirrors", name: "Зеркало Lamis с полкой и подсветкой", price: 11500, image: "/plumbing_section/caizer/caizer-product-4.png", hoverImage: "/plumbing_section/caizer/caizer-product-1.png" },
+  { category: "lamis_mirrors", name: "Зеркало косметическое Lamis x5", price: 4500, image: "/plumbing_section/caizer/caizer-product-1.png", hoverImage: "/plumbing_section/caizer/caizer-product-2.png" },
 
   // Умные водонагреватели Blesk
-  { category: "Умные водонагреватели Blesk", name: "Водонагреватель Blesk 100л Smart", price: 29900, status: "Новинка", image: "/plumbing_section/caizer/3012.png", hoverImage: "/plumbing_section/caizer/3014.png" },
-  { category: "Умные водонагреватели Blesk", name: "Blesk Flat 80л с сухим ТЭНом", price: 26500, image: "/plumbing_section/caizer/3014.png", hoverImage: "/plumbing_section/caizer/3016.png" },
-  { category: "Умные водонагреватели Blesk", name: "Blesk Slim 30л", price: 15000, image: "/plumbing_section/caizer/3016.png", hoverImage: "/plumbing_section/caizer/3030.png" },
-  { category: "Умные водонагреватели Blesk", name: "Blesk Slim 60л", price: 20000, image: "/plumbing_section/caizer/3030.png", hoverImage: "/plumbing_section/caizer/3037.png" },
+  { category: "blesk_heaters", name: "Водонагреватель Blesk 100л Smart", price: 29900, status: "Новинка", image: "/plumbing_section/caizer/caizer-product-1.png", hoverImage: "/plumbing_section/caizer/caizer-product-2.png" },
+  { category: "blesk_heaters", name: "Blesk Flat 80л с сухим ТЭНом", price: 26500, image: "/plumbing_section/caizer/caizer-product-2.png", hoverImage: "/plumbing_section/caizer/caizer-product-3.png" },
+  { category: "blesk_heaters", name: "Blesk Slim 30л", price: 15000, image: "/plumbing_section/caizer/caizer-product-3.png", hoverImage: "/plumbing_section/caizer/caizer-product-4.png" },
+  { category: "blesk_heaters", name: "Blesk Slim 60л", price: 20000, image: "/plumbing_section/caizer/caizer-product-3.png", hoverImage: "/plumbing_section/caizer/caizer-product-4.png" },
 
   // Мебель для ванн Lamis
-  { category: "Мебель для ванн Lamis", name: "Тумба под раковину Lamis 75см", price: 18900, status: "Новинка", image: "/plumbing_section/caizer/3012.png", hoverImage: "/plumbing_section/caizer/3014.png" },
-  { category: "Мебель для ванн Lamis", name: "Шкаф-пенал Lamis Style", price: 22500, image: "/plumbing_section/caizer/3014.png", hoverImage: "/plumbing_section/caizer/3016.png" },
-  { category: "Мебель для ванн Lamis", name: "Подвесная тумба Lamis Air 60см", price: 16200, status: "Хит", image: "/plumbing_section/caizer/3016.png", hoverImage: "/plumbing_section/caizer/3030.png" },
-  { category: "Мебель для ванн Lamis", name: "Комплект мебели Lamis (тумба+зеркало)", price: 29800, image: "/plumbing_section/caizer/3030.png", hoverImage: "/plumbing_section/caizer/3037.png" },
-  { category: "Мебель для ванн Lamis", name: "Полка для ванной Lamis Glass", price: 5500, image: "/plumbing_section/caizer/3037.png", hoverImage: "/plumbing_section/caizer/3038.png" },
+  { category: "lamis_furniture", name: "Тумба под раковину Lamis 75см", price: 18900, status: "Новинка", image: "/plumbing_section/caizer/caizer-product-1.png", hoverImage: "/plumbing_section/caizer/caizer-product-2.png" },
+  { category: "lamis_furniture", name: "Шкаф-пенал Lamis Style", price: 22500, image: "/plumbing_section/caizer/caizer-product-2.png", hoverImage: "/plumbing_section/caizer/caizer-product-3.png" },
+  { category: "lamis_furniture", name: "Подвесная тумба Lamis Air 60см", price: 16200, status: "Хит", image: "/plumbing_section/caizer/caizer-product-3.png", hoverImage: "/plumbing_section/caizer/caizer-product-4.png" },
+  { category: "lamis_furniture", name: "Комплект мебели Lamis (тумба+зеркало)", price: 29800, image: "/plumbing_section/caizer/caizer-product-4.png", hoverImage: "/plumbing_section/caizer/caizer-product-1.png" },
+  { category: "lamis_furniture", name: "Полка для ванной Lamis Glass", price: 5500, image: "/plumbing_section/caizer/caizer-product-1.png", hoverImage: "/plumbing_section/caizer/caizer-product-2.png" },
 ];
 
 const tabs = [
-  { label: "Умные водонагреватели", value: "Умные водонагреватели" },
-  { label: "Зеркала Lamis", value: "Зеркала Lamis" },
-  {
-    label: "Умные водонагреватели Blesk",
-    value: "Умные водонагреватели Blesk",
-  },
-  { label: "Сантехника Caizer", value: "Сантехника Caizer" },
-  { label: "Мебель для ванн Lamis", value: "Мебель для ванн Lamis" },
+  { label: 'Умные водонагреватели', value: 'water_heaters' },
+  { label: 'Зеркала Lamis', value: 'lamis_mirrors' },
+  { label: 'Умные водонагреватели Blesk', value: 'blesk_heaters' },
+  { label: 'Сантехника Caizer', value: 'caizer_plumbing' },
+  { label: 'Мебель для ванн Lamis', value: 'lamis_furniture' },
 ];
 
-const Arrow = ({ direction }: { direction: "left" | "right" }) => (
+const Arrow = ({ direction }: { direction: 'left' | 'right' }) => (
   <svg
     width="16"
     height="16"
@@ -68,7 +66,7 @@ const Arrow = ({ direction }: { direction: "left" | "right" }) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className={`transform group-disabled:[&_fill]:opacity-15 ${
-      direction !== "left" ? "rotate-180" : ""
+      direction !== 'left' ? 'rotate-180' : ''
     }`}
   >
     <path
@@ -79,7 +77,7 @@ const Arrow = ({ direction }: { direction: "left" | "right" }) => (
 );
 
 const PlumbingSection: FC = () => {
-  const [activeFilter, setActiveFilter] = useState("Умные водонагреватели");
+  const [activeFilter, setActiveFilter] = useState('water_heaters');
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
   const [pagination, setPagination] = useState({ current: 1, total: 1 });
   const [isBeginning, setIsBeginning] = useState(true);
@@ -88,17 +86,13 @@ const PlumbingSection: FC = () => {
   const [isSwiperInitialized, setIsSwiperInitialized] = useState(false);
 
   const filteredProducts = useMemo(() => {
-    return sampleProducts.filter(
-      (product) => product.category === activeFilter
-    );
+    return sampleProducts.filter((product) => product.category === activeFilter);
   }, [activeFilter]);
 
+  const slidesPerView = 4;
   const autoplayDelay = 5000;
 
   const updateSwiperState = useCallback((swiper: SwiperType) => {
-    const slidesPerView = swiper.params.slidesPerView;
-    if (typeof slidesPerView !== "number") return;
-
     const totalPages = Math.ceil(swiper.slides.length / slidesPerView);
     let currentPage = Math.floor(swiper.activeIndex / slidesPerView) + 1;
 
@@ -125,20 +119,21 @@ const PlumbingSection: FC = () => {
   useEffect(() => {
     if (!swiperInstance) return;
 
+    // Force-reset UI state immediately
     setPagination({ current: 1, total: 1 });
     setProgress(0);
 
+    // Update swiper and reset its position
     swiperInstance.update();
     swiperInstance.slideTo(0);
 
-    const slidesPerView = swiperInstance.params.slidesPerView;
-    if (typeof slidesPerView !== "number") return;
-
+    // Recalculate correct state and apply it
     const totalPages = Math.ceil(filteredProducts.length / slidesPerView);
     setPagination({ current: 1, total: totalPages > 0 ? totalPages : 1 });
     setIsBeginning(true);
     setIsEnd(totalPages <= 1);
 
+    // Handle autoplay logic
     if (totalPages <= 1) {
       swiperInstance.autoplay.stop();
       setProgress(100);
@@ -147,31 +142,28 @@ const PlumbingSection: FC = () => {
         swiperInstance.autoplay.start();
       }
     }
-  }, [activeFilter, swiperInstance, filteredProducts.length]);
+  }, [activeFilter, swiperInstance]);
 
   return (
-    <div className="max-w-[1194px] w-full mx-auto px-5">
+    <div className="max-w-[1250px] w-full mx-auto">
       <div className="flex justify-between items-end">
-        <h2 className="text-3xl md:text-[44px] font-bold text-gray-900">
-          Сантехника CAIZER
-        </h2>
+        <h2 className="text-[44px]">Сантехника CAIZER</h2>
 
-        {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center gap-6">
+        <div className="flex items-center gap-6">
           <div className="flex items-center gap-2 text-sm text-[#505357]">
-            <span>{String(pagination.current).padStart(2, "0")}</span>
+            <span>{String(pagination.current).padStart(2, '0')}</span>
+
             <div
               className="w-24 h-0.5 rounded-full"
-              style={{ backgroundColor: "rgba(29, 29, 29, 0.15)" }}
+              style={{ backgroundColor: 'rgba(29, 29, 29, 0.15)' }}
             >
               <div
                 className="h-full rounded-full bg-[#009B3E]"
                 style={{ width: `${progress}%` }}
               ></div>
             </div>
-            <span className="text-gray-400">
-              {String(pagination.total).padStart(2, "0")}
-            </span>
+
+            <span className="text-gray-400">{String(pagination.total).padStart(2, '0')}</span>
           </div>
 
           <div className="flex items-center gap-4">
@@ -197,10 +189,8 @@ const PlumbingSection: FC = () => {
           <button
             key={tab.value}
             onClick={() => setActiveFilter(tab.value)}
-            className={`px-4 py-1 : text-sm rounded-full border border-black transition-colors duration-200 cursor-pointer ${
-              activeFilter === tab.value
-                ? "bg-black text-white"
-                : "bg-white text-black"
+            className={`px-4 py-1 text-sm rounded-full border border-black transition-colors duration-200 cursor-pointer ${
+              activeFilter === tab.value ? 'bg-black text-white' : 'bg-white text-black'
             }`}
           >
             {tab.label}
@@ -211,33 +201,14 @@ const PlumbingSection: FC = () => {
       <Swiper
         modules={[Navigation, Autoplay]}
         spaceBetween={24}
+        slidesPerView={slidesPerView}
         className={
-          !isSwiperInitialized
-            ? "opacity-0"
-            : "opacity-100 transition-opacity duration-500"
+          !isSwiperInitialized ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'
         }
         autoplay={{
           delay: autoplayDelay,
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
-        }}
-        breakpoints={{
-          0: {
-            slidesPerView: 1,
-            slidesPerGroup: 1,
-          },
-          320: {
-            slidesPerView: 2,
-            slidesPerGroup: 2,
-          },
-          768: {
-            slidesPerView: 3,
-            slidesPerGroup: 3,
-          },
-          1024: {
-            slidesPerView: 4,
-            slidesPerGroup: 4,
-          },
         }}
         onAutoplayTimeLeft={(s, time, percentage) => {
           setProgress((1 - percentage) * 100);
@@ -255,23 +226,6 @@ const PlumbingSection: FC = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-
-      {/* Mobile Progress Bar */}
-      <div className="lg:hidden flex items-center justify-center mt-6 gap-2 text-sm text-[#505357]">
-        <span>{String(pagination.current).padStart(2, "0")}</span>
-        <div
-          className="w-24 h-0.5 rounded-full"
-          style={{ backgroundColor: "rgba(29, 29, 29, 0.15)" }}
-        >
-          <div
-            className="h-full rounded-full bg-[#009B3E]"
-            style={{ width: `${progress}%` }}
-          ></div>
-        </div>
-        <span className="text-gray-400">
-          {String(pagination.total).padStart(2, "0")}
-        </span>
-      </div>
     </div>
   );
 };

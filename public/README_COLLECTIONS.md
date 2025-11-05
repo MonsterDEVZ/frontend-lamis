@@ -93,6 +93,7 @@ This directory contains the complete extraction of the **"Коллекции м�
 ### For Developers
 
 1. **Read the Quick Reference** first:
+
    ```bash
    open COLLECTIONS_QUICK_REFERENCE.md
    ```
@@ -110,6 +111,7 @@ This directory contains the complete extraction of the **"Коллекции м�
 ### For Designers
 
 1. **Check the Visual Layout** document:
+
    ```bash
    open COLLECTIONS_VISUAL_LAYOUT.md
    ```
@@ -123,6 +125,7 @@ This directory contains the complete extraction of the **"Коллекции м�
 ### For Project Managers
 
 1. **Review the main specification**:
+
    ```bash
    open COLLECTIONS_SECTION_SPECIFICATION.md
    ```
@@ -136,15 +139,15 @@ This directory contains the complete extraction of the **"Коллекции м�
 
 ## 📐 Key Measurements Summary
 
-| Element | Value |
-|---------|-------|
-| **Section Title** | Inter Bold 43.3px, #1d1d1d |
-| **Grid Layout** | 2×2 (1250px × 936px) |
-| **Grid Gap** | 20px (both axes) |
-| **Card Size** | 615px × 458px |
-| **Card Radius** | 16px |
-| **Card Padding** | 20px 30px |
-| **Collection Name** | Inter Bold 32px, #ffffff |
+| Element             | Value                      |
+| ------------------- | -------------------------- |
+| **Section Title**   | Inter Bold 43.3px, #1d1d1d |
+| **Grid Layout**     | 2×2 (1250px × 936px)       |
+| **Grid Gap**        | 20px (both axes)           |
+| **Card Size**       | 615px × 458px              |
+| **Card Radius**     | 16px                       |
+| **Card Padding**    | 20px 30px                  |
+| **Collection Name** | Inter Bold 32px, #ffffff   |
 
 ---
 
@@ -177,6 +180,7 @@ This directory contains the complete extraction of the **"Коллекции м�
 ## 🔧 Technical Details
 
 ### Figma Node IDs
+
 - **Title**: 1:4164
 - **Grid Container**: 1:4167
 - **Ламис Card**: 1:4168
@@ -185,12 +189,14 @@ This directory contains the complete extraction of the **"Коллекции м�
 - **Andalusia Card**: 1:4171
 
 ### Image References
+
 - Ламис: `5065076cb222575d61ba7fe8a0c1859a2440534b`
 - Nora: `59247c5659350b445a0a23a5adaee9586e638895`
 - Akcent: `96ad54204e8f242f85cafe13992389f89688d5c7`
 - Andalusia: `b1714816f75fb84cf7dd6ce1bee1b0aa6a5698da`
 
 ### Layout Properties
+
 - **Container Layout Mode**: HORIZONTAL
 - **Item Spacing**: 20px
 - **Aspect Ratio**: 1.34:1 (landscape)
@@ -201,6 +207,7 @@ This directory contains the complete extraction of the **"Коллекции м�
 ## 📱 Responsive Strategy
 
 ### Breakpoints
+
 ```css
 Desktop:  1440px+ → 2 columns, 615px cards
 Laptop:   1024px+ → 2 columns, scaled cards
@@ -209,6 +216,7 @@ Mobile:   <768px  → 1 column, full width
 ```
 
 ### Grid Transformation
+
 - Desktop: `grid-template-columns: repeat(2, 615px)`
 - Laptop: `grid-template-columns: repeat(2, 1fr)`
 - Tablet: `grid-template-columns: repeat(2, 1fr)`
@@ -219,6 +227,7 @@ Mobile:   <768px  → 1 column, full width
 ## 🎨 Design System Integration
 
 ### Colors
+
 ```json
 {
   "title": "#1d1d1d",
@@ -228,6 +237,7 @@ Mobile:   <768px  → 1 column, full width
 ```
 
 ### Typography
+
 ```json
 {
   "title": {
@@ -246,6 +256,7 @@ Mobile:   <768px  → 1 column, full width
 ```
 
 ### Spacing
+
 ```json
 {
   "titleMarginBottom": "152px",
@@ -258,17 +269,17 @@ Mobile:   <768px  → 1 column, full width
 
 ## 🔍 Where to Find What
 
-| Need | Document |
-|------|----------|
-| **Quick lookup** | COLLECTIONS_QUICK_REFERENCE.md |
-| **Complete specs** | COLLECTIONS_SECTION_SPECIFICATION.md |
-| **Visual diagrams** | COLLECTIONS_VISUAL_LAYOUT.md |
-| **Implementation code** | COLLECTIONS_QUICK_REFERENCE.md |
-| **Raw data** | collections_detailed_spec.json |
-| **Image manifest** | collections_report.json |
-| **Measurements** | All .md files (consistent) |
-| **Responsive breakpoints** | COLLECTIONS_QUICK_REFERENCE.md |
-| **Animation timings** | COLLECTIONS_VISUAL_LAYOUT.md |
+| Need                       | Document                             |
+| -------------------------- | ------------------------------------ |
+| **Quick lookup**           | COLLECTIONS_QUICK_REFERENCE.md       |
+| **Complete specs**         | COLLECTIONS_SECTION_SPECIFICATION.md |
+| **Visual diagrams**        | COLLECTIONS_VISUAL_LAYOUT.md         |
+| **Implementation code**    | COLLECTIONS_QUICK_REFERENCE.md       |
+| **Raw data**               | collections_detailed_spec.json       |
+| **Image manifest**         | collections_report.json              |
+| **Measurements**           | All .md files (consistent)           |
+| **Responsive breakpoints** | COLLECTIONS_QUICK_REFERENCE.md       |
+| **Animation timings**      | COLLECTIONS_VISUAL_LAYOUT.md         |
 
 ---
 
@@ -287,6 +298,7 @@ Mobile:   <768px  → 1 column, full width
 ## 📞 Support
 
 If you need additional information:
+
 - Check the JSON files for raw Figma data
 - Review the Figma file directly using the file key
 - Consult the visual layout diagrams for clarification

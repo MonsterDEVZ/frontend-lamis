@@ -3,6 +3,7 @@
 ## 📐 Key Measurements
 
 ### Section Title
+
 ```
 Text: "Коллекции мебели для ванн LAMIS"
 Font: Inter Bold 43.3px / 56px line-height
@@ -12,6 +13,7 @@ Margin bottom: 152px
 ```
 
 ### Grid Layout
+
 ```
 Container: 1250px × 936px
 Layout: 2×2 Grid
@@ -19,6 +21,7 @@ Gap: 20px (horizontal & vertical)
 ```
 
 ### Collection Cards
+
 ```
 Size: 615px × 458px
 Border Radius: 16px
@@ -27,6 +30,7 @@ Aspect Ratio: 1.34:1
 ```
 
 ### Collection Names
+
 ```
 Font: Inter Bold 32px / 38.73px line-height
 Color: #ffffff (white)
@@ -38,18 +42,19 @@ Alignment: flex-end (bottom)
 
 ## 🎨 Collection Items
 
-| # | Name | Image File | Text | Position |
-|---|------|-----------|------|----------|
-| 1 | Ламис | `lamis.png` | "Ламис" | Top-left |
-| 2 | Nora | `nora.png` | "Nora" | Top-right |
-| 3 | Akcent | `akcent.png` | "Akcent" | Bottom-left |
-| 4 | Andalusia | `andalusia.png` | "Andalusia" | Bottom-right |
+| #   | Name      | Image File      | Text        | Position     |
+| --- | --------- | --------------- | ----------- | ------------ |
+| 1   | Ламис     | `lamis.png`     | "Ламис"     | Top-left     |
+| 2   | Nora      | `nora.png`      | "Nora"      | Top-right    |
+| 3   | Akcent    | `akcent.png`    | "Akcent"    | Bottom-left  |
+| 4   | Andalusia | `andalusia.png` | "Andalusia" | Bottom-right |
 
 ---
 
 ## 💻 Implementation
 
 ### React/Next.js Component
+
 ```tsx
 const collections = [
   { id: 1, name: 'Ламис', image: '/collections/lamis.png' },
@@ -76,26 +81,33 @@ const collections = [
           className="absolute inset-0 w-full h-full object-cover
                      transition-transform group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t
-                        from-black/60 to-transparent" />
-        <span className="relative z-10 text-[32px] font-bold
-                         leading-[38.73px] text-white">
+        <div
+          className="absolute inset-0 bg-gradient-to-t
+                        from-black/60 to-transparent"
+        />
+        <span
+          className="relative z-10 text-[32px] font-bold
+                         leading-[38.73px] text-white"
+        >
           {collection.name}
         </span>
       </a>
     ))}
   </div>
-</section>
+</section>;
 ```
 
 ### Vanilla CSS
+
 ```css
 .collections-section {
   padding: 80px 335px;
 }
 
 .collections-title {
-  font: 700 43.3px/56px 'Inter', sans-serif;
+  font:
+    700 43.3px/56px 'Inter',
+    sans-serif;
   color: #1d1d1d;
   margin-bottom: 152px;
 }
@@ -135,14 +147,16 @@ const collections = [
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
   z-index: 1;
 }
 
 .collection-name {
   position: relative;
   z-index: 2;
-  font: 700 32px/38.73px 'Inter', sans-serif;
+  font:
+    700 32px/38.73px 'Inter',
+    sans-serif;
   color: #ffffff;
 }
 ```
@@ -154,32 +168,72 @@ const collections = [
 ```css
 /* Desktop (default) */
 @media (min-width: 1440px) {
-  .collections-section { padding: 80px 335px; }
-  .collections-grid { width: 1250px; grid-template-columns: repeat(2, 615px); }
-  .collection-card { width: 615px; height: 458px; }
+  .collections-section {
+    padding: 80px 335px;
+  }
+  .collections-grid {
+    width: 1250px;
+    grid-template-columns: repeat(2, 615px);
+  }
+  .collection-card {
+    width: 615px;
+    height: 458px;
+  }
 }
 
 /* Laptop */
 @media (max-width: 1439px) {
-  .collections-section { padding: 60px 80px; }
-  .collections-grid { width: 100%; grid-template-columns: repeat(2, 1fr); max-width: 1100px; }
-  .collection-card { width: 100%; height: 400px; }
+  .collections-section {
+    padding: 60px 80px;
+  }
+  .collections-grid {
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 1100px;
+  }
+  .collection-card {
+    width: 100%;
+    height: 400px;
+  }
 }
 
 /* Tablet */
 @media (max-width: 1024px) {
-  .collections-title { font-size: 36px; line-height: 44px; margin-bottom: 60px; }
-  .collections-section { padding: 40px 40px; }
-  .collection-card { height: 320px; }
+  .collections-title {
+    font-size: 36px;
+    line-height: 44px;
+    margin-bottom: 60px;
+  }
+  .collections-section {
+    padding: 40px 40px;
+  }
+  .collection-card {
+    height: 320px;
+  }
 }
 
 /* Mobile */
 @media (max-width: 768px) {
-  .collections-section { padding: 40px 20px; }
-  .collections-title { font-size: 28px; line-height: 36px; margin-bottom: 40px; }
-  .collections-grid { grid-template-columns: 1fr; gap: 16px; }
-  .collection-card { height: 280px; padding: 16px 24px; }
-  .collection-name { font-size: 24px; line-height: 32px; }
+  .collections-section {
+    padding: 40px 20px;
+  }
+  .collections-title {
+    font-size: 28px;
+    line-height: 36px;
+    margin-bottom: 40px;
+  }
+  .collections-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .collection-card {
+    height: 280px;
+    padding: 16px 24px;
+  }
+  .collection-name {
+    font-size: 24px;
+    line-height: 32px;
+  }
 }
 ```
 

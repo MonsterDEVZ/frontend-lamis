@@ -54,8 +54,7 @@ export const useAuthStore = create<AuthState>()(
         }),
 
       // Update only access token (on refresh)
-      updateAccessToken: (accessToken) =>
-        set({ accessToken }),
+      updateAccessToken: (accessToken) => set({ accessToken }),
     }),
     {
       name: 'auth-storage', // localStorage key

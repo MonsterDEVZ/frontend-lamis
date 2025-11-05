@@ -59,6 +59,7 @@
 ## 📏 Detailed Dimensions
 
 ### Section Container
+
 ```
 ┌────────────────────────────────────────────────────────────┐
 │  Padding Left: 335px              Padding Right: 335px     │
@@ -80,6 +81,7 @@
 ```
 
 ### Individual Card Layout
+
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                      615px width                            │
@@ -149,6 +151,7 @@ z-index: 0        │  • Full card coverage
 ## 📐 Grid Mathematics
 
 ### Container Calculations
+
 ```
 Total Width = (Card Width × Columns) + (Gap × (Columns - 1))
 1250px = (615px × 2) + (20px × 1)
@@ -160,6 +163,7 @@ Total Height = (Card Height × Rows) + (Gap × (Rows - 1))
 ```
 
 ### Responsive Scale Factors
+
 ```
 Desktop (1920px):  1.0x  → Cards: 615px × 458px
 Laptop (1440px):   0.88x → Cards: 541px × 403px
@@ -172,6 +176,7 @@ Mobile (768px):    1 col → Cards: 100% × 280px
 ## 🔄 State Variations
 
 ### Default State
+
 ```css
 .collection-card {
   transform: scale(1);
@@ -181,6 +186,7 @@ Mobile (768px):    1 col → Cards: 100% × 280px
 ```
 
 ### Hover State
+
 ```css
 .collection-card:hover {
   transform: scale(1.02);
@@ -196,6 +202,7 @@ Mobile (768px):    1 col → Cards: 100% × 280px
 ```
 
 ### Focus State (Accessibility)
+
 ```css
 .collection-card:focus-visible {
   outline: 3px solid #1d1d1d;
@@ -208,6 +215,7 @@ Mobile (768px):    1 col → Cards: 100% × 280px
 ## 📱 Responsive Layout Transformations
 
 ### Desktop (1920px) - 2 Columns
+
 ```
 ┌─────────────┬─────────────┐
 │   Ламис     │    Nora     │
@@ -220,6 +228,7 @@ Mobile (768px):    1 col → Cards: 100% × 280px
 ```
 
 ### Tablet (1024px) - 2 Columns (Scaled)
+
 ```
 ┌──────────┬──────────┐
 │  Ламис   │   Nora   │
@@ -232,6 +241,7 @@ Mobile (768px):    1 col → Cards: 100% × 280px
 ```
 
 ### Mobile (768px) - 1 Column
+
 ```
 ┌─────────────────┐
 │     Ламис       │
@@ -254,6 +264,7 @@ Mobile (768px):    1 col → Cards: 100% × 280px
 ## 🎯 Alignment Guide
 
 ### Title Alignment
+
 ```
 Left Edge: 335px from viewport left
 Top Edge: 1300px from page top
@@ -262,6 +273,7 @@ Width: 420px (auto-wraps if needed)
 ```
 
 ### Grid Alignment
+
 ```
 Left Edge: 335px from viewport left (same as title)
 Top Edge: 1452px from page top (152px below title)
@@ -269,6 +281,7 @@ Width: 1250px (fixed)
 ```
 
 ### Card Content Alignment
+
 ```
 Text Position: flex items-end (bottom)
 Text Padding: 20px from bottom, 30px from left
@@ -280,20 +293,21 @@ Text Width: auto (max: 615px - 60px padding)
 ## 🖼️ Image Specifications
 
 ### Source Files
-| Collection | Filename | Size | Dimensions @ 2x |
-|-----------|----------|------|-----------------|
-| Ламис | `lamis.png` | 721 KB | 1230px × 916px |
-| Nora | `nora.png` | 777 KB | 1230px × 916px |
-| Akcent | `akcent.png` | 659 KB | 1230px × 916px |
-| Andalusia | `andalusia.png` | 1.2 MB | 1230px × 916px |
+
+| Collection | Filename        | Size   | Dimensions @ 2x |
+| ---------- | --------------- | ------ | --------------- |
+| Ламис      | `lamis.png`     | 721 KB | 1230px × 916px  |
+| Nora       | `nora.png`      | 777 KB | 1230px × 916px  |
+| Akcent     | `akcent.png`    | 659 KB | 1230px × 916px  |
+| Andalusia  | `andalusia.png` | 1.2 MB | 1230px × 916px  |
 
 ### Image Optimization
+
 ```html
 <!-- Use srcset for responsive images -->
 <img
   src="/collections/lamis.png"
-  srcset="/collections/lamis.png 2x,
-          /collections/lamis-1x.png 1x"
+  srcset="/collections/lamis.png 2x, /collections/lamis-1x.png 1x"
   alt="Коллекция Ламис"
   loading="lazy"
   width="615"
@@ -302,6 +316,7 @@ Text Width: auto (max: 615px - 60px padding)
 ```
 
 ### Recommended Optimizations
+
 - Convert to WebP format (fallback to PNG)
 - Generate 1x versions (~365 KB average)
 - Implement lazy loading
@@ -314,8 +329,9 @@ Text Width: auto (max: 615px - 60px padding)
 ```css
 /* Recommended transition timings */
 .collection-card {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .collection-card img {
@@ -323,10 +339,18 @@ Text Width: auto (max: 615px - 60px padding)
 }
 
 /* Stagger animation on load */
-.collection-card:nth-child(1) { animation-delay: 0ms; }
-.collection-card:nth-child(2) { animation-delay: 100ms; }
-.collection-card:nth-child(3) { animation-delay: 200ms; }
-.collection-card:nth-child(4) { animation-delay: 300ms; }
+.collection-card:nth-child(1) {
+  animation-delay: 0ms;
+}
+.collection-card:nth-child(2) {
+  animation-delay: 100ms;
+}
+.collection-card:nth-child(3) {
+  animation-delay: 200ms;
+}
+.collection-card:nth-child(4) {
+  animation-delay: 300ms;
+}
 ```
 
 ---

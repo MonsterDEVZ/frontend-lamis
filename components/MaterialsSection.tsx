@@ -7,7 +7,8 @@ export default function MaterialsSection() {
   const materials = [
     {
       id: 1,
-      title: 'Все артикулы, технические характеристики и варианты отделки в одном удобном PDF-документе.',
+      title:
+        'Все артикулы, технические характеристики и варианты отделки в одном удобном PDF-документе.',
       description: '',
       fileInfo: 'PDF • 25 MB',
       image: '/images/materials/materialForDownload_01.png',

@@ -94,21 +94,17 @@ export default function ProfilePage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Email
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                     <p className="text-lg text-gray-900">{user.email}</p>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Статус
-                    </label>
-                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      user.is_active
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
-                    }`}>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Статус</label>
+                    <span
+                      className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                        user.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                      }`}
+                    >
                       {user.is_active ? 'Активен' : 'Неактивен'}
                     </span>
                   </div>
@@ -130,17 +126,11 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="pt-6 flex gap-4">
-                  <Button
-                    variant="secondary"
-                    onClick={handleLogout}
-                  >
+                  <Button variant="secondary" onClick={handleLogout}>
                     Выйти
                   </Button>
 
-                  <Button
-                    variant="outline"
-                    onClick={() => router.push('/')}
-                  >
+                  <Button variant="outline" onClick={() => router.push('/')}>
                     На главную
                   </Button>
                 </div>

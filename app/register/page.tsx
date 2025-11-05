@@ -18,18 +18,20 @@ import { register as registerUser, login, getCurrentUser } from '@/services/auth
 import { useAuthStore } from '@/store/authStore';
 
 // Validation schema
-const registerSchema = z.object({
-  email: z.string().email('Введите корректный email'),
-  password: z
-    .string()
-    .min(8, 'Пароль должен содержать минимум 8 символов')
-    .regex(/[A-Z]/, 'Пароль должен содержать хотя бы одну заглавную букву')
-    .regex(/[0-9]/, 'Пароль должен содержать хотя бы одну цифру'),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: 'Пароли не совпадают',
-  path: ['confirmPassword'],
-});
+const registerSchema = z
+  .object({
+    email: z.string().email('Введите корректный email'),
+    password: z
+      .string()
+      .min(8, 'Пароль должен содержать минимум 8 символов')
+      .regex(/[A-Z]/, 'Пароль должен содержать хотя бы одну заглавную букву')
+      .regex(/[0-9]/, 'Пароль должен содержать хотя бы одну цифру'),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Пароли не совпадают',
+    path: ['confirmPassword'],
+  });
 
 type RegisterForm = z.infer<typeof registerSchema>;
 
@@ -85,9 +87,7 @@ export default function RegisterPage() {
         <Card>
           <CardHeader>
             <CardTitle>Создать аккаунт</CardTitle>
-            <CardDescription>
-              Зарегистрируйтесь для доступа к LAMIS
-            </CardDescription>
+            <CardDescription>Зарегистрируйтесь для доступа к LAMIS</CardDescription>
           </CardHeader>
 
           <CardContent>
@@ -125,12 +125,7 @@ export default function RegisterPage() {
                 disabled={isLoading}
               />
 
-              <Button
-                type="submit"
-                variant="primary"
-                isLoading={isLoading}
-                className="w-full"
-              >
+              <Button type="submit" variant="primary" isLoading={isLoading} className="w-full">
                 {isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
               </Button>
 

@@ -20,15 +20,10 @@ export default function CollectionsSection() {
     <section className="py-20 bg-white">
       <div className="mx-auto px-6 lg:px-12" style={{ maxWidth: '1250px' }}>
         {/* Section Heading - Exact specification: 42px */}
-        <SectionHeading>
-          Водонагреватели BLESK
-        </SectionHeading>
+        <SectionHeading>Водонагреватели BLESK</SectionHeading>
 
         {/* Collections Grid - 2x2 Desktop, 1 Column Mobile */}
-        <div
-          className="grid grid-cols-2 md:grid-cols-2 mb-10"
-          style={{ gap: '20px' }}
-        >
+        <div className="grid grid-cols-2 md:grid-cols-2 mb-10" style={{ gap: '20px' }}>
           {collections.map((collection) => (
             <CollectionCard key={collection.id} collection={collection} />
           ))}

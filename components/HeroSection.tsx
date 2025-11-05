@@ -5,7 +5,10 @@ import CTAButton from './ui/CTAButton';
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full overflow-hidden" style={{ height: 'calc(100vh - 110px)', minHeight: '600px' }}>
+    <section
+      className="relative w-full overflow-hidden"
+      style={{ height: 'calc(100vh - 110px)', minHeight: '600px' }}
+    >
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
@@ -27,20 +30,19 @@ export default function HeroSection() {
           <div className="inline-flex flex-col gap-8">
             {/* Main Heading */}
             <h1 className="text-white font-bold text-[56px] leading-[1.2] tracking-[-0.02em] mb-0">
-              Мебель для ванн<br />LAMIS
+              Мебель для ванн
+              <br />
+              LAMIS
             </h1>
 
             {/* Description */}
             <p className="text-white text-base leading-[1.6] opacity-90 max-w-[500px] mb-0">
-              Мы делаем лучшие достижения в мире сантехники доступными каждому.
-              Техника создаётся в Италии и Германии — там, где рождаются стандарты
-              дизайна, надёжности и комфорта.
+              Мы делаем лучшие достижения в мире сантехники доступными каждому. Техника создаётся в
+              Италии и Германии — там, где рождаются стандарты дизайна, надёжности и комфорта.
             </p>
 
             {/* CTA Button */}
-            <CTAButton className="w-48">
-              Подробнее
-            </CTAButton>
+            <CTAButton className="w-48">Подробнее</CTAButton>
           </div>
         </div>
       </div>

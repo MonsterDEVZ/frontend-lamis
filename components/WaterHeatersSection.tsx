@@ -35,7 +35,7 @@ export default function WaterHeatersSection() {
       <div className="max-w-[1250px] mx-auto px-6 lg:px-12">
         {/* Section Title */}
         <h2 className="text-3xl md:text-[44px] font-bold text-gray-900 mb-12">
-          Коллекции мебели <br/> для ванн LAMIS
+          Коллекции мебели <br /> для ванн LAMIS
         </h2>
 
         {/* Grid of Cards */}

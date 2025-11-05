@@ -5,6 +5,7 @@
 Секция "Сантехника CAIZER" - это блок с товарами сантехники от бренда Caizer, извлеченный из Figma дизайна LAMIS.
 
 **Figma Details:**
+
 - File: qaMjuOh6GTJQ5SKYzgGlR6
 - Node: 100-2353 (Frame 26)
 - URL: https://www.figma.com/design/qaMjuOh6GTJQ5SKYzgGlR6
@@ -28,6 +29,7 @@
 ### 🗂️ Навигационные табы
 
 Над секцией товаров находятся табы:
+
 - Умные водонагреватели
 - Зеркала Lamis
 - Умные водонагреватели Blesk
@@ -35,6 +37,7 @@
 - Мебель для ванн Lamis
 
 Стили табов:
+
 ```
 Шрифт: Inter Medium
 Размер: 14px
@@ -58,6 +61,7 @@ Layout: HORIZONTAL (горизонтальный)
 ### Карточка товара
 
 #### Изображение
+
 ```
 Размер: 298px × 298px (квадрат)
 Border radius: 8px
@@ -67,6 +71,7 @@ Transition: 300ms
 ```
 
 #### Бейдж "Новинка"
+
 ```
 Текст: "Новинка"
 Позиция: top-4 left-4 (абсолютная)
@@ -82,6 +87,7 @@ Z-index: 10
 #### Информация о товаре
 
 **Категория (Caizer):**
+
 ```
 Шрифт: Inter Medium
 Размер: 16px
@@ -91,6 +97,7 @@ Spacing: 4px снизу
 ```
 
 **Название товара:**
+
 ```
 Текст: "Сантехника Caizer"
 Шрифт: Inter Medium
@@ -101,6 +108,7 @@ Spacing: 4px снизу
 ```
 
 **Цена:**
+
 ```
 Текст: "4 490 С"
 Шрифт: Inter Medium
@@ -220,7 +228,7 @@ const caizerProducts = [
       style={{
         fontSize: 'clamp(28px, 3vw, 43.3px)',
         lineHeight: 'clamp(36px, 4vw, 56px)',
-        color: '#1d1d1d'
+        color: '#1d1d1d',
       }}
     >
       Сантехника CAIZER
@@ -229,11 +237,7 @@ const caizerProducts = [
     {/* Сетка товаров */}
     <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-8 max-w-[1252px]">
       {caizerProducts.map((product) => (
-        <Link
-          key={product.id}
-          href={`/products/${product.id}`}
-          className="group"
-        >
+        <Link key={product.id} href={`/products/${product.id}`} className="group">
           {/* Изображение с бейджем */}
           <div className="relative overflow-hidden rounded-lg bg-gray-100 aspect-square mb-4">
             {product.isNew && (
@@ -319,6 +323,7 @@ max-width: 1252px (на больших экранах)
 ## 📂 Файлы изображений
 
 Все изображения товаров находятся в:
+
 ```
 /public/products/caizer/
 ├── caizer-product-1.png (16 KB)

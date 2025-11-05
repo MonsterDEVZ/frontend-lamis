@@ -14,25 +14,14 @@ interface ReviewCardProps {
  * ReviewCard Component
  * Displays a single customer review with avatar, name, date, rating and review text
  */
-export default function ReviewCard({
-  name,
-  date,
-  rating,
-  text,
-  avatar,
-}: ReviewCardProps) {
+export default function ReviewCard({ name, date, rating, text, avatar }: ReviewCardProps) {
   return (
     <Card className="h-full">
       <CardContent className="p-6">
         <div className="flex items-start gap-4 mb-4">
           {/* Avatar */}
           <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
-            <Image
-              src={avatar}
-              alt={name}
-              fill
-              className="object-cover"
-            />
+            <Image src={avatar} alt={name} fill className="object-cover" />
           </div>
 
           {/* Name and Date */}
@@ -46,9 +35,7 @@ export default function ReviewCard({
             {[...Array(5)].map((_, index) => (
               <svg
                 key={index}
-                className={`w-5 h-5 ${
-                  index < rating ? 'text-yellow-400' : 'text-gray-300'
-                }`}
+                className={`w-5 h-5 ${index < rating ? 'text-yellow-400' : 'text-gray-300'}`}
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >

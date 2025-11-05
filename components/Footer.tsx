@@ -37,13 +37,7 @@ export default function Footer() {
           {/* Logo and Social */}
           <div className={'mt-2'}>
             <Link href="/" className="inline-block mb-6">
-              <Image
-                src="/logo.svg"
-                alt="LAMIS"
-                width={156}
-                height={32}
-                priority
-              />
+              <Image src="/logo.svg" alt="LAMIS" width={156} height={32} priority />
             </Link>
 
             {/* Social Icons */}
@@ -154,8 +148,9 @@ export default function Footer() {
 
           {/* Disclaimer */}
           <p className="text-xs text-white/40 mt-4 text-center">
-            Производитель оставляет за собой право в любой момент вносить изменения в комплектацию, дизайн и характеристики товара, не ухудшающие его качество.
-            Актуальная информация о продукции LAMIS — на сайте бренда lamis.kg
+            Производитель оставляет за собой право в любой момент вносить изменения в комплектацию,
+            дизайн и характеристики товара, не ухудшающие его качество. Актуальная информация о
+            продукции LAMIS — на сайте бренда lamis.kg
           </p>
         </div>
       </div>
