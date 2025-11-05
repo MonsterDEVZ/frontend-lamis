@@ -126,7 +126,7 @@ Each card has multiple layers:
 - Color: #ffffff (white)
 - Dimensions: 105px × 39px
 
-**Downloaded Image**: `Item_1:4168.png`
+**Downloaded Image**: `Item_14168.png`
 
 ---
 
@@ -155,7 +155,7 @@ Each card has multiple layers:
 - Color: #ffffff (white)
 - Dimensions: 75px × 39px
 
-**Downloaded Image**: `Item_1:4169.png`
+**Downloaded Image**: `Item_14169.png`
 
 ---
 
@@ -180,7 +180,7 @@ Each card has multiple layers:
 - Color: #ffffff (white)
 - Dimensions: 113px × 39px
 
-**Downloaded Image**: `Item_1:4170.png`
+**Downloaded Image**: `Item_14170.png`
 
 ---
 
@@ -208,7 +208,7 @@ Each card has multiple layers:
 - Color: #ffffff (white)
 - Dimensions: 157px × 39px
 
-**Downloaded Image**: `Item_1:4171.png`
+**Downloaded Image**: `Item_14171.png`
 
 ---
 
@@ -243,10 +243,10 @@ All collection images have been downloaded to:
 
 ### Image Files:
 
-1. **Item_1:4168.png** - Ламис collection (721 KB)
-2. **Item_1:4169.png** - Nora collection (777 KB)
-3. **Item_1:4170.png** - Akcent collection (659 KB)
-4. **Item_1:4171.png** - Andalusia collection (1.2 MB)
+1. **Item_14168.png** - Ламис collection (721 KB)
+2. **Item_14169.png** - Nora collection (777 KB)
+3. **Item_14170.png** - Akcent collection (659 KB)
+4. **Item_14171.png** - Andalusia collection (1.2 MB)
 
 All images are exported at 2x scale (Retina) in PNG format.
 
@@ -261,19 +261,19 @@ All images are exported at 2x scale (Retina) in PNG format.
   <h2 class="collections-title">Коллекции мебели для ванн LAMIS</h2>
   <div class="collections-grid">
     <a href="#" class="collection-card">
-      <img src="collections/Item_1:4168.png" alt="Ламис" />
+      <img src="collections/Item_14168.png" alt="Ламис" />
       <span class="collection-name">Ламис</span>
     </a>
     <a href="#" class="collection-card">
-      <img src="collections/Item_1:4169.png" alt="Nora" />
+      <img src="collections/Item_14169.png" alt="Nora" />
       <span class="collection-name">Nora</span>
     </a>
     <a href="#" class="collection-card">
-      <img src="collections/Item_1:4170.png" alt="Akcent" />
+      <img src="collections/Item_14170.png" alt="Akcent" />
       <span class="collection-name">Akcent</span>
     </a>
     <a href="#" class="collection-card">
-      <img src="collections/Item_1:4171.png" alt="Andalusia" />
+      <img src="collections/Item_14171.png" alt="Andalusia" />
       <span class="collection-name">Andalusia</span>
     </a>
   </div>
