@@ -4,6 +4,7 @@ import Header from '@/components/Header';
 import CatalogCard from '@/components/ui/CatalogCard';
 import { Button } from '@/components/ui/Button';
 import { Select, SelectOption } from '../ui/Select';
+import PaginationControls from '../ui/PaginationControls';
 
 const tabs = ['Все', 'Смесители', 'Раковины', 'Ванны', 'Душевые системы'];
 
@@ -40,15 +41,40 @@ const products = [
   },
 ];
 
+/**
+ * Компонент каталога товаров.
+ *
+ * @returns {JSX.Element} Страница каталога с фильтрами, сортировкой и списком товаров.
+ *
+ * @example
+ * <Catalog />
+ */
 const Catalog: FC = () => {
-  // Состояния для хранения выбранных значений
-  const [sortValue, setSortValue] = useState('default');
-  const [selectedColors, setSelectedColors] = useState<string[]>([]);
-  const [defaultSelectValue, setDefaultSelectValue] = useState('12');
+  // Состояния для управления фильтрами и сортировкой
+  const [sortValue, setSortValue] = useState('default'); // Состояние для текущего метода сортировки
+  const [selectedColors, setSelectedColors] = useState<string[]>([]); // Состояние для выбранных цветов
+  const [itemsPerPage, setItemsPerPage] = useState('12'); // Состояние для количества отображаемых товаров
+  const [currentPage, setCurrentPage] = useState(1); // Состояние для текущей страницы
+  const totalPages = 5; // Пример, должно быть вычислено
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // логика для загрузки данных для страницы
+  };
+
+  const handleItemsPerPageChange = (value: string) => {
+    setItemsPerPage(value);
+    // логика для сброса страницы и перезагрузки данных
+  };
+
+  const handleShowMore = () => {
+    // логика для "показать еще"
+  };
 
   return (
     <div className="pb-24">
       <Header />
+      {/* Секция заголовка страницы каталога с фоновым изображением */}
       <div
         className="w-full h-[400px] bg-cover bg-center pb-24 flex items-end"
         style={{ backgroundImage: "url('/images/hero/screen_1.png')" }}
@@ -59,6 +85,7 @@ const Catalog: FC = () => {
       </div>
 
       <div className="container mt-50 pb-8">
+        {/* Табы для фильтрации по категориям */}
         <div className="flex flex-wrap gap-3.5 mb-8">
           {tabs.map((tab, idx) => (
             <Button key={tab} variant={idx === 0 ? 'primary' : 'outline'}>
@@ -67,8 +94,9 @@ const Catalog: FC = () => {
           ))}
         </div>
 
+        {/* Секция с элементами управления сортировкой и фильтрацией */}
         <div className="container flex justify-end gap-3.5 mt-50 mb-8">
-          {/* Сортировка (зеленый) */}
+          {/* Выпадающий список для сортировки товаров */}
           <div className="w-48">
             <Select
               placeholder="Сортировка"
@@ -84,7 +112,7 @@ const Catalog: FC = () => {
             </Select>
           </div>
 
-          {/* Фильтр по цвету (с чекбоксами) */}
+          {/* Выпадающий список для фильтрации по цвету с возможностью множественного выбора */}
           <div className="w-52">
             <Select
               placeholder="Цвет изделия"
@@ -103,6 +131,7 @@ const Catalog: FC = () => {
           </div>
         </div>
 
+        {/* Сетка для отображения карточек товаров */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {products.map((product, index) => (
             <CatalogCard key={index} {...product} />
@@ -110,36 +139,15 @@ const Catalog: FC = () => {
         </div>
       </div>
 
-      <div className="container w-full mt-50">
-        <div className="flex justify-between items-center gap-5">
-          <div className="flex justify-center items-center gap-2 mb-4">
-            {[1, 2, 3, 4, 5].map((num) => (
-              <Button key={num} variant={num === 1 ? 'primary' : 'outline'} size="icon">
-                {num}
-              </Button>
-            ))}
-          </div>
-
-          <Button variant="dark" size="lg">
-            Показать ещё
-          </Button>
-          {/* Стандартный селект */}
-          <div className="w-64">
-            <Select
-              placeholder="Показывать по"
-              intent="default"
-              value={defaultSelectValue}
-              onChange={(val) => setDefaultSelectValue(val as string)}
-            >
-              <SelectOption value="12">Показывать по 12</SelectOption>
-              <SelectOption value="48">Показывать по 48</SelectOption>
-            </Select>
-          </div>
-          {/* <Button variant="dark" size="lg">
-            Показать по 12
-          </Button> */}
-        </div>
-      </div>
+      {/* Секция пагинации и управления количеством отображаемых товаров */}
+      <PaginationControls
+        currentPage={currentPage}
+        totalPages={totalPages}
+        itemsPerPage={itemsPerPage}
+        onPageChange={handlePageChange}
+        onItemsPerPageChange={handleItemsPerPageChange}
+        onShowMore={handleShowMore}
+      />
     </div>
   );
 };
