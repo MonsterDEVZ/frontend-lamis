@@ -1,69 +1,97 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Search, Heart } from 'lucide-react';
+import Nav from './Nav';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="absolute top-0 left-0 right-0 z-50">
-      <div className="mx-auto" style={{ maxWidth: '1250px', width: '100%', padding: '0 40px' }}>
-        <div className="flex items-center justify-between" style={{ height: '80px' }}>
-          {/* Logo */}
-          <Link
-            href="/"
-            className="text-white font-bold hover:opacity-80 transition-opacity"
-            style={{ fontSize: '24px', letterSpacing: '0.1em' }}
-          >
-            LAMIS
-          </Link>
+    <header className="relative z-50 w-full justify-center flex flex-col fixed bg-black" >
+      {/* Top Bar */}
+      <div className="border-b border-white/10 w-full">
+        <div className="mx-auto flex items-stretch justify-between max-w-[1250px] h-10 px-5">
+          {/* Top Left Links */}
+          <div className="hidden lg:flex items-center gap-6">
+            <Link
+              href="/about"
+              className="text-white hover:opacity-80 transition-opacity"
+              style={{ fontSize: '12px' }}
+            >
+              О нас
+            </Link>
+            <Link
+              href="https://instagram.com"
+              target="_blank"
+              className="text-white hover:opacity-80 transition-opacity"
+              style={{ fontSize: '12px' }}
+            >
+              instagram
+            </Link>
+            <Link
+              href="/contacts"
+              className="text-white hover:opacity-80 transition-opacity"
+              style={{ fontSize: '12px' }}
+            >
+              Контакты
+            </Link>
+          </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8 flex-1 justify-center mx-12">
-            <Link
-              href="/bathroom-furniture"
-              className="text-white hover:opacity-80 transition-opacity whitespace-nowrap"
-              style={{ fontSize: '14px' }}
-            >
-              Мебель для ванны<br />Lamis
-            </Link>
-            <Link
-              href="/plumbing-caiser"
-              className="text-white hover:opacity-80 transition-opacity whitespace-nowrap"
-              style={{ fontSize: '14px' }}
-            >
-              Сантехника<br />Caiser
-            </Link>
-            <Link
-              href="/water-heaters"
-              className="text-white hover:opacity-80 transition-opacity whitespace-nowrap"
-              style={{ fontSize: '14px' }}
-            >
-              Водонагреватели<br />Blesk
-            </Link>
-            <Link
-              href="/mirrors"
-              className="text-white hover:opacity-80 transition-opacity whitespace-nowrap"
-              style={{ fontSize: '14px' }}
-            >
-              Дизайнерские<br />зеркала Lamis
-            </Link>
-          </nav>
-
-          {/* CTA Button - Desktop */}
+          {/* Top Right CTA */}
           <button
             className="hidden lg:block text-white font-medium hover:opacity-90 transition-all whitespace-nowrap"
             style={{
               backgroundColor: '#00D856',
-              fontSize: '14px',
-              padding: '12px 24px',
-              borderRadius: '8px',
+              fontSize: '12px',
+              padding: '8px 20px',
             }}
           >
             Сервисный центр
           </button>
+        </div>
+      </div>
+
+      {/* Main Navigation */}
+      <div className="mx-auto max-w-[1250px] w-full">
+        <div className="flex items-center justify-between relative px-5" style={{ height: '70px' }}>
+          {/* Logo */}
+          <Link
+            href="/"
+            className="hover:opacity-80 transition-opacity"
+          >
+            <Image
+              src="/logo.svg"
+              alt="LAMIS"
+              width={156}
+              height={32}
+              priority
+            />
+          </Link>
+
+          {/* Desktop Navigation - Centered */}
+          <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2">
+            <Nav />
+          </div>
+
+          {/* Right Icons */}
+          <div className="w-[147px] hidden lg:flex items-center gap-4">
+            <button
+              className="text-white hover:opacity-80 transition-opacity flex items-center gap-2"
+              aria-label="Search"
+            >
+              <Search size={20} />
+              <span style={{ fontSize: '14px' }}>Поиск</span>
+            </button>
+            <button
+              className="text-white hover:opacity-80 transition-opacity"
+              aria-label="Wishlist"
+            >
+              <Heart size={20} />
+            </button>
+          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -78,9 +106,36 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-black/95 backdrop-blur-md">
+        <div className="lg:hidden" style={{ backgroundColor: '#000000' }}>
           <div className="mx-auto px-6 py-6" style={{ maxWidth: '1250px', width: '100%' }}>
             <nav className="flex flex-col gap-4">
+              {/* Top Links */}
+              <Link
+                href="/about"
+                className="text-white py-2 text-sm hover:opacity-80"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                О нас
+              </Link>
+              <Link
+                href="https://instagram.com"
+                target="_blank"
+                className="text-white py-2 text-sm hover:opacity-80"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                instagram
+              </Link>
+              <Link
+                href="/contacts"
+                className="text-white py-2 text-sm hover:opacity-80"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Контакты
+              </Link>
+
+              <div className="border-t border-white/10 my-2"></div>
+
+              {/* Main Navigation */}
               <Link
                 href="/bathroom-furniture"
                 className="text-white py-3 border-b border-white/10 hover:opacity-80"
@@ -109,7 +164,11 @@ export default function Header() {
               >
                 Дизайнерские зеркала Lamis
               </Link>
-              <button className="mt-4 bg-[#00D856] text-white py-3 rounded-md font-medium hover:bg-[#00C24D] transition-colors">
+
+              <button
+                className="mt-4 text-white py-3 rounded-md font-medium hover:opacity-90 transition-all"
+                style={{ backgroundColor: '#00D856' }}
+              >
                 Сервисный центр
               </button>
             </nav>
