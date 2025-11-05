@@ -93,10 +93,12 @@ const PlumbingSection: FC = () => {
     );
   }, [activeFilter]);
 
-  const slidesPerView = 4;
   const autoplayDelay = 5000;
 
   const updateSwiperState = useCallback((swiper: SwiperType) => {
+    const slidesPerView = swiper.params.slidesPerView;
+    if (typeof slidesPerView !== "number") return;
+
     const totalPages = Math.ceil(swiper.slides.length / slidesPerView);
     let currentPage = Math.floor(swiper.activeIndex / slidesPerView) + 1;
 
@@ -123,21 +125,20 @@ const PlumbingSection: FC = () => {
   useEffect(() => {
     if (!swiperInstance) return;
 
-    // Force-reset UI state immediately
     setPagination({ current: 1, total: 1 });
     setProgress(0);
 
-    // Update swiper and reset its position
     swiperInstance.update();
     swiperInstance.slideTo(0);
 
-    // Recalculate correct state and apply it
+    const slidesPerView = swiperInstance.params.slidesPerView;
+    if (typeof slidesPerView !== "number") return;
+
     const totalPages = Math.ceil(filteredProducts.length / slidesPerView);
     setPagination({ current: 1, total: totalPages > 0 ? totalPages : 1 });
     setIsBeginning(true);
     setIsEnd(totalPages <= 1);
 
-    // Handle autoplay logic
     if (totalPages <= 1) {
       swiperInstance.autoplay.stop();
       setProgress(100);
@@ -146,17 +147,19 @@ const PlumbingSection: FC = () => {
         swiperInstance.autoplay.start();
       }
     }
-  }, [activeFilter, swiperInstance]);
+  }, [activeFilter, swiperInstance, filteredProducts.length]);
 
   return (
-    <div className="max-w-[1250px] w-full mx-auto">
+    <div className="max-w-[1194px] w-full mx-auto px-5">
       <div className="flex justify-between items-end">
-        <h2 className="text-[44px]">Сантехника CAIZER</h2>
+        <h2 className="text-3xl md:text-[44px] font-bold text-gray-900">
+          Сантехника CAIZER
+        </h2>
 
-        <div className="flex items-center gap-6">
+        {/* Desktop Navigation */}
+        <div className="hidden lg:flex items-center gap-6">
           <div className="flex items-center gap-2 text-sm text-[#505357]">
             <span>{String(pagination.current).padStart(2, "0")}</span>
-
             <div
               className="w-24 h-0.5 rounded-full"
               style={{ backgroundColor: "rgba(29, 29, 29, 0.15)" }}
@@ -166,7 +169,6 @@ const PlumbingSection: FC = () => {
                 style={{ width: `${progress}%` }}
               ></div>
             </div>
-
             <span className="text-gray-400">
               {String(pagination.total).padStart(2, "0")}
             </span>
@@ -195,7 +197,7 @@ const PlumbingSection: FC = () => {
           <button
             key={tab.value}
             onClick={() => setActiveFilter(tab.value)}
-            className={`px-4 py-1 text-sm rounded-full border border-black transition-colors duration-200 cursor-pointer ${
+            className={`px-4 py-1 : text-sm rounded-full border border-black transition-colors duration-200 cursor-pointer ${
               activeFilter === tab.value
                 ? "bg-black text-white"
                 : "bg-white text-black"
@@ -209,8 +211,6 @@ const PlumbingSection: FC = () => {
       <Swiper
         modules={[Navigation, Autoplay]}
         spaceBetween={24}
-        slidesPerView={slidesPerView}
-        slidesPerGroup={slidesPerView}
         className={
           !isSwiperInitialized
             ? "opacity-0"
@@ -220,6 +220,24 @@ const PlumbingSection: FC = () => {
           delay: autoplayDelay,
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
+        }}
+        breakpoints={{
+          0: {
+            slidesPerView: 1,
+            slidesPerGroup: 1,
+          },
+          320: {
+            slidesPerView: 2,
+            slidesPerGroup: 2,
+          },
+          768: {
+            slidesPerView: 3,
+            slidesPerGroup: 3,
+          },
+          1024: {
+            slidesPerView: 4,
+            slidesPerGroup: 4,
+          },
         }}
         onAutoplayTimeLeft={(s, time, percentage) => {
           setProgress((1 - percentage) * 100);
@@ -237,6 +255,23 @@ const PlumbingSection: FC = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+
+      {/* Mobile Progress Bar */}
+      <div className="lg:hidden flex items-center justify-center mt-6 gap-2 text-sm text-[#505357]">
+        <span>{String(pagination.current).padStart(2, "0")}</span>
+        <div
+          className="w-24 h-0.5 rounded-full"
+          style={{ backgroundColor: "rgba(29, 29, 29, 0.15)" }}
+        >
+          <div
+            className="h-full rounded-full bg-[#009B3E]"
+            style={{ width: `${progress}%` }}
+          ></div>
+        </div>
+        <span className="text-gray-400">
+          {String(pagination.total).padStart(2, "0")}
+        </span>
+      </div>
     </div>
   );
 };

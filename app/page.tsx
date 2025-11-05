@@ -1,13 +1,14 @@
-import Header from '@/components/Header';
-import HeroSlider from '@/components/HeroSlider';
-import WaterHeatersSection from '@/components/WaterHeatersSection';
-import BleskWaterHeatersSection from '@/components/BleskWaterHeatersSection';
-import CollectionsSection from '@/components/CollectionsSection';
-import FeaturesSection from '@/components/FeaturesSection';
-import AboutSection from '@/components/AboutSection';
-import ServiceCardsSection from '@/components/ServiceCardsSection';
-import MaterialsSection from '@/components/MaterialsSection';
-import Footer from '@/components/Footer';
+import Header from "@/components/Header";
+import HeroSlider from "@/components/HeroSlider";
+import WaterHeatersSection from "@/components/WaterHeatersSection";
+import BleskWaterHeatersSection from "@/components/BleskWaterHeatersSection";
+// import CollectionsSection from "@/components/CollectionsSection";
+import FeaturesSection from "@/components/FeaturesSection";
+import AboutSection from "@/components/AboutSection";
+import ServiceCardsSection from "@/components/ServiceCardsSection";
+import MaterialsSection from "@/components/MaterialsSection";
+import Footer from "@/components/Footer";
+import PlumbingSection from "@/components/PlumbingSection";
 
 export default function HomePage() {
   return (
@@ -15,6 +16,7 @@ export default function HomePage() {
       <Header />
       <HeroSlider />
       <WaterHeatersSection />
+      <PlumbingSection />
       <BleskWaterHeatersSection />
       {/*<CollectionsSection />*/}
       <FeaturesSection />
