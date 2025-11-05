@@ -10,7 +10,7 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="relative z-50 w-full justify-center flex flex-col fixed bg-black">
+    <header className="z-50 w-full justify-center flex flex-col fixed bg-black">
       {/* Top Bar */}
       <div className="border-b border-white/10 w-full">
         <div className="mx-auto flex items-stretch justify-between max-w-[1250px] h-10 px-5">
@@ -128,7 +128,7 @@ export default function Header() {
 
               {/* Main Navigation */}
               <Link
-                href="/bathroom-furniture"
+                href="/bathroom-furniture-lamis"
                 className="text-white py-3 border-b border-white/10 hover:opacity-80"
                 onClick={() => setIsMobileMenuOpen(false)}
               >

@@ -8,9 +8,9 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
 import { getCurrentUser } from '@/services/authService';
 import { useAuthStore } from '@/store/authStore';
+import { Button } from '@/components/ui/Button';
 
 export default function ProfilePage() {
   const router = useRouter();

@@ -4,7 +4,7 @@ export default function Nav() {
   return (
     <nav className="flex items-center gap-[50px]">
       <Link
-        href="/bathroom-furniture"
+        href="/bathroom-furniture-lamis"
         className="text-white hover:opacity-80 transition-opacity whitespace-nowrap text-left"
         style={{ fontSize: '14px', lineHeight: '1.4' }}
       >

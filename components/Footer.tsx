@@ -5,7 +5,7 @@ import { Instagram, Send, Youtube } from 'lucide-react';
 
 export default function Footer() {
   const productLinks = [
-    { title: 'Мебель для ванны', href: '/bathroom-furniture' },
+    { title: 'Мебель для ванны', href: '/bathroom-furniture-lamis' },
     { title: 'Раковины', href: '/sinks' },
     { title: 'Ванны', href: '/baths' },
     { title: 'Смесители', href: '/faucets' },
