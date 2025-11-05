@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import CTAButton from './ui/CTAButton';
+import SliderNavigation from './ui/SliderNavigation';
 
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -121,26 +122,16 @@ export default function HeroSlider() {
         ))}
       </Swiper>
 
-      {/* Progress Indicators */}
-      <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-50 flex gap-4">
-        {slides.map((slide, index) => (
-          <button
-            key={slide.id}
-            onClick={() => {
-              swiperRef.current?.slideToLoop(index);
-            }}
-            className="relative w-24 h-1 bg-white/50 overflow-hidden cursor-pointer hover:bg-white/60 transition-colors"
-            aria-label={`Go to slide ${index + 1}`}
-          >
-            {/* Progress bar */}
-            <div
-              className="absolute top-0 left-0 h-full bg-[#00D856] transition-all duration-100 ease-linear"
-              style={{
-                width: activeIndex === index ? `${progress}%` : '0%',
-              }}
-            />
-          </button>
-        ))}
+      {/* Slider Navigation */}
+      <div className="absolute bottom-12 left-[32%] transform -translate-x-1/2 z-50">
+        <SliderNavigation
+          currentSlide={activeIndex + 1}
+          totalSlides={slides.length}
+          progress={progress}
+          onPrev={() => swiperRef.current?.slidePrev()}
+          onNext={() => swiperRef.current?.slideNext()}
+          variant="light"
+        />
       </div>
     </section>
   );

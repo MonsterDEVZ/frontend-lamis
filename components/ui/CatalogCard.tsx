@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import MyIcon from '@/public/icon/heart.svg';
 import { cn } from '@/styles';
+import { useFavoritesStore } from '@/store/favoritesStore';
 
 interface IProps {
   category: string;
@@ -12,6 +13,7 @@ interface IProps {
   image: string;
   hoverImage: string;
   colors?: string[];
+  id?: string | number;
 }
 
 const CatalogCard: React.FC<IProps> = ({
@@ -22,15 +24,27 @@ const CatalogCard: React.FC<IProps> = ({
   image,
   hoverImage,
   colors,
+  id,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [activeColor, setActiveColor] = useState<string | undefined>(
     colors && colors.length > 0 ? colors[0] : undefined
   );
 
+  const { toggleFavorite, isFavorite } = useFavoritesStore();
+  const productId = String(id || `${category}-${name}`);
+  const isFav = isFavorite(productId);
+
   const formattedPrice = `${price.toLocaleString('ru-RU')}`;
 
   const isHexColor = (str: string) => /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(str);
+
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('🔍 Debugging Favorites:', { productId, isFav });
+    toggleFavorite(productId);
+  };
 
   return (
     <div
@@ -57,28 +71,19 @@ const CatalogCard: React.FC<IProps> = ({
         </div>
       )}
 
-      <div
-        className={cn(
-          'absolute bottom-0.5 right-0 hover:[&_path]:fill-[#009B3E] transition-colors',
-          isHovered ? ' opacity-100' : ' opacity-0'
-        )}
-      >
-        <MyIcon />
-      </div>
-
-      <div className="relative w-full aspect-square overflow-hidden">
+      <div className="relative w-full h-72 overflow-hidden">
         <Image
           src={hoverImage}
           alt={name}
           layout="fill"
           objectFit="contain"
           className={cn(
-            'absolute top-0 left-0 transition-all w-full h-full z-20',
+            'absolute top-0 left-0 transition-all w-full h-full z-20 object-cover',
             isHovered ? ' opacity-100' : ' opacity-0'
           )}
         />
 
-        <Image src={image} alt={name} layout="fill" objectFit="contain" />
+        <Image className={'object-cover'} src={image} alt={name} layout="fill" objectFit="contain" />
       </div>
 
       <div className="mt-4 text-left">
@@ -89,9 +94,24 @@ const CatalogCard: React.FC<IProps> = ({
           </h3>
         </div>
 
-        <p className="mt-auto text-lg font-medium text-gray-900">
-          {formattedPrice} <u>C</u>
-        </p>
+        <div className="flex flex-col mt-2">
+          <p className="text-lg font-medium text-gray-900">
+            {formattedPrice} <u>C</u>
+          </p>
+
+          <button
+              onClick={handleFavoriteClick}
+              className={cn(
+                  'p-1 transition-opacity transition-colors mt-3',
+                  isFav
+                      ? 'opacity-100 [&_path]:fill-[#009B3E]'
+                      : 'opacity-0 group-hover:opacity-100 hover:[&_path]:fill-[#009B3E]'
+              )}
+              aria-label={isFav ? 'Удалить из избранного' : 'Добавить в избранное'}
+          >
+            <MyIcon />
+          </button>
+        </div>
 
         {colors && colors.length > 0 && (
           <div className="flex gap-2 mt-2">

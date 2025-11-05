@@ -12,13 +12,13 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '@/styles';
 
 const selectStyles = cva(
-  'relative inline-block w-full rounded-full border cursor-pointer transition-colors duration-200',
+  'relative inline-block w-full rounded-full border cursor-pointer transition-colors duration-200 h-10',
   {
     variants: {
       intent: {
         default: 'bg-white border-gray-300 text-gray-800 hover:bg-gray-50',
-        outline: 'bg-transparent border-green-500 text-gray-800',
-        filled: 'bg-green-600 border-green-600 text-white hover:bg-green-700',
+        outline: 'bg-transparent border-[#EEEEEE] text-gray-800 hover:text-white hover:bg-[#009B3E] hover:border-[#009B3E]',
+        filled: 'bg-[#009B3E] border-[#009B3E] text-white hover:text-black hover:bg-white',
       },
       isOpen: {
         true: 'border-green-500 ring-2 ring-green-200',
@@ -118,10 +118,10 @@ export function Select({
       onClick={() => setIsOpen(!isOpen)}
       ref={ref}
     >
-      <div className="flex items-center justify-between px-4 py-2 truncate">
+      <div className="flex items-center justify-between px-4 h-full truncate text-sm">
         <span className="truncate">{getDisplayLabel()}</span>
         <svg
-          className={`w-5 h-5 ml-2 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          className={`w-4 h-4 ml-2 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"

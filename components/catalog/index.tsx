@@ -10,6 +10,7 @@ const tabs = ['Все', 'Смесители', 'Раковины', 'Ванны', 
 
 const products = [
   {
+    id: 'mixer-1',
     category: 'Смесители',
     name: 'Смеситель для раковины',
     price: 5999,
@@ -18,6 +19,7 @@ const products = [
     hoverImage: '/plumbing_section/caizer/3012 улучшенный.jpeg',
   },
   {
+    id: 'sink-1',
     category: 'Раковины',
     name: 'Раковина подвесная',
     price: 8999,
@@ -25,6 +27,7 @@ const products = [
     hoverImage: '/plumbing_section/caizer/3014 улучшенный.jpeg',
   },
   {
+    id: 'bath-1',
     category: 'Ванны',
     name: 'Ванна акриловая',
     price: 25999,
@@ -33,22 +36,233 @@ const products = [
     hoverImage: '/plumbing_section/caizer/3016 улучшенный.jpeg',
   },
   {
+    id: 'shower-1',
     category: 'Душевые системы',
     name: 'Душевая система с тропическим душем',
     price: 15999,
     image: '/plumbing_section/caizer/3030.png',
     hoverImage: '/plumbing_section/caizer/3030 улучшенный.jpeg',
   },
+  {
+    id: 'mixer-2',
+    category: 'Смесители',
+    name: 'Смеситель для ванны',
+    price: 7999,
+    image: '/plumbing_section/caizer/3012.png',
+    hoverImage: '/plumbing_section/caizer/3012 улучшенный.jpeg',
+  },
+  {
+    id: 'sink-2',
+    category: 'Раковины',
+    name: 'Раковина накладная',
+    price: 12999,
+    status: 'Новинка',
+    image: '/plumbing_section/caizer/3014.png',
+    hoverImage: '/plumbing_section/caizer/3014 улучшенный.jpeg',
+  },
+  {
+    id: 'bath-2',
+    category: 'Ванны',
+    name: 'Ванна чугунная',
+    price: 35999,
+    image: '/plumbing_section/caizer/3016.png',
+    hoverImage: '/plumbing_section/caizer/3016 улучшенный.jpeg',
+  },
+  {
+    id: 'shower-2',
+    category: 'Душевые системы',
+    name: 'Душевая кабина угловая',
+    price: 18999,
+    status: 'Хит',
+    image: '/plumbing_section/caizer/3030.png',
+    hoverImage: '/plumbing_section/caizer/3030 улучшенный.jpeg',
+  },
+  {
+    id: 'mixer-3',
+    category: 'Смесители',
+    name: 'Смеситель для кухни',
+    price: 6499,
+    image: '/plumbing_section/caizer/3012.png',
+    hoverImage: '/plumbing_section/caizer/3012 улучшенный.jpeg',
+  },
+  {
+    id: 'sink-3',
+    category: 'Раковины',
+    name: 'Раковина встраиваемая',
+    price: 9999,
+    image: '/plumbing_section/caizer/3014.png',
+    hoverImage: '/plumbing_section/caizer/3014 улучшенный.jpeg',
+  },
+  {
+    id: 'bath-3',
+    category: 'Ванны',
+    name: 'Ванна гидромассажная',
+    price: 45999,
+    status: 'Новинка',
+    image: '/plumbing_section/caizer/3016.png',
+    hoverImage: '/plumbing_section/caizer/3016 улучшенный.jpeg',
+  },
+  {
+    id: 'shower-3',
+    category: 'Душевые системы',
+    name: 'Душевая панель',
+    price: 12999,
+    image: '/plumbing_section/caizer/3030.png',
+    hoverImage: '/plumbing_section/caizer/3030 улучшенный.jpeg',
+  },
+  {
+    id: 'mixer-4',
+    category: 'Смесители',
+    name: 'Смеситель настенный',
+    price: 8499,
+    status: 'Хит',
+    image: '/plumbing_section/caizer/3012.png',
+    hoverImage: '/plumbing_section/caizer/3012 улучшенный.jpeg',
+  },
+  {
+    id: 'sink-4',
+    category: 'Раковины',
+    name: 'Раковина двойная',
+    price: 16999,
+    image: '/plumbing_section/caizer/3014.png',
+    hoverImage: '/plumbing_section/caizer/3014 улучшенный.jpeg',
+  },
+  {
+    id: 'bath-4',
+    category: 'Ванны',
+    name: 'Ванна угловая',
+    price: 29999,
+    image: '/plumbing_section/caizer/3016.png',
+    hoverImage: '/plumbing_section/caizer/3016 улучшенный.jpeg',
+  },
+  {
+    id: 'shower-4',
+    category: 'Душевые системы',
+    name: 'Душевая стойка',
+    price: 9999,
+    status: 'Новинка',
+    image: '/plumbing_section/caizer/3030.png',
+    hoverImage: '/plumbing_section/caizer/3030 улучшенный.jpeg',
+  },
+  {
+    id: 'mixer-5',
+    category: 'Смесители',
+    name: 'Смеситель с душем',
+    price: 7499,
+    image: '/plumbing_section/caizer/3012.png',
+    hoverImage: '/plumbing_section/caizer/3012 улучшенный.jpeg',
+  },
+  {
+    id: 'sink-5',
+    category: 'Раковины',
+    name: 'Раковина с тумбой',
+    price: 19999,
+    status: 'Хит',
+    image: '/plumbing_section/caizer/3014.png',
+    hoverImage: '/plumbing_section/caizer/3014 улучшенный.jpeg',
+  },
+  {
+    id: 'bath-5',
+    category: 'Ванны',
+    name: 'Ванна отдельностоящая',
+    price: 55999,
+    image: '/plumbing_section/caizer/3016.png',
+    hoverImage: '/plumbing_section/caizer/3016 улучшенный.jpeg',
+  },
+  {
+    id: 'shower-5',
+    category: 'Душевые системы',
+    name: 'Душевой гарнитур',
+    price: 6999,
+    image: '/plumbing_section/caizer/3030.png',
+    hoverImage: '/plumbing_section/caizer/3030 улучшенный.jpeg',
+  },
+  {
+    id: 'mixer-6',
+    category: 'Смесители',
+    name: 'Смеситель термостатический',
+    price: 11999,
+    status: 'Новинка',
+    image: '/plumbing_section/caizer/3012.png',
+    hoverImage: '/plumbing_section/caizer/3012 улучшенный.jpeg',
+  },
+  {
+    id: 'sink-6',
+    category: 'Раковины',
+    name: 'Раковина компактная',
+    price: 5999,
+    image: '/plumbing_section/caizer/3014.png',
+    hoverImage: '/plumbing_section/caizer/3014 улучшенный.jpeg',
+  },
+  {
+    id: 'bath-6',
+    category: 'Ванны',
+    name: 'Ванна стальная',
+    price: 18999,
+    status: 'Хит',
+    image: '/plumbing_section/caizer/3016.png',
+    hoverImage: '/plumbing_section/caizer/3016 улучшенный.jpeg',
+  },
+  {
+    id: 'shower-6',
+    category: 'Душевые системы',
+    name: 'Душевая система скрытого монтажа',
+    price: 24999,
+    image: '/plumbing_section/caizer/3030.png',
+    hoverImage: '/plumbing_section/caizer/3030 улучшенный.jpeg',
+  },
+  {
+    id: 'mixer-7',
+    category: 'Смесители',
+    name: 'Смеситель сенсорный',
+    price: 13999,
+    image: '/plumbing_section/caizer/3012.png',
+    hoverImage: '/plumbing_section/caizer/3012 улучшенный.jpeg',
+  },
+  {
+    id: 'sink-7',
+    category: 'Раковины',
+    name: 'Раковина керамическая',
+    price: 7999,
+    status: 'Новинка',
+    image: '/plumbing_section/caizer/3014.png',
+    hoverImage: '/plumbing_section/caizer/3014 улучшенный.jpeg',
+  },
+  {
+    id: 'bath-7',
+    category: 'Ванны',
+    name: 'Ванна с хромотерапией',
+    price: 65999,
+    image: '/plumbing_section/caizer/3016.png',
+    hoverImage: '/plumbing_section/caizer/3016 улучшенный.jpeg',
+  },
+  {
+    id: 'shower-7',
+    category: 'Душевые системы',
+    name: 'Душевая лейка тропическая',
+    price: 4999,
+    status: 'Хит',
+    image: '/plumbing_section/caizer/3030.png',
+    hoverImage: '/plumbing_section/caizer/3030 улучшенный.jpeg',
+  },
+  {
+    id: 'mixer-8',
+    category: 'Смесители',
+    name: 'Смеситель каскадный',
+    price: 9999,
+    image: '/plumbing_section/caizer/3012.png',
+    hoverImage: '/plumbing_section/caizer/3012 улучшенный.jpeg',
+  },
+  {
+    id: 'sink-8',
+    category: 'Раковины',
+    name: 'Раковина угловая',
+    price: 11999,
+    image: '/plumbing_section/caizer/3014.png',
+    hoverImage: '/plumbing_section/caizer/3014 улучшенный.jpeg',
+  },
 ];
 
-/**
- * Компонент каталога товаров.
- *
- * @returns {JSX.Element} Страница каталога с фильтрами, сортировкой и списком товаров.
- *
- * @example
- * <Catalog />
- */
 const Catalog: FC = () => {
   // Состояния для управления фильтрами и сортировкой
   const [sortValue, setSortValue] = useState('default'); // Состояние для текущего метода сортировки
@@ -94,9 +308,8 @@ const Catalog: FC = () => {
           ))}
         </div>
 
-        {/* Секция с элементами управления сортировкой и фильтрацией */}
-        <div className="container flex justify-end gap-3.5 mt-50 mb-8">
-          {/* Выпадающий список для сортировки товаров */}
+        <div className="flex justify-start gap-3.5 mt-50 mb-8">
+          {/* Сортировка (зеленый) */}
           <div className="w-48">
             <Select
               placeholder="Сортировка"
@@ -131,8 +344,7 @@ const Catalog: FC = () => {
           </div>
         </div>
 
-        {/* Сетка для отображения карточек товаров */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-8">
           {products.map((product, index) => (
             <CatalogCard key={index} {...product} />
           ))}

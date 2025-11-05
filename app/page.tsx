@@ -13,9 +13,8 @@ import PlumbingSection from '@/components/PlumbingSection';
 export default function HomePage() {
   return (
     <main>
-      {/* <Header /> */}
-      <Collections />
-      {/* <HeroSlider />
+      <Header />
+      <HeroSlider />
       <WaterHeatersSection />
       <PlumbingSection />
       <BleskWaterHeatersSection />
@@ -23,7 +22,7 @@ export default function HomePage() {
       <FeaturesSection />
       <AboutSection />
       <ServiceCardsSection />
-      <MaterialsSection /> */}
+      <MaterialsSection />
       <Footer />
     </main>
   );

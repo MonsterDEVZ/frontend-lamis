@@ -10,6 +10,25 @@ export interface Product {
   image: string;
   category: string;
   isNew?: boolean;
+  slug?: string;
+  sku?: string;
+  description?: string;
+  shortDescription?: string;
+  images?: string[];
+  colors?: ProductColor[];
+  specifications?: ProductSpecification[];
+  relatedProducts?: string[]; // slugs of related products
+}
+
+export interface ProductColor {
+  name: string;
+  hex: string;
+  available: boolean;
+}
+
+export interface ProductSpecification {
+  label: string;
+  value: string;
 }
 
 export interface Collection {
