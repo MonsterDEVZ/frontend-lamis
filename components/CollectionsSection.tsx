@@ -2,6 +2,7 @@
 
 import SectionHeading from './SectionHeading';
 import CollectionCard from './CollectionCard';
+import CTAButton from './ui/CTAButton';
 import { collections } from '@/data/collections';
 
 /**
@@ -20,7 +21,7 @@ export default function CollectionsSection() {
       <div className="mx-auto px-6 lg:px-12" style={{ maxWidth: '1250px' }}>
         {/* Section Heading - Exact specification: 42px */}
         <SectionHeading>
-          Коллекции мебели<br />для ванн LAMIS
+          Водонагреватели BLESK
         </SectionHeading>
 
         {/* Collections Grid - 2x2 Desktop, 1 Column Mobile */}
@@ -35,12 +36,7 @@ export default function CollectionsSection() {
 
         {/* CTA Button - "Show More" */}
         <div className="flex justify-center">
-          <button
-            className="!text-white font-medium hover:bg-gray-800 transition-colors duration-300 bg-black text-sm px-[48px] py-[12px] rounded-full"
-            style={{backgroundColor: "#000000", color: "#FFFFFF"}}
-          >
-            Показать еще
-          </button>
+          <CTAButton>Показать еще</CTAButton>
         </div>
       </div>
     </section>

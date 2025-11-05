@@ -1,0 +1,130 @@
+@import '../variables';
+@import '../mixins';
+
+.header-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background-color: $color-black;
+  width: 100%;
+}
+
+.header {
+  position: relative;
+  z-index: 50;
+  width: 100%;
+}
+
+.header-top {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  .header-top-container {
+    @include container;
+    @include flex-between;
+    height: $header-top-height;
+  }
+
+  .header-top-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+
+    a {
+      @include text-link;
+      font-size: $font-size-xs;
+    }
+  }
+
+  .header-top-cta {
+    @include button-primary;
+    font-size: $font-size-xs;
+    padding: $spacing-xs $spacing-md;
+    border-radius: 6px;
+  }
+}
+
+.header-main {
+  .header-main-container {
+    @include container;
+    @include flex-between;
+    height: $header-main-height;
+  }
+
+  .header-logo {
+    @include text-link;
+  }
+
+  .header-nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    button {
+      @include text-link;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+.mobile-menu {
+  background-color: $color-black;
+
+  .mobile-menu-container {
+    @include container;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    a {
+      @include text-link;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: $font-size-sm;
+    }
+
+    .mobile-menu-cta {
+      @include button-primary;
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 8px;
+    }
+  }
+}
+
+// Responsive
+@include mobile {
+  .header-top-links,
+  .header-top-cta,
+  .header-nav,
+  .header-actions {
+    display: none;
+  }
+}
+
+@include tablet {
+  .header-top-links,
+  .header-top-cta,
+  .header-nav,
+  .header-actions {
+    display: none;
+  }
+}
