@@ -1,7 +1,8 @@
 'use client';
 import React, { useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
-import MyIcon from '@/public/icon/heart.svg';
+import { Heart, GitCompare } from 'lucide-react';
 import { cn } from '@/styles';
 import { useFavoritesStore } from '@/store/favoritesStore';
 
@@ -14,6 +15,8 @@ interface IProps {
   hoverImage: string;
   colors?: string[];
   id?: string | number;
+  collection?: string;
+  slug?: string;
 }
 
 const CatalogCard: React.FC<IProps> = ({
@@ -25,124 +28,124 @@ const CatalogCard: React.FC<IProps> = ({
   hoverImage,
   colors,
   id,
+  collection = 'Caiser',
+  slug,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [activeColor, setActiveColor] = useState<string | undefined>(
-    colors && colors.length > 0 ? colors[0] : undefined
-  );
+  const [isCompared, setIsCompared] = useState(false);
 
   const { toggleFavorite, isFavorite } = useFavoritesStore();
   const productId = String(id || `${category}-${name}`);
   const isFav = isFavorite(productId);
 
   const formattedPrice = `${price.toLocaleString('ru-RU')}`;
-
-  const isHexColor = (str: string) => /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(str);
+  const productSlug = slug || `product-${productId}`;
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('🔍 Debugging Favorites:', { productId, isFav });
     toggleFavorite(productId);
+  };
+
+  const handleCompareClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsCompared(!isCompared);
   };
 
   return (
     <div
-      className="relative group cursor-pointer"
+      className="relative bg-white group cursor-pointer transition-all duration-300 hover:shadow-lg rounded-lg overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {status && !isHovered && (
-        <div
-          className="absolute top-2.5 left-2.5 z-10 flex items-center px-3 py-0.5 text-sm font-medium text-white rounded-full"
-          style={{ backgroundColor: '#E0398D' }}
+      {/* Product Link */}
+      <Link href={`/product/${productSlug}`} className="block">
+        {/* Image Container - 260x260px as per IDDIS */}
+        <div className="relative w-full h-[260px] bg-gray-50 rounded-t-lg overflow-hidden">
+          {/* Hover Image */}
+          <Image
+            src={hoverImage}
+            alt={`${name} - вид 2`}
+            fill
+            sizes="260px"
+            className={cn(
+              'object-contain p-4 transition-opacity duration-300 ease-in-out',
+              isHovered ? 'opacity-100' : 'opacity-0'
+            )}
+          />
+          {/* Main Image */}
+          <Image
+            src={image}
+            alt={name}
+            fill
+            sizes="260px"
+            className={cn(
+              'object-contain p-4 transition-opacity duration-300 ease-in-out',
+              isHovered ? 'opacity-0' : 'opacity-100'
+            )}
+          />
+        </div>
+
+        {/* Product Info */}
+        <div className="p-4">
+          {/* Collection & Category */}
+          <div className="flex items-center gap-2 text-sm mb-2">
+            <span className="text-gray-600 hover:text-[#009B3E] transition-colors">
+              {collection}
+            </span>
+            <span className="text-gray-400">|</span>
+            <span className="text-gray-600 hover:text-[#009B3E] transition-colors">
+              {category}
+            </span>
+          </div>
+
+          {/* Price */}
+          <div className="text-xl font-semibold text-gray-900 mb-3">
+            {formattedPrice} ₽
+          </div>
+        </div>
+      </Link>
+
+      {/* Action Buttons */}
+      <div className="px-4 pb-4 flex items-center gap-2">
+        {/* Add to Favorites */}
+        <button
+          onClick={handleFavoriteClick}
+          className={cn(
+            'flex items-center justify-center w-10 h-10 rounded-full border transition-all duration-200',
+            isFav
+              ? 'bg-[#009B3E] border-[#009B3E] text-white'
+              : 'border-gray-300 text-gray-600 hover:border-[#009B3E] hover:text-[#009B3E]'
+          )}
+          aria-label={isFav ? 'Удалить из избранного' : 'Добавить в избранное'}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="mr-1.5"
-          >
-            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-          </svg>
-          {status}
+          <Heart size={18} fill={isFav ? 'currentColor' : 'none'} />
+        </button>
+
+        {/* Add to Compare */}
+        <button
+          onClick={handleCompareClick}
+          className={cn(
+            'flex items-center justify-center w-10 h-10 rounded-full border transition-all duration-200',
+            isCompared
+              ? 'bg-[#009B3E] border-[#009B3E] text-white'
+              : 'border-gray-300 text-gray-600 hover:border-[#009B3E] hover:text-[#009B3E]'
+          )}
+          aria-label={isCompared ? 'Убрать из сравнения' : 'Добавить к сравнению'}
+        >
+          <GitCompare size={18} />
+        </button>
+      </div>
+
+      {/* Status Badge (if exists) */}
+      {status && (
+        <div className="absolute top-3 left-3 z-10">
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#E0398D] text-white shadow-sm">
+            {status}
+          </span>
         </div>
       )}
-
-      <div className="relative w-full h-72 overflow-hidden">
-        <Image
-          src={hoverImage}
-          alt={name}
-          layout="fill"
-          objectFit="contain"
-          className={cn(
-            'absolute top-0 left-0 transition-all w-full h-full z-20 object-cover',
-            isHovered ? ' opacity-100' : ' opacity-0'
-          )}
-        />
-
-        <Image className={'object-cover'} src={image} alt={name} layout="fill" objectFit="contain" />
-      </div>
-
-      <div className="mt-4 text-left">
-        <div className="h-full">
-          <p className="text-sm text-[#B8B8B9]">{category}</p>
-          <h3 className="mt-1 text-base font-normal text-gray-900 group-hover:text-[#009B3E] transition-colors">
-            {name}
-          </h3>
-        </div>
-
-        <div className="flex flex-col mt-2">
-          <p className="text-lg font-medium text-gray-900">
-            {formattedPrice} <u>C</u>
-          </p>
-
-          <button
-              onClick={handleFavoriteClick}
-              className={cn(
-                  'p-1 transition-opacity transition-colors mt-3',
-                  isFav
-                      ? 'opacity-100 [&_path]:fill-[#009B3E]'
-                      : 'opacity-0 group-hover:opacity-100 hover:[&_path]:fill-[#009B3E]'
-              )}
-              aria-label={isFav ? 'Удалить из избранного' : 'Добавить в избранное'}
-          >
-            <MyIcon />
-          </button>
-        </div>
-
-        {colors && colors.length > 0 && (
-          <div className="flex gap-2 mt-2">
-            {colors.map((color, index) => (
-              <div
-                key={index}
-                className={cn(
-                  'w-6 h-6 rounded-full cursor-pointer shrink-0 p-0.5',
-                  activeColor === color && 'border-2 border-[#009B3E]'
-                )}
-                onClick={() => setActiveColor(color)}
-              >
-                {!isHexColor(color) ? (
-                  <Image
-                    src={color}
-                    alt={`Color ${index}`}
-                    width={22}
-                    height={22}
-                    className="w-full h-full object-cover rounded-full"
-                  />
-                ) : (
-                  <div
-                    className="w-full h-full rounded-full"
-                    style={isHexColor(color) ? { backgroundColor: color } : {}}
-                  ></div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
     </div>
   );
 };
