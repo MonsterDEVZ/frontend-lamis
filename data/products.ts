@@ -28,6 +28,34 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-1.png',
       category: 'Heaters',
       isNew: true,
+      slug: 'vodonagrevatel-smart',
+      sku: 'WH-SMART-001',
+      shortDescription:
+        'Умный водонагреватель с Wi-Fi управлением и энергосберегающим режимом',
+      description:
+        'Водонагреватель Smart - это современное решение для вашего дома. Оснащен интеллектуальной системой управления температурой, Wi-Fi модулем для удаленного контроля через мобильное приложение и энергосберегающим режимом работы. Изготовлен из высококачественной нержавеющей стали с многослойной теплоизоляцией.',
+      images: [
+        '/products/caizer/caizer-product-1.png',
+        '/products/caizer/caizer-product-2.png',
+        '/products/caizer/caizer-product-3.png',
+        '/products/caizer/caizer-product-4.png',
+      ],
+      colors: [
+        { name: 'Белый', hex: '#FFFFFF', available: true },
+        { name: 'Серебристый', hex: '#C0C0C0', available: true },
+        { name: 'Черный', hex: '#000000', available: false },
+      ],
+      specifications: [
+        { label: 'Объем', value: '50 литров' },
+        { label: 'Мощность', value: '2000 Вт' },
+        { label: 'Время нагрева', value: '45 минут' },
+        { label: 'Материал бака', value: 'Нержавеющая сталь' },
+        { label: 'Гарантия', value: '5 лет' },
+        { label: 'Тип управления', value: 'Электронный + Wi-Fi' },
+        { label: 'Размеры', value: '450 x 470 x 815 мм' },
+        { label: 'Вес', value: '22 кг' },
+      ],
+      relatedProducts: ['h2', 'h3', 'h4'],
     },
     {
       id: 'h2',
@@ -36,6 +64,8 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-2.png',
       category: 'Heaters',
       isNew: false,
+      slug: 'vodonagrevatel-pro',
+      sku: 'WH-PRO-002',
     },
     {
       id: 'h3',
@@ -44,6 +74,8 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-3.png',
       category: 'Heaters',
       isNew: true,
+      slug: 'vodonagrevatel-max',
+      sku: 'WH-MAX-003',
     },
     {
       id: 'h4',
@@ -52,6 +84,8 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-4.png',
       category: 'Heaters',
       isNew: false,
+      slug: 'vodonagrevatel-ultra',
+      sku: 'WH-ULTRA-004',
     },
   ],
   mirrors: [
