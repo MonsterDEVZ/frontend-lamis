@@ -4,9 +4,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { motion } from 'framer-motion';
 import { Menu, X, Search, Heart } from 'lucide-react';
 import Nav from './Nav';
 import { useFavoritesStore } from '@/store/favoritesStore';
+import { useScroll } from '@/hooks/useScroll';
 import { cn } from '@/styles';
 
 export default function Header() {
@@ -15,21 +17,27 @@ export default function Header() {
   const { favorites } = useFavoritesStore();
   const favoritesCount = favorites.length;
 
-  // Determine if navbar should have dark background
-  const isDarkNavbar = pathname.startsWith('/favorites') ||
-                        pathname.startsWith('/bathroom-furniture-lamis') ||
-                        pathname.startsWith('/plumbing-caiser') ||
-                        pathname.startsWith('/water-heaters') ||
-                        pathname.startsWith('/mirrors');
+  // Use scroll hook to track scroll position and direction
+  const { scrollY, scrollDirection } = useScroll();
 
-  // Determine if text should be dark (all pages except homepage)
-  const isDarkText = pathname !== '/';
+  // Navbar becomes "active" (opaque) if we scroll down or are not on homepage
+  const isActive = scrollY > 50 || pathname !== '/';
+
+  // Determine if text should be dark
+  const isDarkText = pathname !== '/' || scrollY > 50;
 
   return (
-    <header className={cn(
-      "z-50 w-full justify-center flex flex-col fixed transition-colors duration-300",
-      isDarkNavbar ? "bg-black" : "bg-transparent"
-    )}>
+    <motion.header
+      initial={{ y: 0 }}
+      animate={{
+        y: scrollDirection === 'down' && scrollY > 200 ? '-100%' : '0%',
+      }}
+      transition={{ duration: 0.3, ease: 'easeInOut' }}
+      className={cn(
+        "z-50 w-full justify-center flex flex-col fixed transition-colors duration-300",
+        isActive ? "bg-white shadow-md" : "bg-transparent"
+      )}
+    >
       {/* Top Bar */}
       <div className="border-b border-white/10 w-full">
         <div className="mx-auto flex items-stretch justify-between max-w-[1250px] h-10 px-5">
@@ -217,6 +225,6 @@ export default function Header() {
           </div>
         </div>
       )}
-    </header>
+    </motion.header>
   );
 }
