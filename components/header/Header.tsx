@@ -89,13 +89,13 @@ const nav = [
   },
 ];
 
-const isActiveHeader = ['/favorites', '/product'];
-
 interface IActiveSubList {
   img: string;
   href: string;
   title: string;
 }
+
+const transparentHeaderPaths = ['/', '/bathroom-furniture-lamis', '/about'];
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -110,10 +110,12 @@ export default function Header() {
 
   const { scrollY, scrollDirection } = useScroll();
 
+  // Paths that should have a transparent header when at the top of the page.
+  const transparentHeaderPaths = ['/'];
+
   const isActive =
+    !transparentHeaderPaths.includes(pathname) ||
     scrollY > 50 ||
-    isActiveHeader.includes(pathname) ||
-    pathname.startsWith('/product') ||
     isHovered ||
     isMobileMenuOpen ||
     isSearchOpen;

@@ -1,22 +1,22 @@
 import Header from '@/components/header/Header';
 import Footer from '@/components/Footer';
-import InteractiveBrandSection from '@/components/about/InteractiveBrandSection';
-import HistoryTimelineSection from '@/components/about/HistoryTimelineSection';
-import TwoColumnContentSection from '@/components/about/TwoColumnContentSection';
-import FullWidthContentSection from '@/components/about/FullWidthContentSection';
-import StatisticsSection from '@/components/about/StatisticsSection';
+import Banner from '@/components/about/Banner';
+import AboutBrand from '@/components/about/AboutBrand';
+import HorizontalSwiper from '@/components/about/HorizontalSwiper';
+import TwoColumnInfo from '@/components/about/TwoColumnInfo';
+import OneColumnInfo from '@/components/about/OneColumnInfo';
+import Infographics from '@/components/about/Infographics';
 
 export default function AboutPage() {
   return (
     <main>
       <Header />
-      <div className="pt-[110px]">
-        <InteractiveBrandSection />
-        <HistoryTimelineSection />
-        <TwoColumnContentSection />
-        <FullWidthContentSection />
-        <StatisticsSection />
-      </div>
+      <Banner />
+      <AboutBrand />
+      <HorizontalSwiper />
+      <TwoColumnInfo />
+      <OneColumnInfo />
+      <Infographics />
       <Footer />
     </main>
   );
