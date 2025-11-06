@@ -1,14 +1,15 @@
 import React from 'react';
 import Image from 'next/image';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight} from 'lucide-react';
 
 interface ServiceCardProps {
   title: string;
   subtitle: string;
   image: string;
+  onClick: () => void;
 }
 
-export default function ServiceCard({ title, subtitle, image }: ServiceCardProps) {
+export default function ServiceCard({ title, subtitle, image, onClick }: ServiceCardProps) {
   return (
     <div className="relative overflow-hidden rounded-3xl h-[400px]">
       {/* Background Image */}
@@ -42,7 +43,9 @@ export default function ServiceCard({ title, subtitle, image }: ServiceCardProps
         </div>
 
         {/* Arrow Button */}
+        
         <button
+        onClick={onClick}
           className="flex items-center justify-center text-white hover:opacity-90 transition-all self-start"
           style={{
             backgroundColor: '#00D856',
@@ -55,6 +58,7 @@ export default function ServiceCard({ title, subtitle, image }: ServiceCardProps
         >
           <ArrowRight size={24} />
         </button>
+        
       </div>
     </div>
   );

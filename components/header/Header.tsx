@@ -18,7 +18,7 @@ const mini_nav = [
     title: 'О нас',
   },
   {
-    href: 'https://instagram.com',
+    href: 'https://www.instagram.com/lamis_kgz/',
     title: 'instagram',
     target: true,
   },
@@ -30,7 +30,7 @@ const mini_nav = [
 
 const nav = [
   {
-    href: '/bathroom-furniture-lamis?brandId=1',
+    href: '/catalog?brandId=1',
     title: 'Мебель для ванны Lamis',
     list: [
       {
@@ -77,14 +77,14 @@ const nav = [
   },
   {
     href: '/catalog?brandId=2',
-    title: 'Сантехника Caiser',
+    title: 'Сантехника Caizer',
   },
   {
     href: '/catalog?brandId=3',
     title: 'Водонагреватели Blesk',
   },
   {
-    href: '/catalog?category=mirrors',
+    href: '/catalog?categoryId=mirrors',
     title: 'Дизайнерские зеркала Lamis',
   },
 ];

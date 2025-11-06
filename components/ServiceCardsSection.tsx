@@ -1,7 +1,15 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import ServiceCard from './ServiceCard';
+import FeedbackModal from './feedback/FeedbackModal';
 
 export default function ServiceCardsSection() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCardClick = () => {
+    setIsModalOpen(true);
+  };
   const services = [
     {
       id: 1,
@@ -27,10 +35,15 @@ export default function ServiceCardsSection() {
               title={service.title}
               subtitle={service.subtitle}
               image={service.image}
+              onClick={handleCardClick}
             />
           ))}
         </div>
       </div>
+      <FeedbackModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </section>
   );
 }
