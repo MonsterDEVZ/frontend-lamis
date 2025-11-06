@@ -9,15 +9,6 @@ import PaginationControls from '../ui/PaginationControls';
 import { productsData } from '@/data/products';
 import { useFiltersStore } from '@/store/filtersStore';
 
-const tabs = [
-  { label: 'Все', value: 'all' },
-  { label: 'Умные водонагреватели', value: 'heaters' },
-  { label: 'Зеркала Lamis', value: 'mirrors' },
-  { label: 'Умные водонагреватели Blesk', value: 'blesk' },
-  { label: 'Сантехника Caizer', value: 'caizer' },
-  { label: 'Мебель для ванн Lamis', value: 'furniture' },
-];
-
 // Маппинг категорий к ключам productsData
 const categoryKeyMap: Record<string, string> = {
   heaters: 'heaters',
@@ -38,35 +29,26 @@ const categoryToBrandId: Record<string, number> = {
 
 const Catalog: FC = () => {
   // Подключаемся к Zustand store для фильтров
-  const { selectedCategories, selectedBrandIds, sortBy, toggleCategory, setSortBy, setBrandIds } = useFiltersStore();
+  const {
+    selectedCategories,
+    selectedBrandIds,
+    sortBy,
+    availableCategories,
+    toggleCategory,
+    setSortBy,
+    setBrandIds,
+    setCategoryIds,
+    updateAvailableCategories
+  } = useFiltersStore();
 
   // Получаем параметры из URL
   const searchParams = useSearchParams();
   const brandIdFromUrl = searchParams.get('brandId');
-  const categoryFromUrl = searchParams.get('category');
+  const categoryIdFromUrl = searchParams.get('categoryId');
 
-  // Локальное состояние для пагинации и цветов
+  // Локальное состояние для пагинации
   const [itemsPerPage, setItemsPerPage] = useState('12');
   const [currentPage, setCurrentPage] = useState(1);
-
-  // Инициализируем фильтры из URL параметров
-  useEffect(() => {
-    console.log('--- CATALOG COMPONENT MOUNTED/UPDATED ---');
-    console.log('Brand ID from URL:', brandIdFromUrl);
-    console.log('Category from URL:', categoryFromUrl);
-
-    if (brandIdFromUrl) {
-      const brandId = parseInt(brandIdFromUrl, 10);
-      if (!isNaN(brandId)) {
-        console.log('Setting initial brand filter:', brandId);
-        setBrandIds([brandId]);
-      }
-    }
-    if (categoryFromUrl) {
-      console.log('Setting initial category filter:', categoryFromUrl);
-      toggleCategory(categoryFromUrl);
-    }
-  }, [brandIdFromUrl, categoryFromUrl]); // Убрали функции из зависимостей!
 
   // Получаем все продукты из productsData (мемоизированно)
   const allProducts = useMemo(() => {
@@ -105,6 +87,34 @@ const Catalog: FC = () => {
 
     return products;
   }, []);
+
+  // НОВОЕ: Инициализация фильтров из URL и обновление доступных категорий
+  useEffect(() => {
+    console.log('--- CATALOG COMPONENT: URL PARAMS CHANGED ---');
+    console.log('Brand ID from URL:', brandIdFromUrl);
+    console.log('Category ID from URL:', categoryIdFromUrl);
+
+    // Устанавливаем фильтр по бренду из URL
+    if (brandIdFromUrl) {
+      const brandId = parseInt(brandIdFromUrl, 10);
+      if (!isNaN(brandId)) {
+        console.log('Setting brand filter from URL:', brandId);
+        setBrandIds([brandId]);
+        // КРИТИЧЕСКИ ВАЖНО: Обновляем доступные категории после установки бренда
+        updateAvailableCategories(allProducts, [brandId]);
+      }
+    } else {
+      // Если нет фильтра по бренду, показываем все категории
+      console.log('No brand filter, showing all categories');
+      updateAvailableCategories(allProducts, []);
+    }
+
+    // Устанавливаем фильтр по категории из URL
+    if (categoryIdFromUrl) {
+      console.log('Setting category filter from URL:', categoryIdFromUrl);
+      setCategoryIds([categoryIdFromUrl]);
+    }
+  }, [brandIdFromUrl, categoryIdFromUrl, allProducts]);
 
   // КРИТИЧЕСКИ ВАЖНО: useMemo для фильтрации и сортировки
   const filteredAndSortedProducts = useMemo(() => {
@@ -209,16 +219,25 @@ const Catalog: FC = () => {
       </div>
 
       <div className="container mt-8 sm:mt-12 md:mt-50 pb-8 px-4">
-        {/* Табы для фильтрации по категориям - интегрированы с Zustand store */}
+        {/* ДИНАМИЧЕСКИЕ ТАБЫ для фильтрации по категориям */}
         <div className="flex flex-wrap gap-3.5 mb-8">
-          {tabs.map((tab) => (
+          {/* Кнопка "Все" всегда доступна */}
+          <Button
+            variant={selectedCategories.length === 0 ? 'primary' : 'outline'}
+            onClick={() => handleCategoryClick('all')}
+          >
+            Все
+          </Button>
+
+          {/* Динамически генерируемые категории из store */}
+          {availableCategories.map((category) => (
             <Button
-              key={tab.value}
-              variant={isCategoryActive(tab.value) ? 'primary' : 'outline'}
-              onClick={() => handleCategoryClick(tab.value)}
+              key={category.id}
+              variant={isCategoryActive(category.id) ? 'primary' : 'outline'}
+              onClick={() => handleCategoryClick(category.id)}
             >
-              {tab.label}
-              {tab.value !== 'all' && selectedCategories.includes(tab.value) && (
+              {category.label}
+              {selectedCategories.includes(category.id) && (
                 <span className="ml-2 text-xs">✓</span>
               )}
             </Button>
