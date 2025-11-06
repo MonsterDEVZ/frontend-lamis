@@ -72,6 +72,11 @@ export const productsData: ProductsData = {
         '/products/caizer/caizer-product-3.png',
         '/products/caizer/caizer-product-4.png',
       ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
+      ],
     },
     {
       id: 'h3',
@@ -88,6 +93,11 @@ export const productsData: ProductsData = {
         '/products/caizer/caizer-product-1.png',
         '/products/caizer/caizer-product-2.png',
       ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
+      ],
     },
     {
       id: 'h4',
@@ -103,6 +113,11 @@ export const productsData: ProductsData = {
         '/products/caizer/caizer-product-3.png',
         '/products/caizer/caizer-product-2.png',
         '/products/caizer/caizer-product-1.png',
+      ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
     },
   ],
@@ -134,10 +149,17 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-2.png',
       category: 'Mirrors',
       isNew: true,
+      slug: 'zerkalo-smart-touch',
+      sku: 'SKU-m2',
       images: [
         '/products/caizer/caizer-product-2.png',
         '/products/caizer/caizer-product-3.png',
         '/products/caizer/caizer-product-1.png',
+      ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
     },
     {
@@ -147,10 +169,17 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-3.png',
       category: 'Mirrors',
       isNew: false,
+      slug: 'zerkalo-classic',
+      sku: 'SKU-m3',
       images: [
         '/products/caizer/caizer-product-3.png',
         '/products/caizer/caizer-product-4.png',
         '/products/caizer/caizer-product-2.png',
+      ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
     },
     {
@@ -160,10 +189,17 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-4.png',
       category: 'Mirrors',
       isNew: true,
+      slug: 'zerkalo-luxury',
+      sku: 'SKU-m4',
       images: [
         '/products/caizer/caizer-product-4.png',
         '/products/caizer/caizer-product-1.png',
         '/products/caizer/caizer-product-3.png',
+      ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
     },
   ],
@@ -175,10 +211,17 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-1.png',
       category: 'Blesk',
       isNew: false,
+      slug: 'blesk-standard',
+      sku: 'BL-STD-001',
       images: [
         '/products/caizer/caizer-product-1.png',
         '/products/caizer/caizer-product-2.png',
         '/products/caizer/caizer-product-3.png',
+      ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
     },
     {
@@ -188,10 +231,17 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-2.png',
       category: 'Blesk',
       isNew: true,
+      slug: 'blesk-premium',
+      sku: 'BL-PRM-002',
       images: [
         '/products/caizer/caizer-product-2.png',
         '/products/caizer/caizer-product-3.png',
         '/products/caizer/caizer-product-4.png',
+      ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
     },
     {
@@ -201,10 +251,17 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-3.png',
       category: 'Blesk',
       isNew: true,
+      slug: 'blesk-elite',
+      sku: 'BL-ELT-003',
       images: [
         '/products/caizer/caizer-product-3.png',
         '/products/caizer/caizer-product-4.png',
         '/products/caizer/caizer-product-1.png',
+      ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
     },
     {
@@ -214,10 +271,17 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-4.png',
       category: 'Blesk',
       isNew: false,
+      slug: 'blesk-pro',
+      sku: 'BL-PRO-004',
       images: [
         '/products/caizer/caizer-product-4.png',
         '/products/caizer/caizer-product-1.png',
         '/products/caizer/caizer-product-2.png',
+      ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
     },
   ],
@@ -229,10 +293,17 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-1.png',
       category: 'Caizer',
       isNew: true,
+      slug: 'santehnika-caizer-1',
+      sku: 'CZ-001',
       images: [
         '/products/caizer/caizer-product-1.png',
         '/products/caizer/caizer-product-2.png',
         '/products/caizer/caizer-product-3.png',
+      ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
     },
     {
@@ -242,10 +313,17 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-2.png',
       category: 'Caizer',
       isNew: true,
+      slug: 'santehnika-caizer-2',
+      sku: 'CZ-002',
       images: [
         '/products/caizer/caizer-product-2.png',
         '/products/caizer/caizer-product-3.png',
         '/products/caizer/caizer-product-4.png',
+      ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
     },
     {
@@ -255,10 +333,17 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-3.png',
       category: 'Caizer',
       isNew: true,
+      slug: 'santehnika-caizer-3',
+      sku: 'CZ-003',
       images: [
         '/products/caizer/caizer-product-3.png',
         '/products/caizer/caizer-product-4.png',
         '/products/caizer/caizer-product-1.png',
+      ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
     },
     {
@@ -268,10 +353,17 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-4.png',
       category: 'Caizer',
       isNew: true,
+      slug: 'santehnika-caizer-4',
+      sku: 'CZ-004',
       images: [
         '/products/caizer/caizer-product-4.png',
         '/products/caizer/caizer-product-1.png',
         '/products/caizer/caizer-product-2.png',
+      ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
     },
   ],
@@ -283,10 +375,17 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-1.png',
       category: 'Furniture',
       isNew: false,
+      slug: 'mebel-lamis-classic',
+      sku: 'FRN-CLS-001',
       images: [
         '/products/caizer/caizer-product-1.png',
         '/products/caizer/caizer-product-2.png',
         '/products/caizer/caizer-product-3.png',
+      ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
     },
     {
@@ -296,10 +395,17 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-2.png',
       category: 'Furniture',
       isNew: true,
+      slug: 'mebel-lamis-modern',
+      sku: 'FRN-MDN-002',
       images: [
         '/products/caizer/caizer-product-2.png',
         '/products/caizer/caizer-product-3.png',
         '/products/caizer/caizer-product-4.png',
+      ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
     },
     {
@@ -309,10 +415,17 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-3.png',
       category: 'Furniture',
       isNew: true,
+      slug: 'mebel-lamis-premium',
+      sku: 'FRN-PRM-003',
       images: [
         '/products/caizer/caizer-product-3.png',
         '/products/caizer/caizer-product-4.png',
         '/products/caizer/caizer-product-1.png',
+      ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
     },
     {
@@ -322,10 +435,17 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-4.png',
       category: 'Furniture',
       isNew: false,
+      slug: 'mebel-lamis-luxury',
+      sku: 'FRN-LUX-004',
       images: [
         '/products/caizer/caizer-product-4.png',
         '/products/caizer/caizer-product-1.png',
         '/products/caizer/caizer-product-2.png',
+      ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
     },
   ],
