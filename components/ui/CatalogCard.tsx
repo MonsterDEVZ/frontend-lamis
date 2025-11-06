@@ -55,7 +55,8 @@ const CatalogCard: React.FC<IProps> = ({
       {/* Product Link */}
       <Link href={`/product/${productSlug}`} className="block">
         {/* Image Container - 260x260px as per IDDIS */}
-        <div className="relative w-full h-[260px] bg-gray-50 rounded-t-lg overflow-hidden">
+        {/* bg-gray-50 */}
+        <div className="relative w-full h-[260px] bg-transparent rounded-t-lg overflow-hidden">
           {/* Hover Image */}
           <Image
             src={hoverImage}
@@ -63,9 +64,10 @@ const CatalogCard: React.FC<IProps> = ({
             fill
             sizes="260px"
             className={cn(
-              'object-contain p-4 transition-opacity duration-300 ease-in-out',
+              'object-cover p-0 transition-opacity duration-300 ease-in-out',
               isHovered ? 'opacity-100' : 'opacity-0'
             )}
+            // style={{padding: "0"}}
           />
           {/* Main Image */}
           <Image

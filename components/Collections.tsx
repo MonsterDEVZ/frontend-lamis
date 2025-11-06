@@ -13,7 +13,7 @@ const Collections: FC<IProps> = () => {
     <section className="pb-12">
       <Header />
 
-      <div className="h-40" />
+      <div className="h-10" />
 
       <div className="container">
         <SectionHeading>Коллекции</SectionHeading>

@@ -15,6 +15,11 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const { favorites, isHydrated } = useFavoritesStoreHydrated();
+
+  // Временная отладка
+  console.log('Favorites from Header:', favorites);
+  console.log('IsHydrated from Header:', isHydrated);
+
   const favoritesCount = favorites.length;
 
   // Use scroll hook to track scroll position and direction
