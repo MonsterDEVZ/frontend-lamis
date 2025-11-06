@@ -54,7 +54,7 @@ const CatalogCard: React.FC<IProps> = ({
 
   return (
     <div
-      className="relative bg-white group cursor-pointer transition-all duration-300 rounded-lg overflow-hidden"
+      className="relative bg-white group cursor-pointer transition-all duration-300 overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -62,7 +62,7 @@ const CatalogCard: React.FC<IProps> = ({
       <Link href={`/product/${productSlug}`} className="block">
         {/* Image Container - 260x260px as per IDDIS */}
         {/* bg-gray-50 */}
-        <div className="relative w-full h-[260px] bg-transparent rounded-t-lg overflow-hidden">
+        <div className="relative w-full h-[260px] bg-transparent overflow-hidden">
           {/* Hover Image */}
           <Image
             src={hoverImage}
