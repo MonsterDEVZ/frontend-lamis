@@ -50,13 +50,13 @@ const RepresentativesSection: React.FC = () => {
     },
   ];
 
-  const [activeCity, setActiveCity] = useState<string>('Москва');
+  const [activeCity, setActiveCity] = useState<string>('Манас');
 
   const selectedCity = cities.find((city) => city.name === activeCity);
 
   return (
     <div>
-      <h1 className="text-4xl font-bold text-gray-900 mb-8">Представительства</h1>
+      <h1 className="text-4xl font-bold text-gray-900 mb-8 mt-13">Представительства</h1>
 
       <div className="flex flex-wrap gap-4 mb-8">
         {cities.map((city) => (

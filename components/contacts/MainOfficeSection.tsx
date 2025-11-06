@@ -1,9 +1,17 @@
 import React from 'react';
+import Link from 'next/link';
 import YandexMapEmbed from './YandexMapEmbed';
 
 const MainOfficeSection: React.FC = () => {
   return (
     <div>
+       <div className="text-sm text-gray-600 mb-8">
+        <Link href="/" className="hover:text-green-600 transition-colors">
+          Главная
+        </Link>
+        <span className="mx-2">→</span>
+        <span>Контакты</span>
+      </div>
       <h1 className="text-4xl font-bold text-gray-900 mb-4">Контакты</h1>
       <h2 className="text-2xl font-semibold text-gray-700 mb-8">Санкт-Петербург</h2>
 
