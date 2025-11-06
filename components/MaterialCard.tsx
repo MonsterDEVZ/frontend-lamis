@@ -4,13 +4,12 @@ import Image from 'next/image';
 interface MaterialCardProps {
   title: string;
   description: string;
-  fileInfo: string;
   image: string;
 }
 
-export default function MaterialCard({ title, description, fileInfo, image }: MaterialCardProps) {
+export default function MaterialCard({ title, description, image }: MaterialCardProps) {
   return (
-    <div className="flex flex-col h-[340px] bg-gray-50 rounded-2xl overflow-hidden">
+    <div className="flex flex-col h-[280px] bg-gray-50 rounded-2xl overflow-hidden">
       {/* Image */}
       <div className="relative h-[150px]">
         <Image src={image} alt={title} fill className="object-cover" quality={100} />
@@ -27,8 +26,6 @@ export default function MaterialCard({ title, description, fileInfo, image }: Ma
             {description}
           </p>
         )}
-
-        <p className="mt-auto text-xs text-gray-400">{fileInfo}</p>
       </div>
     </div>
   );

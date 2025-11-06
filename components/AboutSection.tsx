@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowRight} from 'lucide-react';
 
 export default function AboutSection() {
   return (
@@ -47,19 +48,22 @@ export default function AboutSection() {
             </p>
 
             {/* CTA Button */}
-            <button
-              className="flex items-center justify-center gap-2 text-white font-medium hover:opacity-90 transition-all"
-              style={{
-                backgroundColor: '#00D856',
-                fontSize: '14px',
-                padding: '12px 24px',
-                borderRadius: '100px',
-                border: 'none',
-                cursor: 'pointer',
-              }}
-            >
-              <ArrowRight size={20} />
-            </button>
+
+            <Link href="/about">
+              <button
+                className="flex items-center justify-center gap-2 text-white font-medium hover:opacity-90 transition-all"
+                style={{
+                  backgroundColor: '#00D856',
+                  fontSize: '14px',
+                  padding: '12px 24px',
+                  borderRadius: '100px',
+                  border: 'none',
+                  cursor: 'pointer',
+                }}
+              >
+                <ArrowRight size={20} />
+              </button>
+            </Link>
           </div>
         </div>
       </div>

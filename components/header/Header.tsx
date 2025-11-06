@@ -87,10 +87,6 @@ const nav = [
     href: '/catalog?category=mirrors',
     title: 'Дизайнерские зеркала Lamis',
   },
-  {
-    href: '/collections',
-    title: 'Коллекции',
-  },
 ];
 
 const isActiveHeader = ['/favorites', '/product'];
