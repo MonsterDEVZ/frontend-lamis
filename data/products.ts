@@ -41,9 +41,9 @@ export const productsData: ProductsData = {
         '/products/caizer/caizer-product-4.png',
       ],
       colors: [
-        { name: 'Белый', hex: '#FFFFFF', available: true },
-        { name: 'Серебристый', hex: '#C0C0C0', available: true },
-        { name: 'Черный', hex: '#000000', available: false },
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
       specifications: [
         { label: 'Объем', value: '50 литров' },

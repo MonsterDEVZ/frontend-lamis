@@ -3,6 +3,12 @@
 import { useState } from 'react';
 import { Heart } from 'lucide-react';
 import type { ProductColor } from '@/types/product';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface ProductInfoProps {
   id: string | number;
@@ -66,29 +72,36 @@ export default function ProductInfo({
       {colors && colors.length > 0 && (
         <div className="mb-8">
           <p className="text-sm text-gray-600 mb-3">Цвет</p>
-          <div className="flex gap-2">
-            {colors.map((color) => (
-              <button
-                key={color.name}
-                onClick={() => color.available && setSelectedColor(color.name)}
-                disabled={!color.available}
-                className={`w-10 h-10 rounded-full border-2 transition-all relative ${
-                  selectedColor === color.name
-                    ? 'border-[#009B3E] ring-2 ring-[#009B3E] ring-offset-2'
-                    : 'border-gray-300 hover:border-gray-400'
-                } ${!color.available ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}`}
-                style={{ backgroundColor: color.hex }}
-                title={color.name}
-                aria-label={`Выбрать цвет ${color.name}`}
-              >
-                {!color.available && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-full h-0.5 bg-gray-400 rotate-45"></div>
-                  </div>
-                )}
-              </button>
-            ))}
-          </div>
+          <TooltipProvider>
+            <div className="flex gap-2">
+              {colors.map((color) => (
+                <Tooltip key={color.name} delayDuration={200}>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => color.available && setSelectedColor(color.name)}
+                      disabled={!color.available}
+                      className={`w-10 h-10 rounded-full border-2 transition-all relative ${
+                        selectedColor === color.name
+                          ? 'border-[#009B3E] ring-2 ring-[#009B3E] ring-offset-2'
+                          : 'border-gray-300 hover:border-gray-400'
+                      } ${!color.available ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}`}
+                      style={{ backgroundColor: color.hex }}
+                      aria-label={`Выбрать цвет ${color.name}`}
+                    >
+                      {!color.available && (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-full h-0.5 bg-gray-400 rotate-45"></div>
+                        </div>
+                      )}
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top">
+                    <p>{color.name}</p>
+                  </TooltipContent>
+                </Tooltip>
+              ))}
+            </div>
+          </TooltipProvider>
         </div>
       )}
 
@@ -96,7 +109,7 @@ export default function ProductInfo({
       <div className="flex gap-3">
         <button
           onClick={handleAddToCart}
-          className="flex-1 px-8 py-3 bg-[#009B3E] text-white font-medium rounded-lg hover:bg-[#008534] transition-colors"
+          className="flex-1 px-8 py-3 bg-[#009B3E] text-white font-medium hover:bg-[#008534] transition-colors rounded-full"
         >
           Заказать
         </button>
