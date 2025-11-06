@@ -1,6 +1,6 @@
 'use client';
 import { useState, useMemo, type FC } from 'react';
-import Header from '@/components/Header';
+import Header from '@/components/header/Header';
 import CatalogCard from '@/components/ui/CatalogCard';
 import { Button } from '@/components/ui/Button';
 import { Select, SelectOption } from '../ui/Select';

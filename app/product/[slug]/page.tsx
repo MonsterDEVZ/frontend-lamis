@@ -4,7 +4,7 @@ import { use } from 'react';
 import { notFound } from 'next/navigation';
 import { useFavoritesStore } from '@/store/favoritesStore';
 import { productsData } from '@/data/products';
-import Header from '@/components/Header';
+import Header from '@/components/header/Header';
 import Footer from '@/components/Footer';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import ProductGallery from '@/components/product/ProductGallery';
@@ -108,10 +108,7 @@ export default function ProductPage({ params }: ProductPageProps) {
           {/* Product Grid: Gallery Left, Info Right */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
             {/* Left: Gallery */}
-            <ProductGallery
-              images={product.images || [product.image]}
-              productName={product.name}
-            />
+            <ProductGallery images={product.images || [product.image]} productName={product.name} />
 
             {/* Right: Info */}
             <ProductInfo
