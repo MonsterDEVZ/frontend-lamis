@@ -84,7 +84,7 @@ const nav = [
     title: 'Водонагреватели Blesk',
   },
   {
-    href: '/catalog?categoryId=mirrors',
+    href: '/catalog?brandId=1&categoryId=mirrors',
     title: 'Дизайнерские зеркала Lamis',
   },
 ];

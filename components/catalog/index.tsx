@@ -28,17 +28,19 @@ const categoryToBrandId: Record<string, number> = {
 };
 
 const Catalog: FC = () => {
-  // Подключаемся к Zustand store для фильтров
+  // Подключаемся к Zustand store для фильтров (НОВАЯ ТРЕХУРОВНЕВАЯ СИСТЕМА)
   const {
-    selectedCategories,
-    selectedBrandIds,
-    sortBy,
+    // Новая трехуровневая система
+    selectedBrandId,
+    selectedCategoryId,
+    selectedCollectionId,
     availableCategories,
-    toggleCategory,
+    availableCollections,
+    setBrandId,
+    setCategoryId,
+    setCollectionId,
+    sortBy,
     setSortBy,
-    setBrandIds,
-    setCategoryIds,
-    updateAvailableCategories
   } = useFiltersStore();
 
   // Получаем параметры из URL
@@ -71,7 +73,9 @@ const Catalog: FC = () => {
         products.push({
           id: product.id,
           category: product.category,
-          categoryKey: category, // Добавляем ключ категории для фильтрации
+          categoryKey: category, // Добавляем ключ категории для фильтрации (deprecated)
+          categoryId: product.categoryId || category, // НОВОЕ: categoryId из данных
+          collectionId: product.collectionId, // НОВОЕ: collectionId из данных
           name: product.name,
           price: priceNumber,
           status: product.isNew ? 'Новинка' : undefined,
@@ -88,57 +92,64 @@ const Catalog: FC = () => {
     return products;
   }, []);
 
-  // НОВОЕ: Инициализация фильтров из URL и обновление доступных категорий
+  // НОВОЕ: Инициализация фильтров из URL (ТРЕХУРОВНЕВАЯ СИСТЕМА)
   useEffect(() => {
     console.log('--- CATALOG COMPONENT: URL PARAMS CHANGED ---');
     console.log('Brand ID from URL:', brandIdFromUrl);
     console.log('Category ID from URL:', categoryIdFromUrl);
 
-    // Устанавливаем фильтр по бренду из URL
+    // УРОВЕНЬ 1: Устанавливаем фильтр по бренду из URL
     if (brandIdFromUrl) {
       const brandId = parseInt(brandIdFromUrl, 10);
       if (!isNaN(brandId)) {
-        console.log('Setting brand filter from URL:', brandId);
-        setBrandIds([brandId]);
-        // КРИТИЧЕСКИ ВАЖНО: Обновляем доступные категории после установки бренда
-        updateAvailableCategories(allProducts, [brandId]);
+        console.log('🔹 [Level 1] Setting brand filter from URL:', brandId);
+        setBrandId(brandId, allProducts); // Автоматически обновляет availableCategories
       }
     } else {
-      // Если нет фильтра по бренду, показываем все категории
-      console.log('No brand filter, showing all categories');
-      updateAvailableCategories(allProducts, []);
+      // Если нет фильтра по бренду, сбрасываем всё
+      console.log('🔹 No brand filter, resetting filters');
+      setBrandId(null, allProducts);
     }
 
-    // Устанавливаем фильтр по категории из URL
-    if (categoryIdFromUrl) {
-      console.log('Setting category filter from URL:', categoryIdFromUrl);
-      setCategoryIds([categoryIdFromUrl]);
+    // УРОВЕНЬ 2: Устанавливаем фильтр по категории из URL (только если есть бренд)
+    if (categoryIdFromUrl && brandIdFromUrl) {
+      console.log('🔹 [Level 2] Setting category filter from URL:', categoryIdFromUrl);
+      setCategoryId(categoryIdFromUrl, allProducts); // Автоматически обновляет availableCollections
     }
-  }, [brandIdFromUrl, categoryIdFromUrl, allProducts]);
+  }, [brandIdFromUrl, categoryIdFromUrl, allProducts, setBrandId, setCategoryId]);
 
-  // КРИТИЧЕСКИ ВАЖНО: useMemo для фильтрации и сортировки
+  // КРИТИЧЕСКИ ВАЖНО: useMemo для фильтрации и сортировки (ТРЕХУРОВНЕВАЯ СИСТЕМА)
   const filteredAndSortedProducts = useMemo(() => {
-    console.log('🔍 Filtering products with:');
-    console.log('  - Selected Brand IDs:', selectedBrandIds);
-    console.log('  - Selected Categories:', selectedCategories);
+    console.log('🔍 Filtering products with THREE-LEVEL system:');
+    console.log('  - Selected Brand ID:', selectedBrandId);
+    console.log('  - Selected Category ID:', selectedCategoryId);
+    console.log('  - Selected Collection ID:', selectedCollectionId);
     console.log('  - Total products:', allProducts.length);
 
     let result = [...allProducts];
 
-    // ФИЛЬТРАЦИЯ ПО БРЕНДАМ
-    if (selectedBrandIds.length > 0) {
+    // УРОВЕНЬ 1: ФИЛЬТРАЦИЯ ПО БРЕНДУ
+    if (selectedBrandId !== null) {
       console.log('  - Applying brand filter...');
-      result = result.filter((product) =>
-        product.brandId && selectedBrandIds.includes(product.brandId)
-      );
+      result = result.filter((product) => product.brandId === selectedBrandId);
       console.log('  - After brand filter:', result.length, 'products');
     }
 
-    // ФИЛЬТРАЦИЯ ПО КАТЕГОРИЯМ
-    if (selectedCategories.length > 0) {
+    // УРОВЕНЬ 2: ФИЛЬТРАЦИЯ ПО КАТЕГОРИИ
+    if (selectedCategoryId !== null) {
       console.log('  - Applying category filter...');
-      result = result.filter((product) => selectedCategories.includes(product.categoryKey));
+      result = result.filter((product) => {
+        const prodCatId = product.categoryId || product.categoryKey;
+        return prodCatId === selectedCategoryId;
+      });
       console.log('  - After category filter:', result.length, 'products');
+    }
+
+    // УРОВЕНЬ 3: ФИЛЬТРАЦИЯ ПО КОЛЛЕКЦИИ
+    if (selectedCollectionId !== null) {
+      console.log('  - Applying collection filter...');
+      result = result.filter((product) => product.collectionId === selectedCollectionId);
+      console.log('  - After collection filter:', result.length, 'products');
     }
 
     // СОРТИРОВКА
@@ -166,16 +177,29 @@ const Catalog: FC = () => {
     }
 
     return result;
-  }, [allProducts, selectedCategories, selectedBrandIds, sortBy]);
+  }, [allProducts, selectedBrandId, selectedCategoryId, selectedCollectionId, sortBy]);
 
-  // Обработчики для категорий (с интеграцией в store)
+  // УРОВЕНЬ 2: Обработчик клика по категории
   const handleCategoryClick = (categoryValue: string) => {
+    console.log('🔹 [Level 2] Category clicked:', categoryValue);
     if (categoryValue === 'all') {
-      // Если выбрали "Все", очищаем выбранные категории
-      useFiltersStore.setState({ selectedCategories: [] });
+      // Если выбрали "Все", сбрасываем фильтр по категории
+      setCategoryId(null, allProducts);
     } else {
-      // Переключаем категорию
-      toggleCategory(categoryValue);
+      // Устанавливаем выбранную категорию (автоматически обновит availableCollections)
+      setCategoryId(categoryValue, allProducts);
+    }
+    setCurrentPage(1);
+  };
+
+  // УРОВЕНЬ 3: Обработчик клика по коллекции
+  const handleCollectionClick = (collectionId: string) => {
+    console.log('🔹 [Level 3] Collection clicked:', collectionId);
+    if (collectionId === 'all') {
+      // Если выбрали "Все коллекции", сбрасываем фильтр
+      setCollectionId(null);
+    } else {
+      setCollectionId(collectionId);
     }
     setCurrentPage(1);
   };
@@ -183,9 +207,17 @@ const Catalog: FC = () => {
   // Проверяем, активна ли категория
   const isCategoryActive = (categoryValue: string) => {
     if (categoryValue === 'all') {
-      return selectedCategories.length === 0;
+      return selectedCategoryId === null;
     }
-    return selectedCategories.includes(categoryValue);
+    return selectedCategoryId === categoryValue;
+  };
+
+  // Проверяем, активна ли коллекция
+  const isCollectionActive = (collectionId: string) => {
+    if (collectionId === 'all') {
+      return selectedCollectionId === null;
+    }
+    return selectedCollectionId === collectionId;
   };
 
   const totalPages = Math.ceil(filteredAndSortedProducts.length / parseInt(itemsPerPage));
@@ -219,43 +251,57 @@ const Catalog: FC = () => {
       </div>
 
       <div className="container mt-8 sm:mt-12 md:mt-50 pb-8 px-4">
-        {/* ДИНАМИЧЕСКИЕ ТАБЫ для фильтрации по категориям */}
-        <div className="flex flex-wrap gap-3.5 mb-8">
-          {/* Кнопка "Все" всегда доступна */}
-          <Button
-            variant={selectedCategories.length === 0 ? 'primary' : 'outline'}
-            onClick={() => handleCategoryClick('all')}
-          >
-            Все
-          </Button>
+        {/* УРОВЕНЬ 2: ДИНАМИЧЕСКИЕ ТАБЫ для фильтрации по категориям */}
+        {selectedBrandId !== null && availableCategories.length > 0 && (
+          <div className="mb-8">
+            <h3 className="text-lg font-semibold mb-4">Категории</h3>
+            <div className="flex flex-wrap gap-3.5">
+              {/* Кнопка "Все категории" */}
+              <Button
+                variant={selectedCategoryId === null ? 'primary' : 'outline'}
+                onClick={() => handleCategoryClick('all')}
+              >
+                Все категории
+              </Button>
 
-          {/* Динамически генерируемые категории из store */}
-          {availableCategories.map((category) => (
-            <Button
-              key={category.id}
-              variant={isCategoryActive(category.id) ? 'primary' : 'outline'}
-              onClick={() => handleCategoryClick(category.id)}
-            >
-              {category.label}
-              {selectedCategories.includes(category.id) && (
-                <span className="ml-2 text-xs">✓</span>
-              )}
-            </Button>
-          ))}
-        </div>
+              {/* Динамически генерируемые категории из store */}
+              {availableCategories.map((category) => (
+                <Button
+                  key={category.id}
+                  variant={isCategoryActive(category.id) ? 'primary' : 'outline'}
+                  onClick={() => handleCategoryClick(category.id)}
+                >
+                  {category.label}
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
 
-        {/* Отображение активных фильтров */}
-        {selectedCategories.length > 0 && (
-          <div className="mb-4 flex items-center gap-2">
-            <span className="text-sm text-gray-600">
-              Выбрано категорий: {selectedCategories.length}
-            </span>
-            <button
-              onClick={() => useFiltersStore.setState({ selectedCategories: [] })}
-              className="text-sm text-red-500 hover:underline"
-            >
-              Очистить все
-            </button>
+        {/* УРОВЕНЬ 3: ДИНАМИЧЕСКИЕ ТАБЫ для фильтрации по коллекциям */}
+        {selectedCategoryId !== null && availableCollections.length > 0 && (
+          <div className="mb-8">
+            <h3 className="text-lg font-semibold mb-4">Коллекции</h3>
+            <div className="flex flex-wrap gap-3.5">
+              {/* Кнопка "Все коллекции" */}
+              <Button
+                variant={selectedCollectionId === null ? 'primary' : 'outline'}
+                onClick={() => handleCollectionClick('all')}
+              >
+                Все коллекции
+              </Button>
+
+              {/* Динамически генерируемые коллекции из store */}
+              {availableCollections.map((collection) => (
+                <Button
+                  key={collection.id}
+                  variant={isCollectionActive(collection.id) ? 'primary' : 'outline'}
+                  onClick={() => handleCollectionClick(collection.id)}
+                >
+                  {collection.name}
+                </Button>
+              ))}
+            </div>
           </div>
         )}
 
