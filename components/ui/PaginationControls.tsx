@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Button } from './Button';
 import { Select, SelectOption } from './Select';
+import {cn} from "@/styles";
 
 interface PaginationControlsProps {
   currentPage: number;
@@ -9,6 +10,7 @@ interface PaginationControlsProps {
   onPageChange: (page: number) => void;
   onItemsPerPageChange: (value: string) => void;
   onShowMore: () => void;
+  className?: string;
 }
 
 const PaginationControls: FC<PaginationControlsProps> = ({
@@ -18,11 +20,12 @@ const PaginationControls: FC<PaginationControlsProps> = ({
   onPageChange,
   onItemsPerPageChange,
   onShowMore,
+  className
 }) => {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <div className="flex justify-between items-center gap-5">
+    <div className={cn("flex justify-between items-center gap-5", className)}>
       {/* Блок с кнопками пагинации */}
       <div className="flex justify-center items-center gap-2 mb-4">
         {pages.map((num) => (
