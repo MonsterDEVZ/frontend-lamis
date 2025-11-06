@@ -1,4 +1,4 @@
-import Header from '@/components/Header';
+import Header from '@/components/header/Header';
 import HeroSlider from '@/components/HeroSlider';
 import WaterHeatersSection from '@/components/WaterHeatersSection';
 import BleskWaterHeatersSection from '@/components/BleskWaterHeatersSection';

@@ -1,0 +1,172 @@
+'use client';
+
+import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { motion } from 'framer-motion';
+import { useScroll } from '@/hooks/useScroll';
+import { cn } from '@/styles';
+import NavItemMoreList from './NavItemMoreList';
+import BurgerMenu from './BurgerMenu';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { MainNavigationDesc, TopBar } from './IsDesktop';
+import { MainNavigationMob } from './IsMobile';
+
+const mini_nav = [
+  {
+    href: '/about',
+    title: 'О нас',
+  },
+  {
+    href: 'https://instagram.com',
+    title: 'instagram',
+    target: true,
+  },
+  {
+    href: '/contacts',
+    title: 'Контакты',
+  },
+];
+
+const nav = [
+  {
+    href: '/bathroom-furniture-lamis',
+    title: 'Мебель для ванны Lamis',
+    list: [
+      {
+        img: '',
+        href: '',
+        title: 'Смесители для ванной',
+      },
+      {
+        img: '',
+        href: '',
+        title: 'Душевые системы',
+      },
+      {
+        img: '',
+        href: '',
+        title: 'Смесители для кухни',
+      },
+      {
+        img: '',
+        href: '',
+        title: 'Санитарный фарфор и сиденья',
+      },
+      {
+        img: '',
+        href: '',
+        title: 'Мебель и зеркала',
+      },
+      {
+        img: '',
+        href: '',
+        title: 'Аксессуары для душа',
+      },
+      {
+        img: '',
+        href: '',
+        title: 'Мойки',
+      },
+      {
+        img: '',
+        href: '',
+        title: 'Инсталляции и клавиши',
+      },
+    ],
+  },
+  {
+    href: '/plumbing-caiser',
+    title: 'Сантехника Caiser',
+  },
+  {
+    href: '/water-heaters',
+    title: 'Водонагреватели Blesk',
+  },
+  {
+    href: '/mirrors',
+    title: 'Дизайнерские зеркала Lamis',
+  },
+  {
+    href: '/collections',
+    title: 'Коллекции',
+  },
+];
+
+const isActiveHeader = ['/favorites'];
+
+interface IActiveSubList {
+  img: string;
+  href: string;
+  title: string;
+}
+
+export default function Header() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [activeSubList, setActiveSubList] = useState<IActiveSubList[] | undefined>(undefined);
+  const isTablet = useMediaQuery('(min-width: 1024px)');
+
+  const pathname = usePathname();
+
+  // Use scroll hook to track scroll position and direction
+  const { scrollY, scrollDirection } = useScroll();
+
+  // Navbar becomes "active" (opaque) if we scroll down or are not on homepage
+  const isActive =
+    scrollY > 50 || isActiveHeader.includes(pathname) || isHovered || isMobileMenuOpen;
+
+  return (
+    <motion.header
+      initial={{ y: 0 }}
+      animate={{
+        y: scrollDirection === 'down' && scrollY > 200 ? '-100%' : '0%',
+      }}
+      transition={{ duration: 0.3, ease: 'easeInOut' }}
+      className={cn(
+        'z-50 w-full justify-center flex flex-col fixed transition-colors duration-300 border-b',
+        isActive ? 'bg-white border-[#1d1d1d1a]' : 'bg-transparent border-white/10'
+      )}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setActiveSubList(undefined);
+      }}
+    >
+      {/* Top Bar */}
+      {isTablet ? <TopBar mini_nav={mini_nav} isActive={isActive} /> : null}
+
+      {/* Main Navigation */}
+      <div className="w-full">
+        <div className="mx-auto max-w-[1250px] w-full">
+          <div
+            className="flex items-center justify-between relative px-5"
+            style={{ height: '70px' }}
+          >
+            {isTablet ? (
+              <MainNavigationDesc
+                isActive={isActive}
+                nav={nav}
+                setActiveSubList={setActiveSubList}
+              />
+            ) : (
+              <MainNavigationMob
+                isMobileMenuOpen={isMobileMenuOpen}
+                setIsMobileMenuOpen={setIsMobileMenuOpen}
+                isActive={isActive}
+              />
+            )}
+          </div>
+
+          {/* Nav Item More List */}
+        </div>
+      </div>
+
+      {isHovered && activeSubList && <NavItemMoreList activeSubList={activeSubList} />}
+
+      {/* Mobile Menu */}
+      {!isTablet && isMobileMenuOpen ? (
+        <BurgerMenu setIsMobileMenuOpen={setIsMobileMenuOpen} mini_nav={mini_nav} nav={nav} />
+      ) : null}
+    </motion.header>
+  );
+}

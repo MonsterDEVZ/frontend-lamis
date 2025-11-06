@@ -63,16 +63,6 @@ body {
   border-style: solid;
 }
 
-.border_top {
-  border-top-width: 1px;
-  border-top-style: solid;
-}
-
-.border_bottom {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-}
-
 .border_left {
   border-left-width: 1px;
   border-left-style: solid;

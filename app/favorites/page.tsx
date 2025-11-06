@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import Link from 'next/link';
-import Header from '@/components/Header';
+import Header from '@/components/header/Header';
 import Footer from '@/components/Footer';
 import FavoriteItemCard from '@/components/ui/FavoriteItemCard';
 import { Button } from '@/components/ui/Button';
@@ -129,9 +129,7 @@ export default function FavoritesPage() {
               <div className="w-32 h-32 mb-8 rounded-full bg-gray-100 flex items-center justify-center">
                 <Heart size={64} className="text-gray-300" />
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Ваш список избранного пуст
-              </h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">Ваш список избранного пуст</h2>
               <p className="text-gray-600 mb-8 text-center max-w-md">
                 Добавьте товары в избранное, чтобы не потерять их и купить позже
               </p>
@@ -148,18 +146,15 @@ export default function FavoritesPage() {
               <div className="flex justify-between items-center mb-12">
                 <h1 className="text-5xl font-bold text-gray-900">Избранное</h1>
                 <span className="text-gray-600">
-                  Выбрано: <span className="font-semibold text-gray-900">{favoriteProducts.length}</span>
+                  Выбрано:{' '}
+                  <span className="font-semibold text-gray-900">{favoriteProducts.length}</span>
                 </span>
               </div>
 
               {/* Products List - Vertical Stack */}
               <div className="flex flex-col gap-6 mb-12">
                 {favoriteProducts.map((product) => (
-                  <FavoriteItemCard
-                    key={product.id}
-                    product={product}
-                    onRemove={toggleFavorite}
-                  />
+                  <FavoriteItemCard key={product.id} product={product} onRemove={toggleFavorite} />
                 ))}
               </div>
 

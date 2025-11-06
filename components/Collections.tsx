@@ -4,7 +4,7 @@ import { collections } from '@/data/collections';
 import CollectionCard from './CollectionCard';
 import SectionHeading from './SectionHeading';
 import PaginationControls from './ui/PaginationControls';
-import Header from './Header';
+import Header from './header/Header';
 
 interface IProps {}
 
