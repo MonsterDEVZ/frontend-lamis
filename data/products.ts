@@ -114,10 +114,17 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-1.png',
       category: 'Mirrors',
       isNew: true,
+      slug: 'zerkalo-led-premium',
+      sku: 'SKU-m1',
       images: [
         '/products/caizer/caizer-product-1.png',
         '/products/caizer/caizer-product-2.png',
         '/products/caizer/caizer-product-3.png',
+      ],
+      colors: [
+        { name: 'Матовый графит', hex: '#2C2C2C', available: true },
+        { name: 'Хром', hex: '#C0C0C0', available: true },
+        { name: 'Золото', hex: '#D4AF37', available: true },
       ],
     },
     {
