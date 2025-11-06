@@ -27,6 +27,15 @@ const categoryKeyMap: Record<string, string> = {
   furniture: 'furniture',
 };
 
+// Маппинг категорий к brandId
+const categoryToBrandId: Record<string, number> = {
+  furniture: 1,   // Lamis
+  mirrors: 1,     // Lamis
+  heaters: 1,     // Lamis
+  caizer: 2,      // Caizer
+  blesk: 3,       // Blesk
+};
+
 const Catalog: FC = () => {
   // Подключаемся к Zustand store для фильтров
   const { selectedCategories, selectedBrandIds, sortBy, toggleCategory, setSortBy, setBrandIds } = useFiltersStore();
@@ -61,6 +70,8 @@ const Catalog: FC = () => {
       const categoryProducts = productsData[category];
       for (const product of categoryProducts) {
         const priceNumber = parseInt(product.price.replace(/[^\d]/g, ''), 10);
+        // Определяем brandId на основе категории
+        const brandId = product.brandId || categoryToBrandId[category] || 1;
         products.push({
           id: product.id,
           category: product.category,
@@ -73,7 +84,7 @@ const Catalog: FC = () => {
           slug: product.slug,
           collection: 'Caiser',
           isNew: product.isNew,
-          brandId: product.brandId || 2, // Default to Caizer (2) if not specified
+          brandId: brandId,
         });
       }
     }
