@@ -1,9 +1,16 @@
 'use client';
 import React, { useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
-import MyIcon from '@/public/icon/heart.svg';
+import { Heart } from 'lucide-react';
 import { cn } from '@/styles';
-import { useFavoritesStore } from '@/store/favoritesStore';
+import { useFavoritesStoreHydrated } from '@/hooks/useFavoritesStoreHydrated';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface IProps {
   category: string;
@@ -14,6 +21,8 @@ interface IProps {
   hoverImage: string;
   colors?: string[];
   id?: string | number;
+  collection?: string;
+  slug?: string;
 }
 
 const CatalogCard: React.FC<IProps> = ({
@@ -25,124 +34,115 @@ const CatalogCard: React.FC<IProps> = ({
   hoverImage,
   colors,
   id,
+  collection = 'Caiser',
+  slug,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [activeColor, setActiveColor] = useState<string | undefined>(
-    colors && colors.length > 0 ? colors[0] : undefined
-  );
 
-  const { toggleFavorite, isFavorite } = useFavoritesStore();
+  const { toggleFavorite, isFavorite, isHydrated } = useFavoritesStoreHydrated();
   const productId = String(id || `${category}-${name}`);
-  const isFav = isFavorite(productId);
+  const isFav = isHydrated ? isFavorite(productId) : false;
 
   const formattedPrice = `${price.toLocaleString('ru-RU')}`;
-
-  const isHexColor = (str: string) => /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(str);
+  const productSlug = slug || `product-${productId}`;
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('🔍 Debugging Favorites:', { productId, isFav });
     toggleFavorite(productId);
   };
 
   return (
     <div
-      className="relative group cursor-pointer"
+      className="relative bg-white group cursor-pointer transition-all duration-300 overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {status && !isHovered && (
-        <div
-          className="absolute top-2.5 left-2.5 z-10 flex items-center px-3 py-0.5 text-sm font-medium text-white rounded-full"
-          style={{ backgroundColor: '#E0398D' }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="mr-1.5"
-          >
-            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-          </svg>
-          {status}
+      {/* Product Link */}
+      <Link href={`/product/${productSlug}`} className="block">
+        {/* Image Container - 260x260px as per IDDIS */}
+        {/* bg-gray-50 */}
+        <div className="relative w-full h-[260px] bg-transparent overflow-hidden">
+          {/* Hover Image */}
+          <Image
+            src={hoverImage}
+            alt={`${name} - вид 2`}
+            fill
+            sizes="260px"
+            className={cn(
+              'object-cover p-0 transition-opacity duration-300 ease-in-out',
+              isHovered ? 'opacity-100' : 'opacity-0'
+            )}
+            // style={{padding: "0"}}
+          />
+          {/* Main Image */}
+          <Image
+            src={image}
+            alt={name}
+            fill
+            sizes="260px"
+            className={cn(
+              'object-contain p-4 transition-opacity duration-300 ease-in-out',
+              isHovered ? 'opacity-0' : 'opacity-100'
+            )}
+          />
         </div>
-      )}
 
-      <div className="relative w-full h-72 overflow-hidden">
-        <Image
-          src={hoverImage}
-          alt={name}
-          layout="fill"
-          objectFit="contain"
-          className={cn(
-            'absolute top-0 left-0 transition-all w-full h-full z-20 object-cover',
-            isHovered ? ' opacity-100' : ' opacity-0'
-          )}
-        />
+        {/* Product Info */}
+        <div className="p-4">
+          {/* Brand Name - Design Spec: #B8B8B9, 16px, 500, 24px line-height */}
+          <div className="mb-2">
+            <span className="text-[#B8B8B9] text-base font-medium leading-6">
+              {collection}
+            </span>
+          </div>
 
-        <Image className={'object-cover'} src={image} alt={name} layout="fill" objectFit="contain" />
-      </div>
-
-      <div className="mt-4 text-left">
-        <div className="h-full">
-          <p className="text-sm text-[#B8B8B9]">{category}</p>
-          <h3 className="mt-1 text-base font-normal text-gray-900 group-hover:text-[#009B3E] transition-colors">
+          {/* Product Name - Design Spec: 16px, 500, 24px line-height, hover: #009B3E */}
+          <h3 className="text-base font-medium leading-6 transition-colors group-hover:text-[#009B3E] mb-2">
             {name}
           </h3>
-        </div>
 
-        <div className="flex flex-col mt-2">
-          <p className="text-lg font-medium text-gray-900">
-            {formattedPrice} <u>C</u>
-          </p>
-
-          <button
-              onClick={handleFavoriteClick}
-              className={cn(
-                  'p-1 transition-opacity transition-colors mt-3',
-                  isFav
-                      ? 'opacity-100 [&_path]:fill-[#009B3E]'
-                      : 'opacity-0 group-hover:opacity-100 hover:[&_path]:fill-[#009B3E]'
-              )}
-              aria-label={isFav ? 'Удалить из избранного' : 'Добавить в избранное'}
-          >
-            <MyIcon />
-          </button>
-        </div>
-
-        {colors && colors.length > 0 && (
-          <div className="flex gap-2 mt-2">
-            {colors.map((color, index) => (
-              <div
-                key={index}
-                className={cn(
-                  'w-6 h-6 rounded-full cursor-pointer shrink-0 p-0.5',
-                  activeColor === color && 'border-2 border-[#009B3E]'
-                )}
-                onClick={() => setActiveColor(color)}
-              >
-                {!isHexColor(color) ? (
-                  <Image
-                    src={color}
-                    alt={`Color ${index}`}
-                    width={22}
-                    height={22}
-                    className="w-full h-full object-cover rounded-full"
-                  />
-                ) : (
-                  <div
-                    className="w-full h-full rounded-full"
-                    style={isHexColor(color) ? { backgroundColor: color } : {}}
-                  ></div>
-                )}
-              </div>
-            ))}
+          {/* Price */}
+          <div className="text-xl font-semibold text-gray-900 mb-3">
+            {formattedPrice} <u className="underline">С</u>
           </div>
-        )}
+        </div>
+      </Link>
+
+      {/* Action Buttons */}
+      <div className="px-4 pb-4 flex items-center gap-2">
+        {/* Add to Favorites */}
+        <TooltipProvider delayDuration={200}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                onClick={handleFavoriteClick}
+                className={cn(
+                  'flex items-center justify-center w-10 h-10 rounded-full border transition-all duration-200',
+                  isFav
+                    ? 'bg-[#009B3E] border-[#009B3E] text-white'
+                    : 'border-gray-300 text-gray-600 hover:border-[#009B3E] hover:text-[#009B3E]'
+                )}
+                aria-label={isFav ? 'Удалить из избранного' : 'Добавить в избранное'}
+              >
+                <Heart size={18} fill={isFav ? 'currentColor' : 'none'} />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p>{isFav ? 'Удалить из избранного' : 'Добавить в избранное'}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
+
+      {/* Status Badge (if exists) */}
+      {status && (
+        <div className="absolute top-3 left-3 z-10">
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#E0398D] text-white shadow-sm">
+            {status}
+          </span>
+        </div>
+      )}
     </div>
   );
 };

@@ -6,7 +6,7 @@ import Header from '@/components/header/Header';
 import Footer from '@/components/Footer';
 import FavoriteItemCard from '@/components/ui/FavoriteItemCard';
 import { Button } from '@/components/ui/Button';
-import { useFavoritesStore } from '@/store/favoritesStore';
+import { useFavoritesStoreHydrated } from '@/hooks/useFavoritesStoreHydrated';
 import { Heart, ChevronRight } from 'lucide-react';
 
 // Mock data - в будущем заменить на реальный API запрос
@@ -98,7 +98,11 @@ const mockProducts = [
 ];
 
 export default function FavoritesPage() {
-  const { favorites, toggleFavorite, clearFavorites } = useFavoritesStore();
+  const { favorites, toggleFavorite, clearFavorites, isHydrated } = useFavoritesStoreHydrated();
+
+  // Временная отладка
+  console.log('Favorites from FavoritesPage:', favorites);
+  console.log('IsHydrated:', isHydrated);
 
   // Получаем товары, которые есть в избранном
   const favoriteProducts = useMemo(() => {
@@ -120,7 +124,7 @@ export default function FavoritesPage() {
               Главная
             </Link>
             <ChevronRight size={16} />
-            <span className="text-gray-900">Готовые интерьерные решения</span>
+            <span className="text-gray-900">Избранное</span>
           </div>
 
           {isEmpty ? (
@@ -133,11 +137,21 @@ export default function FavoritesPage() {
               <p className="text-gray-600 mb-8 text-center max-w-md">
                 Добавьте товары в избранное, чтобы не потерять их и купить позже
               </p>
-              <Link href="/bathroom-furniture-lamis">
-                <Button variant="primary" size="lg">
-                  Перейти к каталогу
+              <div className="flex gap-4">
+                <Link href="/bathroom-furniture-lamis">
+                  <Button variant="primary" size="lg">
+                    Перейти к каталогу
+                  </Button>
+                </Link>
+                {/* Временная кнопка для отладки */}
+                <Button
+                  variant="outline"
+                  size="lg"
+                  onClick={clearFavorites}
+                >
+                  🔧 Очистить localStorage (DEBUG)
                 </Button>
-              </Link>
+              </div>
             </div>
           ) : (
             // Products List

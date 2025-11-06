@@ -42,7 +42,7 @@ export default function MaterialsSection() {
         <SectionHeading>Материалы для скачивания</SectionHeading>
 
         {/* Materials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-12">
           {materials.map((material) => (
             <MaterialCard
               key={material.id}
