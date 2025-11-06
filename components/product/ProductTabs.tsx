@@ -24,15 +24,15 @@ export default function ProductTabs({
   return (
     <div className="w-full">
       {/* Tab Navigation */}
-      <div className="border-b border-gray-200">
+      <div className="border-b border-gray-200 mb-8">
         <nav className="flex gap-8">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`pb-4 px-2 text-sm font-medium transition-colors relative ${
+              className={`pb-4 px-2 text-base font-medium transition-colors relative ${
                 activeTab === tab.id
-                  ? 'text-[#009B3E] border-b-2 border-[#009B3E]'
+                  ? 'text-gray-900 border-b-2 border-gray-900'
                   : 'text-gray-500 hover:text-gray-700'
               }`}
             >
@@ -43,15 +43,13 @@ export default function ProductTabs({
       </div>
 
       {/* Tab Content */}
-      <div className="py-8">
+      <div className="py-4">
         {activeTab === 'description' && (
           <div className="prose max-w-none">
             {description ? (
               <p className="text-gray-600 leading-relaxed">{description}</p>
             ) : (
-              <p className="text-gray-400 italic">
-                Описание товара отсутствует
-              </p>
+              <p className="text-gray-400 italic">Описание товара отсутствует</p>
             )}
           </div>
         )}
@@ -59,16 +57,16 @@ export default function ProductTabs({
         {activeTab === 'specifications' && (
           <div>
             {specifications && specifications.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 {specifications.map((spec, index) => (
                   <div
                     key={index}
-                    className="flex justify-between items-center py-3 px-4 bg-gray-50 rounded-lg"
+                    className="flex flex-col gap-1 p-0"
                   >
-                    <span className="text-sm font-medium text-gray-700">
-                      {spec.label}
+                    <span className="text-sm text-gray-600">{spec.label}</span>
+                    <span className="text-base font-medium text-gray-900">
+                      {spec.value}
                     </span>
-                    <span className="text-sm text-gray-900">{spec.value}</span>
                   </div>
                 ))}
               </div>
