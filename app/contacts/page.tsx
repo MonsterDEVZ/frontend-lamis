@@ -1,37 +1,49 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import Header from '@/components/header/Header';
 import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/Button';
+import MainOfficeSection from '@/components/contacts/MainOfficeSection';
+import RepresentativesSection from '@/components/contacts/RepresentativesSection';
 import FeedbackModal from '@/components/feedback/FeedbackModal';
 
 export default function ContactsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <main>
-      <Header />
-      <div className="container mx-auto px-4 py-16 min-h-[60vh]">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">Контакты</h1>
-        <div className="max-w-2xl">
-          <p className="text-lg text-gray-600 mb-8">
-            У вас есть вопросы? Свяжитесь с нами, и мы с радостью вам поможем!
-          </p>
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={() => setIsModalOpen(true)}
-          >
-            Задать вопрос
-          </Button>
+    <div>
+      {/* ИЗМЕНЕНИЕ 1: Создаем единый "липкий" блок для хедера и хлебных крошек */}
+      <header className="sticky top-0 z-40 bg-white shadow-sm">
+        <Header />
+        
+        {/* Хлебные крошки теперь являются частью этого липкого блока */}
+        <div className="container mx-auto px-4">
+          <div className="text-sm text-gray-600 py-4">
+            <Link href="/" className="hover:text-green-600 transition-colors">
+              Главная
+            </Link>
+            <span className="mx-2">→</span>
+            <span>Контакты</span>
+          </div>
         </div>
-      </div>
+      </header>
+
+      {/* ИЗМЕНЕНИЕ 2: Основной контент теперь не нуждается в верхнем отступе */}
+      <main>
+        <div className="container mx-auto px-4 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20 mt-20">
+            <MainOfficeSection />
+            <RepresentativesSection />
+          </div>
+        </div>
+      </main>
+
       <Footer />
       <FeedbackModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
-    </main>
+    </div>
   );
 }
