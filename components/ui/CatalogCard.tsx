@@ -90,16 +90,21 @@ const CatalogCard: React.FC<IProps> = ({
 
         {/* Product Info */}
         <div className="p-4">
-          {/* Collection & Category */}
-          <div className="flex items-center gap-2 text-sm mb-2">
-            <span className="text-gray-600 hover:text-[#009B3E] transition-colors">
+          {/* Collection & Category - Design Spec: #B8B8B9, 16px, 500, 24px line-height */}
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-[#B8B8B9] text-base font-medium leading-6">
               {collection}
             </span>
-            <span className="text-gray-400">|</span>
-            <span className="text-gray-600 hover:text-[#009B3E] transition-colors">
+            <span className="text-[#B8B8B9]">|</span>
+            <span className="text-[#B8B8B9] text-base font-medium leading-6">
               {category}
             </span>
           </div>
+
+          {/* Product Name - Design Spec: 16px, 500, 24px line-height, hover: #009B3E */}
+          <h3 className="text-base font-medium leading-6 transition-colors group-hover:text-[#009B3E] mb-2">
+            {name}
+          </h3>
 
           {/* Price */}
           <div className="text-xl font-semibold text-gray-900 mb-3">
