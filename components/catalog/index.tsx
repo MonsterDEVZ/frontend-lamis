@@ -1,5 +1,6 @@
 'use client';
-import { useState, useMemo, type FC } from 'react';
+import { useState, useMemo, useEffect, type FC } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Header from '@/components/header/Header';
 import CatalogCard from '@/components/ui/CatalogCard';
 import { Button } from '@/components/ui/Button';
@@ -28,11 +29,29 @@ const categoryKeyMap: Record<string, string> = {
 
 const Catalog: FC = () => {
   // Подключаемся к Zustand store для фильтров
-  const { selectedCategories, sortBy, toggleCategory, setSortBy } = useFiltersStore();
+  const { selectedCategories, selectedBrandIds, sortBy, toggleCategory, setSortBy, setBrandIds } = useFiltersStore();
+
+  // Получаем параметры из URL
+  const searchParams = useSearchParams();
+  const brandIdFromUrl = searchParams.get('brandId');
+  const categoryFromUrl = searchParams.get('category');
 
   // Локальное состояние для пагинации и цветов
   const [itemsPerPage, setItemsPerPage] = useState('12');
   const [currentPage, setCurrentPage] = useState(1);
+
+  // Инициализируем фильтры из URL параметров
+  useEffect(() => {
+    if (brandIdFromUrl) {
+      const brandId = parseInt(brandIdFromUrl, 10);
+      if (!isNaN(brandId)) {
+        setBrandIds([brandId]);
+      }
+    }
+    if (categoryFromUrl) {
+      toggleCategory(categoryFromUrl);
+    }
+  }, [brandIdFromUrl, categoryFromUrl, setBrandIds, toggleCategory]);
 
   // Получаем все продукты из productsData (мемоизированно)
   const allProducts = useMemo(() => {
@@ -54,6 +73,7 @@ const Catalog: FC = () => {
           slug: product.slug,
           collection: 'Caiser',
           isNew: product.isNew,
+          brandId: product.brandId || 2, // Default to Caizer (2) if not specified
         });
       }
     }
@@ -64,6 +84,13 @@ const Catalog: FC = () => {
   // КРИТИЧЕСКИ ВАЖНО: useMemo для фильтрации и сортировки
   const filteredAndSortedProducts = useMemo(() => {
     let result = [...allProducts];
+
+    // ФИЛЬТРАЦИЯ ПО БРЕНДАМ
+    if (selectedBrandIds.length > 0) {
+      result = result.filter((product) =>
+        product.brandId && selectedBrandIds.includes(product.brandId)
+      );
+    }
 
     // ФИЛЬТРАЦИЯ ПО КАТЕГОРИЯМ
     if (selectedCategories.length > 0) {
@@ -95,7 +122,7 @@ const Catalog: FC = () => {
     }
 
     return result;
-  }, [allProducts, selectedCategories, sortBy]);
+  }, [allProducts, selectedCategories, selectedBrandIds, sortBy]);
 
   // Обработчики для категорий (с интеграцией в store)
   const handleCategoryClick = (categoryValue: string) => {

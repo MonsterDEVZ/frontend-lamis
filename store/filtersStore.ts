@@ -4,11 +4,14 @@ import { persist } from 'zustand/middleware';
 interface FiltersState {
   // Состояние
   selectedCategories: string[];
+  selectedBrandIds: number[];
   sortBy: string;
   selectedColors: string[];
 
   // Действия
   toggleCategory: (category: string) => void;
+  toggleBrandId: (brandId: number) => void;
+  setBrandIds: (brandIds: number[]) => void;
   setSortBy: (sort: string) => void;
   toggleColor: (color: string) => void;
   clearFilters: () => void;
@@ -19,6 +22,7 @@ export const useFiltersStore = create<FiltersState>()(
     (set) => ({
       // Начальное состояние
       selectedCategories: [],
+      selectedBrandIds: [],
       sortBy: 'default',
       selectedColors: [],
 
@@ -29,6 +33,18 @@ export const useFiltersStore = create<FiltersState>()(
             ? state.selectedCategories.filter((c) => c !== category)
             : [...state.selectedCategories, category],
         })),
+
+      // Переключение бренда (добавить/удалить)
+      toggleBrandId: (brandId: number) =>
+        set((state) => ({
+          selectedBrandIds: state.selectedBrandIds.includes(brandId)
+            ? state.selectedBrandIds.filter((id) => id !== brandId)
+            : [...state.selectedBrandIds, brandId],
+        })),
+
+      // Установка списка брендов
+      setBrandIds: (brandIds: number[]) =>
+        set({ selectedBrandIds: brandIds }),
 
       // Установка метода сортировки
       setSortBy: (sort: string) =>
@@ -46,6 +62,7 @@ export const useFiltersStore = create<FiltersState>()(
       clearFilters: () =>
         set({
           selectedCategories: [],
+          selectedBrandIds: [],
           sortBy: 'default',
           selectedColors: [],
         }),

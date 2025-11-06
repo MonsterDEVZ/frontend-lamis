@@ -9,6 +9,7 @@ export interface Product {
   price: string;
   image: string;
   category: string;
+  brandId?: number; // ID of the brand (1=Lamis, 2=Caizer, 3=Blesk)
   isNew?: boolean;
   slug?: string;
   sku?: string;
