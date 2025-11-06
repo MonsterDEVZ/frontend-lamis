@@ -1,5 +1,6 @@
 'use client';
 
+import { use } from 'react';
 import { notFound } from 'next/navigation';
 import { useFavoritesStore } from '@/store/favoritesStore';
 import { productsData } from '@/data/products';
@@ -13,9 +14,9 @@ import ProductSlider from '@/components/ui/ProductSlider';
 import type { Product } from '@/types/product';
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 // Helper function to find product by slug
@@ -52,7 +53,7 @@ function getRelatedProducts(product: Product): Product[] {
 }
 
 export default function ProductPage({ params }: ProductPageProps) {
-  const { slug } = params;
+  const { slug } = use(params);
   const product = findProductBySlug(slug);
 
   if (!product) {
