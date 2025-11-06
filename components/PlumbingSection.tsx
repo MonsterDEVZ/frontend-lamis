@@ -40,7 +40,7 @@ const Arrow = ({ direction }: { direction: 'left' | 'right' }) => (
 );
 
 const PlumbingSection: FC = () => {
-  const [activeFilter, setActiveFilter] = useState('heaters');
+  const [activeFilter, setActiveFilter] = useState('caizer');
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
   const [pagination, setPagination] = useState({ current: 1, total: 1 });
   const [isBeginning, setIsBeginning] = useState(true);
@@ -52,6 +52,15 @@ const PlumbingSection: FC = () => {
     const categoryProducts = productsData[activeFilter] || [];
     return categoryProducts.map((product) => {
       const priceNumber = parseInt(product.price.replace(/[^\d]/g, ''), 10);
+
+      // Определяем коллекцию на основе категории
+      let collectionName = 'Lamis';
+      if (activeFilter === 'caizer') {
+        collectionName = 'Caizer';
+      } else if (activeFilter === 'blesk') {
+        collectionName = 'Blesk';
+      }
+
       return {
         id: product.id,
         category: product.category,
@@ -61,7 +70,7 @@ const PlumbingSection: FC = () => {
         image: product.image,
         hoverImage: product.images?.[1] || product.image,
         slug: product.slug,
-        collection: 'Caiser',
+        collection: collectionName,
       };
     });
   }, [activeFilter]);

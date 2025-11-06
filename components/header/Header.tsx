@@ -93,7 +93,7 @@ const nav = [
   },
 ];
 
-const isActiveHeader = ['/favorites'];
+const isActiveHeader = ['/favorites', '/product'];
 
 interface IActiveSubList {
   img: string;
@@ -117,6 +117,7 @@ export default function Header() {
   const isActive =
     scrollY > 50 ||
     isActiveHeader.includes(pathname) ||
+    pathname.startsWith('/product') ||
     isHovered ||
     isMobileMenuOpen ||
     isSearchOpen;

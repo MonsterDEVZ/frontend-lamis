@@ -3,7 +3,6 @@ import type { FC } from 'react';
 import { collections } from '@/data/collections';
 import CollectionCard from './CollectionCard';
 import SectionHeading from './SectionHeading';
-import PaginationControls from './ui/PaginationControls';
 import Header from './header/Header';
 
 interface IProps {}
@@ -23,15 +22,6 @@ const Collections: FC<IProps> = () => {
             <CollectionCard key={collection.id} collection={collection} />
           ))}
         </div>
-
-        <PaginationControls
-          currentPage={1}
-          totalPages={5}
-          itemsPerPage={''}
-          onPageChange={() => {}}
-          onItemsPerPageChange={() => {}}
-          onShowMore={() => {}}
-        />
       </div>
     </section>
   );
