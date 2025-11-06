@@ -127,7 +127,7 @@ const CatalogCard: React.FC<IProps> = ({
                 <Heart size={18} fill={isFav ? 'currentColor' : 'none'} />
               </button>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent side="bottom">
               <p>{isFav ? 'Удалить из избранного' : 'Добавить в избранное'}</p>
             </TooltipContent>
           </Tooltip>
