@@ -6,56 +6,19 @@ import type { Swiper as SwiperType } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import CatalogCard from './ui/CatalogCard';
+import { productsData } from '@/data/products';
 
 // @ts-ignore
 import 'swiper/css';
 // @ts-ignore
 import 'swiper/css/navigation';
 
-// Example Usage
-// prettier-ignore
-const sampleProducts = [
-  // Сантехника Caizer
-  { category: "Caizer", name: "Унитаз-компакт Caizer PRO", price: 14490, status: "Новинка", image: "/plumbing_section/caizer/3012.png", hoverImage: "/plumbing_section/caizer/3012 улучшенный.jpeg" },
-  { category: "Caizer", name: "Подвесной унитаз Caizer Wall", price: 19990, image: "/plumbing_section/caizer/3014.png", hoverImage: "/plumbing_section/caizer/3014 улучшенный.jpeg" },
-  { category: "Caizer", name: "Раковина встраиваемая Caizer Drop", price: 7800, image: "/plumbing_section/caizer/3016.png", hoverImage: "/plumbing_section/caizer/3016 улучшенный.jpeg" },
-  { category: "Caizer", name: "Смеситель для раковины Caizer Flow", price: 6500, status: "Хит", image: "/plumbing_section/caizer/3030.png", hoverImage: "/plumbing_section/caizer/3030 улучшенный.jpeg" },
-  { category: "Caizer", name: "Душевая система Caizer Rain", price: 25900, image: "/plumbing_section/caizer/3037.png", hoverImage: "/plumbing_section/caizer/3037 улучшенный.jpeg" },
-  { category: "Caizer", name: "Ванна акриловая Caizer Wave", price: 32000, image: "/plumbing_section/caizer/3038.png", hoverImage: "/plumbing_section/caizer/3038 улучшенный.jpeg" },
-
-  // Умные водонагреватели
-  { category: "Умные водонагреватели", name: "Водонагреватель Smart 50л", price: 18500, status: "Новинка", image: "/plumbing_section/caizer/3012.png", hoverImage: "/plumbing_section/caizer/3012 улучшенный.jpeg" },
-  { category: "Умные водонагреватели", name: "Проточный водонагреватель Smart Flow", price: 12300, image: "/plumbing_section/caizer/3014.png", hoverImage: "/plumbing_section/caizer/3014 улучшенный.jpeg" },
-  { category: "Умные водонагреватели", name: "Водонагреватель Smart 80л Wi-Fi", price: 24000, status: "Хит", image: "/plumbing_section/caizer/3016.png", hoverImage: "/plumbing_section/caizer/3016 улучшенный.jpeg" },
-  { category: "Умные водонагреватели", name: "Компактный водонагреватель 15л", price: 9800, image: "/plumbing_section/caizer/3030.png", hoverImage: "/plumbing_section/caizer/3030 улучшенный.jpeg" },
-
-  // Зеркала Lamis
-  { category: "Зеркала Lamis", name: "Зеркало Lamis с LED-подсветкой 80см", price: 8900, status: "Хит", image: "/plumbing_section/caizer/3012.png", hoverImage: "/plumbing_section/caizer/3012 улучшенный.jpeg" },
-  { category: "Зеркала Lamis", name: "Зеркальный шкаф Lamis 60см", price: 13400, image: "/plumbing_section/caizer/3014.png", hoverImage: "/plumbing_section/caizer/3014 улучшенный.jpeg" },
-  { category: "Зеркала Lamis", name: "Круглое зеркало Lamis 70см", price: 9900, status: "Новинка", image: "/plumbing_section/caizer/3016.png", hoverImage: "/plumbing_section/caizer/3016 улучшенный.jpeg" },
-  { category: "Зеркала Lamis", name: "Зеркало Lamis с полкой и подсветкой", price: 11500, image: "/plumbing_section/caizer/3030.png", hoverImage: "/plumbing_section/caizer/3030 улучшенный.jpeg" },
-  { category: "Зеркала Lamis", name: "Зеркало косметическое Lamis x5", price: 4500, image: "/plumbing_section/caizer/3038.png", hoverImage: "/plumbing_section/caizer/3037 улучшенный.jpeg" },
-
-  // Умные водонагреватели Blesk
-  { category: "Умные водонагреватели Blesk", name: "Водонагреватель Blesk 100л Smart", price: 29900, status: "Новинка", image: "/plumbing_section/caizer/3012.png", hoverImage: "/plumbing_section/caizer/3012 улучшенный.jpeg" },
-  { category: "Умные водонагреватели Blesk", name: "Blesk Flat 80л с сухим ТЭНом", price: 26500, image: "/plumbing_section/caizer/3014.png", hoverImage: "/plumbing_section/caizer/3014 улучшенный.jpeg" },
-  { category: "Умные водонагреватели Blesk", name: "Blesk Slim 30л", price: 15000, image: "/plumbing_section/caizer/3016.png", hoverImage: "/plumbing_section/caizer/3016 улучшенный.jpeg" },
-  { category: "Умные водонагреватели Blesk", name: "Blesk Slim 60л", price: 20000, image: "/plumbing_section/caizer/3030.png", hoverImage: "/plumbing_section/caizer/3030 улучшенный.jpeg" },
-
-  // Мебель для ванн Lamis
-  { category: "lamis_furniture", name: "Тумба под раковину Lamis 75см", price: 18900, status: "Новинка", image: "/plumbing_section/caizer/3012.png", hoverImage: "/plumbing_section/caizer/3012 улучшенный.jpeg" },
-  { category: "lamis_furniture", name: "Шкаф-пенал Lamis Style", price: 22500, image: "/plumbing_section/caizer/3014.png", hoverImage: "/plumbing_section/caizer/3014 улучшенный.jpeg" },
-  { category: "lamis_furniture", name: "Подвесная тумба Lamis Air 60см", price: 16200, status: "Хит", image: "/plumbing_section/caizer/3016.png", hoverImage: "/plumbing_section/caizer/3016 улучшенный.jpeg" },
-  { category: "lamis_furniture", name: "Комплект мебели Lamis (тумба+зеркало)", price: 29800, image: "/plumbing_section/caizer/3030.png", hoverImage: "/plumbing_section/caizer/3030 улучшенный.jpeg" },
-  { category: "lamis_furniture", name: "Полка для ванной Lamis Glass", price: 5500, image: "/plumbing_section/caizer/3038.png", hoverImage: "/plumbing_section/caizer/3037 улучшенный.jpeg" },
-];
-
 const tabs = [
-  { label: 'Умные водонагреватели', value: 'Умные водонагреватели' },
-  { label: 'Зеркала Lamis', value: 'Зеркала Lamis' },
-  { label: 'Умные водонагреватели Blesk', value: 'Умные водонагреватели Blesk' },
-  { label: 'Сантехника Caizer', value: 'Caizer' },
-  { label: 'Мебель для ванн Lamis', value: 'lamis_furniture' },
+  { label: 'Умные водонагреватели', value: 'heaters' },
+  { label: 'Зеркала Lamis', value: 'mirrors' },
+  { label: 'Умные водонагреватели Blesk', value: 'blesk' },
+  { label: 'Сантехника Caizer', value: 'caizer' },
+  { label: 'Мебель для ванн Lamis', value: 'furniture' },
 ];
 
 const Arrow = ({ direction }: { direction: 'left' | 'right' }) => (
@@ -77,7 +40,7 @@ const Arrow = ({ direction }: { direction: 'left' | 'right' }) => (
 );
 
 const PlumbingSection: FC = () => {
-  const [activeFilter, setActiveFilter] = useState('Умные водонагреватели');
+  const [activeFilter, setActiveFilter] = useState('heaters');
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
   const [pagination, setPagination] = useState({ current: 1, total: 1 });
   const [isBeginning, setIsBeginning] = useState(true);
@@ -86,7 +49,21 @@ const PlumbingSection: FC = () => {
   const [isSwiperInitialized, setIsSwiperInitialized] = useState(false);
 
   const filteredProducts = useMemo(() => {
-    return sampleProducts.filter((product) => product.category === activeFilter);
+    const categoryProducts = productsData[activeFilter] || [];
+    return categoryProducts.map((product) => {
+      const priceNumber = parseInt(product.price.replace(/[^\d]/g, ''), 10);
+      return {
+        id: product.id,
+        category: product.category,
+        name: product.name,
+        price: priceNumber,
+        status: product.isNew ? 'Новинка' : undefined,
+        image: product.image,
+        hoverImage: product.images?.[1] || product.image,
+        slug: product.slug,
+        collection: 'Caiser',
+      };
+    });
   }, [activeFilter]);
 
   const slidesPerView = 4;
