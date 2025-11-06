@@ -8,6 +8,7 @@ import FavoriteItemCard from '@/components/ui/FavoriteItemCard';
 import { Button } from '@/components/ui/Button';
 import { useFavoritesStoreHydrated } from '@/hooks/useFavoritesStoreHydrated';
 import { Heart, ChevronRight } from 'lucide-react';
+import Breadcrumbs from '@/components/ui/Breadcrumbs';
 
 // Mock data - в будущем заменить на реальный API запрос
 const mockProducts = [
@@ -119,13 +120,17 @@ export default function FavoritesPage() {
         {/* Main Container with max-width and centered */}
         <div className="max-w-7xl mx-auto px-4">
           {/* Breadcrumbs */}
-          <div className="flex items-center gap-2 text-sm text-gray-600 mb-8">
-            <Link href="/" className="hover:text-[#009B3E] transition-colors">
-              Главная
-            </Link>
-            <ChevronRight size={16} />
-            <span className="text-gray-900">Избранное</span>
-          </div>
+          <Breadcrumbs
+            items={[
+              {
+                label: 'Главная',
+                href: '',
+              },
+              {
+                label: 'Избранное',
+              },
+            ]}
+          />
 
           {isEmpty ? (
             // Empty State
@@ -144,11 +149,7 @@ export default function FavoritesPage() {
                   </Button>
                 </Link>
                 {/* Временная кнопка для отладки */}
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={clearFavorites}
-                >
+                <Button variant="outline" size="lg" onClick={clearFavorites}>
                   🔧 Очистить localStorage (DEBUG)
                 </Button>
               </div>
