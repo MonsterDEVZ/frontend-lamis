@@ -90,14 +90,10 @@ const CatalogCard: React.FC<IProps> = ({
 
         {/* Product Info */}
         <div className="p-4">
-          {/* Collection & Category - Design Spec: #B8B8B9, 16px, 500, 24px line-height */}
-          <div className="flex items-center gap-2 mb-2">
+          {/* Brand Name - Design Spec: #B8B8B9, 16px, 500, 24px line-height */}
+          <div className="mb-2">
             <span className="text-[#B8B8B9] text-base font-medium leading-6">
               {collection}
-            </span>
-            <span className="text-[#B8B8B9]">|</span>
-            <span className="text-[#B8B8B9] text-base font-medium leading-6">
-              {category}
             </span>
           </div>
 
@@ -108,7 +104,7 @@ const CatalogCard: React.FC<IProps> = ({
 
           {/* Price */}
           <div className="text-xl font-semibold text-gray-900 mb-3">
-            {formattedPrice} ₽
+            {formattedPrice} <u className="decoration-1">₽</u>
           </div>
         </div>
       </Link>
