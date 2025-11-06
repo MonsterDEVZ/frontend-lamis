@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import FeedbackForm from './FeedbackForm';
 import { CheckCircle2, XCircle, X } from 'lucide-react';
@@ -13,31 +13,41 @@ interface FeedbackModalProps {
 const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Этот useEffect будет управлять блокировкой прокрутки
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    // Функция очистки
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
+  
   const handleSubmit = async (data: { name: string; phone: string; }) => {
     setIsSubmitting(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       console.log('Feedback submitted:', data);
 
-      // Уведомление об успехе с новым дизайном
+      // Уведомление об успехе
       toast.custom(
         (t) => (
           <div
             className={`${
               t.visible ? 'toast-enter' : 'toast-leave'
-            } max-w-sm w-full bg-green-600 shadow-lg rounded-lg pointer-events-auto flex items-center justify-between p-4`} 
+            } max-w-sm w-full bg-green-600 shadow-lg rounded-lg pointer-events-auto flex items-center justify-between p-3`}
           >
-
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <CheckCircle2 className="h-6 w-6 text-white" /> 
+                <CheckCircle2 className="h-6 w-6 text-white" />
               </div>
               <div className="ml-3 flex-1">
-                <p className="text-sm font-semibold text-white">Заявка принята! Мы свяжемся с вами.</p> 
+                <p className="text-sm font-semibold text-white">Заявка принята! Мы свяжемся с вами.</p>
               </div>
             </div>
-            
- 
             <div className="flex items-center">
               <button
                 onClick={() => toast.dismiss(t.id)}
@@ -57,7 +67,7 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
     } catch (error) {
       console.error('Error submitting feedback:', error);
 
-      // Уведомление об ошибке (остается прежним для контраста)
+      // Уведомление об ошибке
       toast.custom(
         (t) => (
           <div
@@ -93,15 +103,25 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  if (!isOpen) return null;
-
+  // ИЗМЕНЕНИЕ: Убираем `if (!isOpen) return null;` и заменяем на управление через CSS
   return (
-    <>
+    <div
+      className={`fixed inset-0 z-50 transition-opacity duration-300 ${
+        isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+      }`}
+    >
+      {/* Фон-затемнение */}
       <div
-        className="fixed inset-0 bg-black/50 z-50"
+        className="absolute inset-0 bg-black/50"
         onClick={onClose}
       />
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+
+      {/* Контейнер модального окна с анимацией */}
+      <div
+        className={`flex items-center justify-center p-4 h-full w-full transition-all duration-300 ${
+          isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+        }`}
+      >
         <div
           className="bg-white rounded-2xl max-w-md w-full shadow-xl"
           onClick={(e) => e.stopPropagation()}
@@ -115,7 +135,7 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
