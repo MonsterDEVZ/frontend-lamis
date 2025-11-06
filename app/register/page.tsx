@@ -13,7 +13,7 @@ import { z } from 'zod';
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/Card';
 import Input from '@/components/ui/Input';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/Button';
 import { register as registerUser, login, getCurrentUser } from '@/services/authService';
 import { useAuthStore } from '@/store/authStore';
 
@@ -41,6 +41,7 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>('');
 
+  // @ts-ignore - version mismatch between zod and @hookform/resolvers
   const {
     register,
     handleSubmit,

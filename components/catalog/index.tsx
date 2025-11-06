@@ -78,6 +78,14 @@ const Catalog: FC = () => {
         const priceNumber = parseInt(product.price.replace(/[^\d]/g, ''), 10);
         // Определяем brandId на основе категории
         const brandId = product.brandId || categoryToBrandId[category] || 1;
+        // Определяем имя бренда на основе brandId
+        const brandNames: Record<number, string> = {
+          1: 'Lamis',
+          2: 'Caizer',
+          3: 'Blesk',
+        };
+        const collectionName = brandNames[brandId] || 'Lamis';
+
         products.push({
           id: product.id,
           category: product.category,
@@ -88,7 +96,7 @@ const Catalog: FC = () => {
           image: product.image,
           hoverImage: product.images?.[1] || product.image,
           slug: product.slug,
-          collection: 'Caiser',
+          collection: collectionName,
           isNew: product.isNew,
           brandId: brandId,
         });
@@ -190,15 +198,17 @@ const Catalog: FC = () => {
       <Header />
       {/* Секция заголовка страницы каталога с фоновым изображением */}
       <div
-        className="w-full h-[400px] bg-cover bg-center pb-24 flex items-end"
+        className="w-full h-[200px] sm:h-[300px] md:h-[400px] bg-cover bg-center pb-8 sm:pb-16 md:pb-24 flex items-end"
         style={{ backgroundImage: "url('/images/hero/screen_1.png')" }}
       >
-        <div className="container">
-          <h1 className="text-white text-[64px] font-bold">Каталог товаров</h1>
+        <div className="container px-4">
+          <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold">
+            Каталог товаров
+          </h1>
         </div>
       </div>
 
-      <div className="container mt-50 pb-8">
+      <div className="container mt-8 sm:mt-12 md:mt-50 pb-8 px-4">
         {/* Табы для фильтрации по категориям - интегрированы с Zustand store */}
         <div className="flex flex-wrap gap-3.5 mb-8">
           {tabs.map((tab) => (
@@ -230,9 +240,9 @@ const Catalog: FC = () => {
           </div>
         )}
 
-        <div className="flex justify-start gap-3.5 mt-50 mb-8">
+        <div className="flex flex-col sm:flex-row justify-start gap-3.5 mt-6 sm:mt-8 md:mt-50 mb-8">
           {/* Сортировка - интегрирована с Zustand store */}
-          <div className="w-48">
+          <div className="w-full sm:w-48">
             <Select
               placeholder="Сортировка"
               intent="filled"
@@ -248,7 +258,7 @@ const Catalog: FC = () => {
           </div>
 
           {/* Выпадающий список для фильтрации по цвету (будущий функционал) */}
-          <div className="w-52">
+          <div className="w-full sm:w-52">
             <Select
               placeholder="Цвет изделия"
               intent="outline"
