@@ -3,6 +3,8 @@
 import { notFound } from 'next/navigation';
 import { useFavoritesStore } from '@/store/favoritesStore';
 import { productsData } from '@/data/products';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import ProductGallery from '@/components/product/ProductGallery';
 import ProductInfo from '@/components/product/ProductInfo';
 import ProductTabs from '@/components/product/ProductTabs';
@@ -63,9 +65,11 @@ export default function ProductPage({ params }: ProductPageProps) {
   };
 
   return (
-    <main className="min-h-screen bg-white">
-      {/* Product Detail Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+    <>
+      <Header />
+      <main className="min-h-screen bg-white pt-32">
+        {/* Product Detail Section */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Left: Gallery */}
           <ProductGallery
@@ -96,15 +100,17 @@ export default function ProductPage({ params }: ProductPageProps) {
         </div>
       </section>
 
-      {/* Related Products Section */}
-      {relatedProducts.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-          <RelatedProducts
-            products={relatedProducts}
-            currentProductId={product.id}
-          />
-        </section>
-      )}
-    </main>
+        {/* Related Products Section */}
+        {relatedProducts.length > 0 && (
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+            <RelatedProducts
+              products={relatedProducts}
+              currentProductId={product.id}
+            />
+          </section>
+        )}
+      </main>
+      <Footer />
+    </>
   );
 }

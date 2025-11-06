@@ -66,6 +66,12 @@ export const productsData: ProductsData = {
       isNew: false,
       slug: 'vodonagrevatel-pro',
       sku: 'WH-PRO-002',
+      images: [
+        '/products/caizer/caizer-product-2.png',
+        '/products/caizer/caizer-product-1.png',
+        '/products/caizer/caizer-product-3.png',
+        '/products/caizer/caizer-product-4.png',
+      ],
     },
     {
       id: 'h3',
@@ -76,6 +82,12 @@ export const productsData: ProductsData = {
       isNew: true,
       slug: 'vodonagrevatel-max',
       sku: 'WH-MAX-003',
+      images: [
+        '/products/caizer/caizer-product-3.png',
+        '/products/caizer/caizer-product-4.png',
+        '/products/caizer/caizer-product-1.png',
+        '/products/caizer/caizer-product-2.png',
+      ],
     },
     {
       id: 'h4',
@@ -86,6 +98,12 @@ export const productsData: ProductsData = {
       isNew: false,
       slug: 'vodonagrevatel-ultra',
       sku: 'WH-ULTRA-004',
+      images: [
+        '/products/caizer/caizer-product-4.png',
+        '/products/caizer/caizer-product-3.png',
+        '/products/caizer/caizer-product-2.png',
+        '/products/caizer/caizer-product-1.png',
+      ],
     },
   ],
   mirrors: [
@@ -96,6 +114,11 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-1.png',
       category: 'Mirrors',
       isNew: true,
+      images: [
+        '/products/caizer/caizer-product-1.png',
+        '/products/caizer/caizer-product-2.png',
+        '/products/caizer/caizer-product-3.png',
+      ],
     },
     {
       id: 'm2',
@@ -104,6 +127,11 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-2.png',
       category: 'Mirrors',
       isNew: true,
+      images: [
+        '/products/caizer/caizer-product-2.png',
+        '/products/caizer/caizer-product-3.png',
+        '/products/caizer/caizer-product-1.png',
+      ],
     },
     {
       id: 'm3',
@@ -112,6 +140,11 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-3.png',
       category: 'Mirrors',
       isNew: false,
+      images: [
+        '/products/caizer/caizer-product-3.png',
+        '/products/caizer/caizer-product-4.png',
+        '/products/caizer/caizer-product-2.png',
+      ],
     },
     {
       id: 'm4',
@@ -120,6 +153,11 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-4.png',
       category: 'Mirrors',
       isNew: true,
+      images: [
+        '/products/caizer/caizer-product-4.png',
+        '/products/caizer/caizer-product-1.png',
+        '/products/caizer/caizer-product-3.png',
+      ],
     },
   ],
   blesk: [
@@ -130,6 +168,11 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-1.png',
       category: 'Blesk',
       isNew: false,
+      images: [
+        '/products/caizer/caizer-product-1.png',
+        '/products/caizer/caizer-product-2.png',
+        '/products/caizer/caizer-product-3.png',
+      ],
     },
     {
       id: 'b2',
@@ -138,6 +181,11 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-2.png',
       category: 'Blesk',
       isNew: true,
+      images: [
+        '/products/caizer/caizer-product-2.png',
+        '/products/caizer/caizer-product-3.png',
+        '/products/caizer/caizer-product-4.png',
+      ],
     },
     {
       id: 'b3',
@@ -146,6 +194,11 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-3.png',
       category: 'Blesk',
       isNew: true,
+      images: [
+        '/products/caizer/caizer-product-3.png',
+        '/products/caizer/caizer-product-4.png',
+        '/products/caizer/caizer-product-1.png',
+      ],
     },
     {
       id: 'b4',
@@ -154,6 +207,11 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-4.png',
       category: 'Blesk',
       isNew: false,
+      images: [
+        '/products/caizer/caizer-product-4.png',
+        '/products/caizer/caizer-product-1.png',
+        '/products/caizer/caizer-product-2.png',
+      ],
     },
   ],
   caizer: [
@@ -164,6 +222,11 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-1.png',
       category: 'Caizer',
       isNew: true,
+      images: [
+        '/products/caizer/caizer-product-1.png',
+        '/products/caizer/caizer-product-2.png',
+        '/products/caizer/caizer-product-3.png',
+      ],
     },
     {
       id: 2,
@@ -172,6 +235,11 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-2.png',
       category: 'Caizer',
       isNew: true,
+      images: [
+        '/products/caizer/caizer-product-2.png',
+        '/products/caizer/caizer-product-3.png',
+        '/products/caizer/caizer-product-4.png',
+      ],
     },
     {
       id: 3,
@@ -180,6 +248,11 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-3.png',
       category: 'Caizer',
       isNew: true,
+      images: [
+        '/products/caizer/caizer-product-3.png',
+        '/products/caizer/caizer-product-4.png',
+        '/products/caizer/caizer-product-1.png',
+      ],
     },
     {
       id: 4,
@@ -188,6 +261,11 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-4.png',
       category: 'Caizer',
       isNew: true,
+      images: [
+        '/products/caizer/caizer-product-4.png',
+        '/products/caizer/caizer-product-1.png',
+        '/products/caizer/caizer-product-2.png',
+      ],
     },
   ],
   furniture: [
@@ -198,6 +276,11 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-1.png',
       category: 'Furniture',
       isNew: false,
+      images: [
+        '/products/caizer/caizer-product-1.png',
+        '/products/caizer/caizer-product-2.png',
+        '/products/caizer/caizer-product-3.png',
+      ],
     },
     {
       id: 'f2',
@@ -206,6 +289,11 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-2.png',
       category: 'Furniture',
       isNew: true,
+      images: [
+        '/products/caizer/caizer-product-2.png',
+        '/products/caizer/caizer-product-3.png',
+        '/products/caizer/caizer-product-4.png',
+      ],
     },
     {
       id: 'f3',
@@ -214,6 +302,11 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-3.png',
       category: 'Furniture',
       isNew: true,
+      images: [
+        '/products/caizer/caizer-product-3.png',
+        '/products/caizer/caizer-product-4.png',
+        '/products/caizer/caizer-product-1.png',
+      ],
     },
     {
       id: 'f4',
@@ -222,6 +315,11 @@ export const productsData: ProductsData = {
       image: '/products/caizer/caizer-product-4.png',
       category: 'Furniture',
       isNew: false,
+      images: [
+        '/products/caizer/caizer-product-4.png',
+        '/products/caizer/caizer-product-1.png',
+        '/products/caizer/caizer-product-2.png',
+      ],
     },
   ],
 };
