@@ -9,12 +9,16 @@ interface IMainNavigationMobProps {
   setIsMobileMenuOpen: (value: SetStateAction<boolean>) => void;
   isActive: boolean;
   isMobileMenuOpen: boolean;
+  isSearchOpen: boolean;
+  setIsSearchOpen: (value: SetStateAction<boolean>) => void;
 }
 
 const MainNavigationMob: FC<IMainNavigationMobProps> = ({
   setIsMobileMenuOpen,
   isActive,
   isMobileMenuOpen,
+  isSearchOpen,
+  setIsSearchOpen,
 }) => {
   const { favorites } = useFavoritesStore();
   const favoritesCount = favorites.length;
@@ -33,6 +37,7 @@ const MainNavigationMob: FC<IMainNavigationMobProps> = ({
 
       <div className="flex gap-8 items-center">
         <button
+          onClick={() => setIsSearchOpen(!isSearchOpen)}
           className={cn(
             'hover:opacity-80 transition-opacity flex items-center gap-2',
             isActive ? 'text-gray-900 hover:text-gray-700' : 'text-white'
@@ -60,10 +65,7 @@ const MainNavigationMob: FC<IMainNavigationMobProps> = ({
 
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className={cn(
-            'lg:hidden p-2 transition-colors',
-            isActive ? 'text-gray-900' : 'text-white'
-          )}
+          className={cn('lg:hidden transition-colors', isActive ? 'text-gray-900' : 'text-white')}
           aria-label="Toggle menu"
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}

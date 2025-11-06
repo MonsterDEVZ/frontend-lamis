@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useScroll } from '@/hooks/useScroll';
@@ -10,6 +10,7 @@ import BurgerMenu from './BurgerMenu';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { MainNavigationDesc, TopBar } from './IsDesktop';
 import { MainNavigationMob } from './IsMobile';
+import MobileSearchOverlay from './MobileSearchOverlay';
 
 const mini_nav = [
   {
@@ -104,19 +105,43 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [activeSubList, setActiveSubList] = useState<IActiveSubList[] | undefined>(undefined);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [currentSearchValue, setCurrentSearchValue] = useState('');
   const isTablet = useMediaQuery('(min-width: 1024px)');
 
+  const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
 
-  // Use scroll hook to track scroll position and direction
   const { scrollY, scrollDirection } = useScroll();
 
-  // Navbar becomes "active" (opaque) if we scroll down or are not on homepage
   const isActive =
-    scrollY > 50 || isActiveHeader.includes(pathname) || isHovered || isMobileMenuOpen;
+    scrollY > 50 ||
+    isActiveHeader.includes(pathname) ||
+    isHovered ||
+    isMobileMenuOpen ||
+    isSearchOpen;
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isSearchOpen &&
+        headerRef.current &&
+        !headerRef.current.contains(event.target as Node) &&
+        currentSearchValue === ''
+      ) {
+        setIsSearchOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isSearchOpen, currentSearchValue]);
 
   return (
     <motion.header
+      ref={headerRef}
       initial={{ y: 0 }}
       animate={{
         y: scrollDirection === 'down' && scrollY > 200 ? '-100%' : '0%',
@@ -130,6 +155,9 @@ export default function Header() {
       onMouseLeave={() => {
         setIsHovered(false);
         setActiveSubList(undefined);
+        if (currentSearchValue === '') {
+          setIsSearchOpen(false);
+        }
       }}
     >
       {/* Top Bar */}
@@ -147,12 +175,18 @@ export default function Header() {
                 isActive={isActive}
                 nav={nav}
                 setActiveSubList={setActiveSubList}
+                isSearchOpen={isSearchOpen}
+                setIsSearchOpen={setIsSearchOpen}
+                currentSearchValue={currentSearchValue}
+                onSearchValueChange={setCurrentSearchValue}
               />
             ) : (
               <MainNavigationMob
                 isMobileMenuOpen={isMobileMenuOpen}
                 setIsMobileMenuOpen={setIsMobileMenuOpen}
                 isActive={isActive}
+                isSearchOpen={isSearchOpen}
+                setIsSearchOpen={setIsSearchOpen}
               />
             )}
           </div>
@@ -162,6 +196,15 @@ export default function Header() {
       </div>
 
       {isHovered && activeSubList && <NavItemMoreList activeSubList={activeSubList} />}
+
+      {/* Mobile Search Overlay */}
+      {isSearchOpen && !isTablet && (
+        <MobileSearchOverlay
+          setIsSearchOpen={setIsSearchOpen}
+          currentSearchValue={currentSearchValue}
+          onSearchValueChange={setCurrentSearchValue}
+        />
+      )}
 
       {/* Mobile Menu */}
       {!isTablet && isMobileMenuOpen ? (

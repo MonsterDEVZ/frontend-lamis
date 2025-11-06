@@ -1,4 +1,4 @@
-import type { FC, SetStateAction } from 'react';
+import { type FC, type SetStateAction } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Search, Heart } from 'lucide-react';
@@ -68,16 +68,27 @@ interface IMainNavigationDescProps {
       | undefined
     >
   ) => void;
+  isSearchOpen: boolean;
+  setIsSearchOpen: (value: boolean) => void;
+  currentSearchValue: string;
+  onSearchValueChange: (value: string) => void;
 }
 
-const MainNavigationDesc: FC<IMainNavigationDescProps> = ({ isActive, nav, setActiveSubList }) => {
+const MainNavigationDesc: FC<IMainNavigationDescProps> = ({
+  isActive,
+  nav,
+  setActiveSubList,
+  isSearchOpen,
+  setIsSearchOpen,
+  currentSearchValue,
+  onSearchValueChange,
+}) => {
   const { favorites } = useFavoritesStore();
   const favoritesCount = favorites.length;
 
   return (
-    <div className="flex items-center justify-between w-full h-full">
+    <div className="flex items-center justify-between gap-5 w-full h-full">
       <div className="flex items-center gap-[46px] h-full">
-        {/* Logo */}
         <Link href="/" className="hover:opacity-80 transition-opacity">
           <Image
             src={isActive ? '/logo-dark.svg' : '/logo-white.svg'}
@@ -88,7 +99,6 @@ const MainNavigationDesc: FC<IMainNavigationDescProps> = ({ isActive, nav, setAc
           />
         </Link>
 
-        {/* Desktop Navigation - Centered */}
         <div className="block h-full">
           <Nav
             isDarkText={isActive}
@@ -98,18 +108,47 @@ const MainNavigationDesc: FC<IMainNavigationDescProps> = ({ isActive, nav, setAc
         </div>
       </div>
 
-      {/* Right Icons */}
-      <div className="w-[147px] flex items-center gap-4">
-        <button
-          className={cn(
-            'hover:opacity-80 transition-opacity flex items-center gap-2',
-            isActive ? 'text-gray-900 hover:text-gray-700' : 'text-white'
-          )}
-          aria-label="Search"
-        >
-          <Search size={20} />
-          <span style={{ fontSize: '14px' }}>Поиск</span>
-        </button>
+      <div className="flex items-center justify-end gap-4">
+        {isSearchOpen ? (
+          <div className="relative w-60">
+            <input
+              type="text"
+              value={currentSearchValue}
+              onChange={(e) => onSearchValueChange(e.target.value)}
+              placeholder="Поиск..."
+              className={cn(
+                'w-full h-10 pl-4 pr-10 rounded-full border transition-colors duration-300',
+                'focus:outline-none focus:ring-2 focus:ring-[#009b3e]',
+                isActive
+                  ? 'bg-white border-gray-300 text-gray-900'
+                  : 'bg-transparent border-white/50 text-white placeholder:text-white/70'
+              )}
+            />
+            <button
+              onClick={() => setIsSearchOpen(false)}
+              className={cn(
+                'absolute right-1 top-1/2 -translate-y-1/2 p-2 rounded-full transition-colors',
+                isActive ? 'text-gray-600 hover:bg-gray-100' : 'text-white/80 hover:bg-white/20'
+              )}
+              aria-label="Close search"
+            >
+              <Search size={20} />
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => setIsSearchOpen(true)}
+            className={cn(
+              'hover:opacity-80 transition-opacity flex items-center gap-2',
+              isActive ? 'text-gray-900 hover:text-gray-700' : 'text-white'
+            )}
+            aria-label="Search"
+          >
+            <Search size={20} />
+            <span style={{ fontSize: '14px' }}>Поиск</span>
+          </button>
+        )}
+
         <Link
           href="/favorites"
           className={cn(
