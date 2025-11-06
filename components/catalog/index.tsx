@@ -352,14 +352,18 @@ const Catalog: FC = () => {
       </div>
 
       {/* Секция пагинации и управления количеством отображаемых товаров */}
-      <PaginationControls
-        currentPage={currentPage}
-        totalPages={totalPages}
-        itemsPerPage={itemsPerPage}
-        onPageChange={handlePageChange}
-        onItemsPerPageChange={handleItemsPerPageChange}
-        onShowMore={handleShowMore}
-      />
+      <div className="container">
+        <div className="flex justify-end items-center gap-4 mt-12">
+          <PaginationControls
+            currentPage={currentPage}
+            totalPages={totalPages}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+            onItemsPerPageChange={handleItemsPerPageChange}
+            onShowMore={handleShowMore}
+          />
+        </div>
+      </div>
     </div>
   );
 };
