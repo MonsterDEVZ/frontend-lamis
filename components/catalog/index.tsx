@@ -51,16 +51,22 @@ const Catalog: FC = () => {
 
   // Инициализируем фильтры из URL параметров
   useEffect(() => {
+    console.log('--- CATALOG COMPONENT MOUNTED/UPDATED ---');
+    console.log('Brand ID from URL:', brandIdFromUrl);
+    console.log('Category from URL:', categoryFromUrl);
+
     if (brandIdFromUrl) {
       const brandId = parseInt(brandIdFromUrl, 10);
       if (!isNaN(brandId)) {
+        console.log('Setting initial brand filter:', brandId);
         setBrandIds([brandId]);
       }
     }
     if (categoryFromUrl) {
+      console.log('Setting initial category filter:', categoryFromUrl);
       toggleCategory(categoryFromUrl);
     }
-  }, [brandIdFromUrl, categoryFromUrl, setBrandIds, toggleCategory]);
+  }, [brandIdFromUrl, categoryFromUrl]); // Убрали функции из зависимостей!
 
   // Получаем все продукты из productsData (мемоизированно)
   const allProducts = useMemo(() => {
@@ -94,18 +100,27 @@ const Catalog: FC = () => {
 
   // КРИТИЧЕСКИ ВАЖНО: useMemo для фильтрации и сортировки
   const filteredAndSortedProducts = useMemo(() => {
+    console.log('🔍 Filtering products with:');
+    console.log('  - Selected Brand IDs:', selectedBrandIds);
+    console.log('  - Selected Categories:', selectedCategories);
+    console.log('  - Total products:', allProducts.length);
+
     let result = [...allProducts];
 
     // ФИЛЬТРАЦИЯ ПО БРЕНДАМ
     if (selectedBrandIds.length > 0) {
+      console.log('  - Applying brand filter...');
       result = result.filter((product) =>
         product.brandId && selectedBrandIds.includes(product.brandId)
       );
+      console.log('  - After brand filter:', result.length, 'products');
     }
 
     // ФИЛЬТРАЦИЯ ПО КАТЕГОРИЯМ
     if (selectedCategories.length > 0) {
+      console.log('  - Applying category filter...');
       result = result.filter((product) => selectedCategories.includes(product.categoryKey));
+      console.log('  - After category filter:', result.length, 'products');
     }
 
     // СОРТИРОВКА

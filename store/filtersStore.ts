@@ -43,8 +43,10 @@ export const useFiltersStore = create<FiltersState>()(
         })),
 
       // Установка списка брендов
-      setBrandIds: (brandIds: number[]) =>
-        set({ selectedBrandIds: brandIds }),
+      setBrandIds: (brandIds: number[]) => {
+        console.log('🏪 Store: setBrandIds called with:', brandIds);
+        set({ selectedBrandIds: brandIds });
+      },
 
       // Установка метода сортировки
       setSortBy: (sort: string) =>
