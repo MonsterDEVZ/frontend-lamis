@@ -5,6 +5,12 @@ import Image from 'next/image';
 import { Heart } from 'lucide-react';
 import { cn } from '@/styles';
 import { useFavoritesStoreHydrated } from '@/hooks/useFavoritesStoreHydrated';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface IProps {
   category: string;
@@ -105,19 +111,27 @@ const CatalogCard: React.FC<IProps> = ({
       {/* Action Buttons */}
       <div className="px-4 pb-4 flex items-center gap-2">
         {/* Add to Favorites */}
-        <button
-          onClick={handleFavoriteClick}
-          title={isFav ? 'Удалить из избранного' : 'Добавить в избранное'}
-          className={cn(
-            'flex items-center justify-center w-10 h-10 rounded-full border transition-all duration-200',
-            isFav
-              ? 'bg-[#009B3E] border-[#009B3E] text-white'
-              : 'border-gray-300 text-gray-600 hover:border-[#009B3E] hover:text-[#009B3E]'
-          )}
-          aria-label={isFav ? 'Удалить из избранного' : 'Добавить в избранное'}
-        >
-          <Heart size={18} fill={isFav ? 'currentColor' : 'none'} />
-        </button>
+        <TooltipProvider delayDuration={200}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                onClick={handleFavoriteClick}
+                className={cn(
+                  'flex items-center justify-center w-10 h-10 rounded-full border transition-all duration-200',
+                  isFav
+                    ? 'bg-[#009B3E] border-[#009B3E] text-white'
+                    : 'border-gray-300 text-gray-600 hover:border-[#009B3E] hover:text-[#009B3E]'
+                )}
+                aria-label={isFav ? 'Удалить из избранного' : 'Добавить в избранное'}
+              >
+                <Heart size={18} fill={isFav ? 'currentColor' : 'none'} />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{isFav ? 'Удалить из избранного' : 'Добавить в избранное'}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       {/* Status Badge (if exists) */}
