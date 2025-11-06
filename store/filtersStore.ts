@@ -111,7 +111,7 @@ export const useFiltersStore = create<FiltersState>()(
           const categoryLabels: Record<string, string> = {
             heaters: 'Умные водонагреватели',
             mirrors: 'Зеркала Lamis',
-            blesk: 'Умные водонагреватели Blesk',
+            blesk: 'Водонагреватели Blesk',
             caizer: 'Сантехника Caizer',
             furniture: 'Мебель для ванн Lamis',
           };
@@ -145,7 +145,7 @@ export const useFiltersStore = create<FiltersState>()(
         const categoryLabels: Record<string, string> = {
           heaters: 'Умные водонагреватели',
           mirrors: 'Зеркала Lamis',
-          blesk: 'Умные водонагреватели Blesk',
+          blesk: 'Водонагреватели Blesk',
           caizer: 'Сантехника Caizer',
           furniture: 'Мебель для ванн Lamis',
         };

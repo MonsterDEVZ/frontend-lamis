@@ -8,9 +8,9 @@ import { Product, ProductsData, Tab, Collection } from '@/types/product';
 /**
  * Табы для категорий товаров
  */
-export const productTabs: Tab[] = [
-  { id: 'furniture', label: 'Мебель для ванн Lamis', count: 47 },
-];
+// export const productTabs: Tab[] = [
+//   { id: 'furniture', label: 'Мебель для ванн Lamis', count: 47 },
+// ];
 
 /**
  * Все продукты, сгруппированные по категориям
@@ -49,7 +49,7 @@ export const productsData: ProductsData = {
       description: 'Элегантный шкаф-пенал Accent в белом цвете. Универсальное решение для любой ванной.',
       images: [
         '/catalog/Lamis/Accent/AKTSENT-Closet-White-400x300x1750-2017-2024.2.22-3DDD3DSKY.png',
-        '/catalog/Lamis/Accent/1/example_for_2_image.jpg',
+        '/catalog/Lamis/Accent/2/example_for_2_image.jpg',
       ],
     },
     {
@@ -66,7 +66,7 @@ export const productsData: ProductsData = {
       description: 'Элегантный шкаф-пенал Accent в сером цвете. Стильное дополнение к современному интерьеру.',
       images: [
         '/catalog/Lamis/Accent/AKTSENT-Grey-400x300x1750-2017-2024.2.22-3DDD3DSKY.png',
-        '/catalog/Lamis/Accent/2/example_for_2_image.jpg',
+        '/catalog/Lamis/Accent/1/example_for_2_image.jpg',
       ],
     },
     {
@@ -793,6 +793,197 @@ export const productsData: ProductsData = {
       ],
     },
   ],
+
+  // ========== BLESK WATER HEATERS COLLECTION ==========
+  blesk: [
+    {
+      id: 'blesk-hor-30-50-80-100',
+      name: 'Blesk HOR 30/50/80/100 Водонагреватель горизонтальный',
+      price: '32 990 С',
+      image: '/catalog/Blesk/B HOR 30-50-80-100.png',
+      category: 'Water Heaters',
+      brandId: 3,
+      isNew: true,
+      slug: 'blesk-hor-30-50-80-100',
+      sku: 'BLK-HOR-001',
+      shortDescription: 'Горизонтальный водонагреватель Blesk HOR серии',
+      description: 'Современный горизонтальный водонагреватель Blesk с умным управлением. Доступны объемы 30, 50, 80 и 100 литров.',
+      images: [
+        '/catalog/Blesk/B HOR 30-50-80-100.png',
+        '/catalog/Blesk/for_example_all.JPG',
+      ],
+    },
+    {
+      id: 'blesk-mini-10-15-30-floor',
+      name: 'Blesk MINI 10/15/30 Водонагреватель напольный',
+      price: '24 990 С',
+      image: '/catalog/Blesk/B MINI 10-15-30 напольный.png',
+      category: 'Water Heaters',
+      brandId: 3,
+      isNew: true,
+      slug: 'blesk-mini-10-15-30-floor',
+      sku: 'BLK-MINI-FLR-001',
+      shortDescription: 'Компактный напольный водонагреватель Blesk MINI',
+      description: 'Компактный напольный водонагреватель Blesk MINI. Идеальное решение для небольших помещений. Объемы 10, 15 и 30 литров.',
+      images: [
+        '/catalog/Blesk/B MINI 10-15-30 напольный.png',
+        '/catalog/Blesk/for_example_all.JPG',
+      ],
+    },
+    {
+      id: 'blesk-mini-10-15-30-wall',
+      name: 'Blesk MINI 10/15/30 Водонагреватель подвесной',
+      price: '24 990 С',
+      image: '/catalog/Blesk/B MINI 10-15-30 подвесной.png',
+      category: 'Water Heaters',
+      brandId: 3,
+      isNew: true,
+      slug: 'blesk-mini-10-15-30-wall',
+      sku: 'BLK-MINI-WLL-001',
+      shortDescription: 'Компактный подвесной водонагреватель Blesk MINI',
+      description: 'Компактный подвесной водонагреватель Blesk MINI для экономии пространства. Объемы 10, 15 и 30 литров.',
+      images: [
+        '/catalog/Blesk/B MINI 10-15-30 подвесной.png',
+        '/catalog/Blesk/for_example_all.JPG',
+      ],
+    },
+    {
+      id: 'blesk-slv-50-80-v1',
+      name: 'Blesk SLV 50/80 Водонагреватель slim',
+      price: '29 990 С',
+      image: '/catalog/Blesk/B SLV 50-80 (1).png',
+      category: 'Water Heaters',
+      brandId: 3,
+      isNew: false,
+      slug: 'blesk-slv-50-80-v1',
+      sku: 'BLK-SLV-001',
+      shortDescription: 'Узкий водонагреватель Blesk SLV серии',
+      description: 'Узкий (slim) водонагреватель Blesk SLV для установки в ограниченном пространстве. Объемы 50 и 80 литров.',
+      images: [
+        '/catalog/Blesk/B SLV 50-80 (1).png',
+        '/catalog/Blesk/for_example_all.JPG',
+      ],
+    },
+    {
+      id: 'blesk-slv-50-80',
+      name: 'Blesk SLV 50/80 Водонагреватель slim premium',
+      price: '31 990 С',
+      image: '/catalog/Blesk/B SLV 50-80.png',
+      category: 'Water Heaters',
+      brandId: 3,
+      isNew: false,
+      slug: 'blesk-slv-50-80',
+      sku: 'BLK-SLV-002',
+      shortDescription: 'Узкий водонагреватель Blesk SLV premium',
+      description: 'Премиум версия узкого водонагревателя Blesk SLV с расширенным функционалом. Объемы 50 и 80 литров.',
+      images: [
+        '/catalog/Blesk/B SLV 50-80.png',
+        '/catalog/Blesk/for_example_all.JPG',
+      ],
+    },
+    {
+      id: 'blesk-neo-10-15-30-floor',
+      name: 'Blesk NEO 10/15/30 Водонагреватель напольный',
+      price: '26 990 С',
+      image: '/catalog/Blesk/B-NEO-10-15-30 напольный.png',
+      category: 'Water Heaters',
+      brandId: 3,
+      isNew: true,
+      slug: 'blesk-neo-10-15-30-floor',
+      sku: 'BLK-NEO-FLR-001',
+      shortDescription: 'Современный напольный водонагреватель Blesk NEO',
+      description: 'Водонагреватель Blesk NEO с современным дизайном для напольной установки. Объемы 10, 15 и 30 литров.',
+      images: [
+        '/catalog/Blesk/B-NEO-10-15-30 напольный.png',
+        '/catalog/Blesk/for_example_all.JPG',
+      ],
+    },
+    {
+      id: 'blesk-neo-10-15-30-wall',
+      name: 'Blesk NEO 10/15/30 Водонагреватель подвесной',
+      price: '26 990 С',
+      image: '/catalog/Blesk/B-NEO-10-15-30 подвесной.png',
+      category: 'Water Heaters',
+      brandId: 3,
+      isNew: true,
+      slug: 'blesk-neo-10-15-30-wall',
+      sku: 'BLK-NEO-WLL-001',
+      shortDescription: 'Современный подвесной водонагреватель Blesk NEO',
+      description: 'Водонагреватель Blesk NEO с современным дизайном для настенного монтажа. Объемы 10, 15 и 30 литров.',
+      images: [
+        '/catalog/Blesk/B-NEO-10-15-30 подвесной.png',
+        '/catalog/Blesk/for_example_all.JPG',
+      ],
+    },
+    {
+      id: 'blesk-nova-30-50-80-100',
+      name: 'Blesk NOVA 30/50/80/100 Водонагреватель',
+      price: '35 990 С',
+      image: '/catalog/Blesk/B-NOVA305080100.png',
+      category: 'Water Heaters',
+      brandId: 3,
+      isNew: true,
+      slug: 'blesk-nova-30-50-80-100',
+      sku: 'BLK-NOVA-001',
+      shortDescription: 'Водонагреватель Blesk NOVA с инновационными технологиями',
+      description: 'Инновационный водонагреватель Blesk NOVA с передовыми технологиями энергосбережения. Объемы от 30 до 100 литров.',
+      images: [
+        '/catalog/Blesk/B-NOVA305080100.png',
+        '/catalog/Blesk/for_example_all.JPG',
+      ],
+    },
+    {
+      id: 'blesk-vc-30-50-80-100-120',
+      name: 'Blesk VC 30/50/80/100/120 Водонагреватель вертикальный',
+      price: '38 990 С',
+      image: '/catalog/Blesk/BVC 305080100120.png',
+      category: 'Water Heaters',
+      brandId: 3,
+      isNew: true,
+      slug: 'blesk-vc-30-50-80-100-120',
+      sku: 'BLK-VC-001',
+      shortDescription: 'Вертикальный водонагреватель Blesk VC большого объема',
+      description: 'Вертикальный водонагреватель Blesk VC для больших объемов воды. Идеален для семей. Объемы от 30 до 120 литров.',
+      images: [
+        '/catalog/Blesk/BVC 305080100120.png',
+        '/catalog/Blesk/for_example_all.JPG',
+      ],
+    },
+    {
+      id: 'blesk-concept-30-50-80-100',
+      name: 'Blesk Concept 30/50/80/100 Водонагреватель дизайнерский',
+      price: '42 990 С',
+      image: '/catalog/Blesk/Concept 30-50-80-100.png',
+      category: 'Water Heaters',
+      brandId: 3,
+      isNew: true,
+      slug: 'blesk-concept-30-50-80-100',
+      sku: 'BLK-CONCEPT-001',
+      shortDescription: 'Дизайнерский водонагреватель Blesk Concept',
+      description: 'Премиум водонагреватель Blesk Concept с уникальным дизайном и передовыми технологиями. Объемы 30-100 литров.',
+      images: [
+        '/catalog/Blesk/Concept 30-50-80-100.png',
+        '/catalog/Blesk/for_example_all.JPG',
+      ],
+    },
+    {
+      id: 'blesk-flat-50-80-100',
+      name: 'Blesk Flat 50/80/100 Водонагреватель плоский',
+      price: '39 990 С',
+      image: '/catalog/Blesk/Flat 50-80-100.png',
+      category: 'Water Heaters',
+      brandId: 3,
+      isNew: true,
+      slug: 'blesk-flat-50-80-100',
+      sku: 'BLK-FLAT-001',
+      shortDescription: 'Плоский водонагреватель Blesk Flat',
+      description: 'Ультратонкий водонагреватель Blesk Flat для максимальной экономии пространства. Объемы 50, 80 и 100 литров.',
+      images: [
+        '/catalog/Blesk/Flat 50-80-100.png',
+        '/catalog/Blesk/for_example_all.JPG',
+      ],
+    },
+  ],
 };
 
 /**
@@ -863,5 +1054,10 @@ export const collections: Collection[] = [
     name: 'Caizer',
     image: '/plumbing_section/caizer/3016.png',
     slug: 'caizer',
+  },
+  {
+    name: 'Blesk',
+    image: '/catalog/Blesk/Concept 30-50-80-100.png',
+    slug: 'blesk',
   },
 ];
