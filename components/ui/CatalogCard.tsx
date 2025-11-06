@@ -104,7 +104,7 @@ const CatalogCard: React.FC<IProps> = ({
 
           {/* Price */}
           <div className="text-xl font-semibold text-gray-900 mb-3">
-            {formattedPrice} <u className="decoration-1">₽</u>
+            {formattedPrice} <u className="underline">С</u>
           </div>
         </div>
       </Link>
