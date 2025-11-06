@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import Header from '@/components/header/Header';
 import HeroSlider from '@/components/HeroSlider';
 import WaterHeatersSection from '@/components/WaterHeatersSection';
@@ -9,8 +12,12 @@ import ServiceCardsSection from '@/components/ServiceCardsSection';
 import MaterialsSection from '@/components/MaterialsSection';
 import Footer from '@/components/Footer';
 import PlumbingSection from '@/components/PlumbingSection';
+import FeedbackModal from '@/components/feedback/FeedbackModal';
+import { Button } from '@/components/ui/Button';
 
 export default function HomePage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <main>
       <Header />
@@ -23,7 +30,12 @@ export default function HomePage() {
       <AboutSection />
       <ServiceCardsSection />
       <MaterialsSection />
+
       <Footer />
+      <FeedbackModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </main>
   );
 }

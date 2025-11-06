@@ -91,3 +91,35 @@ button,
 a {
   cursor: pointer;
 }
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Анимация плавного исчезновения вправо */
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Классы для применения анимаций */
+.toast-enter {
+  animation: slideInRight 0.4s cubic-bezier(0.21, 1.02, 0.73, 1) forwards;
+}
+
+.toast-leave {
+  animation: slideOutRight 0.4s cubic-bezier(0.21, 1.02, 0.73, 1) forwards;
+}
