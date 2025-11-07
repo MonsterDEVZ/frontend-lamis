@@ -27,7 +27,7 @@ export default function MaterialsSection() {
     },
     {
       id: 4,
-      title: 'Фото дизайнерского зеркала над раковиной + лого LAMIS',
+      title: 'Фото дизайнерского зеркала над раковиной + лого LAMIS', //
       description: '',
       image: '/images/materials/materialForDownload_04.png',
     },
