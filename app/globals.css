@@ -123,3 +123,13 @@ a {
 .toast-leave {
   animation: slideOutRight 0.4s cubic-bezier(0.21, 1.02, 0.73, 1) forwards;
 }
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}

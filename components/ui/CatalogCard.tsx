@@ -5,12 +5,7 @@ import Image from 'next/image';
 import { Heart } from 'lucide-react';
 import { cn } from '@/styles';
 import { useFavoritesStoreHydrated } from '@/hooks/useFavoritesStoreHydrated';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface IProps {
   category: string;
@@ -92,9 +87,7 @@ const CatalogCard: React.FC<IProps> = ({
         <div className="p-4">
           {/* Brand Name - Design Spec: #B8B8B9, 16px, 500, 24px line-height */}
           <div className="mb-2">
-            <span className="text-[#B8B8B9] text-base font-medium leading-6">
-              {collection}
-            </span>
+            <span className="text-[#B8B8B9] text-base font-medium leading-6">{collection}</span>
           </div>
 
           {/* Product Name - Design Spec: 16px, 500, 24px line-height, hover: #009B3E */}
@@ -128,7 +121,7 @@ const CatalogCard: React.FC<IProps> = ({
                 <Heart size={18} fill={isFav ? 'currentColor' : 'none'} />
               </button>
             </TooltipTrigger>
-            <TooltipContent side="bottom">
+            <TooltipContent side="top">
               <p>{isFav ? 'Удалить из избранного' : 'Добавить в избранное'}</p>
             </TooltipContent>
           </Tooltip>

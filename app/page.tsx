@@ -13,7 +13,6 @@ import MaterialsSection from '@/components/MaterialsSection';
 import Footer from '@/components/Footer';
 import PlumbingSection from '@/components/PlumbingSection';
 import FeedbackModal from '@/components/feedback/FeedbackModal';
-import { Button } from '@/components/ui/Button';
 
 export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,10 +31,7 @@ export default function HomePage() {
       <MaterialsSection />
 
       <Footer />
-      <FeedbackModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+      <FeedbackModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </main>
   );
 }

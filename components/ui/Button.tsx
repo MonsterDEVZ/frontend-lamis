@@ -11,7 +11,10 @@ const buttonVariants = cva(
         secondary: 'bg-[#009B3E] text-white hover:text-black border-[#009B3E] hover:bg-white',
         outline:
           'leading-6 outline-none border-[#EEEEEE] hover:text-white hover:bg-[#009B3E] hover:border-[#009B3E]',
+        outline_gr:
+          'leading-6 outline-none border-[#009B3E] text-[#009B3E] hover:text-white hover:bg-[#009B3E] hover:border-[#009B3E]',
         dark: 'bg-black border-black hover:bg-white text-white hover:text-black h-12 rounded-4xl w-48 text-center',
+        empty: '',
       },
       size: {
         default: 'h-10 py-2 px-4',
@@ -41,7 +44,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, children, isLoading, ...props }, ref) => {
     return (
       <button
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, size }), className)}
         ref={ref}
         disabled={isLoading}
         {...props}
