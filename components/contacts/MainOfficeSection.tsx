@@ -1,9 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
-import YandexMapEmbed from './YandexMapEmbed';
+
 
 const MainOfficeSection: React.FC = () => {
   return (
+
     <div>
        <div className="text-sm text-gray-600 mb-8">
         <Link href="/" className="hover:text-green-600 transition-colors">
@@ -42,8 +43,6 @@ const MainOfficeSection: React.FC = () => {
           </a>
         </div>
       </div>
-
-      <YandexMapEmbed mapUrl="https://yandex.ru/map-widget/v1/?um=constructor%3A1e8d4c5f0b8a7b9c6d5e4f3a2b1c0d9e&amp;source=constructor" />
     </div>
   );
 };

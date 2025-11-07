@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { Button } from './Button';
 import { cn } from '@/styles';
@@ -26,43 +26,45 @@ const OrderModal: React.FC<OrderModalProps> = ({ isOpen, onClose, items, onSubmi
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
 
-  // Валидация формы
+  // Эффект для блокировки прокрутки фона
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    // Функция очистки, которая вернет прокрутку, если компонент будет удален
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
+
   const validateForm = () => {
     const newErrors: { name?: string; phone?: string } = {};
-
     if (!name.trim()) {
       newErrors.name = 'Введите ваше имя';
     }
-
     if (!phone.trim()) {
       newErrors.phone = 'Введите номер телефона';
     } else if (!/^[\d\s\+\-\(\)]+$/.test(phone)) {
       newErrors.phone = 'Некорректный формат телефона';
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  // Обработчик отправки формы
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validateForm()) {
       return;
     }
-
     setIsSubmitting(true);
-
     try {
-      // Вызываем колбэк с данными
       await onSubmit({
         name: name.trim(),
         phone: phone.trim(),
         items,
       });
-
-      // Очищаем форму и закрываем модалку
       setName('');
       setPhone('');
       setErrors({});
@@ -74,21 +76,26 @@ const OrderModal: React.FC<OrderModalProps> = ({ isOpen, onClose, items, onSubmi
     }
   };
 
-  // Подсчет общей суммы
   const totalPrice = items.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
 
-  if (!isOpen) return null;
-
   return (
-    <>
+    <div
+      className={`fixed inset-0 z-50 transition-opacity duration-300 ${
+        isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+      }`}
+    >
       {/* Overlay */}
       <div
-        className="fixed inset-0 bg-black/50 z-50 transition-opacity"
+        className="absolute inset-0 bg-black/50"
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div
+        className={`flex items-center justify-center p-4 h-full w-full transition-all duration-300 ${
+          isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+        }`}
+      >
         <div
           className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-xl"
           onClick={(e) => e.stopPropagation()}
@@ -230,7 +237,7 @@ const OrderModal: React.FC<OrderModalProps> = ({ isOpen, onClose, items, onSubmi
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
