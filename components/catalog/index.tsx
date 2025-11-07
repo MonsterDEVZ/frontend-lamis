@@ -323,22 +323,23 @@ const Catalog: FC = () => {
           </div>
 
           {/* Выпадающий список для фильтрации по цвету (будущий функционал) */}
-          <div className="w-full sm:w-52">
-            <Select
-              placeholder="Цвет изделия"
-              intent="outline"
-              multiple
-              value={[]}
-              onChange={() => {}}
-            >
-              <SelectOption value="beige">Бежевый</SelectOption>
-              <SelectOption value="white">Белый</SelectOption>
-              <SelectOption value="white_glossy">Белый глянцевый</SelectOption>
-              <SelectOption value="white_matte">Белый матовый</SelectOption>
-              <SelectOption value="bronze_matte">Бронза матовая</SelectOption>
-              <SelectOption value="beech_light">Бук светлый</SelectOption>
-            </Select>
-          </div>
+        {/*  FIX: ВРЕМЕННО УБРАЛ */}
+        {/*  <div className="w-full sm:w-52">*/}
+        {/*    <Select*/}
+        {/*      placeholder="Цвет изделия"*/}
+        {/*      intent="outline"*/}
+        {/*      multiple*/}
+        {/*      value={[]}*/}
+        {/*      onChange={() => {}}*/}
+        {/*    >*/}
+        {/*      <SelectOption value="beige">Бежевый</SelectOption>*/}
+        {/*      <SelectOption value="white">Белый</SelectOption>*/}
+        {/*      <SelectOption value="white_glossy">Белый глянцевый</SelectOption>*/}
+        {/*      <SelectOption value="white_matte">Белый матовый</SelectOption>*/}
+        {/*      <SelectOption value="bronze_matte">Бронза матовая</SelectOption>*/}
+        {/*      <SelectOption value="beech_light">Бук светлый</SelectOption>*/}
+        {/*    </Select>*/}
+        {/*  </div>*/}
         </div>
 
         {/* Отображение количества найденных товаров */}
