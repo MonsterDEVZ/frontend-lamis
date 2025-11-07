@@ -41,6 +41,7 @@ const Arrow = ({ direction }: { direction: 'left' | 'right' }) => (
 
 const PlumbingSection: FC = () => {
   const [activeFilter, setActiveFilter] = useState('caizer');
+  const [activeSubFilter, setActiveSubFilter] = useState('Все');
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
   const [pagination, setPagination] = useState({ current: 1, total: 1 });
   const [isBeginning, setIsBeginning] = useState(true);
@@ -48,9 +49,31 @@ const PlumbingSection: FC = () => {
   const [progress, setProgress] = useState(0);
   const [isSwiperInitialized, setIsSwiperInitialized] = useState(false);
 
+  const subFilters = ['Все', 'Раковины', 'Унитазы', 'Ванны', 'Смесители'];
+
   const filteredProducts = useMemo(() => {
     const categoryProducts = productsData[activeFilter] || [];
-    return categoryProducts.map((product) => {
+
+    const subFilteredProducts =
+      activeFilter === 'caizer' && activeSubFilter !== 'Все'
+        ? categoryProducts.filter((product) => {
+            if (activeSubFilter === 'Раковины') {
+              return product.name.toLowerCase().includes('раковин');
+            }
+            if (activeSubFilter === 'Унитазы') {
+              return product.name.toLowerCase().includes('унитаз');
+            }
+            if (activeSubFilter === 'Ванны') {
+              return product.name.toLowerCase().includes('ванн');
+            }
+            if (activeSubFilter === 'Смесители') {
+              return product.name.toLowerCase().includes('смеситель');
+            }
+            return true;
+          })
+        : categoryProducts;
+
+    return subFilteredProducts.map((product) => {
       const priceNumber = parseInt(product.price.replace(/[^\d]/g, ''), 10);
 
       // Определяем коллекцию на основе категории
@@ -73,7 +96,7 @@ const PlumbingSection: FC = () => {
         collection: collectionName,
       };
     });
-  }, [activeFilter]);
+  }, [activeFilter, activeSubFilter]);
 
   const slidesPerView = 4;
   const autoplayDelay = 5000;
@@ -170,19 +193,37 @@ const PlumbingSection: FC = () => {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2 mb-8 mt-10">
-        {tabs.map((tab) => (
-          <button
-            key={tab.value}
-            onClick={() => setActiveFilter(tab.value)}
-            className={`px-4 py-1 text-sm rounded-full border border-black transition-colors duration-200 cursor-pointer ${
-              activeFilter === tab.value ? 'bg-black text-white' : 'bg-white text-black'
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+      {/*<div className="flex flex-wrap items-center gap-2 mb-8 mt-10">*/}
+      {/*  {tabs.map((tab) => (*/}
+      {/*    <button*/}
+      {/*      key={tab.value}*/}
+      {/*      onClick={() => setActiveFilter(tab.value)}*/}
+      {/*      className={`px-4 py-1 text-sm rounded-full border border-black transition-colors duration-200 cursor-pointer ${*/}
+      {/*        activeFilter === tab.value ? 'bg-black text-white' : 'bg-white text-black'*/}
+      {/*      }`}*/}
+      {/*    >*/}
+      {/*      {tab.label}*/}
+      {/*    </button>*/}
+      {/*  ))}*/}
+      {/*</div>*/}
+
+      {activeFilter === 'caizer' && (
+        <div className="flex flex-wrap items-center gap-2 mb-8 mt-4">
+          {subFilters.map((subFilter) => (
+            <button
+              key={subFilter}
+              onClick={() => setActiveSubFilter(subFilter)}
+              className={`px-4 py-1 text-sm rounded-full border border-black transition-colors duration-200 cursor-pointer ${
+                activeSubFilter === subFilter
+                  ? 'bg-black text-white'
+                  : 'bg-white text-black'
+              }`}
+            >
+              {subFilter}
+            </button>
+          ))}
+        </div>
+      )}
 
       <Swiper
         modules={[Navigation, Autoplay]}
