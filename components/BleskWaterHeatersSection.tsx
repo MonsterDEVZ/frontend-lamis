@@ -66,11 +66,11 @@ export default function BleskWaterHeatersSection() {
         </div>
 
         {/* CTA Button */}
-        <div className="flex justify-center">
-          <button className="bg-black text-white px-8 py-4 rounded-full text-base font-medium hover:bg-gray-800 transition-colors duration-300">
-            Посмотреть еще
-          </button>
-        </div>
+        {/*<div className="flex justify-center">*/}
+        {/*  <button className="bg-black text-white px-8 py-4 rounded-full text-base font-medium hover:bg-gray-800 transition-colors duration-300">*/}
+        {/*    Посмотреть еще*/}
+        {/*  </button>*/}
+        {/*</div>*/}
       </div>
     </section>
   );

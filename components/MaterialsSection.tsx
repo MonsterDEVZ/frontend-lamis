@@ -51,9 +51,9 @@ export default function MaterialsSection() {
         </div>
 
         {/* Show More Button */}
-        <div className="flex justify-center">
-          <CTAButton>Посмотреть еще</CTAButton>
-        </div>
+        {/*<div className="flex justify-center">*/}
+        {/*  <CTAButton>Посмотреть еще</CTAButton>*/}
+        {/*</div>*/}
       </div>
     </section>
   );

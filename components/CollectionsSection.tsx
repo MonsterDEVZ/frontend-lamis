@@ -30,9 +30,9 @@ export default function CollectionsSection() {
         </div>
 
         {/* CTA Button - "Show More" */}
-        <div className="flex justify-center">
-          <CTAButton>Показать еще</CTAButton>
-        </div>
+        {/*<div className="flex justify-center">*/}
+        {/*  <CTAButton>Показать еще</CTAButton>*/}
+        {/*</div>*/}
       </div>
     </section>
   );
