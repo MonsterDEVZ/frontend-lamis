@@ -8,25 +8,26 @@ export default function MaterialsSection() {
     {
       id: 1,
       title:
-        'Все артикулы, технические характеристики и варианты отделки в одном удобном PDF-документе.',
+        'Фото коллекции + лого LAMIS\n' +
+          'Текст под фото: Все коллекции мебели для ванн\n',
       description: '',
       image: '/images/materials/materialForDownload_01.png',
     },
     {
       id: 2,
-      title: 'Готовые модели для 3ds Max, ArchiCAD и SketchUp. Просто перетащите в вашу сцену.',
+      title: 'Фото красивой раковины настольной в интерьере + лого CAISER. Все коллекции сантехники и смесителей',
       description: '',
       image: '/images/materials/materialForDownload_02.png',
     },
     {
       id: 3,
-      title: 'Бесшовные текстуры высокого разрешения для создания фотореалистичных визуализаций.',
+      title: 'Фото водонагревателя в интерьере + лого BLESK Все виды водонагревателей\n',
       description: '',
       image: '/images/materials/materialForDownload_03.png',
     },
     {
       id: 4,
-      title: 'Точные чертежи и инструкции для всех изделий. Незаменимо для строителей и инженеров.',
+      title: 'Фото дизайнерского зеркала над раковиной + лого LAMIS',
       description: '',
       image: '/images/materials/materialForDownload_04.png',
     },
