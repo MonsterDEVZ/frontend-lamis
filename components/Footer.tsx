@@ -137,10 +137,10 @@ export default function Footer() {
             <p>Copyright 2025. LAMIS</p>
 
             <div className="flex gap-6">
-              <Link href="/privacy" className="hover:text-white transition-colors">
+              <Link href="/cookie-policy" className="hover:text-white transition-colors">
                 Политика использования файлов Cookie
               </Link>
-              <Link href="/confidentiality" className="hover:text-white transition-colors">
+              <Link href="/privacy-policy" className="hover:text-white transition-colors">
                 Политика конфиденциальности
               </Link>
             </div>
