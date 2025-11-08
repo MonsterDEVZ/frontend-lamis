@@ -3,13 +3,14 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, EffectFade } from 'swiper/modules';
+
+import { Autoplay } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import CTAButton from './ui/CTAButton';
 import SliderNavigation from './ui/SliderNavigation';
 
 import 'swiper/css';
-import 'swiper/css/effect-fade';
+
 
 const slides = [
   {
@@ -63,8 +64,8 @@ export default function HeroSlider() {
       style={{ height: 'calc(100vh - 110px)', minHeight: '600px' }}
     >
       <Swiper
-        modules={[Autoplay, EffectFade]}
-        effect="fade"
+
+        modules={[Autoplay]}
         autoplay={{
           delay: autoplayDelay,
           disableOnInteraction: false,
