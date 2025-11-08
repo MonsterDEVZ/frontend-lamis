@@ -146,8 +146,8 @@ const PlumbingSection: FC = () => {
   }, [activeFilter, swiperInstance]);
 
   return (
-    <div className="max-w-[1250px] w-full mx-auto">
-      <div className="flex justify-between items-end">
+    <div className="container w-full">
+      <div className="pl-3 md:flex md:justify-between md:items-end">
         <h2 className="text-[44px]">Сантехника CAIZER</h2>
 
         <div className="flex items-center gap-6">

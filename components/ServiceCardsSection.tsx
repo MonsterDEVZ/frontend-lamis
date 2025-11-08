@@ -27,7 +27,7 @@ export default function ServiceCardsSection() {
 
   return (
     <section className="py-[100px] bg-white">
-      <div className="mx-auto px-10" style={{ maxWidth: '1250px' }}>
+      <div className="container px-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {services.map((service) => (
             <ServiceCard

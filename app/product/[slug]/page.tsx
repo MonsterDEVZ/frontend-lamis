@@ -101,7 +101,7 @@ export default function ProductPage({ params }: ProductPageProps) {
       <Header />
       <main className="min-h-screen bg-white pt-32">
         {/* Product Detail Section */}
-        <section className="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <section className="container px-4 sm:px-6 lg:px-8 py-8">
           {/* Breadcrumbs */}
           <Breadcrumbs items={breadcrumbs} />
 
@@ -135,7 +135,7 @@ export default function ProductPage({ params }: ProductPageProps) {
 
         {/* Related Products Section */}
         {sliderProducts.length > 0 && (
-          <section className="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+          <section className="container px-4 sm:px-6 lg:px-8 pb-16">
             <ProductSlider
               title="Коллекция Bild"
               products={sliderProducts}

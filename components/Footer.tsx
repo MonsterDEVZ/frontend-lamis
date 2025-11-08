@@ -32,7 +32,7 @@ export default function Footer() {
   return (
     <footer className="bg-black text-white">
       {/* Main Footer Content */}
-      <div className="mx-auto px-10 py-16" style={{ maxWidth: '1250px' }}>
+      <div className="container px-10 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Logo and Social */}
           <div className={'mt-2'}>
@@ -132,7 +132,7 @@ export default function Footer() {
 
       {/* Bottom Footer */}
       <div className="border-t border-white/10">
-        <div className="mx-auto px-10 py-6" style={{ maxWidth: '1250px' }}>
+        <div className="container px-10 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/60">
             <p>Copyright 2025. LAMIS</p>
 

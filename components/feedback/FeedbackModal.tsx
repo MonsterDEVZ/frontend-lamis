@@ -103,7 +103,7 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  // ИЗМЕНЕНИЕ: Убираем `if (!isOpen) return null;` и заменяем на управление через CSS
+ 
   return (
     <div
       className={`fixed inset-0 z-50 transition-opacity duration-300 ${

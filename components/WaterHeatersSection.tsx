@@ -32,7 +32,7 @@ const waterHeaters = [
 export default function WaterHeatersSection() {
   return (
     <section className="py-20 bg-white">
-      <div className="max-w-[1250px] mx-auto px-6 lg:px-12">
+      <div className="container px-6 lg:px-12">
         {/* Section Title */}
         <h2 className="text-3xl md:text-[44px] font-bold text-gray-900 mb-12">
           Коллекции мебели <br /> для ванн LAMIS

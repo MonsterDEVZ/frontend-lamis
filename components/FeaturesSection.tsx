@@ -6,7 +6,7 @@ import { features } from '@/data/features';
 export default function FeaturesSection() {
   return (
     <section className="py-20 bg-white">
-      <div className="mx-auto px-10" style={{ maxWidth: '1250px' }}>
+      <div className="container px-10">
         <SectionHeading>Почему выбирают «Lamis»</SectionHeading>
 
         {/* Features Grid */}

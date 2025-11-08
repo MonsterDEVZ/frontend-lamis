@@ -3,13 +3,14 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, EffectFade } from 'swiper/modules';
+
+import { Autoplay } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import CTAButton from './ui/CTAButton';
 import SliderNavigation from './ui/SliderNavigation';
 
 import 'swiper/css';
-import 'swiper/css/effect-fade';
+
 
 const slides = [
   {
@@ -63,8 +64,8 @@ export default function HeroSlider() {
       style={{ height: 'calc(100vh - 110px)', minHeight: '600px' }}
     >
       <Swiper
-        modules={[Autoplay, EffectFade]}
-        effect="fade"
+
+        modules={[Autoplay]}
         autoplay={{
           delay: autoplayDelay,
           disableOnInteraction: false,
@@ -99,7 +100,7 @@ export default function HeroSlider() {
 
             {/* Content */}
             <div className="relative z-10 h-full flex items-center w-full">
-              <div className="mx-auto flex items-center h-full max-w-[1250px] w-full px-10">
+              <div className="container flex items-center h-full w-full px-10">
                 <div className="inline-flex flex-col gap-8">
                   {/* Main Heading */}
                   <h1 className="text-white font-bold text-[56px] leading-[1.2] tracking-[-0.02em] mb-0">

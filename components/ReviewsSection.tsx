@@ -10,7 +10,7 @@ import { reviews } from '@/data/reviews';
 export default function ReviewsSection() {
   return (
     <section className="py-16 px-4 bg-white">
-      <div className="mx-auto" style={{ maxWidth: '1250px' }}>
+      <div className="container">
         <SectionHeading>Отзывы</SectionHeading>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
