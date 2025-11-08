@@ -23,6 +23,9 @@ body {
 
   --spacing-50: 50px;
   --spacing-100: 100px;
+
+  --color-green-100: #009b3e;
+  --color-dark-100: #1d1d1d;
 }
 
 .container {

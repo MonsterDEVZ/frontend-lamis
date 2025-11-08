@@ -13,13 +13,7 @@ import 'swiper/css';
 // @ts-ignore
 import 'swiper/css/navigation';
 
-const tabs = [
-  { label: 'Умные водонагреватели', value: 'heaters' },
-  { label: 'Зеркала Lamis', value: 'mirrors' },
-  { label: 'Умные водонагреватели Blesk', value: 'blesk' },
-  { label: 'Сантехника Caizer', value: 'caizer' },
-  { label: 'Мебель для ванн Lamis', value: 'furniture' },
-];
+const subFilters = ['Все', 'Раковины', 'Унитазы', 'Ванны', 'Смесители'];
 
 const Arrow = ({ direction }: { direction: 'left' | 'right' }) => (
   <svg
@@ -48,8 +42,6 @@ const PlumbingSection: FC = () => {
   const [isEnd, setIsEnd] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isSwiperInitialized, setIsSwiperInitialized] = useState(false);
-
-  const subFilters = ['Все', 'Раковины', 'Унитазы', 'Ванны', 'Смесители'];
 
   const filteredProducts = useMemo(() => {
     const categoryProducts = productsData[activeFilter] || [];
@@ -214,9 +206,7 @@ const PlumbingSection: FC = () => {
               key={subFilter}
               onClick={() => setActiveSubFilter(subFilter)}
               className={`px-4 py-1 text-sm rounded-full border border-black transition-colors duration-200 cursor-pointer ${
-                activeSubFilter === subFilter
-                  ? 'bg-black text-white'
-                  : 'bg-white text-black'
+                activeSubFilter === subFilter ? 'bg-black text-white' : 'bg-white text-black'
               }`}
             >
               {subFilter}
