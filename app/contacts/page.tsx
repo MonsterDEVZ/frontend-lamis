@@ -23,20 +23,6 @@ export default function ContactsPage() {
             <MainOfficeSection />
             <RepresentativesSection />
           </div>
-          <section className="mb-20 text-center">
-            <h2 className="text-3xl font-bold mb-4">
-              Остались вопросы?
-            </h2>
-            <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-              Нажмите на кнопку ниже, чтобы оставить заявку, и наш менеджер свяжется с вами для консультации.
-            </p>
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="bg-green-600 text-white font-semibold py-3 px-8 rounded-full hover:bg-green-700 transition-colors"
-            >
-              Связаться с нами
-            </button>
-          </section>
         </div>
       </main>
 
