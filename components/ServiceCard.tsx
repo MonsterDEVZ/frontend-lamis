@@ -14,7 +14,7 @@ export default function ServiceCard({ title, subtitle, image, onClick }: Service
     <div className="relative overflow-hidden rounded-3xl h-[400px]">
       {/* Background Image */}
       <div className="absolute inset-0">
-        <Image src={image} alt={title} fill className="object-cover" quality={100} />
+        <Image src={image} alt={title} fill className="object-cover object-top" quality={100} />
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black/30" />
       </div>

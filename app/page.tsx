@@ -24,7 +24,7 @@ export default function HomePage() {
       <WaterHeatersSection />
       <PlumbingSection />
       <BleskWaterHeatersSection />
-      <Collections />
+      {/*<Collections />*/}
       <FeaturesSection />
       <AboutSection />
       <ServiceCardsSection />

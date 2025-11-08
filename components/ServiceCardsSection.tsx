@@ -15,13 +15,13 @@ export default function ServiceCardsSection() {
       id: 1,
       title: 'Сервисный центр',
       subtitle: 'Поддержим в любой ситуации',
-      image: '/images/services/service-center.png',
+      image: '/imag494491.png',
     },
     {
       id: 2,
       title: 'Станьте нашим партнером',
       subtitle: 'Создаем и развиваемся',
-      image: '/images/services/partnership.png',
+      image: '/imag9dd82.png',
     },
   ];
 
