@@ -164,7 +164,7 @@ export default function Header() {
 
       {/* Main Navigation */}
       <div className="w-full">
-        <div className="mx-auto max-w-[1250px] w-full">
+        <div className="container w-full">
           <div
             className="flex items-center justify-between relative px-5"
             style={{ height: '70px' }}

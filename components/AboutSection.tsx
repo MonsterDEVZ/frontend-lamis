@@ -21,7 +21,7 @@ export default function AboutSection() {
 
       {/* Content */}
       <div className="relative z-10 h-full flex items-center">
-        <div className="mx-auto w-full px-10" style={{ maxWidth: '1250px' }}>
+        <div className="container w-full px-10">
           <div style={{ maxWidth: '600px' }}>
             {/* Heading */}
             <h2

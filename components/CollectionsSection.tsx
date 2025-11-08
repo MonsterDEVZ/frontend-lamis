@@ -18,7 +18,7 @@ import { collections } from '@/data/collections';
 export default function CollectionsSection() {
   return (
     <section className="py-20 bg-white">
-      <div className="mx-auto px-6 lg:px-12" style={{ maxWidth: '1250px' }}>
+      <div className="container px-6 lg:px-12">
         {/* Section Heading - Exact specification: 42px */}
         <SectionHeading>Водонагреватели BLESK</SectionHeading>
 

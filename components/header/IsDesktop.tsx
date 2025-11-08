@@ -18,7 +18,7 @@ interface ITopBarProps {
 const TopBar: FC<ITopBarProps> = ({ mini_nav, isActive }) => {
   return (
     <div className={cn('border-b border-white/10 w-full h-8', isActive ? 'bg-[#272b2b]' : '')}>
-      <div className="flex items-stretch justify-between max-w-[1250px] mx-auto px-5">
+      <div className="flex items-stretch justify-between container px-5">
         {/* Top Left Links */}
         <div className="flex items-center gap-6">
           {mini_nav.map((item) => (

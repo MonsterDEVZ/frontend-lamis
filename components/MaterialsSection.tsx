@@ -35,7 +35,7 @@ export default function MaterialsSection() {
 
   return (
     <section className="pb-20 bg-white">
-      <div className="mx-auto px-10" style={{ maxWidth: '1250px' }}>
+      <div className="container px-10">
         <SectionHeading>Материалы для скачивания</SectionHeading>
 
         {/* Materials Grid */}

@@ -21,7 +21,7 @@ const NavItemMoreList: FC<IProps> = ({ activeSubList }) => {
       }}
       transition={{ duration: 0.3 }}
     >
-      <div className="mx-auto max-w-[1250px] w-full px-5 py-6">
+      <div className="container w-full px-5 py-6">
         <div className="grid grid-cols-4 gap-x-8 gap-y-4">
           {activeSubList.map((item, index) => (
             <Link href={item.href} key={index} className="flex items-center gap-3 group">
