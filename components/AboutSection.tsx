@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export default function AboutSection() {
   return (
@@ -21,7 +21,7 @@ export default function AboutSection() {
 
       {/* Content */}
       <div className="relative z-10 h-full flex items-center">
-        <div className="container w-full px-10">
+        <div className="wrapper_centering w-full">
           <div style={{ maxWidth: '600px' }}>
             {/* Heading */}
             <h2
@@ -51,9 +51,8 @@ export default function AboutSection() {
 
             <Link href="/about">
               <button
-                className="flex items-center justify-center gap-2 text-white font-medium hover:opacity-90 transition-all"
+                className="flex items-center justify-center gap-2 text-white font-medium hover:opacity-90 transition-all bg-green-100"
                 style={{
-                  backgroundColor: '#00D856',
                   fontSize: '14px',
                   padding: '12px 24px',
                   borderRadius: '100px',

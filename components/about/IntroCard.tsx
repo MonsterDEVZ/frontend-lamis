@@ -7,10 +7,10 @@ interface IIntroCardProps {
 
 export const IntroCard = ({ title, description }: IIntroCardProps) => {
   return (
-    <div className="flex-shrink-0 w-full flex flex-col justify-center max-w-md mx-auto md:justify-start">
-      <h2 className="text-2xl lg:text-4xl font-bold">{title}</h2>
-      <p className="mt-4 text-gray-600 md:mb-30">{description}</p>
-      <div className="flex items-center mt-5 md:mt-10 lg:mt-8 xl:mt-7.5 text-[#1d1d1d] gap-4 justify-center">
+    <div className="shrink-0 w-[400px] flex flex-col justify-center">
+      <h2 className="text-4xl font-bold">{title}</h2>
+      <p className="mt-4 text-gray-600">{description}</p>
+      <div className="flex items-center mt-8 text-[#1d1d1d] gap-4">
         <svg
           width="22"
           height="34"

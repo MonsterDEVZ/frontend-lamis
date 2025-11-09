@@ -46,9 +46,8 @@ export default function ServiceCard({ title, subtitle, image, onClick }: Service
         
         <button
         onClick={onClick}
-          className="flex items-center justify-center text-white hover:opacity-90 transition-all self-start"
+          className="flex items-center justify-center text-white hover:opacity-90 transition-all self-start bg-green-100"
           style={{
-            backgroundColor: '#00D856',
             width: '48px',
             height: '48px',
             borderRadius: '50%',

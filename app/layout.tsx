@@ -1,5 +1,7 @@
+// Путь: app/layout.tsx
+
 import './globals.css';
-import { Toaster } from 'react-hot-toast';
+import ClientLayoutWrapper from './ClientLayoutWrapper'; // <-- Импортируем нашу обертку
 
 export const metadata = {
   title: 'LAMIS - Платформа электронной коммерции',
@@ -10,8 +12,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ru">
       <body>
-        {children}
-        <Toaster position="top-right" />
+        {/* Оборачиваем дочерние элементы в наш клиентский компонент */}
+        <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
       </body>
     </html>
   );

@@ -45,9 +45,9 @@ const BurgerMenu: FC<IProps> = ({ setIsMobileMenuOpen, nav, mini_nav }) => {
           style={{ paddingBottom: '24px' }}
         >
           <button className="p-2 -ml-2 transition-colors" aria-label="Go back">
-            <ChevronLeft size={24} style={{ color: '#009B3E' }} />
+            <ChevronLeft size={24} className="text-green-100" />
           </button>
-          <h2 className="text-lg font-bold text-[#009B3E] ml-2">{activeSubMenu.title}</h2>
+          <h2 className="text-lg font-bold text-green-100 ml-2">{activeSubMenu.title}</h2>
         </div>
 
         {/* Sub-menu List */}
@@ -90,7 +90,7 @@ const BurgerMenu: FC<IProps> = ({ setIsMobileMenuOpen, nav, mini_nav }) => {
             <Link
               href={item.href}
               onClick={handleLinkClick}
-              className="text-[#1d1d1d] hover:text-[#009B3E] transition-colors"
+              className="text-dark-100 hover:text-[#009B3E] transition-colors"
               style={{ fontSize: '18px' }}
             >
               {item.title}
@@ -100,7 +100,7 @@ const BurgerMenu: FC<IProps> = ({ setIsMobileMenuOpen, nav, mini_nav }) => {
                 onClick={() => setActiveSubMenu(item)}
                 aria-label={`Open ${item.title} submenu`}
               >
-                <ChevronRight size={24} style={{ color: '#009B3E' }} />
+                <ChevronRight size={24} className="text-green-100" />
               </button>
             )}
           </div>
@@ -115,7 +115,7 @@ const BurgerMenu: FC<IProps> = ({ setIsMobileMenuOpen, nav, mini_nav }) => {
               target={item.target ? '_blank' : undefined}
               rel={item.target ? 'noopener noreferrer' : undefined}
               onClick={handleLinkClick}
-              className="block text-[#1d1d1d] hover:text-[#009B3E] transition-colors"
+              className="block text-dark-100 hover:text-[#009B3E] transition-colors"
               style={{ fontSize: '18px' }}
             >
               {item.title}

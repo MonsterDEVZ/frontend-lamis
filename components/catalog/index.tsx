@@ -20,11 +20,11 @@ const categoryKeyMap: Record<string, string> = {
 
 // Маппинг категорий к brandId
 const categoryToBrandId: Record<string, number> = {
-  furniture: 1,   // Lamis
-  mirrors: 1,     // Lamis
-  heaters: 1,     // Lamis
-  caizer: 2,      // Caizer
-  blesk: 3,       // Blesk
+  furniture: 1, // Lamis
+  mirrors: 1, // Lamis
+  heaters: 1, // Lamis
+  caizer: 2, // Caizer
+  blesk: 3, // Blesk
 };
 
 const Catalog: FC = () => {
@@ -243,14 +243,14 @@ const Catalog: FC = () => {
         className="w-full h-[200px] sm:h-[300px] md:h-[400px] bg-cover bg-center pb-8 sm:pb-16 md:pb-24 flex items-end"
         style={{ backgroundImage: "url('/images/hero/screen_1.png')" }}
       >
-        <div className="container px-4">
+        <div className="wrapper_centering px-4">
           <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold">
             Каталог товаров
           </h1>
         </div>
       </div>
 
-      <div className="container mt-8 sm:mt-12 md:mt-50 pb-8 px-4">
+      <div className="wrapper_centering mt-8 sm:mt-12 md:mt-50 pb-8 px-4">
         {/* УРОВЕНЬ 2: ДИНАМИЧЕСКИЕ ТАБЫ для фильтрации по категориям */}
         {selectedBrandId !== null && availableCategories.length > 0 && (
           <div className="mb-8">
@@ -323,23 +323,23 @@ const Catalog: FC = () => {
           </div>
 
           {/* Выпадающий список для фильтрации по цвету (будущий функционал) */}
-        {/*  FIX: ВРЕМЕННО УБРАЛ */}
-        {/*  <div className="w-full sm:w-52">*/}
-        {/*    <Select*/}
-        {/*      placeholder="Цвет изделия"*/}
-        {/*      intent="outline"*/}
-        {/*      multiple*/}
-        {/*      value={[]}*/}
-        {/*      onChange={() => {}}*/}
-        {/*    >*/}
-        {/*      <SelectOption value="beige">Бежевый</SelectOption>*/}
-        {/*      <SelectOption value="white">Белый</SelectOption>*/}
-        {/*      <SelectOption value="white_glossy">Белый глянцевый</SelectOption>*/}
-        {/*      <SelectOption value="white_matte">Белый матовый</SelectOption>*/}
-        {/*      <SelectOption value="bronze_matte">Бронза матовая</SelectOption>*/}
-        {/*      <SelectOption value="beech_light">Бук светлый</SelectOption>*/}
-        {/*    </Select>*/}
-        {/*  </div>*/}
+          {/*  FIX: ВРЕМЕННО УБРАЛ */}
+          {/*  <div className="w-full sm:w-52">*/}
+          {/*    <Select*/}
+          {/*      placeholder="Цвет изделия"*/}
+          {/*      intent="outline"*/}
+          {/*      multiple*/}
+          {/*      value={[]}*/}
+          {/*      onChange={() => {}}*/}
+          {/*    >*/}
+          {/*      <SelectOption value="beige">Бежевый</SelectOption>*/}
+          {/*      <SelectOption value="white">Белый</SelectOption>*/}
+          {/*      <SelectOption value="white_glossy">Белый глянцевый</SelectOption>*/}
+          {/*      <SelectOption value="white_matte">Белый матовый</SelectOption>*/}
+          {/*      <SelectOption value="bronze_matte">Бронза матовая</SelectOption>*/}
+          {/*      <SelectOption value="beech_light">Бук светлый</SelectOption>*/}
+          {/*    </Select>*/}
+          {/*  </div>*/}
         </div>
 
         {/* Отображение количества найденных товаров */}
@@ -355,7 +355,7 @@ const Catalog: FC = () => {
       </div>
 
       {/* Секция пагинации и управления количеством отображаемых товаров */}
-      <div className="container">
+      <div className="wrapper_centering">
         <div className="flex justify-between items-center gap-4 mt-12 w-full">
           <PaginationControls
             className={'w-full'}

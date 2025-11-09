@@ -84,7 +84,7 @@ export default function CollectionsGrid() {
                 w-10 h-10 rounded-full flex items-center justify-center font-medium transition-colors
                 ${
                   activePage === page
-                    ? 'bg-[#009B3E] text-white'
+                    ? 'bg-green-100 text-white'
                     : 'border border-gray-300 text-gray-700 hover:border-[#009B3E] hover:text-[#009B3E]'
                 }
               `}

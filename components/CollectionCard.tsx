@@ -26,7 +26,7 @@ export default function CollectionCard({ collection }: CollectionCardProps) {
       href={`/collection/${collection.slug}`}
       className="block relative aspect-[4/3] rounded-2xl overflow-hidden group"
     >
-      {/* Image Container with Hover Effect */}
+      {/* Image wrapper_centering with Hover Effect */}
       <motion.div
         className="relative w-full h-full"
         whileHover={{ scale: 1.05 }}

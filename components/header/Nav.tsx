@@ -38,7 +38,7 @@ export default function Nav({ isDarkText = false, list, onItemEnter }: NavProps)
           className={cn(
             linkClass,
             'relative flex items-center h-full group',
-            pathname === item.href ? 'text-[#009b3e]' : ''
+            pathname === item.href ? 'text-green-100' : ''
           )}
           style={{
             width: w[idx],
@@ -49,7 +49,7 @@ export default function Nav({ isDarkText = false, list, onItemEnter }: NavProps)
 
           <div
             className={cn(
-              'absolute -bottom-px bg-[#009b3e] rounded-t-sm w-full h-1 transition-all duration-300',
+              'absolute -bottom-px bg-green-100 rounded-t-sm w-full h-1 transition-all duration-300',
               pathname === item.href ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
             )}
           />
