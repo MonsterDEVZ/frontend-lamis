@@ -1,21 +1,57 @@
 'use client';
 import { historyData } from '@/data/historyData';
 import { useHorizontalScroll } from '@/hooks/useHorizontalScroll';
+import { useMediaQuery } from '@/hooks/useMediaQuery'; // <-- Убедитесь, что импорт правильный
 import { TimelineCard } from './TimelineCard';
 import { IntroCard } from './IntroCard';
 
 export const HistoryTimeline = () => {
-  const scrollRef = useHorizontalScroll();
+  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const scrollRef = useHorizontalScroll(isDesktop);
+
+  if (isDesktop) {
+    return (
+      <div
+        ref={scrollRef}
+        className="flex overflow-x-auto cursor-grab space-x-8 py-10 pl-10 pr-20 no-scrollbar"
+      >
+        {historyData.map((item, index) =>
+          item.type === 'intro' ? (
+            <IntroCard key={index} title={item.title} description={item.description[0]} />
+          ) : (
+            <TimelineCard
+              key={index}
+              year={item.year!}
+              title={item.title}
+              description={item.description}
+              image={item.image!}
+            />
+          )
+        )}
+      </div>
+    );
+  }
+
+  // Если это мобильное устройство (< 768px), рендерим ВАРИАНТ С ТЕКСТОМ НАВЕРХУ
+  // Отделяем интро-карточку от остальных
+  const introItem = historyData.find(item => item.type === 'intro');
+  const eventItems = historyData.filter(item => item.type === 'event');
 
   return (
-    <div
-      ref={scrollRef}
-      className="flex overflow-x-auto cursor-grab space-x-8 py-10 pl-10 pr-20 no-scrollbar"
-    >
-      {historyData.map((item, index) =>
-        item.type === 'intro' ? (
-          <IntroCard key={index} title={item.title} description={item.description[0]} />
-        ) : (
+    <div className="py-10">
+      {/* Блок с текстом "Наша история" */}
+      {introItem && (
+        <div className="px-4 mb-8 text-center">
+          <IntroCard title={introItem.title} description={introItem.description[0]} />
+        </div>
+      )}
+
+      {/* Горизонтально прокручиваемый контейнер ТОЛЬКО для карточек */}
+      <div
+        ref={scrollRef}
+        className="flex overflow-x-auto cursor-grab space-x-8 pl-4 pr-4 no-scrollbar"
+      >
+        {eventItems.map((item, index) => (
           <TimelineCard
             key={index}
             year={item.year!}
@@ -23,8 +59,8 @@ export const HistoryTimeline = () => {
             description={item.description}
             image={item.image!}
           />
-        )
-      )}
+        ))}
+      </div>
     </div>
   );
 };

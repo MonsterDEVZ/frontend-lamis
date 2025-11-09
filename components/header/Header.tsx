@@ -147,7 +147,7 @@ export default function Header() {
       }}
       transition={{ duration: 0.3, ease: 'easeInOut' }}
       className={cn(
-        'z-50 w-full justify-center flex flex-col fixed transition-colors duration-300 border-b',
+        'z-99 w-full justify-center flex flex-col fixed transition-colors duration-300 border-b',
         isActive ? 'bg-white border-[#1d1d1d1a]' : 'bg-transparent border-white/10'
       )}
       onMouseEnter={() => setIsHovered(true)}

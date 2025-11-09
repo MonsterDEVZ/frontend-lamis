@@ -61,6 +61,7 @@ export const SliderNavigation: FC<SliderNavigationProps> = ({
             style={{
               width: `${progress}%`,
               backgroundColor: progressFill,
+              
             }}
           />
         </div>

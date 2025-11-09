@@ -1,3 +1,8 @@
+'use client';
+
+import { useRef, useEffect } from 'react';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
+
 import Header from '@/components/header/Header';
 import Footer from '@/components/Footer';
 import Banner from '@/components/about/Banner';
@@ -8,13 +13,13 @@ import { cn } from '@/styles';
 
 const card1 = {
   title: 'Премиум, доступный каждому',
-  description: `Продукты IDDIS® созданы, чтобы превосходить ожидания. Они предлагают новый уровень эстетики, надёжности, красоты и удовольствия от повседневных ритуалов. IDDIS® – это премиальное качество, продуманность и дизайн, сопоставимые с европейскими брендами, по цене, доступной среднему россиянину.<br/>• Новый уровень надёжности. Наши продукты разработаны для длительной службы и отличаются исключительной надёжностью. Мы тщательно тестируем каждую деталь, чтобы обеспечить удобство использования, интуитивный принцип работы и простой монтаж.<br/>• Новый уровень дизайна. Наш дизайн вне времени. Он легко переживёт быстротечные тренды, даря ежедневную радость от красивых, удобных продуктов, которые безупречно работают в течение многих лет.<br/>• Новый уровень сервиса. Экспертиза наших сотрудников и партнёров гарантирует всестороннюю поддержку на каждом этапе – от выбора продукта до установки и обслуживания. Мы предлагаем консультирование на установку и покупки и гарантируем поставку запасных частей даже спустя долгое время после прекращения производства модели.`,
-  imageUrl: '/images/about-brand.png', // Placeholder image
+  description: `Продукты Lamis® созданы, чтобы превосходить ожидания. Они предлагают новый уровень эстетики, надёжности, красоты и удовольствия от повседневных ритуалов. Lamis® – это премиальное качество, продуманность и дизайн, сопоставимые с европейскими брендами, по цене, доступной среднему россиянину.<br/>• Новый уровень надёжности. Наши продукты разработаны для длительной службы и отличаются исключительной надёжностью. Мы тщательно тестируем каждую деталь, чтобы обеспечить удобство использования, интуитивный принцип работы и простой монтаж.<br/>• Новый уровень дизайна. Наш дизайн вне времени. Он легко переживёт быстротечные тренды, даря ежедневную радость от красивых, удобных продуктов, которые безупречно работают в течение многих лет.<br/>• Новый уровень сервиса. Экспертиза наших сотрудников и партнёров гарантирует всестороннюю поддержку на каждом этапе – от выбора продукта до установки и обслуживания. Мы предлагаем консультирование на установку и покупки и гарантируем поставку запасных частей даже спустя долгое время после прекращения производства модели.`,
+  imageUrl: '/images/about-brand.png',
 };
 const card2 = {
   title: 'Экспертиза, проверенная временем и стандартами',
   description: `Наша приверженность качеству подтверждена не только нашей репутацией, но и строгими стандартами, которые мы соблюдаем:<br/>• Уровень тестирования нашей продукции значительно выше, чем у других российских марок. Трёхступенчатая система контроля включает входной контроль материалов, промежуточный контроль на всех этапах производства и итоговый контроль готовой продукции.`,
-  imageUrl: '/images/about-brand.png', // Placeholder image
+  imageUrl: '/images/about-brand.png',
 };
 
 const card3 = {
@@ -23,7 +28,7 @@ const card3 = {
   <br/>
   Мы используем только высококачественные материалы и современные технологии. Наши заводы оснащены передовым оборудованием, что позволяет нам контролировать качество на каждом этапе производства. Мы гордимся тем, что наша продукция соответствует самым высоким мировым стандартам.
   `,
-  imageUrl: '/images/about-brand.png', // Placeholder image
+  imageUrl: '/images/about-brand.png',
 };
 
 const metrics = [
@@ -38,43 +43,49 @@ const metrics = [
 ];
 
 export default function AboutPage() {
+  const metricsScrollRef = useRef<HTMLDivElement>(null);
+  const isMobile = useMediaQuery('(max-width: 767px)');
+
+  useEffect(() => {
+    if (isMobile) {
+      const container = metricsScrollRef.current;
+      if (container) {
+        const scrollLeftCenter = (container.scrollWidth - container.clientWidth) / 2;
+        container.scrollLeft = scrollLeftCenter;
+      }
+    }
+  }, [isMobile]);
+
   return (
     <main>
       <Header />
       <Banner />
       <AboutBrand />
-
       <HistoryTimeline />
 
       {/* Two Column Info */}
-      <section
-        className="container py-24"
-        style={{
-          paddingBlock: '96px',
-        }}
-      >
+      <section className="container py-24" style={{ paddingBlock: '96px' }}>
         <div className="grid md:grid-cols-2 gap-6">
           <InfoCardAccordion {...card1} />
           <InfoCardAccordion {...card2} />
         </div>
-
-        {/* One Column Info */}
         <div className="mt-24 w-full">
           <InfoCardAccordion {...card3} />
         </div>
       </section>
 
-      {/* Infographics */}
       <section className="container bg-white w-full" style={{ paddingBottom: '96px' }}>
-        <div className="overflow-hidden overflow-x-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 py-5 border_solid border-[#1d1d1d] rounded-[18px] min-w-[1154px]">
-            {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 divide-x divide-[#1d1d1d] py-5 border_solid border-[#1d1d1d] rounded-[18px] min-w-[1154px]"> */}
+        <div ref={metricsScrollRef} className="overflow-hidden overflow-x-auto no-scrollbar">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 py-5 border border-[#1d1d1d] rounded-[18px] min-w-[1154px]">
             {metrics.map((metric, index) => (
               <div
                 key={index}
                 className={cn(
                   'flex items-center justify-center h-36',
-                  index === 3 || index === 7 ? '' : 'border_right border-[#1d1d1d]'
+
+                  'border-r border-[#1d1d1d]',
+                  'sm:last:border-r-0',
+                  'md:[&:nth-child(4n)]:border-r-0'
                 )}
               >
                 <div className="text-center px-4">
