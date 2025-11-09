@@ -13,7 +13,7 @@ import MaterialsSection from '@/components/MaterialsSection';
 import Footer from '@/components/Footer';
 import PlumbingSection from '@/components/PlumbingSection';
 import FeedbackModal from '@/components/feedback/FeedbackModal';
-import CooperationForm from '@/components/forms/CooperationForm';
+// import CooperationForm from '@/components/forms/CooperationForm';
 
 export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,7 +30,7 @@ export default function HomePage() {
       <AboutSection />
       <ServiceCardsSection />
       <MaterialsSection />
-      <CooperationForm />
+      {/* <CooperationForm /> */}
 
       <Footer />
       <FeedbackModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
