@@ -38,7 +38,7 @@ const slides = [
   },
   {
     id: 4,
-    image: '/images/hero/slide_3.png',
+    image: '/hero_4-image.jpg',
     title: 'Дизайнерского зеркала',
     subtitle: 'LAMIS',
     description:

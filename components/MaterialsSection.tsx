@@ -10,25 +10,25 @@ export default function MaterialsSection() {
       title:
         'Все коллекции мебели для ванн',
       description: '',
-      image: '/Image__01.png',
+      image: 'Image__01.webp',
     },
     {
       id: 2,
       title: 'Все коллекции сантехники и смесителей',
       description: '',
-      image: '/image__02.png',
+      image: 'Image__02.webp',
     },
     {
       id: 3,
       title: 'Все виды водонагревателей',
       description: '',
-      image: '/image__03.png',
+      image: 'Image__03.webp',
     },
     {
       id: 4,
       title: 'Вся коллекция дизайнерских и умных зеркал',
       description: '',
-      image: '/image__04.png',
+      image: 'Image__04.webp',
     },
   ];
 
@@ -44,7 +44,7 @@ export default function MaterialsSection() {
               key={material.id}
               title={material.title}
               description={material.description}
-              image={material.image}
+              image={`https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/${material.image}`}
             />
           ))}
         </div>
