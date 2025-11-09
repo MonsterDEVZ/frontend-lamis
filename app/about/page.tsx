@@ -48,7 +48,7 @@ export default function AboutPage() {
 
       {/* Two Column Info */}
       <section
-        className="container py-24"
+        className="container py-24 mx-auto"
         style={{
           paddingBlock: '96px',
         }}
@@ -65,7 +65,7 @@ export default function AboutPage() {
       </section>
 
       {/* Infographics */}
-      <section className="container bg-white w-full" style={{ paddingBottom: '96px' }}>
+      <section className="container bg-white w-full mx-auto" style={{ paddingBottom: '96px' }}>
         <div className="overflow-hidden overflow-x-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 py-5 border_solid border-[#1d1d1d] rounded-[18px] min-w-[1154px]">
             {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 divide-x divide-[#1d1d1d] py-5 border_solid border-[#1d1d1d] rounded-[18px] min-w-[1154px]"> */}
