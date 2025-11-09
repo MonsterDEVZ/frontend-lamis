@@ -20,7 +20,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev',
+        hostname: 'pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev', // lamis bucket for images in Cloudflare R2
       }
     ],
   },
