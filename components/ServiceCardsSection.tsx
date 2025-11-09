@@ -42,6 +42,5 @@ export default function ServiceCardsSection() {
       </div>
       <FeedbackModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
-  )
+  );
 }
-

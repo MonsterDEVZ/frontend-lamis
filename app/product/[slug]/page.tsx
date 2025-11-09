@@ -99,14 +99,15 @@ export default function ProductPage({ params }: ProductPageProps) {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-white pt-32">
+
+      <main className="min-h-screen bg-white pt-24">
         {/* Product Detail Section */}
-        <section className="container px-4 sm:px-6 lg:px-8 py-8 mx-auto">
+        <section className="wrapper_centering py-8">
           {/* Breadcrumbs */}
-          <Breadcrumbs items={breadcrumbs} />
+          <Breadcrumbs items={breadcrumbs} resetPosition />
 
           {/* Product Grid: Gallery Left, Info Right */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 mt-10">
             {/* Left: Gallery */}
             <ProductGallery images={product.images || [product.image]} productName={product.name} />
 
@@ -135,7 +136,7 @@ export default function ProductPage({ params }: ProductPageProps) {
 
         {/* Related Products Section */}
         {sliderProducts.length > 0 && (
-          <section className="container px-4 sm:px-6 lg:px-8 pb-16 mx-auto">
+          <section className="wrapper_centering px-4 sm:px-6 lg:px-8 pb-16">
             <ProductSlider
               title="Коллекция Bild"
               products={sliderProducts}

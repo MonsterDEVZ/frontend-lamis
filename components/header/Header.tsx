@@ -104,6 +104,7 @@ export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [currentSearchValue, setCurrentSearchValue] = useState('');
   const isTablet = useMediaQuery('(min-width: 1024px)');
+  console.log('RENDER HEADER');
 
   const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();

@@ -7,6 +7,7 @@ import type { Swiper as SwiperType } from 'swiper';
 import CTAButton from './ui/CTAButton';
 import SliderNavigation from './ui/SliderNavigation';
 
+// @ts-ignore
 import 'swiper/css';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 
@@ -59,7 +60,6 @@ export default function HeroSlider() {
         height: isDesktop ? 'calc(100vh - 70px)' : 'calc(600px - 70px)',
         minHeight: '600px',
       }}
-      // style={{ height: isDesktop ? 'calc(100vh - 70px)' : 'calc(530px - 70px)', minHeight: '600px' }}
     >
       <Swiper
         modules={[Autoplay]}
@@ -92,19 +92,19 @@ export default function HeroSlider() {
               <div className="wrapper_centering flex items-center h-full w-full px-10">
                 <div className="inline-flex flex-col items-center lg:items-start gap-8">
                   {/* Main Heading */}
-                  <h1 className="text-white font-bold text-[56px] leading-[1.2] tracking-[-0.02em] mb-0 text-center lg:text-left">
+                  <h1 className="text-white font-bold text-[40px] md:text-[56px] leading-12 md:leading-[1.2] tracking-[-0.02em] mb-0 text-center lg:text-left">
                     {slide.title}
                     <br />
                     {slide.subtitle}
                   </h1>
 
                   {/* Description */}
-                  <p className="text-white text-base leading-[1.6] opacity-90 max-w-[500px] mb-0 text-center lg:text-left">
+                  <p className="text-white text-base leading-[22px] opacity-90 max-w-[500px] mb-0 text-center lg:text-left">
                     {slide.description}
                   </p>
 
                   {/* CTA Button */}
-                  <CTAButton className="w-48">Подробнее</CTAButton>
+                  <CTAButton className="w-40 md:w-48 px-0!">Подробнее</CTAButton>
                 </div>
               </div>
             </div>
