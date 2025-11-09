@@ -24,7 +24,7 @@ const AboutBrand: React.FC = () => {
         </h2>
 
         <div
-          className="relative overflow-hidden transition-all duration-700 ease-in-out mt-6 max-w-[650px]"
+          className="relative overflow-hidden transition-all duration-700 ease-in-out mt-6 max-w-[650px] px-5 md:px-0"
           style={{ maxHeight: isExpanded ? '1000px' : '120px' }}
         >
           <p

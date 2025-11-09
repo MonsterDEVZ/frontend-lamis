@@ -7,10 +7,10 @@ interface IIntroCardProps {
 
 export const IntroCard = ({ title, description }: IIntroCardProps) => {
   return (
-    <div className="flex-shrink-0 w-full flex flex-col justify-center max-w-md mx-auto">
+    <div className="flex-shrink-0 w-full flex flex-col justify-center max-w-md mx-auto md:justify-start">
       <h2 className="text-2xl lg:text-4xl font-bold">{title}</h2>
-      <p className="mt-4 text-gray-600">{description}</p>
-      <div className="flex items-center mt-8 text-[#1d1d1d] gap-4">
+      <p className="mt-4 text-gray-600 md:mb-30">{description}</p>
+      <div className="flex items-center mt-5 md:mt-10 lg:mt-8 xl:mt-7.5 text-[#1d1d1d] gap-4 justify-center">
         <svg
           width="22"
           height="34"
@@ -46,9 +46,13 @@ export const IntroCard = ({ title, description }: IIntroCardProps) => {
           />
         </svg>
 
-        <span>
-          Начните вращать <br /> колесико
-        </span>
+        <div className="flex items-center md:flex-grow md:mr-5">
+          <p className='md:mr-4'>Начните вращать <br /> колесико</p>
+          <div className="md:flex-grow md:border-b-2 md:border-dashed"></div>
+          <div className="md:flex-shrink-0 md:w-5 md:h-5 md:rounded-full md:border md:border-green-500 md:flex md:items-center md:justify-center">
+            <div className="md:w-2 md:h-2 md:rounded-full md:bg-green-500"></div>
+          </div>
+        </div>
       </div>
     </div>
   );
