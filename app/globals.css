@@ -68,6 +68,15 @@ body {
   @media (width >= 768px) {
     max-width: 924px;
   }
+  @media (width >= 80rem) {
+    max-width: 1180px;
+  }
+  @media (width >= 96rem) {
+    max-width: 1290px;
+  }
+  @media (width >= 1920.98px) {
+    max-width: 1250px;
+  }
 }
 
 .border_solid {

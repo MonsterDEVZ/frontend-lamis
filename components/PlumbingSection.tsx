@@ -5,9 +5,9 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import CatalogCard from './ui/CatalogCard';
 
-const productsData = {
+const productsDataCaizer = {
   caizer: [
-    { 
+    {
       id: 'caizer-toilet-3016',
       name: 'Caizer 3016 Унитаз напольный',
       price: '24990',
@@ -20,17 +20,70 @@ const productsData = {
         '/plumbing_section/caizer/3016 улучшенный.jpeg',
       ],
     },
+    // Смесители
     {
-      id: 'caizer-3037',
-      name: 'Caizer 3037 Смеситель для кухни',
-      price: '13990',
-      image: '/plumbing_section/caizer/3037.png',
+      id: 'sa35g-mixer-01D3',
+      name: 'Caizer Смеситель для раковины',
+      price: '8500',
+      image: '/plumbing_section/pjgz30rh7ljegnkwifmgp0jdb5za01wv.jpg',
       category: 'Plumbing',
       isNew: true,
-      slug: 'caizer-3037',
+      slug: 'смеситель',
       images: [
-        '/plumbing_section/caizer/3037.png',
-        '/plumbing_section/caizer/3037 улучшенный.jpeg',
+        '/plumbing_section/pjgz30rh7ljegnkwifmgp0jdb5za01wv.jpg',
+        '/plumbing_section/hrf6dw1ddw1fgegcrmrlvxa3gg62won6.jpg',
+      ],
+    },
+    {
+      id: 'caizer-mixer-02',
+      name: 'Caizer Смеситель для ванны',
+      price: '12000',
+      image: '/plumbing_section/jqg1n668xinb8y3cywiv92n684scojdm.jpg',
+      category: 'Plumbing',
+      isNew: false,
+      slug: 'caizer-mixer-02',
+      images: [
+        '/plumbing_section/jqg1n668xinb8y3cywiv92n684scojdm.jpg',
+        '/plumbing_section/3l55sqwvznm6nz1efx2xrksitlyo4m7t.jpg',
+      ],
+    },
+    {
+      id: 'caizer-mixer-03',
+      name: 'Caizer Смеситель для душа',
+      price: '9800',
+      image: '/plumbing_section/otoitugl5dh2fh3fz86400ga6cz5s1g1.jpg',
+      category: 'Plumbing',
+      isNew: true,
+      slug: 'caizer-mixer-03',
+      images: [
+        '/plumbing_section/otoitugl5dh2fh3fz86400ga6cz5s1g1.jpg',
+        '/plumbing_section/vl1wqps6xgjerpdn280kcws3ey6u1jk6.jpg',
+      ],
+    },
+    {
+      id: 'caizer-mixer-04',
+      name: 'Caizer Смеситель для биде',
+      price: '7200',
+      image: '/plumbing_section/2agwq1mjodkt6d3pg7cbt9w6wggvjlt9.jpg',
+      category: 'Plumbing',
+      isNew: false,
+      slug: 'caizer-mixer-04',
+      images: [
+        '/plumbing_section/2agwq1mjodkt6d3pg7cbt9w6wggvjlt9.jpg',
+        '/plumbing_section/kcemottv4irlmk6c341s4k4ahabcqxvr.jpg',
+      ],
+    },
+    {
+      id: 'caizer-mixer-05',
+      name: 'Caizer Смеситель для кухни с выдвижным изливом',
+      price: '15500',
+      image: '/plumbing_section/djv7acl873n9sar1jcn3fh4eu700slgu.jpg',
+      category: 'Plumbing',
+      isNew: true,
+      slug: 'caizer-mixer-05',
+      images: [
+        '/plumbing_section/djv7acl873n9sar1jcn3fh4eu700slgu.jpg',
+        '/plumbing_section/ps1o6t5dyp0boh1agzpbgkb1vhgmt3wu.jpg',
       ],
     },
     // Раковины
@@ -127,29 +180,16 @@ const productsData = {
       ],
     },
     {
-      id: 'caizer-3016',
-      name: 'Caizer 3016 Смеситель напольный',
-      price: '24990',
-      image: '/plumbing_section/caizer/3016.png',
-      category: 'Plumbing',
-      isNew: true,
-      slug: 'caizer-3016',
-      images: [
-        '/plumbing_section/caizer/3016.png',
-        '/plumbing_section/caizer/3016 улучшенный.jpeg',
-      ],
-    },
-    {
       id: 'caizer-toilet-3037',
-      name: 'Caizer 3037 Унитаз для кухни',
+      name: 'Унитаз подвесной',
       price: '13990',
-      image: '/plumbing_section/caizer/3037.png',
+      image: '/plumbing_section/caizer/yjj0h1gpfwjbk22m7xb441lglngz3agw.jpg',
       category: 'Plumbing',
       isNew: true,
       slug: 'caizer-toilet-3037',
       images: [
-        '/plumbing_section/caizer/3037.png',
-        '/plumbing_section/caizer/3037 улучшенный.jpeg',
+        '/plumbing_section/caizer/yjj0h1gpfwjbk22m7xb441lglngz3agw.jpg',
+        '/plumbing_section/caizer/iub5vfy88pjksx9ztax4trhnc5kdjjk1.jpg',
       ],
     },
     {
@@ -165,45 +205,6 @@ const productsData = {
         '/plumbing_section/caizer/3014 улучшенный.jpeg',
       ],
     },
-    // {
-    //   id: 'caizer-bath-02',
-    //   name: 'Caizer Ванна стальная 150х75',
-    //   price: '19990',
-    //   image: '/plumbing_section/caizer/3014.png',
-    //   category: 'Plumbing',
-    //   isNew: false,
-    //   slug: 'caizer-bath-02',
-    //   images: [
-    //     '/plumbing_section/caizer/3014.png',
-    //     '/plumbing_section/caizer/3014 улучшенный.jpeg',
-    //   ],
-    // },
-    // {
-    //   id: 'caizer-bath-03',
-    //   name: 'Caizer Ванна чугунная 180х80',
-    //   price: '35990',
-    //   image: '/plumbing_section/caizer/3014.png',
-    //   category: 'Plumbing',
-    //   isNew: false,
-    //   slug: 'caizer-bath-03',
-    //   images: [
-    //     '/plumbing_section/caizer/3014.png',
-    //     '/plumbing_section/caizer/3014 улучшенный.jpeg',
-    //   ],
-    // },
-    // {
-    //   id: 'caizer-bath-04',
-    //   name: 'Caizer Ванна угловая акриловая',
-    //   price: '28990',
-    //   image: '/plumbing_section/caizer/3014.png',
-    //   category: 'Plumbing',
-    //   isNew: true,
-    //   slug: 'caizer-bath-04',
-    //   images: [
-    //     '/plumbing_section/caizer/3014.png',
-    //     '/plumbing_section/caizer/3014 улучшенный.jpeg',
-    //   ],
-    // },
   ],
 };
 
@@ -318,7 +319,7 @@ const PlumbingSection: FC = () => {
   }, [isDesktop, isTablet]);
 
   const filteredProducts = useMemo(() => {
-    const categoryProducts = productsData['caizer'] || [];
+    const categoryProducts = productsDataCaizer['caizer'] || [];
 
     const subFilteredProducts =
       activeSubFilter === 'Все'
