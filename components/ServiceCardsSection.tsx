@@ -25,11 +25,6 @@ export default function ServiceCardsSection() {
     },
   ];
 
-export default function ServiceCardsSection() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleCardClick = () => setIsModalOpen(true);
-
   return (
     <section className="py-[100px] bg-white">
       <div className="wrapper_centering">
@@ -47,5 +42,6 @@ export default function ServiceCardsSection() {
       </div>
       <FeedbackModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
-  );
+  )
 }
+
