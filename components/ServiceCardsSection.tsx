@@ -1,23 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import ServiceCard from './ServiceCard';
 import FeedbackModal from './feedback/FeedbackModal';
 
-const services = [
-  {
-    id: 1,
-    title: 'Сервисный центр',
-    subtitle: 'Поддержим в любой ситуации',
-    image: '/imag494491.png',
-  },
-  {
-    id: 2,
-    title: 'Станьте нашим партнером',
-    subtitle: 'Создаем и развиваемся',
-    image: '/imag9dd82.png',
-  },
-];
+export default function ServiceCardsSection() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCardClick = () => {
+    setIsModalOpen(true);
+  };
+  const services = [
+    {
+      id: 1,
+      title: 'Сервисный центр',
+      subtitle: 'Поддержим в любой ситуации',
+      image: '/imag494491.png',
+    },
+    {
+      id: 2,
+      title: 'Станьте нашим партнером',
+      subtitle: 'Создаем и развиваемся',
+      image: '/thepeoples.webp',
+    },
+  ];
 
 export default function ServiceCardsSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
