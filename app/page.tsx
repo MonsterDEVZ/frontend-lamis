@@ -5,7 +5,6 @@ import Header from '@/components/header/Header';
 import HeroSlider from '@/components/HeroSlider';
 import WaterHeatersSection from '@/components/WaterHeatersSection';
 import BleskWaterHeatersSection from '@/components/BleskWaterHeatersSection';
-// import Collections from '@/components/Collections';
 import FeaturesSection from '@/components/FeaturesSection';
 import AboutSection from '@/components/AboutSection';
 import ServiceCardsSection from '@/components/ServiceCardsSection';
@@ -25,7 +24,6 @@ export default function HomePage() {
       <WaterHeatersSection />
       <PlumbingSection />
       <BleskWaterHeatersSection />
-      {/*<Collections />*/}
       <FeaturesSection />
       <AboutSection />
       <ServiceCardsSection />

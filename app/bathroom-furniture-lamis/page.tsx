@@ -11,15 +11,7 @@ export default function BathroomFurnitureLamisPage() {
     <main>
       <Header />
       <Breadcrumbs
-        items={[
-          {
-            label: 'Главная',
-            href: '/',
-          },
-          {
-            label: 'Каталог товаров',
-          },
-        ]}
+        items={[{ label: 'Главная', href: '/' }, { label: 'Каталог товаров' }]}
         variant="light"
       />
 
