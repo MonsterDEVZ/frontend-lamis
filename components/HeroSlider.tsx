@@ -106,11 +106,9 @@ export default function HeroSlider() {
 
       {/* Slider Navigation */}
       <div className="absolute bottom-12 left-1/2 lg:left-[32%] -translate-x-1/2 z-5">
-        {/* <div className="absolute bottom-12 left-[32%] transform -translate-x-1/2 z-5"> */}
         <SliderNavigation
           currentSlide={activeIndex + 1}
           totalSlides={slides.length}
-          activeIndex={activeIndex}
           autoplayDelay={autoplayDelay}
           onPrev={() => swiperRef.current?.slidePrev()}
           onNext={() => swiperRef.current?.slideNext()}

@@ -1,72 +1,128 @@
+/**
+ * @file SliderNavigation.tsx
+ * @description A reusable component for Swiper.js navigation, including pagination, progress bar, and navigation arrows.
+ *
+ * @component SliderNavigation
+ *
+ * @prop {number} totalSlides - The total number of slides.
+ * @prop {number} currentSlide - The current active slide number (1-based).
+ * @prop {() => void} onPrev - Function to call when the previous button is clicked.
+ * @prop {() => void} onNext - Function to call when the next button is clicked.
+ * @prop {boolean} [isBeginning] - Optional. Whether the swiper is at the beginning. Disables the prev button.
+ * @prop {boolean} [isEnd] - Optional. Whether the swiper is at the end. Disables the next button for non-looping sliders.
+ * @prop {number} [progress] - Optional. The progress of the autoplay timer (0-100). If not provided, an internal timer will be used based on `autoplayDelay`.
+ * @prop {number} [autoplayDelay] - Optional. The delay for the autoplay in milliseconds. Used for the internal progress bar fallback.
+ * @prop {'light' | 'dark'} [variant='dark'] - The color variant of the component.
+ * @prop {string} [className] - Optional additional class names.
+ *
+ * @example
+ * // With external progress control (from Swiper's onAutoplayTimeLeft)
+ * <SliderNavigation
+ *   totalSlides={5}
+ *   currentSlide={2}
+ *   onPrev={() => swiper.slidePrev()}
+ *   onNext={() => swiper.slideNext()}
+ *   isBeginning={swiper.isBeginning}
+ *   isEnd={swiper.isEnd}
+ *   progress={autoplayProgress}
+ *   variant="light"
+ * />
+ *
+ * @example
+ * // With internal progress fallback
+ * <SliderNavigation
+ *   totalSlides={5}
+ *   currentSlide={activeIndex + 1}
+ *   onPrev={() => swiper.slidePrev()}
+ *   onNext={() => swiper.slideNext()}
+ *   autoplayDelay={5000}
+ *   variant="light"
+ * />
+ */
 'use client';
 import type { FC } from 'react';
 import { useState, useEffect } from 'react';
+import { cn } from '@/styles';
 
-interface SliderNavigationProps {
-  currentSlide: number;
-  totalSlides: number;
-  onPrev: () => void;
-  onNext: () => void;
-  isPrevDisabled?: boolean;
-  isNextDisabled?: boolean;
-  variant?: 'dark' | 'light';
-  autoplayDelay: number;
-  activeIndex: number;
-}
-
-const Arrow: FC<{ direction: 'left' | 'right' }> = ({ direction }) => (
+const Arrow: FC<{ direction: 'left' | 'right'; disabled?: boolean }> = ({
+  direction,
+  disabled,
+}) => (
   <svg
     width="16"
     height="16"
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={`transform group-disabled:[&_path]:opacity-30 ${
-      direction !== 'left' ? 'rotate-180' : ''
-    }`}
+    className={`transform ${direction !== 'left' ? 'rotate-180' : ''}`}
   >
     <path
       d="M16 9H3.83L9.42 14.59L8 16L9.53674e-07 8L8 0L9.41 1.41L3.83 7H16L16 9Z"
       fill="currentColor"
-      className="transition-opacity duration-300"
+      className={cn('transition-opacity duration-300', { 'opacity-30': disabled })}
     />
   </svg>
 );
 
+interface SliderNavigationProps {
+  totalSlides: number;
+  currentSlide: number;
+  onPrev: () => void;
+  onNext: () => void;
+  isBeginning?: boolean;
+  isEnd?: boolean;
+  progress?: number;
+  autoplayDelay?: number;
+  variant?: 'light' | 'dark';
+  className?: string;
+}
+
 export const SliderNavigation: FC<SliderNavigationProps> = ({
-  currentSlide,
   totalSlides,
+  currentSlide,
   onPrev,
   onNext,
-  isPrevDisabled = false,
-  isNextDisabled = false,
-  variant = 'dark',
+  isBeginning = false,
+  isEnd = false,
+  progress: externalProgress,
   autoplayDelay,
-  activeIndex,
+  variant = 'dark',
+  className,
 }) => {
-  const [progress, setProgress] = useState(0);
+  const [internalProgress, setInternalProgress] = useState(0);
+  const progress = externalProgress ?? internalProgress;
+
   const textColor = variant === 'light' ? 'text-white' : 'text-[#505357]';
+  const totalColor = variant === 'light' ? 'text-white' : 'text-[#505357]';
   const progressBg = variant === 'light' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(29, 29, 29, 0.15)';
   const progressFill = 'var(--color-green-100)';
 
   useEffect(() => {
-    setProgress(0);
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          return 100;
-        }
-        return prev + 100 / (autoplayDelay / 100);
-      });
-    }, 50);
+    // Only run internal progress if external progress is not provided
+    if (typeof externalProgress !== 'number' && autoplayDelay) {
+      setInternalProgress(0);
+      const intervalTime = 50; // ms
+      const steps = autoplayDelay / intervalTime;
+      const increment = 100 / steps;
 
-    return () => clearInterval(interval);
-  }, [activeIndex, autoplayDelay]);
+      const interval = setInterval(() => {
+        setInternalProgress((prev) => {
+          if (prev >= 100) {
+            clearInterval(interval);
+            return 100;
+          }
+          return prev + increment;
+        });
+      }, intervalTime);
+
+      return () => clearInterval(interval);
+    }
+  }, [currentSlide, autoplayDelay, externalProgress]);
 
   return (
-    <div className="slider-switch-component flex items-center gap-6">
+    <div className={cn('flex items-center gap-6', className)}>
       {/* Counter and Progress Bar */}
-      <div className={`flex items-center gap-2 text-sm ${textColor}`}>
+      <div className={cn('flex items-center gap-2 text-sm', textColor)}>
         <span className="font-medium">{String(currentSlide).padStart(2, '0')}</span>
 
         <div
@@ -74,7 +130,7 @@ export const SliderNavigation: FC<SliderNavigationProps> = ({
           style={{ backgroundColor: progressBg }}
         >
           <div
-            className="h-full rounded-full transition-all duration-300 ease-out"
+            className="h-full rounded-full transition-transform duration-100 ease-linear"
             style={{
               width: `${progress}%`,
               backgroundColor: progressFill,
@@ -82,26 +138,26 @@ export const SliderNavigation: FC<SliderNavigationProps> = ({
           />
         </div>
 
-        <span>{String(totalSlides).padStart(2, '0')}</span>
+        <span className={totalColor}>{String(totalSlides).padStart(2, '0')}</span>
       </div>
 
       {/* Navigation Arrows */}
-      <div className={`hidden lg:flex items-center gap-4 ${textColor}`}>
+      <div className={cn('hidden lg:flex items-center gap-4', textColor)}>
         <button
           onClick={onPrev}
-          className="w-6 h-6 flex items-center justify-center group disabled:opacity-30 disabled:cursor-not-allowed transition-opacity duration-300 hover:opacity-70"
-          disabled={isPrevDisabled}
+          className="w-6 h-6 flex items-center justify-center group disabled:cursor-not-allowed transition-opacity duration-300 hover:opacity-70"
+          disabled={isBeginning}
           aria-label="Previous slide"
         >
-          <Arrow direction="left" />
+          <Arrow direction="left" disabled={isBeginning} />
         </button>
         <button
           onClick={onNext}
-          className="w-6 h-6 flex items-center justify-center group disabled:opacity-30 disabled:cursor-not-allowed transition-opacity duration-300 hover:opacity-70"
-          disabled={isNextDisabled}
+          className="w-6 h-6 flex items-center justify-center group disabled:cursor-not-allowed transition-opacity duration-300 hover:opacity-70"
+          disabled={isEnd}
           aria-label="Next slide"
         >
-          <Arrow direction="right" />
+          <Arrow direction="right" disabled={isEnd} />
         </button>
       </div>
     </div>
