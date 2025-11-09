@@ -157,6 +157,10 @@ const ProductSlider: FC<ProductSliderProps> = ({
           setIsSwiperInitialized(true);
         }}
         onTransitionEnd={updateSwiperState}
+        breakpoints={{
+          456: { slidesPerView: 2 },
+          1024: { slidesPerView: 4 },
+        }}
       >
         {products.map((product, index) => (
           <SwiperSlide key={product.id || index}>
