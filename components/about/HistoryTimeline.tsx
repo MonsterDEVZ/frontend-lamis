@@ -1,7 +1,7 @@
 'use client';
 import { historyData } from '@/data/historyData';
 import { useHorizontalScroll } from '@/hooks/useHorizontalScroll';
-import { useMediaQuery } from '@/hooks/useMediaQuery'; // <-- Убедитесь, что импорт правильный
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { TimelineCard } from './TimelineCard';
 import { IntroCard } from './IntroCard';
 
@@ -13,7 +13,7 @@ export const HistoryTimeline = () => {
     return (
       <div
         ref={scrollRef}
-        className="flex overflow-x-auto cursor-grab space-x-8 py-10 pl-10 pr-20 no-scrollbar"
+        className="flex overflow-x-auto cursor-grab space-x-8 py-10 pl-10 pr-20 no-scrollbar container"
       >
         {historyData.map((item, index) =>
           item.type === 'intro' ? (
@@ -32,21 +32,19 @@ export const HistoryTimeline = () => {
     );
   }
 
-  // Если это мобильное устройство (< 768px), рендерим ВАРИАНТ С ТЕКСТОМ НАВЕРХУ
-  // Отделяем интро-карточку от остальных
   const introItem = historyData.find(item => item.type === 'intro');
   const eventItems = historyData.filter(item => item.type === 'event');
 
   return (
     <div className="py-10">
-      {/* Блок с текстом "Наша история" */}
+
       {introItem && (
         <div className="px-4 mb-8 text-center">
           <IntroCard title={introItem.title} description={introItem.description[0]} />
         </div>
       )}
 
-      {/* Горизонтально прокручиваемый контейнер ТОЛЬКО для карточек */}
+
       <div
         ref={scrollRef}
         className="flex overflow-x-auto cursor-grab space-x-8 pl-4 pr-4 no-scrollbar"
