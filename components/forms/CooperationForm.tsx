@@ -104,7 +104,6 @@ const CooperationForm: React.FC = () => {
   }, [formData, showToast, validate]);
 
   return (
-<<<<<<< HEAD
     <section className="wrapper_centering pb-24">
       <div className="rounded-2xl md:rounded-3xl lg:rounded-4xl xl:rounded-[40px] bg-gray-200 w-full lg:h-150">
         <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
@@ -114,24 +113,6 @@ const CooperationForm: React.FC = () => {
               className="h-150 w-full object-cover rounded-l-[40px]"
               alt="Bathroom interior"
             />
-=======
-    <div className="rounded-2xl md:rounded-3xl lg:rounded-4xl xl:rounded-[40px] bg-gray-200 w-full lg:h-150 mb-10 container">
-      <div className="grid grid-cols-1 lg:grid-cols-2">
-        <div className="hidden lg:block">
-          <img
-            src="https://i.pinimg.com/originals/3a/b8/de/3ab8de5e509ba76ffab062236d2c5c31.jpg"  
-            className="h-150 rounded-l-[40px]"
-            alt="Bathroom interior"
-          />
-        </div>
-
-        <div className="py-6 px-6 md:py-8 md:px-10 lg:py-8 lg:px-14">
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Давайте начнем сотрудничество</h2>
-            <p className="mt-2 text-sm text-gray-500">
-              Пожалуйста, заполните, чтобы с вами могли связаться
-            </p>
->>>>>>> 602a169b45dbc620399d7bdc7e5dc4a7c9335b86
           </div>
 
           <div className="py-6 px-6 md:py-8 md:px-10 lg:py-8 lg:px-14">

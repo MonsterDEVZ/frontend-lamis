@@ -4,36 +4,30 @@
 
 import { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
-import ContactWidget from '@/components/ContactWidget';
-import FeedbackForm from '@/components/feedback/FeedbackForm'; // Ваш компонент, который мы не меняем
+import ScrollToTopButton from '@/components/ui/ScrollToTopButton';
+import FloatingWidget from '@/components/ui/FloatingWidget';
+// --- ИЗМЕНЕНИЕ: Импортируем вашу модалку ---
+import FeedbackModal from '@/components/feedback/FeedbackModal'; // Убедитесь, что путь верный
 
 export default function ClientLayoutWrapper({ children }: { children: React.ReactNode }) {
-  const [isFeedbackModalOpen, setFeedbackModalOpen] = useState(false);
+  // --- ИЗМЕНЕНИЕ: Добавляем состояние для управления вашей модалкой ---
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
       {children}
       <Toaster position="top-right" />
 
-      <ContactWidget onOpenFeedbackModal={() => setFeedbackModalOpen(true)} />
+      <ScrollToTopButton />
+      
+      {/* --- ИЗМЕНЕНИЕ: Передаем функцию для открытия модалки в виджет --- */}
+      <FloatingWidget onOpenChat={() => setIsModalOpen(true)} />
 
-      {isFeedbackModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-5 pointer-events-none w-[448px] px-7 rounded-2xl m-auto h-107 bg-white">
-          <div className="pointer-events-auto" >
-            
-            <FeedbackForm
-            
-              onCancel={() => setFeedbackModalOpen(false)}
-              onSubmit={() => {
-                
-                console.log('Form submitted!');
-              }}
-              isSubmitting={false}
-              
-            />
-          </div>
-        </div>
-      )}
+      {/* --- ИЗМЕНЕНИЕ: Рендерим вашу модалку и передаем ей состояние и функцию закрытия --- */}
+      <FeedbackModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </>
   );
 }
