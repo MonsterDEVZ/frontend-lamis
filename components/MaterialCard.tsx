@@ -23,6 +23,7 @@ export default function MaterialCard({ title, image, fileUrl }: MaterialCardProp
           fill
           className="object-cover pointer-events-none group-hover:scale-105 transition-transform duration-300"
           quality={100}
+          loading={'lazy'}
         />
       </div>
 
