@@ -4,6 +4,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import CatalogCard from './ui/CatalogCard';
+// @ts-ignore
+import 'swiper/css';
+// @ts-ignore
+import 'swiper/css/navigation';
 
 const productsDataCaizer = {
   caizer: [
@@ -22,13 +26,13 @@ const productsDataCaizer = {
     },
     // Смесители
     {
-      id: 'sa35g-mixer-01D3',
+      id: 'caizer-mixer-03',
       name: 'Caizer Смеситель для раковины',
       price: '8500',
       image: '/plumbing_section/pjgz30rh7ljegnkwifmgp0jdb5za01wv.jpg',
       category: 'Plumbing',
       isNew: true,
-      slug: 'смеситель',
+      slug: 'caizer-mixer-03',
       images: [
         '/plumbing_section/pjgz30rh7ljegnkwifmgp0jdb5za01wv.jpg',
         '/plumbing_section/hrf6dw1ddw1fgegcrmrlvxa3gg62won6.jpg',
@@ -208,37 +212,14 @@ const productsDataCaizer = {
   ],
 };
 
-// @ts-ignore
-import 'swiper/css';
-// @ts-ignore
-import 'swiper/css/navigation';
-
 const subFilters = ['Все', 'Раковины', 'Унитазы', 'Ванны', 'Смесители'];
 
 import { SliderNavigation } from './ui/SliderNavigation';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 
-const MemoizedSliderNavigation: FC<{
-  swiper: SwiperType | null;
-  totalSlides: number;
-  currentSlide: number;
-  onPrev: () => void;
-  onNext: () => void;
-  isBeginning: boolean;
-  isEnd: boolean;
-  slidesPerView: number;
-  autoplayDelay: number;
-}> = ({
-  swiper,
-  totalSlides,
-  currentSlide,
-  onPrev,
-  onNext,
-  isBeginning,
-  isEnd,
-  slidesPerView,
-  autoplayDelay,
-}) => {
+// prettier-ignore
+const MemoizedSliderNavigation: FC<{ swiper: SwiperType | null; totalSlides: number; currentSlide: number; onPrev: () => void; onNext: () => void; isBeginning: boolean; isEnd: boolean; slidesPerView: number; autoplayDelay: number; }> 
+  = ({ swiper, totalSlides, currentSlide, onPrev, onNext, isBeginning, isEnd, slidesPerView, autoplayDelay }) => {
   const [progress, setProgress] = useState(0);
   const activeIndexRef = useRef(0); // Use ref for activeIndex
 
