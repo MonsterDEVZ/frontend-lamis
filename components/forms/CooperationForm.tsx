@@ -137,8 +137,8 @@ const CooperationForm: React.FC = () => {
   };
 
   return (
-    <div className="rounded-2xl md:rounded-3xl lg:rounded-4xl xl:rounded-[40px] bg-gray-200 w-full lg:h-150 mx-auto mb-10">
-      <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
+    <div className="rounded-2xl md:rounded-3xl lg:rounded-4xl xl:rounded-[40px] bg-gray-200 w-full lg:h-150 mb-10 container">
+      <div className="grid grid-cols-1 lg:grid-cols-2">
         <div className="hidden lg:block">
           <img
             src="https://i.pinimg.com/originals/3a/b8/de/3ab8de5e509ba76ffab062236d2c5c31.jpg"  
