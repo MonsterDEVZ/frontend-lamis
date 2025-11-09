@@ -212,7 +212,7 @@ const productsDataCaizer = {
   ],
 };
 
-const subFilters = ['Все', 'Раковины', 'Унитазы', 'Ванны', 'Смесители'];
+const subFilters = ['Все', 'Раковины', 'Унитазы', 'Смесители'];
 
 import { SliderNavigation } from './ui/SliderNavigation';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
@@ -308,7 +308,8 @@ const PlumbingSection: FC = () => {
         : categoryProducts.filter((product) => {
             if (activeSubFilter === 'Раковины') {
               return (
-                product.name.toLowerCase().includes('раковин') ||
+                (product.name.toLowerCase().includes('раковин') &&
+                  !product.name.toLowerCase().includes('смеситель')) ||
                 product.id === 'lamis-grey-900' ||
                 product.id === 'eklips-1000-01' ||
                 product.id === 'amsterdam-1000' ||
@@ -317,9 +318,6 @@ const PlumbingSection: FC = () => {
             }
             if (activeSubFilter === 'Унитазы') {
               return product.name.toLowerCase().includes('унитаз');
-            }
-            if (activeSubFilter === 'Ванны') {
-              return product.name.toLowerCase().includes('ванн');
             }
             if (activeSubFilter === 'Смесители') {
               return product.name.toLowerCase().includes('смеситель');

@@ -4,6 +4,7 @@ interface MaterialCardProps {
   title: string;
   image: string;
   fileUrl: string;
+  description?: string;
 }
 
 export default function MaterialCard({ title, image, fileUrl }: MaterialCardProps) {
