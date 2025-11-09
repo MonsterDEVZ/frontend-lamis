@@ -1,41 +1,40 @@
-import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Instagram, Send, Youtube } from 'lucide-react';
 
+const productLinks = [
+  { title: 'Мебель для ванны', href: '/bathroom-furniture-lamis' },
+  { title: 'Раковины', href: '/sinks' },
+  { title: 'Ванны', href: '/baths' },
+  { title: 'Смесители', href: '/faucets' },
+  { title: 'Водонагреватели', href: '/water-heaters' },
+  { title: 'Каталоги', href: '/catalogs' },
+  { title: 'Сертификаты качества', href: '/certificates' },
+];
+
+const professionalLinks = [
+  { title: 'Установка мебели', href: '/installation/furniture' },
+  { title: 'Установка раковины', href: '/installation/sink' },
+  { title: 'Установка ванн', href: '/installation/bath' },
+  { title: 'Установка смесителей', href: '/installation/faucet' },
+  { title: 'Установка водонагревателей', href: '/installation/water-heater' },
+];
+
+const infoLinks = [
+  { title: 'О нас', href: '/about' },
+  { title: 'Где купить', href: '/where-to-buy' },
+  { title: 'Сервисный центр', href: '/service-center' },
+  { title: 'Станьте нашим партнером', href: '/partnership' },
+];
+
 export default function Footer() {
-  const productLinks = [
-    { title: 'Мебель для ванны', href: '/bathroom-furniture-lamis' },
-    { title: 'Раковины', href: '/sinks' },
-    { title: 'Ванны', href: '/baths' },
-    { title: 'Смесители', href: '/faucets' },
-    { title: 'Водонагреватели', href: '/water-heaters' },
-    { title: 'Каталоги', href: '/catalogs' },
-    { title: 'Сертификаты качества', href: '/certificates' },
-  ];
-
-  const professionalLinks = [
-    { title: 'Установка мебели', href: '/installation/furniture' },
-    { title: 'Установка раковины', href: '/installation/sink' },
-    { title: 'Установка ванн', href: '/installation/bath' },
-    { title: 'Установка смесителей', href: '/installation/faucet' },
-    { title: 'Установка водонагревателей', href: '/installation/water-heater' },
-  ];
-
-  const infoLinks = [
-    { title: 'О нас', href: '/about' },
-    { title: 'Где купить', href: '/where-to-buy' },
-    { title: 'Сервисный центр', href: '/service-center' },
-    { title: 'Станьте нашим партнером', href: '/partnership' },
-  ];
-
   return (
     <footer className="bg-black text-white">
       {/* Main Footer Content */}
-      <div className="container px-10 py-16">
+      <div className="wrapper_centering py-16!">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Logo and Social */}
-          <div className={'mt-2'}>
+          <div className="mt-2">
             <Link href="/" className="inline-block mb-6">
               <Image src="/logo.svg" alt="LAMIS" width={156} height={32} priority />
             </Link>
@@ -132,7 +131,7 @@ export default function Footer() {
 
       {/* Bottom Footer */}
       <div className="border-t border-white/10">
-        <div className="container px-10 py-6">
+        <div className="wrapper_centering py-6!">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/60">
             <p>Copyright 2025. LAMIS</p>
 
@@ -140,6 +139,7 @@ export default function Footer() {
               <Link href="/privacy" className="hover:text-white transition-colors">
                 Политика использования файлов Cookie
               </Link>
+
               <Link href="/confidentiality" className="hover:text-white transition-colors">
                 Политика конфиденциальности
               </Link>

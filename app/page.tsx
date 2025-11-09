@@ -31,7 +31,7 @@ export default function HomePage() {
       <ServiceCardsSection />
       <MaterialsSection />
       <CooperationForm />
-      
+
       <Footer />
       <FeedbackModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </main>

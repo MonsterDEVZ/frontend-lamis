@@ -82,7 +82,7 @@ export default function ProductInfo({
                       disabled={!color.available}
                       className={`w-10 h-10 rounded-full border-2 transition-all relative ${
                         selectedColor === color.name
-                          ? 'border-[#009B3E] ring-2 ring-[#009B3E] ring-offset-2'
+                          ? 'border-green-100 ring-2 ring-green-100 ring-offset-2'
                           : 'border-gray-300 hover:border-gray-400'
                       } ${!color.available ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}`}
                       style={{ backgroundColor: color.hex }}
@@ -109,7 +109,7 @@ export default function ProductInfo({
       <div className="flex gap-3">
         <button
           onClick={handleAddToCart}
-          className="flex-1 px-8 py-3 bg-[#009B3E] text-white font-medium hover:bg-[#008534] transition-colors rounded-full"
+          className="flex-1 px-8 py-3 bg-green-100 text-white font-medium hover:bg-[#008534] transition-colors rounded-full"
         >
           Заказать
         </button>
@@ -118,7 +118,7 @@ export default function ProductInfo({
           onClick={onAddToFavorites}
           className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition-colors ${
             isFavorite
-              ? 'border-[#009B3E] bg-[#009B3E] text-white'
+              ? 'border-green-100 bg-green-100 text-white'
               : 'border-gray-300 text-gray-600 hover:border-[#009B3E] hover:text-[#009B3E]'
           }`}
           aria-label={isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'}

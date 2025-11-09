@@ -18,7 +18,7 @@ import { collections } from '@/data/collections';
 export default function CollectionsSection() {
   return (
     <section className="py-20 bg-white">
-      <div className="container px-6 lg:px-12">
+      <div className="wrapper_centering px-6 lg:px-12">
         {/* Section Heading - Exact specification: 42px */}
         <SectionHeading>Водонагреватели BLESK</SectionHeading>
 

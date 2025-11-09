@@ -146,7 +146,7 @@ const PlumbingSection: FC = () => {
   }, [activeFilter, swiperInstance]);
 
   return (
-    <div className="container w-full">
+    <div className="wrapper_centering w-full">
       <div className="pl-3 md:flex md:justify-between md:items-end">
         <h2 className="text-[44px]">Сантехника CAIZER</h2>
 
@@ -159,7 +159,7 @@ const PlumbingSection: FC = () => {
               style={{ backgroundColor: 'rgba(29, 29, 29, 0.15)' }}
             >
               <div
-                className="h-full rounded-full bg-[#009B3E]"
+                className="h-full rounded-full bg-green-100"
                 style={{ width: `${progress}%` }}
               ></div>
             </div>

@@ -28,7 +28,7 @@ export default function MaterialCard({ title, image, fileUrl }: MaterialCardProp
 
       {/* Content */}
       <div className="p-6">
-        <p className="font-medium mb-3 line-clamp-3 text-lg leading-[1.15] text-dark-100 group-hover:text-green-200 transition-colors duration-300">
+        <p className="font-medium mb-3 line-clamp-3 text-lg leading-[1.15] text-dark-100 group-hover:text-green-100 transition-colors duration-300">
           {title}
         </p>
       </div>

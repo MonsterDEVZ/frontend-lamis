@@ -57,7 +57,7 @@ const MainNavigationMob: FC<IMainNavigationMobProps> = ({
         >
           <Heart size={20} />
           {favoritesCount > 0 && (
-            <span className="absolute -top-1.5 -right-2 bg-[#009B3E] text-white text-[10px] font-medium min-w-4 h-4 flex items-center justify-center rounded-full pointer-events-none px-0.5">
+            <span className="absolute -top-1.5 -right-2 bg-green-100 text-white text-[10px] font-medium min-w-4 h-4 flex items-center justify-center rounded-full pointer-events-none px-0.5">
               {favoritesCount}
             </span>
           )}

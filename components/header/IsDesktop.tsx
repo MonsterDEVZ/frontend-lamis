@@ -1,4 +1,4 @@
-import { type FC, type SetStateAction } from 'react';
+import type { FC, SetStateAction } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Search, Heart } from 'lucide-react';
@@ -18,7 +18,7 @@ interface ITopBarProps {
 const TopBar: FC<ITopBarProps> = ({ mini_nav, isActive }) => {
   return (
     <div className={cn('border-b border-white/10 w-full h-8', isActive ? 'bg-[#272b2b]' : '')}>
-      <div className="flex items-stretch justify-between container px-5">
+      <div className="flex items-stretch justify-between wrapper_centering px-5">
         {/* Top Left Links */}
         <div className="flex items-center gap-6">
           {mini_nav.map((item) => (
@@ -34,12 +34,7 @@ const TopBar: FC<ITopBarProps> = ({ mini_nav, isActive }) => {
         </div>
 
         {/* Top Right CTA */}
-        <button
-          className="text-white font-medium hover:opacity-90 transition-all whitespace-nowrap px-5 h-8 text-sm"
-          style={{
-            backgroundColor: '#009b3e',
-          }}
-        >
+        <button className="text-white font-medium hover:opacity-90 transition-all whitespace-nowrap px-5 h-8 text-sm bg-green-100">
           Сервисный центр
         </button>
       </div>
@@ -118,7 +113,7 @@ const MainNavigationDesc: FC<IMainNavigationDescProps> = ({
               placeholder="Поиск..."
               className={cn(
                 'w-full h-10 pl-4 pr-10 rounded-full border transition-colors duration-300',
-                'focus:outline-none focus:ring-2 focus:ring-[#009b3e]',
+                'focus:outline-none focus:ring-2 focus:ring-green-100',
                 isActive
                   ? 'bg-white border-gray-300 text-gray-900'
                   : 'bg-transparent border-white/50 text-white placeholder:text-white/70'
@@ -159,7 +154,7 @@ const MainNavigationDesc: FC<IMainNavigationDescProps> = ({
         >
           <Heart size={20} />
           {favoritesCount > 0 && (
-            <span className="absolute -top-1.5 -right-2 bg-[#009B3E] text-white text-[10px] font-medium min-w-4 h-4 flex items-center justify-center rounded-full pointer-events-none px-0.5">
+            <span className="absolute -top-1.5 -right-2 bg-green-100 text-white text-[10px] font-medium min-w-4 h-4 flex items-center justify-center rounded-full pointer-events-none px-0.5">
               {favoritesCount}
             </span>
           )}

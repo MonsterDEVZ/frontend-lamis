@@ -26,7 +26,7 @@ export default function HeroSection() {
 
       {/* Content */}
       <div className="relative z-10 h-full flex items-center w-full">
-        <div className="container flex items-center h-full w-full px-10">
+        <div className="wrapper_centering flex items-center h-full w-full px-10">
           <div className="inline-flex flex-col gap-8">
             {/* Main Heading */}
             <h1 className="text-white font-bold text-[56px] leading-[1.2] tracking-[-0.02em] mb-0">

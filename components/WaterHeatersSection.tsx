@@ -32,7 +32,7 @@ const waterHeaters = [
 export default function WaterHeatersSection() {
   return (
     <section className="py-20 bg-white">
-      <div className="container px-6 lg:px-12">
+      <div className="wrapper_centering px-6 lg:px-12">
         {/* Section Title */}
         <h2 className="text-3xl md:text-[44px] font-bold text-gray-900 mb-12">
           Коллекции мебели <br /> для ванн LAMIS
@@ -43,19 +43,19 @@ export default function WaterHeatersSection() {
           {waterHeaters.map((heater) => (
             <div
               key={heater.id}
-              className="relative aspect-[4/3] rounded-2xl overflow-hidden group cursor-pointer"
+              className="relative aspect-4/3 rounded-2xl overflow-hidden group cursor-pointer"
             >
               {/* Image */}
               <Image
                 src={heater.image}
                 alt={heater.alt}
                 fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
 
               {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
 
               {/* Brand Label */}
               <div className="absolute bottom-6 left-6">

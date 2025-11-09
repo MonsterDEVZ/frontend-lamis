@@ -21,7 +21,7 @@ const NavItemMoreList: FC<IProps> = ({ activeSubList }) => {
       }}
       transition={{ duration: 0.3 }}
     >
-      <div className="container w-full px-5 py-6">
+      <div className="wrapper_centering w-full py-6">
         <div className="grid grid-cols-4 gap-x-8 gap-y-4">
           {activeSubList.map((item, index) => (
             <Link href={item.href} key={index} className="flex items-center gap-3 group">
@@ -36,7 +36,7 @@ const NavItemMoreList: FC<IProps> = ({ activeSubList }) => {
               ) : (
                 <div className="w-10 h-10 bg-gray-100 rounded-full shrink-0"></div>
               )}
-              <span className="font-medium text-sm text-gray-800 group-hover:text-[#009b3e] transition-colors duration-200">
+              <span className="font-medium text-sm text-gray-800 group-hover:text-green-100 transition-colors duration-200">
                 {item.title}
               </span>
             </Link>

@@ -164,11 +164,8 @@ export default function Header() {
 
       {/* Main Navigation */}
       <div className="w-full">
-        <div className="container w-full">
-          <div
-            className="flex items-center justify-between relative px-5"
-            style={{ height: '70px' }}
-          >
+        <div className="wrapper_centering w-full">
+          <div className="relative flex items-center justify-between" style={{ height: '70px' }}>
             {isTablet ? (
               <MainNavigationDesc
                 isActive={isActive}

@@ -10,9 +10,8 @@ export default function CTAButton({ children, onClick, className = '' }: CTAButt
   return (
     <button
       onClick={onClick}
-      className={`text-white font-medium hover:opacity-90 transition-all ${className}`}
+      className={`text-white font-medium hover:opacity-90 transition-all bg-green-100 ${className}`}
       style={{
-        backgroundColor: '#00D856',
         fontSize: '14px',
         padding: '14px 48px',
         borderRadius: '100px',

@@ -1,16 +1,17 @@
 'use client';
-
-import { type FC } from 'react';
+import type { FC } from 'react';
+import { useState, useEffect } from 'react';
 
 interface SliderNavigationProps {
   currentSlide: number;
   totalSlides: number;
-  progress?: number;
   onPrev: () => void;
   onNext: () => void;
   isPrevDisabled?: boolean;
   isNextDisabled?: boolean;
   variant?: 'dark' | 'light';
+  autoplayDelay: number;
+  activeIndex: number;
 }
 
 const Arrow: FC<{ direction: 'left' | 'right' }> = ({ direction }) => (
@@ -35,16 +36,32 @@ const Arrow: FC<{ direction: 'left' | 'right' }> = ({ direction }) => (
 export const SliderNavigation: FC<SliderNavigationProps> = ({
   currentSlide,
   totalSlides,
-  progress = 0,
   onPrev,
   onNext,
   isPrevDisabled = false,
   isNextDisabled = false,
   variant = 'dark',
+  autoplayDelay,
+  activeIndex,
 }) => {
+  const [progress, setProgress] = useState(0);
   const textColor = variant === 'light' ? 'text-white' : 'text-[#505357]';
   const progressBg = variant === 'light' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(29, 29, 29, 0.15)';
-  const progressFill = variant === 'light' ? '#00D856' : '#009B3E';
+  const progressFill = 'var(--color-green-100)';
+
+  useEffect(() => {
+    setProgress(0);
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          return 100;
+        }
+        return prev + 100 / (autoplayDelay / 100);
+      });
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [activeIndex, autoplayDelay]);
 
   return (
     <div className="slider-switch-component flex items-center gap-6">
@@ -53,7 +70,7 @@ export const SliderNavigation: FC<SliderNavigationProps> = ({
         <span className="font-medium">{String(currentSlide).padStart(2, '0')}</span>
 
         <div
-          className="w-24 h-0.5 rounded-full relative overflow-hidden"
+          className="w-[120px] lg:w-24 h-0.5 rounded-full relative overflow-hidden"
           style={{ backgroundColor: progressBg }}
         >
           <div
@@ -65,11 +82,11 @@ export const SliderNavigation: FC<SliderNavigationProps> = ({
           />
         </div>
 
-        <span className="opacity-40">{String(totalSlides).padStart(2, '0')}</span>
+        <span>{String(totalSlides).padStart(2, '0')}</span>
       </div>
 
       {/* Navigation Arrows */}
-      <div className={`flex items-center gap-4 ${textColor}`}>
+      <div className={`hidden lg:flex items-center gap-4 ${textColor}`}>
         <button
           onClick={onPrev}
           className="w-6 h-6 flex items-center justify-center group disabled:opacity-30 disabled:cursor-not-allowed transition-opacity duration-300 hover:opacity-70"

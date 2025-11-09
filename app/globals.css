@@ -13,13 +13,13 @@ body {
 * {
   box-sizing: border-box;
 }
-
+/*  */
 @theme {
-  --breakpoint-mac: 1920.98px;
-  --breakpoint-ss: 526px;
   --breakpoint-ms: 320px;
+  --breakpoint-ss: 526px;
   --breakpoint-md2: 770px;
   --breakpoint-lg: 1025px;
+  --breakpoint-mac: 1920.98px;
 
   --spacing-50: 50px;
   --spacing-100: 100px;
@@ -28,39 +28,35 @@ body {
   --color-dark-100: #1d1d1d;
 }
 
-.container {
+:root {
+  --color-green-100: #009b3e;
+}
+
+.wrapper_centering {
   width: 100%;
-  padding: 0 20px;
+  padding-left: 20px;
+  padding-right: 20px;
   margin-inline: auto;
-  @media (width >= 320px) {
-    max-width: 320px;
+
+  @media (width >= 480px) {
+    max-width: 438px;
   }
   @media (width >= 526px) {
-    max-width: 526px;
-  }
-  @media (width >= 770px) {
-    max-width: 770px;
+    /* @media (width >= 768px) { */
+    max-width: 800px;
+    /* max-width: 100dvw; */
   }
   @media (width >= 1025px) {
-    max-width: 1025px;
+    max-width: 924px;
   }
-  @media (width >= 1250px) {
-    max-width: 1250px;
+  @media (width >= 80rem) {
+    max-width: 1180px;
+  }
+  @media (width >= 96rem) {
+    max-width: 1290px;
   }
   @media (width >= 1920.98px) {
-    max-width: 1920.98px;
-  }
-  @media (width >= 40rem /* 640px */) {
-    max-width: 40rem /* 640px */;
-  }
-  @media (width >= 48rem /* 768px */) {
-    max-width: 48rem /* 768px */;
-  }
-  @media (width >= 80rem /* 1280px */) {
-    max-width: 1194px /* 1280px */;
-  }
-  @media (width >= 96rem /* 1536px */) {
-    max-width: 1194px /* 1536px */;
+    max-width: 1250px;
   }
 }
 

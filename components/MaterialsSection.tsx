@@ -30,11 +30,16 @@ const materials = [
 
 export default function MaterialsSection() {
   return (
-    <section className="mx-auto px-10 pb-20" style={{ maxWidth: '1250px' }}>
+    <section
+      className="wrapper_centering pb-24"
+      style={{
+        paddingBottom: '96px',
+      }}
+    >
       <SectionHeading>Материалы для скачивания</SectionHeading>
 
       {/* Materials Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mb-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
         {materials.map((material) => (
           <MaterialCard
             key={material.id}

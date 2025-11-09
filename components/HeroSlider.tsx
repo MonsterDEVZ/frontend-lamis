@@ -1,16 +1,14 @@
 'use client';
-
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 import { Autoplay } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import CTAButton from './ui/CTAButton';
 import SliderNavigation from './ui/SliderNavigation';
 
 import 'swiper/css';
-
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const slides = [
   {
@@ -39,46 +37,29 @@ const slides = [
   },
 ];
 
+const autoplayDelay = 5000; // 5 seconds
+
 export default function HeroSlider() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [progress, setProgress] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
-  const autoplayDelay = 5000; // 5 seconds
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          return 0;
-        }
-        return prev + 100 / (autoplayDelay / 50);
-      });
-    }, 50);
-
-    return () => clearInterval(interval);
-  }, [activeIndex]);
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
 
   return (
     <section
       className="relative w-full overflow-hidden"
-      style={{ height: 'calc(100vh - 110px)', minHeight: '600px' }}
+      style={{
+        height: isDesktop ? 'calc(100vh - 70px)' : 'calc(600px - 70px)',
+        minHeight: '600px',
+      }}
+      // style={{ height: isDesktop ? 'calc(100vh - 70px)' : 'calc(530px - 70px)', minHeight: '600px' }}
     >
       <Swiper
-
         modules={[Autoplay]}
-        autoplay={{
-          delay: autoplayDelay,
-          disableOnInteraction: false,
-        }}
+        autoplay={{ delay: autoplayDelay, disableOnInteraction: false }}
         loop={true}
         speed={1000}
-        onSwiper={(swiper) => {
-          swiperRef.current = swiper;
-        }}
-        onSlideChange={(swiper) => {
-          setActiveIndex(swiper.realIndex);
-          setProgress(0);
-        }}
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
+        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         className="h-full w-full"
       >
         {slides.map((slide) => (
@@ -100,17 +81,17 @@ export default function HeroSlider() {
 
             {/* Content */}
             <div className="relative z-10 h-full flex items-center w-full">
-              <div className="container flex items-center h-full w-full px-10">
-                <div className="inline-flex flex-col gap-8">
+              <div className="wrapper_centering flex items-center h-full w-full px-10">
+                <div className="inline-flex flex-col items-center lg:items-start gap-8">
                   {/* Main Heading */}
-                  <h1 className="text-white font-bold text-[56px] leading-[1.2] tracking-[-0.02em] mb-0">
+                  <h1 className="text-white font-bold text-[56px] leading-[1.2] tracking-[-0.02em] mb-0 text-center lg:text-left">
                     {slide.title}
                     <br />
                     {slide.subtitle}
                   </h1>
 
                   {/* Description */}
-                  <p className="text-white text-base leading-[1.6] opacity-90 max-w-[500px] mb-0">
+                  <p className="text-white text-base leading-[1.6] opacity-90 max-w-[500px] mb-0 text-center lg:text-left">
                     {slide.description}
                   </p>
 
@@ -124,11 +105,13 @@ export default function HeroSlider() {
       </Swiper>
 
       {/* Slider Navigation */}
-      <div className="absolute bottom-12 left-[32%] transform -translate-x-1/2 z-50">
+      <div className="absolute bottom-12 left-1/2 lg:left-[32%] -translate-x-1/2 z-5">
+        {/* <div className="absolute bottom-12 left-[32%] transform -translate-x-1/2 z-5"> */}
         <SliderNavigation
           currentSlide={activeIndex + 1}
           totalSlides={slides.length}
-          progress={progress}
+          activeIndex={activeIndex}
+          autoplayDelay={autoplayDelay}
           onPrev={() => swiperRef.current?.slidePrev()}
           onNext={() => swiperRef.current?.slideNext()}
           variant="light"
