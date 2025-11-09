@@ -25,9 +25,9 @@ const PaginationControls: FC<PaginationControlsProps> = ({
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <div className={cn("flex justify-between items-center gap-5", className)}>
+    <div className={cn("flex justify-between items-center gap-5 lg:flex-row flex-col", className)}>
       {/* Блок с кнопками пагинации */}
-      <div className="flex justify-center items-center gap-2 mb-4">
+      <div className="flex justify-center items-center gap-2 mb-4 lg:w-auto w-full">
         {pages.map((num) => (
           <Button
             key={num}
@@ -41,7 +41,7 @@ const PaginationControls: FC<PaginationControlsProps> = ({
       </div>
 
       <Button
-        className="transition-all duration-500"
+        className="transition-all duration-500 lg:w-auto w-full"
         variant="dark"
         size="lg"
         onClick={onShowMore}
@@ -49,7 +49,7 @@ const PaginationControls: FC<PaginationControlsProps> = ({
         Показать ещё
       </Button>
       {/* Выпадающий список для выбора количества отображаемых товаров */}
-      <div className="w-48">
+      <div className="lg:w-48 w-full">
         <Select
           placeholder="Показывать по"
           intent="default"

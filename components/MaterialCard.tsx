@@ -4,6 +4,7 @@ interface MaterialCardProps {
   title: string;
   image: string;
   fileUrl: string;
+  description?: string;
 }
 
 export default function MaterialCard({ title, image, fileUrl }: MaterialCardProps) {
@@ -21,8 +22,10 @@ export default function MaterialCard({ title, image, fileUrl }: MaterialCardProp
           src={image}
           alt={title}
           fill
-          className="object-cover pointer-events-none group-hover:scale-105 transition-transform duration-300"
+          className="object-cover object-top
+           pointer-events-none group-hover:scale-105 transition-transform duration-300"
           quality={100}
+          loading={'lazy'}
         />
       </div>
 

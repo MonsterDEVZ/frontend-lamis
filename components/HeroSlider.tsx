@@ -7,33 +7,42 @@ import type { Swiper as SwiperType } from 'swiper';
 import CTAButton from './ui/CTAButton';
 import SliderNavigation from './ui/SliderNavigation';
 
+// @ts-ignore
 import 'swiper/css';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const slides = [
   {
     id: 1,
-    image: '/images/hero/slide_1.png',
-    title: 'Мебель для ванн',
-    subtitle: 'LAMIS',
+    image: '/images/water-heaters/1.png',
+    title: 'Мебель для',
+    subtitle: 'ванн LAMIS',
     description:
-      'Мы делаем лучшие достижения в мире сантехники доступными каждому. Техника создаётся в Италии и Германии — там, где рождаются стандарты дизайна, надёжности и комфорта.',
+      'Изысканность, функциональность,  дизайнерские модели. Водонепроницаемая итальянская краска Sirca, немецкая фурнитура Tallsen.',
   },
   {
     id: 2,
     image: '/images/hero/slide_2.png',
-    title: 'Водонагреватели',
-    subtitle: 'BLESK',
-    description:
-      'Надежные водонагреватели для вашего дома. Современные технологии и европейское качество по доступной цене.',
-  },
-  {
-    id: 3,
-    image: '/images/hero/slide_3.png',
     title: 'Сантехника',
     subtitle: 'CAISER',
     description:
-      'Премиальная сантехника для ванной комнаты. Инновационный дизайн и безупречное качество из Германии.',
+      'Премиальная сантехника из фарфора, камня, стали по немецкой технологии. Гарантия 10 лет.',
+  },
+  {
+    id: 3,
+    image: '/blesk_2.webp',
+    title: 'Водонагреватели',
+    subtitle: 'BLESK',
+    description:
+        'Экономичные, многолетние, сенсорные водонагреватели с увеличенными магниевыми анодами. Гарантия 10 лет.',
+  },
+  {
+    id: 4,
+    image: '/hero_4-image.jpg',
+    title: 'Дизайнерского зеркала',
+    subtitle: 'LAMIS',
+    description:
+      'Ваше отражение заслуживает идеального обрамления. Откройте мир эксклюзивного дизайна с нашими зеркалами. Создайте свой уникальный стиль.',
   },
 ];
 
@@ -51,7 +60,6 @@ export default function HeroSlider() {
         height: isDesktop ? 'calc(100vh - 70px)' : 'calc(600px - 70px)',
         minHeight: '600px',
       }}
-      // style={{ height: isDesktop ? 'calc(100vh - 70px)' : 'calc(530px - 70px)', minHeight: '600px' }}
     >
       <Swiper
         modules={[Autoplay]}
@@ -84,19 +92,19 @@ export default function HeroSlider() {
               <div className="wrapper_centering flex items-center h-full w-full px-10">
                 <div className="inline-flex flex-col items-center lg:items-start gap-8">
                   {/* Main Heading */}
-                  <h1 className="text-white font-bold text-[56px] leading-[1.2] tracking-[-0.02em] mb-0 text-center lg:text-left">
+                  <h1 className="text-white font-bold text-[40px] md:text-[56px] leading-12 md:leading-[1.2] tracking-[-0.02em] mb-0 text-center lg:text-left">
                     {slide.title}
                     <br />
                     {slide.subtitle}
                   </h1>
 
                   {/* Description */}
-                  <p className="text-white text-base leading-[1.6] opacity-90 max-w-[500px] mb-0 text-center lg:text-left">
+                  <p className="text-white text-base leading-[22px] opacity-90 max-w-[500px] mb-0 text-center lg:text-left">
                     {slide.description}
                   </p>
 
                   {/* CTA Button */}
-                  <CTAButton className="w-48">Подробнее</CTAButton>
+                  <CTAButton className="w-40 md:w-48 px-0!">Подробнее</CTAButton>
                 </div>
               </div>
             </div>

@@ -25,27 +25,27 @@ export const features: Feature[] = [
     title: 'КАЧЕСТВО',
     description:
       'Контроль на всех этапах — от поступления материалов до отгрузки готового изделия.',
-    icon: '/bath-icon.svg',
+    icon: '/quality.svg',
   },
   {
     id: 2,
     title: 'СОВРЕМЕННОЕ ОБОРУДОВАНИЕ',
     description:
       'Роботизированные станки, ручные и полуавтоматические линии покраски, гибкие сборочные зоны.',
-    icon: '/toilet-icon.svg',
+    icon: '/Modern_Equipment.svg',
   },
   {
     id: 3,
     title: 'ЭКОЛОГИЧНОСТЬ И БЕЗОПАСНОСТЬ',
     description:
       'Используем сертифицированные материалы и экологичные технологии, включая водяные фильтры на покрасочном участке.',
-    icon: '/sinks-wash-icon.svg',
+    icon: '/Eco_and_safety.svg',
   },
   {
     id: 4,
     title: 'МОДНЫЙ ДИЗАЙН',
     description:
       'Современные итальянские и француские дизаины мебели для ванн, сантехники, водонагревателей',
-    icon: '/faucet-icon.svg',
+    icon: '/rakovina-icon.svg',
   },
 ];

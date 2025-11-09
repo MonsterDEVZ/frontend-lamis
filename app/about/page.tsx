@@ -64,7 +64,12 @@ export default function AboutPage() {
       <HistoryTimeline />
 
       {/* Two Column Info */}
-      <section className="container py-24" style={{ paddingBlock: '96px' }}>
+      <section
+        className="wrapper_centering py-24 mx-auto"
+        style={{
+          paddingBlock: '96px',
+        }}
+      >
         <div className="grid md:grid-cols-2 gap-6">
           <InfoCardAccordion {...card1} />
           <InfoCardAccordion {...card2} />
@@ -74,22 +79,27 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="container bg-white w-full" style={{ paddingBottom: '96px' }}>
-        <div ref={metricsScrollRef} className="overflow-hidden overflow-x-auto no-scrollbar">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 py-5 border border-[#1d1d1d] rounded-[18px] min-w-[1154px]">
+      {/* Infographics */}
+      <section
+        className="wrapper_centering bg-white w-full mx-auto"
+        style={{ paddingBottom: '96px' }}
+      >
+        <div className="overflow-hidden overflow-x-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 py-5 border_solid border-dark-100 rounded-[18px] min-w-[1154px]">
+            {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 divide-x divide-[#1d1d1d] py-5 border_solid border-[#1d1d1d] rounded-[18px] min-w-[1154px]"> */}
             {metrics.map((metric, index) => (
               <div
                 key={index}
                 className={cn(
                   'flex items-center justify-center h-36',
 
-                  'border-r border-[#1d1d1d]',
+                  'border-r border-dark-100',
                   'sm:last:border-r-0',
-                  'md:[&:nth-child(4n)]:border-r-0'
+                  'md:nth-[4n]:border-r-0'
                 )}
               >
                 <div className="text-center px-4">
-                  <p className="text-sm text-[#1d1d1d] font-medium">{metric.top}</p>
+                  <p className="text-sm text-dark-100 font-medium">{metric.top}</p>
                   <p className="text-[32px] leading-[30px] font-bold text-[#009B3E] my-1.5">
                     {metric.middle}
                     {metric.note && <sup className="text-xl font-semibold">{metric.note}</sup>}

@@ -3,21 +3,13 @@
  * Полный справочник коллекций/интерьеров с привязкой к брендам и категориям
  */
 
-export interface CollectionItem {
-  id: string;
-  name: string;
-  brandId: number;
-  categoryId: string;
-  slug: string;
-  description?: string;
-  image?: string;
-}
+import { Collection } from '@/types/product';
 
 /**
  * Все коллекции, сгруппированные иерархически
  * Бренд -> Категория -> Коллекция
  */
-export const collections: CollectionItem[] = [
+export const collections: Collection[] = [
   // ========== LAMIS FURNITURE COLLECTIONS (brandId: 1, categoryId: furniture) ==========
   {
     id: 'accent',
@@ -156,7 +148,7 @@ export const collections: CollectionItem[] = [
 /**
  * Вспомогательная функция для получения коллекций по brandId
  */
-export const getCollectionsByBrand = (brandId: number): CollectionItem[] => {
+export const getCollectionsByBrand = (brandId: number): Collection[] => {
   return collections.filter((collection) => collection.brandId === brandId);
 };
 
@@ -166,7 +158,7 @@ export const getCollectionsByBrand = (brandId: number): CollectionItem[] => {
 export const getCollectionsByBrandAndCategory = (
   brandId: number,
   categoryId: string
-): CollectionItem[] => {
+): Collection[] => {
   return collections.filter(
     (collection) => collection.brandId === brandId && collection.categoryId === categoryId
   );
@@ -175,6 +167,6 @@ export const getCollectionsByBrandAndCategory = (
 /**
  * Вспомогательная функция для получения коллекции по id
  */
-export const getCollectionById = (id: string): CollectionItem | undefined => {
+export const getCollectionById = (id: string): Collection | undefined => {
   return collections.find((collection) => collection.id === id);
 };

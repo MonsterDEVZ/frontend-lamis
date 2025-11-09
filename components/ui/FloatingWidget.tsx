@@ -2,7 +2,7 @@
 
 import { useState, useEffect, type FC } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
-import { FaWhatsapp, FaCommentDots, FaPhoneAlt, FaChevronDown } from 'react-icons/fa';
+import { FaWhatsapp, FaCommentDots, FaChevronDown } from 'react-icons/fa';
 import { FiMessageSquare } from 'react-icons/fi';
 
 interface FloatingWidgetProps {

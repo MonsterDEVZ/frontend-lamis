@@ -9,15 +9,6 @@ import PaginationControls from '../ui/PaginationControls';
 import { productsData } from '@/data/products';
 import { useFiltersStore } from '@/store/filtersStore';
 
-// Маппинг категорий к ключам productsData
-const categoryKeyMap: Record<string, string> = {
-  heaters: 'heaters',
-  mirrors: 'mirrors',
-  blesk: 'blesk',
-  caizer: 'caizer',
-  furniture: 'furniture',
-};
-
 // Маппинг категорий к brandId
 const categoryToBrandId: Record<string, number> = {
   furniture: 1, // Lamis
@@ -142,14 +133,11 @@ const Catalog: FC = () => {
         const prodCatId = product.categoryId || product.categoryKey;
         return prodCatId === selectedCategoryId;
       });
-      console.log('  - After category filter:', result.length, 'products');
     }
 
     // УРОВЕНЬ 3: ФИЛЬТРАЦИЯ ПО КОЛЛЕКЦИИ
     if (selectedCollectionId !== null) {
-      console.log('  - Applying collection filter...');
       result = result.filter((product) => product.collectionId === selectedCollectionId);
-      console.log('  - After collection filter:', result.length, 'products');
     }
 
     // СОРТИРОВКА
@@ -250,7 +238,7 @@ const Catalog: FC = () => {
         </div>
       </div>
 
-      <div className="wrapper_centering mt-8 sm:mt-12 md:mt-50 pb-8 px-4">
+      <div className="wrapper_centering mt-8 sm:mt-12 md:mt-50 pb-8 px-4 !overflow-hidden">
         {/* УРОВЕНЬ 2: ДИНАМИЧЕСКИЕ ТАБЫ для фильтрации по категориям */}
         {selectedBrandId !== null && availableCategories.length > 0 && (
           <div className="mb-8">
@@ -355,7 +343,7 @@ const Catalog: FC = () => {
       </div>
 
       {/* Секция пагинации и управления количеством отображаемых товаров */}
-      <div className="wrapper_centering">
+      <div className="wrapper_centering overflow-hidden">
         <div className="flex justify-between items-center gap-4 mt-12 w-full">
           <PaginationControls
             className={'w-full'}
