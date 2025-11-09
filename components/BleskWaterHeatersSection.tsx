@@ -5,27 +5,27 @@ import Image from 'next/image';
 const bleskHeaters = [
   {
     id: 1,
-    name: 'Blesk',
-    image: '/images/blesk-heaters/1.png',
-    alt: 'Водонагреватель Blesk - модель 1',
+    name: 'Гармония Технологий и Природы',
+    image: '/blesk_1.webp',
+    alt: 'Гармония Технологий и Природы',
   },
   {
     id: 2,
-    name: 'Blesk',
-    image: '/images/blesk-heaters/2.png',
-    alt: 'Водонагреватель Blesk - модель 2',
+    name: 'Инновации для Современной Жизни',
+    image: '/blesk_2.webp',
+    alt: 'Инновации для Современной Жизни',
   },
   {
     id: 3,
-    name: 'Blesk',
-    image: '/images/blesk-heaters/3.png',
-    alt: 'Водонагреватель Blesk - модель 3',
+    name: 'Энергия Природы, Умный Комфорт',
+    image: '/blesk_3.webp',
+    alt: 'Энергия Природы, Умный Комфорт',
   },
   {
     id: 4,
-    name: 'Blesk',
-    image: '/images/blesk-heaters/4.png',
-    alt: 'Водонагреватель Blesk - модель 4',
+    name: 'Искусство Контраста',
+    image: '/blesk_4.webp',
+    alt: 'Искусство Контраста',
   },
 ];
 
@@ -59,7 +59,7 @@ export default function BleskWaterHeatersSection() {
 
               {/* Brand Label */}
               <div className="absolute bottom-6 left-6">
-                <span className="text-white font-medium text-2xl">{heater.name}</span>
+                <span className="text-white font-semibold text-2xl">{heater.name}</span>
               </div>
             </div>
           ))}

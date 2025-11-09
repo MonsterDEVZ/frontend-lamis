@@ -9,10 +9,10 @@ export default function AboutSection() {
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="/images/about-brand.png"
+          src="/bg_aboutus.png"
           alt="О бренде"
           fill
-          className="object-cover object-center"
+          className="object-cover object-bottom"
           quality={100}
         />
         {/* Dark Overlay */}
