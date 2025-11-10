@@ -6,62 +6,49 @@ import { Autoplay } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import CTAButton from './ui/CTAButton';
 import SliderNavigation from './ui/SliderNavigation';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 // @ts-ignore
 import 'swiper/css';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
-import {FaCommentDots, FaWhatsapp} from "react-icons/fa";
 
 const slides = [
   {
     id: 1,
-    image: '/images/water-heaters/1.png',
+    image:
+      'https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/951aef2a-878c-43ae-fc29-ae05e5ef9900/full',
     title: 'Мебель для',
     subtitle: 'ванных LAMIS',
     description:
-        'Изысканность, функциональность, дизайнерские модели. Водонепроницаемая итальянская краска Sirca, немецкая фурнитура Tallsen.',
+      'Изысканность, функциональность, дизайнерские модели. Водонепроницаемая итальянская краска Sirca, немецкая фурнитура Tallsen.',
   },
   {
     id: 2,
-    image: '/images/hero/slide_2.png',
+    image:
+      'https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/ef0abf8c-40d2-4d04-7d85-184eaf0fc800/full',
     title: 'Сантехника',
     subtitle: 'CAISER',
     description:
-        'Премиальная сантехника из фарфора, камня и стали, созданная по немецкой технологии. Гарантия — 10 лет.',
+      'Премиальная сантехника из фарфора, камня и стали, созданная по немецкой технологии. Гарантия — 10 лет.',
   },
   {
     id: 3,
-    image: '/blesk_2.webp',
+    image:
+      'https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/691db7a2-0959-458f-1aa0-fa6f77b16e00/full',
     title: 'Водонагреватели',
     subtitle: 'BLESK',
     description:
-        'Экономичные, долговечные, сенсорные водонагреватели с увеличенными магниевыми анодами. Гарантия — 10 лет.',
+      'Экономичные, долговечные, сенсорные водонагреватели с увеличенными магниевыми анодами. Гарантия — 10 лет.',
   },
   {
     id: 4,
-    image: '/hero_4-image.jpg',
+    image:
+      'https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/d42c3a2e-71fb-4818-3614-aa073bbf5d00/full',
     title: 'Дизайнерские зеркала',
     subtitle: 'LAMIS',
     description:
-        'Ваше отражение заслуживает идеального обрамления. Откройте мир эксклюзивного дизайна с нашими зеркалами и создайте свой уникальный стиль.',
+      'Ваше отражение заслуживает идеального обрамления. Откройте мир эксклюзивного дизайна с нашими зеркалами и создайте свой уникальный стиль.',
   },
 ];
-
-// const actionButtons = [
-//   {
-//     icon: FaWhatsapp,
-//     name: 'WhatsApp',
-//     url: 'https://wa.me/ВАШ_НОМЕР_WHATSAPP?text=Здравствуйте, пишу с сайта LAMIS',
-//   },
-//   { icon: FaCommentDots, name: 'Chat' },
-//   /* // Телефон закомментирован
-//   {
-//     icon: FaPhoneAlt,
-//     name: "Call",
-//     url: "tel:ВАШ_НОМЕР_ТЕЛЕФОНА",
-//   },
-//   */
-// ];
 
 const autoplayDelay = 5000; // 5 seconds
 
@@ -69,18 +56,6 @@ export default function HeroSlider() {
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
   const isDesktop = useMediaQuery('(min-width: 1024px)');
-
-  // const [isOpen, setIsOpen] = useState(false);
-
-  // const handleSubButtonClick = (button: (typeof actionButtons)[0]) => {
-  //   setIsOpen(false);
-  //   if (button.url) {
-  //     window.open(button.url, '_blank');
-  //   } else if (button.name === 'Chat') {
-  //     onOpenChat();
-  //     if (isTooltipVisible) setIsTooltipVisible(false);
-  //   }
-  // };
 
   return (
     <section
@@ -134,9 +109,11 @@ export default function HeroSlider() {
 
                   {/* CTA Button */}
                   <CTAButton
-                      className="w-40 md:w-48 px-0!"
-                      // onClick={() => handleSubButtonClick(actionButtons[1])}
-                  >Подробнее</CTAButton>
+                    className="w-40 md:w-48 px-0!"
+                    // onClick={() => handleSubButtonClick(actionButtons[1])}
+                  >
+                    Подробнее
+                  </CTAButton>
                 </div>
               </div>
             </div>

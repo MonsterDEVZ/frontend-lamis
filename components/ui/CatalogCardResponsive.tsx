@@ -20,7 +20,7 @@ interface IProps {
   slug?: string;
 }
 
-const CatalogCard: React.FC<IProps> = ({
+const CatalogCardResponsive: React.FC<IProps> = ({
   category,
   name,
   price,
@@ -53,9 +53,8 @@ const CatalogCard: React.FC<IProps> = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Product Link */}
-      <Link href={`/product/${productSlug}`} className="block">
+      <Link href={`/product/${productSlug}`} className="flex md:block">
         {/* Image Container - 260x260px as per IDDIS */}
-        {/* bg-gray-50 */}
         <div className="relative w-full h-[260px] bg-transparent overflow-hidden">
           {/* Hover Image */}
           <Image
@@ -67,7 +66,6 @@ const CatalogCard: React.FC<IProps> = ({
               'object-cover p-0 transition-opacity duration-300 ease-in-out',
               isHovered ? 'opacity-100' : 'opacity-0'
             )}
-            // style={{padding: "0"}}
           />
           {/* Main Image */}
           <Image
@@ -82,50 +80,58 @@ const CatalogCard: React.FC<IProps> = ({
           />
         </div>
 
-        {/* Product Info */}
-        <div className="p-4">
-          {/* Brand Name - Design Spec: #B8B8B9, 16px, 500, 24px line-height */}
-          <div className="mb-2">
-            <span className="text-[#B8B8B9] text-base font-medium leading-6">{collection}</span>
+        <div className="flex flex-col justify-between">
+          {/* Product Info */}
+          <div className="p-4">
+            {/* Brand Name - Design Spec: #B8B8B9, 16px, 500, 24px line-height */}
+            <div className="mb-2">
+              <span className="text-[#B8B8B9] text-base font-medium leading-6">{collection}</span>
+            </div>
+
+            {/* Product Name - Design Spec */}
+            <h3 className="text-base font-medium leading-6 transition-colors group-hover:text-green-100 mb-2">
+              {name}
+            </h3>
+
+            {/* Price */}
+            <div className="text-base md:text-xl font-semibold text-gray-900 mb-3">
+              {formattedPrice} <u className="underline">С</u>
+            </div>
           </div>
 
-          {/* Product Name - Design Spec: 16px, 500, 24px line-height, hover: #009B3E */}
-          <h3 className="text-base font-medium leading-6 transition-colors group-hover:text-[#009B3E] mb-2">
-            {name}
-          </h3>
-
-          {/* Price */}
-          <div className="text-xl font-semibold text-gray-900 mb-3">
-            {formattedPrice} <u className="underline">С</u>
+          {/* Action Buttons */}
+          <div
+            className="flex items-center px-4 pb-4 gap-2"
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+            }}
+          >
+            {/* Add to Favorites */}
+            <TooltipProvider delayDuration={200}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={handleFavoriteClick}
+                    className={cn(
+                      'flex items-center justify-center w-10 h-10 rounded-full border transition-all duration-200',
+                      isFav
+                        ? 'bg-green-100 border-green-100 text-white'
+                        : 'border-gray-300 text-gray-600 hover:border-green-100 hover:text-green-100'
+                    )}
+                    aria-label={isFav ? 'Удалить из избранного' : 'Добавить в избранное'}
+                  >
+                    <Heart size={18} fill={isFav ? 'currentColor' : 'none'} />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="top">
+                  <p>{isFav ? 'Удалить из избранного' : 'Добавить в избранное'}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
       </Link>
-
-      {/* Action Buttons */}
-      <div className="px-4 pb-4 flex items-center gap-2">
-        {/* Add to Favorites */}
-        <TooltipProvider delayDuration={200}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                onClick={handleFavoriteClick}
-                className={cn(
-                  'flex items-center justify-center w-10 h-10 rounded-full border transition-all duration-200',
-                  isFav
-                    ? 'bg-[#009B3E] border-[#009B3E] text-white'
-                    : 'border-gray-300 text-gray-600 hover:border-[#009B3E] hover:text-[#009B3E]'
-                )}
-                aria-label={isFav ? 'Удалить из избранного' : 'Добавить в избранное'}
-              >
-                <Heart size={18} fill={isFav ? 'currentColor' : 'none'} />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent side="top">
-              <p>{isFav ? 'Удалить из избранного' : 'Добавить в избранное'}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </div>
 
       {/* Status Badge (if exists) */}
       {status && (
@@ -139,4 +145,4 @@ const CatalogCard: React.FC<IProps> = ({
   );
 };
 
-export default CatalogCard;
+export default CatalogCardResponsive;

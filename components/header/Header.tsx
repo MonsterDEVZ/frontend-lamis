@@ -104,7 +104,6 @@ export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [currentSearchValue, setCurrentSearchValue] = useState('');
   const isTablet = useMediaQuery('(min-width: 1024px)');
-  console.log('RENDER HEADER');
 
   const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
@@ -164,31 +163,27 @@ export default function Header() {
       {isTablet ? <TopBar mini_nav={mini_nav} isActive={isActive} /> : null}
 
       {/* Main Navigation */}
-      <div className="w-full">
-        <div className="wrapper_centering w-full">
-          <div className="relative flex items-center justify-between" style={{ height: '70px' }}>
-            {isTablet ? (
-              <MainNavigationDesc
-                isActive={isActive}
-                nav={nav}
-                setActiveSubList={setActiveSubList}
-                isSearchOpen={isSearchOpen}
-                setIsSearchOpen={setIsSearchOpen}
-                currentSearchValue={currentSearchValue}
-                onSearchValueChange={setCurrentSearchValue}
-              />
-            ) : (
-              <MainNavigationMob
-                isMobileMenuOpen={isMobileMenuOpen}
-                setIsMobileMenuOpen={setIsMobileMenuOpen}
-                isActive={isActive}
-                isSearchOpen={isSearchOpen}
-                setIsSearchOpen={setIsSearchOpen}
-              />
-            )}
-          </div>
-
-          {/* Nav Item More List */}
+      <div className="wrapper_centering w-full">
+        <div className="relative flex items-center justify-between" style={{ height: '70px' }}>
+          {isTablet ? (
+            <MainNavigationDesc
+              isActive={isActive}
+              nav={nav}
+              setActiveSubList={setActiveSubList}
+              isSearchOpen={isSearchOpen}
+              setIsSearchOpen={setIsSearchOpen}
+              currentSearchValue={currentSearchValue}
+              onSearchValueChange={setCurrentSearchValue}
+            />
+          ) : (
+            <MainNavigationMob
+              isMobileMenuOpen={isMobileMenuOpen}
+              setIsMobileMenuOpen={setIsMobileMenuOpen}
+              isActive={isActive}
+              isSearchOpen={isSearchOpen}
+              setIsSearchOpen={setIsSearchOpen}
+            />
+          )}
         </div>
       </div>
 
