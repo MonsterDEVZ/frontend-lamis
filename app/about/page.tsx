@@ -93,7 +93,7 @@ export default function AboutPage() {
       <Header />
       <Banner />
       <AboutBrand />
-      <HistoryTimeline />
+      {/*<HistoryTimeline />*/}
 
       {/* Two Column Info */}
       <section
