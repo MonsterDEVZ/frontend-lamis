@@ -1,7 +1,6 @@
 'use client';
 import { useState, useMemo, useEffect, type FC } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Header from '@/components/header/Header';
 import { Button } from '@/components/ui/Button';
 import { Select, SelectOption } from '../ui/Select';
 import PaginationControls from '../ui/PaginationControls';
@@ -29,6 +28,14 @@ const listCatalog = [
   { label: 'Инсталляции и клавиши' },
 ];
 
+const sortOptions = [
+  { value: 'default', label: 'По умолчанию' },
+  { value: 'newest', label: 'Новинки' },
+  { value: 'price_asc', label: 'Сначала дешёвые' },
+  { value: 'price_desc', label: 'Сначала дорогие' },
+  { value: 'sale', label: 'Товары по акции' },
+];
+
 const Catalog: FC = () => {
   // Подключаемся к Zustand store для фильтров (НОВАЯ ТРЕХУРОВНЕВАЯ СИСТЕМА)
   const {
@@ -37,7 +44,6 @@ const Catalog: FC = () => {
     selectedCategoryId,
     selectedCollectionId,
     availableCategories,
-    availableCollections,
     setBrandId,
     setCategoryId,
     setCollectionId,
@@ -174,17 +180,6 @@ const Catalog: FC = () => {
     setCurrentPage(1);
   };
 
-  // УРОВЕНЬ 3: Обработчик клика по коллекции
-  const handleCollectionClick = (collectionId: string) => {
-    if (collectionId === 'all') {
-      // Если выбрали "Все коллекции", сбрасываем фильтр
-      setCollectionId(null);
-    } else {
-      setCollectionId(collectionId);
-    }
-    setCurrentPage(1);
-  };
-
   // Проверяем, активна ли категория
   const isCategoryActive = (categoryValue: string) => {
     if (categoryValue === 'all') {
@@ -219,29 +214,24 @@ const Catalog: FC = () => {
   return (
     <div className="pb-24">
       {/* Hero */}
-      <>
-        <Header />
 
-        <div
-          className="w-full h-[350px] md:h-[400px] bg-cover bg-center pb-8 sm:pb-16 md:pb-24 flex items-end"
-          style={{ backgroundImage: "url('/images/hero/screen_1.png')" }}
-        >
-          <div className="wrapper_centering px-4">
-            <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold">
-              Каталог товаров
-            </h1>
-          </div>
+      <div
+        className="w-full h-[350px] md:h-[400px] bg-cover bg-center pb-8 sm:pb-16 md:pb-24 flex items-end"
+        style={{ backgroundImage: "url('/images/hero/screen_1.png')" }}
+      >
+        <div className="wrapper_centering px-4">
+          <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold">
+            Каталог товаров
+          </h1>
         </div>
-      </>
+      </div>
 
       <div className="wrapper_centering mt-8 sm:mt-12 md:mt-50 pb-8 px-4">
         {/* УРОВЕНЬ 2: ДИНАМИЧЕСКИЕ ТАБЫ для фильтрации по категориям */}
         {selectedBrandId !== null && availableCategories.length > 0 && (
           <div className="flex flex-wrap gap-3 md:gap-3.5 mb-8">
-            {/* Кнопка "Все категории" */}
             <Button
               className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
-              // h-10 py-2 px-4
               variant={selectedCategoryId === null ? 'primary' : 'outline'}
               onClick={() => handleCategoryClick('all')}
             >
@@ -254,7 +244,6 @@ const Catalog: FC = () => {
               <Button
                 key={idx}
                 variant={isCategoryActive('primary') ? 'primary' : 'outline'}
-                // variant={isCategoryActive(idx) ? 'primary' : 'outline'}
                 onClick={() => handleCategoryClick(el.label)}
               >
                 {el.label}
@@ -272,16 +261,16 @@ const Catalog: FC = () => {
               value={sortBy}
               onChange={(val) => setSortBy(val as string)}
             >
-              <SelectOption value="default">По умолчанию</SelectOption>
-              <SelectOption value="newest">Новинки</SelectOption>
-              <SelectOption value="price_asc">Сначала дешёвые</SelectOption>
-              <SelectOption value="price_desc">Сначала дорогие</SelectOption>
-              <SelectOption value="sale">Товары по акции</SelectOption>
+              {sortOptions.map((option) => (
+                <SelectOption key={option.value} value={option.value}>
+                  {option.label}
+                </SelectOption>
+              ))}
             </Select>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 md:gap-6 divide-y divide-[#1d1d1d1a] md:divide-transparent border_y border-[#1d1d1d1a] md:border-transparent">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 md:gap-6 divide-y divide-dark-50 md:divide-transparent border_y border-dark-50 md:border-transparent">
           {filteredAndSortedProducts.map((product) => (
             <div key={product.id} className="py-5 md:py-0">
               <CatalogCardResponsive {...product} />
@@ -291,21 +280,19 @@ const Catalog: FC = () => {
       </div>
 
       {/* Секция пагинации и управления количеством отображаемых товаров */}
-      {false && (
-        <div className="wrapper_centering overflow-hidden">
-          <div className="flex justify-between items-center gap-4 mt-12 w-full">
-            <PaginationControls
-              className="w-full"
-              currentPage={currentPage}
-              totalPages={totalPages}
-              itemsPerPage={itemsPerPage}
-              onPageChange={handlePageChange}
-              onItemsPerPageChange={handleItemsPerPageChange}
-              onShowMore={handleShowMore}
-            />
-          </div>
+      <div className="wrapper_centering">
+        <div className="flex justify-between items-center gap-4 mt-12 w-full">
+          <PaginationControls
+            className="w-full"
+            currentPage={currentPage}
+            totalPages={totalPages}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+            onItemsPerPageChange={handleItemsPerPageChange}
+            onShowMore={handleShowMore}
+          />
         </div>
-      )}
+      </div>
     </div>
   );
 };

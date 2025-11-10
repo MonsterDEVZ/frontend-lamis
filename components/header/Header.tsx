@@ -31,7 +31,7 @@ const mini_nav = [
 const nav = [
   {
     href: '/catalog?brandId=1',
-    title: 'Мебель для ванны Lamis',
+    title: 'Мебель для ванной',
     list: [
       {
         img: '',
@@ -77,15 +77,15 @@ const nav = [
   },
   {
     href: '/catalog?brandId=2',
-    title: 'Сантехника Caizer',
+    title: 'Сантехника',
   },
   {
     href: '/catalog?brandId=3',
-    title: 'Водонагреватели Blesk',
+    title: 'Водонагреватели',
   },
   {
     href: '/catalog?brandId=1&categoryId=mirrors',
-    title: 'Дизайнерские зеркала Lamis',
+    title: 'Дизайнерские зеркала',
   },
 ];
 

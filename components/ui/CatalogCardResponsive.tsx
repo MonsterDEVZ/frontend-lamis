@@ -83,7 +83,7 @@ const CatalogCardResponsive: React.FC<IProps> = ({
         <div className="flex flex-col justify-between">
           {/* Product Info */}
           <div className="p-4">
-            {/* Brand Name - Design Spec: #B8B8B9, 16px, 500, 24px line-height */}
+            {/* Brand Name */}
             <div className="mb-2">
               <span className="text-[#B8B8B9] text-base font-medium leading-6">{collection}</span>
             </div>
@@ -124,6 +124,7 @@ const CatalogCardResponsive: React.FC<IProps> = ({
                     <Heart size={18} fill={isFav ? 'currentColor' : 'none'} />
                   </button>
                 </TooltipTrigger>
+
                 <TooltipContent side="top">
                   <p>{isFav ? 'Удалить из избранного' : 'Добавить в избранное'}</p>
                 </TooltipContent>
@@ -136,7 +137,7 @@ const CatalogCardResponsive: React.FC<IProps> = ({
       {/* Status Badge (if exists) */}
       {status && (
         <div className="absolute top-3 left-3 z-10">
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#E0398D] text-white shadow-sm">
+          <span className="inline-flex items-center px-3 py-0.5 ss:py-1 rounded-full text-[11px] ss:text-xs font-medium bg-[#E0398D] text-white shadow-sm">
             {status}
           </span>
         </div>
