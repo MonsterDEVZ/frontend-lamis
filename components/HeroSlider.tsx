@@ -47,21 +47,21 @@ const slides = [
   },
 ];
 
-const actionButtons = [
-  {
-    icon: FaWhatsapp,
-    name: 'WhatsApp',
-    url: 'https://wa.me/ВАШ_НОМЕР_WHATSAPP?text=Здравствуйте, пишу с сайта LAMIS',
-  },
-  { icon: FaCommentDots, name: 'Chat' },
-  /* // Телефон закомментирован
-  {
-    icon: FaPhoneAlt,
-    name: "Call",
-    url: "tel:ВАШ_НОМЕР_ТЕЛЕФОНА",
-  },
-  */
-];
+// const actionButtons = [
+//   {
+//     icon: FaWhatsapp,
+//     name: 'WhatsApp',
+//     url: 'https://wa.me/ВАШ_НОМЕР_WHATSAPP?text=Здравствуйте, пишу с сайта LAMIS',
+//   },
+//   { icon: FaCommentDots, name: 'Chat' },
+//   /* // Телефон закомментирован
+//   {
+//     icon: FaPhoneAlt,
+//     name: "Call",
+//     url: "tel:ВАШ_НОМЕР_ТЕЛЕФОНА",
+//   },
+//   */
+// ];
 
 const autoplayDelay = 5000; // 5 seconds
 
@@ -70,17 +70,17 @@ export default function HeroSlider() {
   const swiperRef = useRef<SwiperType | null>(null);
   const isDesktop = useMediaQuery('(min-width: 1024px)');
 
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
-  const handleSubButtonClick = (button: (typeof actionButtons)[0]) => {
-    setIsOpen(false);
-    if (button.url) {
-      window.open(button.url, '_blank');
-    } else if (button.name === 'Chat') {
-      onOpenChat();
-      if (isTooltipVisible) setIsTooltipVisible(false);
-    }
-  };
+  // const handleSubButtonClick = (button: (typeof actionButtons)[0]) => {
+  //   setIsOpen(false);
+  //   if (button.url) {
+  //     window.open(button.url, '_blank');
+  //   } else if (button.name === 'Chat') {
+  //     onOpenChat();
+  //     if (isTooltipVisible) setIsTooltipVisible(false);
+  //   }
+  // };
 
   return (
     <section
@@ -135,7 +135,7 @@ export default function HeroSlider() {
                   {/* CTA Button */}
                   <CTAButton
                       className="w-40 md:w-48 px-0!"
-                      onClick={() => handleSubButtonClick(actionButtons[1])}
+                      // onClick={() => handleSubButtonClick(actionButtons[1])}
                   >Подробнее</CTAButton>
                 </div>
               </div>
