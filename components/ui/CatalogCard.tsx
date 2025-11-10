@@ -94,10 +94,10 @@ const CatalogCard: React.FC<IProps> = ({
             {name}
           </h3>
 
-          {/* Price */}
-          <div className="text-xl font-semibold text-gray-900 mb-3">
+          {/* Price - Temporarily hidden */}
+          {/* <div className="text-xl font-semibold text-gray-900 mb-3">
             {formattedPrice} <u className="underline">С</u>
-          </div>
+          </div> */}
         </div>
       </Link>
 
@@ -127,14 +127,14 @@ const CatalogCard: React.FC<IProps> = ({
         </TooltipProvider>
       </div>
 
-      {/* Status Badge (if exists) */}
-      {status && (
+      {/* Status Badge (if exists) - Temporarily hidden per requirements */}
+      {/* {status && (
         <div className="absolute top-3 left-3 z-10">
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#E0398D] text-white shadow-sm">
             {status}
           </span>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

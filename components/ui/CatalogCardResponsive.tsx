@@ -93,10 +93,10 @@ const CatalogCardResponsive: React.FC<IProps> = ({
               {name}
             </h3>
 
-            {/* Price */}
-            <div className="text-base md:text-xl font-semibold text-gray-900 mb-3">
+            {/* Price - Temporarily hidden */}
+            {/* <div className="text-base md:text-xl font-semibold text-gray-900 mb-3">
               {formattedPrice} <u className="underline">С</u>
-            </div>
+            </div> */}
           </div>
 
           {/* Action Buttons */}

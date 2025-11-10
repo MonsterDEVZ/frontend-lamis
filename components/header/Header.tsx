@@ -32,60 +32,44 @@ const nav = [
   {
     href: '/catalog?brandId=1',
     title: 'Мебель для ванной',
+  },
+  {
+    href: '/catalog?brandId=2',
+    title: 'Санфарфор',
     list: [
       {
         img: '',
         href: '',
-        title: 'Смесители для ванной',
+        title: 'Раковины',
       },
       {
         img: '',
         href: '',
-        title: 'Душевые системы',
+        title: 'Унитазы',
       },
       {
         img: '',
         href: '',
-        title: 'Смесители для кухни',
+        title: 'Писсуары',
       },
       {
         img: '',
         href: '',
-        title: 'Санитарный фарфор и сиденья',
-      },
-      {
-        img: '',
-        href: '',
-        title: 'Мебель и зеркала',
-      },
-      {
-        img: '',
-        href: '',
-        title: 'Аксессуары для душа',
-      },
-      {
-        img: '',
-        href: '',
-        title: 'Мойки',
-      },
-      {
-        img: '',
-        href: '',
-        title: 'Инсталляции и клавиши',
+        title: 'Биде',
       },
     ],
   },
   {
-    href: '/catalog?brandId=2',
-    title: 'Сантехника',
-  },
-  {
     href: '/catalog?brandId=3',
-    title: 'Водонагреватели',
+    title: 'Смесители',
   },
   {
-    href: '/catalog?brandId=1&categoryId=mirrors',
-    title: 'Дизайнерские зеркала',
+    href: '/catalog?brandId=4',
+    title: 'Инсталяции',
+  },
+  {
+    href: '/catalog?brandId=5',
+    title: 'Водонагреватели (электрические)',
   },
 ];
 

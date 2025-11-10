@@ -25,7 +25,7 @@ const slides = [
     id: 2,
     image:
       'https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/ef0abf8c-40d2-4d04-7d85-184eaf0fc800/full',
-    title: 'Сантехника',
+    title: 'Санфарфор',
     subtitle: 'CAISER',
     description:
       'Премиальная сантехника из фарфора, камня и стали, созданная по немецкой технологии. Гарантия — 10 лет.',
@@ -33,20 +33,38 @@ const slides = [
   {
     id: 3,
     image:
-      'https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/691db7a2-0959-458f-1aa0-fa6f77b16e00/full',
-    title: 'Водонагреватели',
-    subtitle: 'BLESK',
+      'https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/ef0abf8c-40d2-4d04-7d85-184eaf0fc800/full',
+    title: 'Смесители',
+    subtitle: 'CAISER',
     description:
-      'Экономичные, долговечные, сенсорные водонагреватели с увеличенными магниевыми анодами. Гарантия — 10 лет.',
+      'Это искусство комфорта на вашей кухне и в ванной. Латунь придаёт высокую прочность, долговечность и антибактериальные свойства. Картридж Sedal делает более одного миллиона циклов, защиту от налётов и экономию воды.',
   },
   {
     id: 4,
     image:
-      'https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/d42c3a2e-71fb-4818-3614-aa073bbf5d00/full',
-    title: 'Дизайнерские зеркала',
-    subtitle: 'LAMIS',
+      'https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/ef0abf8c-40d2-4d04-7d85-184eaf0fc800/full',
+    title: 'Инсталяции',
+    subtitle: 'CAISER',
     description:
-      'Ваше отражение заслуживает идеального обрамления. Откройте мир эксклюзивного дизайна с нашими зеркалами и создайте свой уникальный стиль.',
+      'Скрытая элегантность вашего интерьера. Они дарят простор сниженный шум и экономию воды. Прочный металлический каркас, способным выдерживать большие нагрузки.',
+  },
+  {
+    id: 5,
+    image:
+      'https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/691db7a2-0959-458f-1aa0-fa6f77b16e00/full',
+    title: 'Водонагреватели',
+    subtitle: '(электрические)',
+    description:
+      'Экономичные, долговечные, сенсорные водонагреватели с увеличенными магниевыми анодами. Гарантия — 10 лет.',
+  },
+  {
+    id: 6,
+    image:
+      'https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/d42c3a2e-71fb-4818-3614-aa073bbf5d00/full',
+    title: 'Дизайнерские и умные',
+    subtitle: 'зеркала LAMIS',
+    description:
+      'Ваше отражение заслуживает идеального обрамления. Откройте мир эксклюзивного дизайна и дополнительных функций (3 вида подсветки холодный-тёплый-нейтральный), сенсорные датчики на движение, подогрев-антипар.',
   },
 ];
 
