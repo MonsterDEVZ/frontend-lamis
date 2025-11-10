@@ -18,8 +18,8 @@ export default function ContactsPage() {
       <Header />
 
       <main className="pt-24">
-        <div className="md:px-10 lg:px-15 xl:px-30 mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
+        <div className="wrapper_centering md:px-10 lg:px-15 xl:px-30 mx-auto px-4 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20 mx-auto">
             <MainOfficeSection />
             <RepresentativesSection />
           </div>

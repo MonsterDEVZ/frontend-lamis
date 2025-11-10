@@ -10,6 +10,7 @@ import SliderNavigation from './ui/SliderNavigation';
 // @ts-ignore
 import 'swiper/css';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
+import {FaCommentDots, FaWhatsapp} from "react-icons/fa";
 
 const slides = [
   {
@@ -46,12 +47,40 @@ const slides = [
   },
 ];
 
+const actionButtons = [
+  {
+    icon: FaWhatsapp,
+    name: 'WhatsApp',
+    url: 'https://wa.me/ВАШ_НОМЕР_WHATSAPP?text=Здравствуйте, пишу с сайта LAMIS',
+  },
+  { icon: FaCommentDots, name: 'Chat' },
+  /* // Телефон закомментирован
+  {
+    icon: FaPhoneAlt,
+    name: "Call",
+    url: "tel:ВАШ_НОМЕР_ТЕЛЕФОНА",
+  },
+  */
+];
+
 const autoplayDelay = 5000; // 5 seconds
 
 export default function HeroSlider() {
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
   const isDesktop = useMediaQuery('(min-width: 1024px)');
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleSubButtonClick = (button: (typeof actionButtons)[0]) => {
+    setIsOpen(false);
+    if (button.url) {
+      window.open(button.url, '_blank');
+    } else if (button.name === 'Chat') {
+      onOpenChat();
+      if (isTooltipVisible) setIsTooltipVisible(false);
+    }
+  };
 
   return (
     <section
@@ -104,7 +133,10 @@ export default function HeroSlider() {
                   </p>
 
                   {/* CTA Button */}
-                  <CTAButton className="w-40 md:w-48 px-0!">Подробнее</CTAButton>
+                  <CTAButton
+                      className="w-40 md:w-48 px-0!"
+                      onClick={() => handleSubButtonClick(actionButtons[1])}
+                  >Подробнее</CTAButton>
                 </div>
               </div>
             </div>
