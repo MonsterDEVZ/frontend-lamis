@@ -16,9 +16,10 @@ const selectStyles = cva(
   {
     variants: {
       intent: {
-        default: 'bg-white border-gray-300 text-gray-800 hover:bg-gray-50',
-        outline: 'bg-transparent border-[#EEEEEE] text-gray-800 hover:text-white hover:bg-[#009B3E] hover:border-[#009B3E]',
-        filled: 'bg-[#009B3E] border-[#009B3E] text-white hover:text-black hover:bg-white',
+        default: 'bg-white border-gray-300 text-dark-100 hover:bg-gray-50',
+        outline:
+          'bg-transparent border-[#1d1d1d1a] text-dark-100 hover:text-white hover:bg-green-100 hover:border-green-100',
+        filled: 'bg-green-100 border-green-100 text-white hover:text-black hover:bg-white',
       },
       isOpen: {
         true: 'border-green-500 ring-2 ring-green-200',
@@ -42,6 +43,7 @@ interface SelectProps extends VariantProps<typeof selectStyles> {
   onChange: (value: string | string[]) => void;
   placeholder: string;
   multiple?: boolean;
+  center?: boolean;
 }
 
 interface SelectOptionProps {
@@ -59,6 +61,7 @@ export function Select({
   placeholder,
   intent,
   multiple = false,
+  center = false,
 }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -118,20 +121,24 @@ export function Select({
       onClick={() => setIsOpen(!isOpen)}
       ref={ref}
     >
-      <div className="flex items-center justify-between px-4 h-full truncate text-sm">
+      <div
+        className={cn(
+          'flex items-center px-4 h-full truncate text-sm',
+          center ? 'justify-center' : 'justify-between'
+        )}
+      >
         <span className="truncate">{getDisplayLabel()}</span>
+
         <svg
-          className={`w-4 h-4 ml-2 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          className={cn(
+            'w-4 h-4 ml-2 shrink-0 transition-transform duration-200',
+            isOpen && 'rotate-180'
+          )}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M19 9l-7 7-7-7"
-          ></path>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
         </svg>
       </div>
       <div className={cn(dropdownStyles({ isOpen }))}>
@@ -168,7 +175,10 @@ export function SelectOption({
   if (!isCheckbox) {
     return (
       <div
-        className={`p-2 rounded-md hover:text-[#009B3E] cursor-pointer ${isSelected ? 'font-bold' : ''}`}
+        className={cn(
+          'p-2 rounded-md hover:text-green-100 cursor-pointer text-sm md:text-base',
+          isSelected && 'font-bold'
+        )}
         onClick={onClick}
       >
         {children}
@@ -179,7 +189,10 @@ export function SelectOption({
   // Для множественного выбора с чекбоксами
   return (
     <label
-      className={`flex items-center p-2 rounded-md hover:text-[#009B3E] cursor-pointer ${isSelected ? 'font-bold' : ''}`}
+      className={cn(
+        'flex items-center p-2 rounded-md hover:text-green-100 cursor-pointer text-center',
+        isSelected && 'font-bold'
+      )}
       onClick={(e) => {
         e.preventDefault(); // не даём label кликать второй раз
         onClick?.(e);
@@ -189,8 +202,8 @@ export function SelectOption({
 
       <div
         className={cn(
-          'w-[18px] h-[18px] rounded-sm border_solid border-[#009B3E] mr-3 inline-flex justify-center items-center',
-          !!isSelected ? 'bg-[#009B3E] border-none' : 'bg-white'
+          'w-[18px] h-[18px] rounded-sm border_solid border-green-100 mr-3 inline-flex justify-center items-center text-center text-sm md:text-base',
+          !!isSelected ? 'bg-green-100 border-none' : 'bg-white'
         )}
       >
         {!!isSelected ? (

@@ -7,12 +7,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'bg-[#009B3E] text-white hover:text-black border-[#009B3E] hover:bg-white',
-        secondary: 'bg-[#009B3E] text-white hover:text-black border-[#009B3E] hover:bg-white',
+        primary: 'bg-green-100 text-white hover:text-black border-green-100 hover:bg-white',
+        secondary: 'bg-green-100 text-white hover:text-black border-green-100 hover:bg-white',
         outline:
-          'leading-6 outline-none border-[#EEEEEE] hover:text-white hover:bg-[#009B3E] hover:border-[#009B3E]',
+          'leading-6 outline-none border-[#1d1d1d1a] hover:text-white hover:bg-green-100 hover:border-green-100',
         outline_gr:
-          'leading-6 outline-none border-[#009B3E] text-[#009B3E] hover:text-white hover:bg-[#009B3E] hover:border-[#009B3E]',
+          'leading-6 outline-none border-green-100 text-green-100 hover:text-white hover:bg-green-100 hover:border-green-100',
         dark: 'bg-black border-black hover:bg-white text-white hover:text-black h-12 rounded-4xl w-48 text-center',
         empty: '',
       },
@@ -20,7 +20,7 @@ const buttonVariants = cva(
         default: 'h-10 py-2 px-4',
         sm: 'h-9 px-6 py-1 rounded-md',
         lg: 'h-12 px-8 rounded-md',
-        icon: 'h-12 w-12 flex items-center justify-center rounded-full border-[#EEEEEE] hover:text-white hover:bg-[#009B3E] hover:border-[#009B3E]',
+        icon: 'h-12 w-12 flex items-center justify-center rounded-full border-[#1d1d1d1a] hover:text-white hover:bg-green-100 hover:border-green-100',
       },
       round: {
         default: 'rounded-4xl',

@@ -10,11 +10,12 @@ const footerSections = [
   {
     title: 'Продукция',
     links: [
-      { title: 'Мебель для ванны', href: '/bathroom-furniture-lamis' },
-      { title: 'Раковины', href: '/sinks' },
-      { title: 'Ванны', href: '/baths' },
+      { title: 'Мебель для ванной', href: '/bathroom-furniture-lamis' },
+      { title: 'Санфарфор', href: '/sanfarfor' },
       { title: 'Смесители', href: '/faucets' },
-      { title: 'Водонагреватели', href: '/water-heaters' },
+      { title: 'Инсталяции', href: '/installations' },
+      { title: 'Водонагреватели (электрические)', href: '/water-heaters' },
+      { title: 'Дизайнерские и умные зеркала', href: '/smart-mirrors' },
       { title: 'Каталоги', href: '/catalogs' },
       { title: 'Сертификаты качества', href: '/certificates' },
     ],

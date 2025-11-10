@@ -1,13 +1,12 @@
 'use client';
 import { useState, useMemo, useEffect, type FC } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Header from '@/components/header/Header';
-import CatalogCard from '@/components/ui/CatalogCard';
 import { Button } from '@/components/ui/Button';
 import { Select, SelectOption } from '../ui/Select';
 import PaginationControls from '../ui/PaginationControls';
 import { productsData } from '@/data/products';
 import { useFiltersStore } from '@/store/filtersStore';
+import CatalogCardResponsive from '../ui/CatalogCardResponsive';
 
 // Маппинг категорий к brandId
 const categoryToBrandId: Record<string, number> = {
@@ -18,6 +17,25 @@ const categoryToBrandId: Record<string, number> = {
   blesk: 3, // Blesk
 };
 
+const listCatalog = [
+  { label: 'Смесители для ванной' },
+  { label: 'Душевые системы' },
+  { label: 'Смесители для кухни' },
+  { label: 'Санитарный фарфор и сиденья' },
+  { label: 'Мебель и зеркала' },
+  { label: 'Аксессуары для душа' },
+  { label: 'Мойки' },
+  { label: 'Инсталляции и клавиши' },
+];
+
+const sortOptions = [
+  { value: 'default', label: 'По умолчанию' },
+  { value: 'newest', label: 'Новинки' },
+  { value: 'price_asc', label: 'Сначала дешёвые' },
+  { value: 'price_desc', label: 'Сначала дорогие' },
+  { value: 'sale', label: 'Товары по акции' },
+];
+
 const Catalog: FC = () => {
   // Подключаемся к Zustand store для фильтров (НОВАЯ ТРЕХУРОВНЕВАЯ СИСТЕМА)
   const {
@@ -26,7 +44,6 @@ const Catalog: FC = () => {
     selectedCategoryId,
     selectedCollectionId,
     availableCategories,
-    availableCollections,
     setBrandId,
     setCategoryId,
     setCollectionId,
@@ -85,50 +102,34 @@ const Catalog: FC = () => {
 
   // НОВОЕ: Инициализация фильтров из URL (ТРЕХУРОВНЕВАЯ СИСТЕМА)
   useEffect(() => {
-    console.log('--- CATALOG COMPONENT: URL PARAMS CHANGED ---');
-    console.log('Brand ID from URL:', brandIdFromUrl);
-    console.log('Category ID from URL:', categoryIdFromUrl);
-
     // УРОВЕНЬ 1: Устанавливаем фильтр по бренду из URL
     if (brandIdFromUrl) {
       const brandId = parseInt(brandIdFromUrl, 10);
       if (!isNaN(brandId)) {
-        console.log('🔹 [Level 1] Setting brand filter from URL:', brandId);
         setBrandId(brandId, allProducts); // Автоматически обновляет availableCategories
       }
     } else {
       // Если нет фильтра по бренду, сбрасываем всё
-      console.log('🔹 No brand filter, resetting filters');
       setBrandId(null, allProducts);
     }
 
     // УРОВЕНЬ 2: Устанавливаем фильтр по категории из URL (только если есть бренд)
     if (categoryIdFromUrl && brandIdFromUrl) {
-      console.log('🔹 [Level 2] Setting category filter from URL:', categoryIdFromUrl);
       setCategoryId(categoryIdFromUrl, allProducts); // Автоматически обновляет availableCollections
     }
   }, [brandIdFromUrl, categoryIdFromUrl, allProducts, setBrandId, setCategoryId]);
 
   // КРИТИЧЕСКИ ВАЖНО: useMemo для фильтрации и сортировки (ТРЕХУРОВНЕВАЯ СИСТЕМА)
   const filteredAndSortedProducts = useMemo(() => {
-    console.log('🔍 Filtering products with THREE-LEVEL system:');
-    console.log('  - Selected Brand ID:', selectedBrandId);
-    console.log('  - Selected Category ID:', selectedCategoryId);
-    console.log('  - Selected Collection ID:', selectedCollectionId);
-    console.log('  - Total products:', allProducts.length);
-
     let result = [...allProducts];
 
     // УРОВЕНЬ 1: ФИЛЬТРАЦИЯ ПО БРЕНДУ
     if (selectedBrandId !== null) {
-      console.log('  - Applying brand filter...');
       result = result.filter((product) => product.brandId === selectedBrandId);
-      console.log('  - After brand filter:', result.length, 'products');
     }
 
     // УРОВЕНЬ 2: ФИЛЬТРАЦИЯ ПО КАТЕГОРИИ
     if (selectedCategoryId !== null) {
-      console.log('  - Applying category filter...');
       result = result.filter((product) => {
         const prodCatId = product.categoryId || product.categoryKey;
         return prodCatId === selectedCategoryId;
@@ -169,25 +170,12 @@ const Catalog: FC = () => {
 
   // УРОВЕНЬ 2: Обработчик клика по категории
   const handleCategoryClick = (categoryValue: string) => {
-    console.log('🔹 [Level 2] Category clicked:', categoryValue);
     if (categoryValue === 'all') {
       // Если выбрали "Все", сбрасываем фильтр по категории
       setCategoryId(null, allProducts);
     } else {
       // Устанавливаем выбранную категорию (автоматически обновит availableCollections)
       setCategoryId(categoryValue, allProducts);
-    }
-    setCurrentPage(1);
-  };
-
-  // УРОВЕНЬ 3: Обработчик клика по коллекции
-  const handleCollectionClick = (collectionId: string) => {
-    console.log('🔹 [Level 3] Collection clicked:', collectionId);
-    if (collectionId === 'all') {
-      // Если выбрали "Все коллекции", сбрасываем фильтр
-      setCollectionId(null);
-    } else {
-      setCollectionId(collectionId);
     }
     setCurrentPage(1);
   };
@@ -225,10 +213,10 @@ const Catalog: FC = () => {
 
   return (
     <div className="pb-24">
-      <Header />
-      {/* Секция заголовка страницы каталога с фоновым изображением */}
+      {/* Hero */}
+
       <div
-        className="w-full h-[200px] sm:h-[300px] md:h-[400px] bg-cover bg-center pb-8 sm:pb-16 md:pb-24 flex items-end"
+        className="w-full h-[350px] md:h-[400px] bg-cover bg-center pb-8 sm:pb-16 md:pb-24 flex items-end"
         style={{ backgroundImage: "url('/images/hero/screen_1.png')" }}
       >
         <div className="wrapper_centering px-4">
@@ -238,115 +226,64 @@ const Catalog: FC = () => {
         </div>
       </div>
 
-      <div className="wrapper_centering mt-8 sm:mt-12 md:mt-50 pb-8 px-4 !overflow-hidden">
+      <div className="wrapper_centering mt-8 sm:mt-12 md:mt-50 pb-8 px-4">
         {/* УРОВЕНЬ 2: ДИНАМИЧЕСКИЕ ТАБЫ для фильтрации по категориям */}
         {selectedBrandId !== null && availableCategories.length > 0 && (
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold mb-4">Категории</h3>
-            <div className="flex flex-wrap gap-3.5">
-              {/* Кнопка "Все категории" */}
-              <Button
-                variant={selectedCategoryId === null ? 'primary' : 'outline'}
-                onClick={() => handleCategoryClick('all')}
-              >
-                Все категории
-              </Button>
+          <div className="flex flex-wrap gap-3 md:gap-3.5 mb-8">
+            <Button
+              className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
+              variant={selectedCategoryId === null ? 'primary' : 'outline'}
+              onClick={() => handleCategoryClick('all')}
+            >
+              Все категории
+            </Button>
 
-              {/* Динамически генерируемые категории из store */}
-              {availableCategories.map((category) => (
-                <Button
-                  key={category.id}
-                  variant={isCategoryActive(category.id) ? 'primary' : 'outline'}
-                  onClick={() => handleCategoryClick(category.id)}
-                >
-                  {category.label}
-                </Button>
-              ))}
-            </div>
+            {/* Динамически генерируемые категории из store */}
+            {listCatalog.map((el, idx) => (
+              // {availableCategories.map((category) => (
+              <Button
+                key={idx}
+                variant={isCategoryActive('primary') ? 'primary' : 'outline'}
+                onClick={() => handleCategoryClick(el.label)}
+              >
+                {el.label}
+              </Button>
+            ))}
           </div>
         )}
 
-        {/* УРОВЕНЬ 3: ДИНАМИЧЕСКИЕ ТАБЫ для фильтрации по коллекциям */}
-        {selectedCategoryId !== null && availableCollections.length > 0 && (
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold mb-4">Коллекции</h3>
-            <div className="flex flex-wrap gap-3.5">
-              {/* Кнопка "Все коллекции" */}
-              <Button
-                variant={selectedCollectionId === null ? 'primary' : 'outline'}
-                onClick={() => handleCollectionClick('all')}
-              >
-                Все коллекции
-              </Button>
-
-              {/* Динамически генерируемые коллекции из store */}
-              {availableCollections.map((collection) => (
-                <Button
-                  key={collection.id}
-                  variant={isCollectionActive(collection.id) ? 'primary' : 'outline'}
-                  onClick={() => handleCollectionClick(collection.id)}
-                >
-                  {collection.name}
-                </Button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div className="flex flex-col sm:flex-row justify-start gap-3.5 mt-6 sm:mt-8 md:mt-50 mb-8">
+        <div className="flex flex-col sm:flex-row justify-start gap-3.5 mt-4 mb-10">
           {/* Сортировка - интегрирована с Zustand store */}
-          <div className="w-full sm:w-48">
+          <div className="w-48">
             <Select
               placeholder="Сортировка"
               intent="filled"
               value={sortBy}
               onChange={(val) => setSortBy(val as string)}
             >
-              <SelectOption value="default">По умолчанию</SelectOption>
-              <SelectOption value="newest">Новинки</SelectOption>
-              <SelectOption value="price_asc">Сначала дешёвые</SelectOption>
-              <SelectOption value="price_desc">Сначала дорогие</SelectOption>
-              <SelectOption value="sale">Товары по акции</SelectOption>
+              {sortOptions.map((option) => (
+                <SelectOption key={option.value} value={option.value}>
+                  {option.label}
+                </SelectOption>
+              ))}
             </Select>
           </div>
-
-          {/* Выпадающий список для фильтрации по цвету (будущий функционал) */}
-          {/*  FIX: ВРЕМЕННО УБРАЛ */}
-          {/*  <div className="w-full sm:w-52">*/}
-          {/*    <Select*/}
-          {/*      placeholder="Цвет изделия"*/}
-          {/*      intent="outline"*/}
-          {/*      multiple*/}
-          {/*      value={[]}*/}
-          {/*      onChange={() => {}}*/}
-          {/*    >*/}
-          {/*      <SelectOption value="beige">Бежевый</SelectOption>*/}
-          {/*      <SelectOption value="white">Белый</SelectOption>*/}
-          {/*      <SelectOption value="white_glossy">Белый глянцевый</SelectOption>*/}
-          {/*      <SelectOption value="white_matte">Белый матовый</SelectOption>*/}
-          {/*      <SelectOption value="bronze_matte">Бронза матовая</SelectOption>*/}
-          {/*      <SelectOption value="beech_light">Бук светлый</SelectOption>*/}
-          {/*    </Select>*/}
-          {/*  </div>*/}
         </div>
 
-        {/* Отображение количества найденных товаров */}
-        <div className="mb-4 text-sm text-gray-600">
-          Найдено товаров: {filteredAndSortedProducts.length}
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 md:gap-6 divide-y divide-dark-50 md:divide-transparent border_y border-dark-50 md:border-transparent">
           {filteredAndSortedProducts.map((product) => (
-            <CatalogCard key={product.id} {...product} />
+            <div key={product.id} className="py-5 md:py-0">
+              <CatalogCardResponsive {...product} />
+            </div>
           ))}
         </div>
       </div>
 
       {/* Секция пагинации и управления количеством отображаемых товаров */}
-      <div className="wrapper_centering overflow-hidden">
+      <div className="wrapper_centering">
         <div className="flex justify-between items-center gap-4 mt-12 w-full">
           <PaginationControls
-            className={'w-full'}
+            className="w-full"
             currentPage={currentPage}
             totalPages={totalPages}
             itemsPerPage={itemsPerPage}

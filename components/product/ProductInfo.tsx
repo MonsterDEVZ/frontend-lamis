@@ -54,13 +54,13 @@ export default function ProductInfo({
       {/* Title and SKU */}
       <h1 className="text-3xl font-bold text-gray-900 mb-2">{name}, {sku}</h1>
 
-      {/* Price Section */}
-      <div className="mb-6 mt-4">
+      {/* Price Section - Temporarily hidden */}
+      {/* <div className="mb-6 mt-4">
         <p className="text-sm text-gray-600 mb-1">
           Рекомендованная розничная цена
         </p>
         <div className="text-3xl font-bold text-gray-900">{price}</div>
-      </div>
+      </div> */}
 
       {/* Material */}
       <div className="mb-6">

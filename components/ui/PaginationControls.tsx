@@ -1,7 +1,7 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { Button } from './Button';
 import { Select, SelectOption } from './Select';
-import {cn} from "@/styles";
+import { cn } from '@/styles';
 
 interface PaginationControlsProps {
   currentPage: number;
@@ -20,14 +20,14 @@ const PaginationControls: FC<PaginationControlsProps> = ({
   onPageChange,
   onItemsPerPageChange,
   onShowMore,
-  className
+  className,
 }) => {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <div className={cn("flex justify-between items-center gap-5 lg:flex-row flex-col", className)}>
+    <div className={cn('flex justify-between items-center gap-5 lg:flex-row flex-col', className)}>
       {/* Блок с кнопками пагинации */}
-      <div className="flex justify-center items-center gap-2 mb-4 lg:w-auto w-full">
+      <div className="flex justify-center items-center gap-2 mb-4 lg:w-auto w-full order-2 lg:order-1">
         {pages.map((num) => (
           <Button
             key={num}
@@ -41,18 +41,20 @@ const PaginationControls: FC<PaginationControlsProps> = ({
       </div>
 
       <Button
-        className="transition-all duration-500 lg:w-auto w-full"
-        variant="dark"
+        className="transition-all duration-500 lg:w-auto w-full order-1 lg:order-2"
+        variant="outline"
         size="lg"
         onClick={onShowMore}
       >
         Показать ещё
       </Button>
+
       {/* Выпадающий список для выбора количества отображаемых товаров */}
-      <div className="lg:w-48 w-full">
+      <div className="lg:w-48 w-full font-medium order-3">
         <Select
           placeholder="Показывать по"
-          intent="default"
+          intent="outline"
+          center={true}
           value={itemsPerPage}
           onChange={(val) => onItemsPerPageChange(val as string)}
         >

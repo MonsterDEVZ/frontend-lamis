@@ -31,61 +31,45 @@ const mini_nav = [
 const nav = [
   {
     href: '/catalog?brandId=1',
-    title: 'Мебель для ванны Lamis',
+    title: 'Мебель для ванной',
+  },
+  {
+    href: '/catalog?brandId=2',
+    title: 'Санфарфор',
     list: [
       {
         img: '',
         href: '',
-        title: 'Смесители для ванной',
+        title: 'Раковины',
       },
       {
         img: '',
         href: '',
-        title: 'Душевые системы',
+        title: 'Унитазы',
       },
       {
         img: '',
         href: '',
-        title: 'Смесители для кухни',
+        title: 'Писсуары',
       },
       {
         img: '',
         href: '',
-        title: 'Санитарный фарфор и сиденья',
-      },
-      {
-        img: '',
-        href: '',
-        title: 'Мебель и зеркала',
-      },
-      {
-        img: '',
-        href: '',
-        title: 'Аксессуары для душа',
-      },
-      {
-        img: '',
-        href: '',
-        title: 'Мойки',
-      },
-      {
-        img: '',
-        href: '',
-        title: 'Инсталляции и клавиши',
+        title: 'Биде',
       },
     ],
   },
   {
-    href: '/catalog?brandId=2',
-    title: 'Сантехника Caizer',
-  },
-  {
     href: '/catalog?brandId=3',
-    title: 'Водонагреватели Blesk',
+    title: 'Смесители',
   },
   {
-    href: '/catalog?brandId=1&categoryId=mirrors',
-    title: 'Дизайнерские зеркала Lamis',
+    href: '/catalog?brandId=4',
+    title: 'Инсталяции',
+  },
+  {
+    href: '/catalog?brandId=5',
+    title: 'Водонагреватели (электрические)',
   },
 ];
 
@@ -104,7 +88,6 @@ export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [currentSearchValue, setCurrentSearchValue] = useState('');
   const isTablet = useMediaQuery('(min-width: 1024px)');
-  console.log('RENDER HEADER');
 
   const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
@@ -164,31 +147,27 @@ export default function Header() {
       {isTablet ? <TopBar mini_nav={mini_nav} isActive={isActive} /> : null}
 
       {/* Main Navigation */}
-      <div className="w-full">
-        <div className="wrapper_centering w-full">
-          <div className="relative flex items-center justify-between" style={{ height: '70px' }}>
-            {isTablet ? (
-              <MainNavigationDesc
-                isActive={isActive}
-                nav={nav}
-                setActiveSubList={setActiveSubList}
-                isSearchOpen={isSearchOpen}
-                setIsSearchOpen={setIsSearchOpen}
-                currentSearchValue={currentSearchValue}
-                onSearchValueChange={setCurrentSearchValue}
-              />
-            ) : (
-              <MainNavigationMob
-                isMobileMenuOpen={isMobileMenuOpen}
-                setIsMobileMenuOpen={setIsMobileMenuOpen}
-                isActive={isActive}
-                isSearchOpen={isSearchOpen}
-                setIsSearchOpen={setIsSearchOpen}
-              />
-            )}
-          </div>
-
-          {/* Nav Item More List */}
+      <div className="wrapper_centering w-full">
+        <div className="relative flex items-center justify-between" style={{ height: '70px' }}>
+          {isTablet ? (
+            <MainNavigationDesc
+              isActive={isActive}
+              nav={nav}
+              setActiveSubList={setActiveSubList}
+              isSearchOpen={isSearchOpen}
+              setIsSearchOpen={setIsSearchOpen}
+              currentSearchValue={currentSearchValue}
+              onSearchValueChange={setCurrentSearchValue}
+            />
+          ) : (
+            <MainNavigationMob
+              isMobileMenuOpen={isMobileMenuOpen}
+              setIsMobileMenuOpen={setIsMobileMenuOpen}
+              isActive={isActive}
+              isSearchOpen={isSearchOpen}
+              setIsSearchOpen={setIsSearchOpen}
+            />
+          )}
         </div>
       </div>
 

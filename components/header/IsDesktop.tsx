@@ -34,9 +34,12 @@ const TopBar: FC<ITopBarProps> = ({ mini_nav, isActive }) => {
         </div>
 
         {/* Top Right CTA */}
-        <button className="text-white font-medium hover:opacity-90 transition-all whitespace-nowrap px-5 h-8 text-sm bg-green-100">
+        <Link
+          href="/service-center"
+          className="text-white font-medium hover:opacity-90 transition-all whitespace-nowrap px-5 h-8 text-sm bg-green-100 flex items-center justify-center"
+        >
           Сервисный центр
-        </button>
+        </Link>
       </div>
     </div>
   );

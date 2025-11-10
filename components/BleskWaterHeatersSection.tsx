@@ -2,30 +2,30 @@
 
 import Image from 'next/image';
 
-const bleskHeaters = [
+const waterHeaters = [
   {
     id: 1,
-    name: 'Искусство Контраста',
+    name: 'До 25% экономии электроэнергии',
     image: '/blesk_1.webp',
-    alt: 'Искусство Контраста',
+    alt: 'До 25% экономии электроэнергии',
   },
   {
     id: 2,
-    name: 'Инновации для Современной Жизни',
+    name: 'Нагрев воды всего за 29 минут',
     image: '/blesk_2.webp',
-    alt: 'Инновации для Современной Жизни',
+    alt: 'Нагрев воды всего за 29 минут',
   },
   {
     id: 3,
-    name: 'Энергия Природы, Умный Комфорт',
+    name: '99,9% защита от бактерий',
     image: '/blesk_3.webp',
-    alt: 'Энергия Природы, Умный Комфорт',
+    alt: '99,9% защита от бактерий',
   },
   {
     id: 4,
-    name: 'Гармония Технологий и Природы',
+    name: 'Многоступенчатая проверка качества по международным стандартам',
     image: '/blesk_4.webp',
-    alt: 'Гармония Технологий и Природы',
+    alt: 'Многоступенчатая проверка качества по международным стандартам',
   },
 ];
 
@@ -35,12 +35,12 @@ export default function BleskWaterHeatersSection() {
       <div className="wrapper_centering px-6 lg:px-12">
         {/* Section Title */}
         <h2 className="text-3xl md:text-[44px] font-bold text-gray-900 mb-12">
-          Водонагреватели <br /> Blesk
+          Водонагреватели <br /> (электрические)
         </h2>
 
         {/* Grid of Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-          {bleskHeaters.map((heater) => (
+          {waterHeaters.map((heater) => (
             <div
               key={heater.id}
               className="relative aspect-4/3 rounded-2xl overflow-hidden group cursor-pointer"
