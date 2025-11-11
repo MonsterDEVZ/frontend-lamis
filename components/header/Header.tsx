@@ -32,10 +32,63 @@ const nav = [
   {
     href: '/catalog?brandId=1',
     title: 'Мебель для ванной',
+    list: [
+      {
+        img: '/catalog/Lamis/Accent/1/example_for_2_image.jpg',
+        href: '/catalog?collection=akcent',
+        title: 'Akcent',
+      },
+      {
+        img: '',
+        href: '/catalog?collection=palermo',
+        title: 'Palermo',
+      },
+      {
+        img: '/catalog/Lamis/Lamis/for_example_1.jpg',
+        href: '/catalog?collection=lamis',
+        title: 'Lamis',
+      },
+      {
+        img: '',
+        href: '/catalog?collection=sevilya',
+        title: 'Sevilya',
+      },
+      {
+        img: '',
+        href: '/catalog?collection=omega',
+        title: 'Omega',
+      },
+      {
+        img: '/catalog/Lamis/Deluxe/for_example.jpg',
+        href: '/catalog?collection=deluxe',
+        title: 'Deluxe',
+      },
+      {
+        img: '/catalog/Lamis/Kapetown/1/for_example.jpg',
+        href: '/catalog?collection=capetown',
+        title: 'Capetown',
+      },
+      {
+        img: '',
+        href: '/catalog?collection=nora',
+        title: 'Nora',
+      },
+      {
+        img: '',
+        href: '/catalog?collection=sanremo',
+        title: 'Sanremo',
+      },
+      {
+        img: '/catalog/Lamis/Andalusia/example_for_all.jpg',
+        href: '/catalog?collection=andalusia',
+        title: 'Andalusia',
+      },
+    ],
   },
   {
     href: '/catalog?brandId=2',
     title: 'Санфарфор',
+    showPlaceholder: true,
     list: [
       {
         img: '',
@@ -69,7 +122,11 @@ const nav = [
   },
   {
     href: '/catalog?brandId=5',
-    title: 'Водонагреватели (электрические)',
+    title: 'Водонагреватили (электрические)',
+  },
+  {
+    href: '/catalog?brandId=6',
+    title: 'Дизайнерские и умные зеркала',
   },
 ];
 
@@ -85,6 +142,7 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [activeSubList, setActiveSubList] = useState<IActiveSubList[] | undefined>(undefined);
+  const [showPlaceholder, setShowPlaceholder] = useState(true);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [currentSearchValue, setCurrentSearchValue] = useState('');
   const isTablet = useMediaQuery('(min-width: 1024px)');
@@ -132,7 +190,7 @@ export default function Header() {
       transition={{ duration: 0.3, ease: 'easeInOut' }}
       className={cn(
         'z-99 w-full justify-center flex flex-col fixed transition-colors duration-300 border-b',
-        isActive ? 'bg-white border-[#1d1d1d1a]' : 'bg-transparent border-white/10'
+        isActive ? 'bg-white border-dark-50' : 'bg-transparent border-white/10'
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
@@ -154,6 +212,7 @@ export default function Header() {
               isActive={isActive}
               nav={nav}
               setActiveSubList={setActiveSubList}
+              setShowPlaceholder={setShowPlaceholder}
               isSearchOpen={isSearchOpen}
               setIsSearchOpen={setIsSearchOpen}
               currentSearchValue={currentSearchValue}
@@ -171,7 +230,9 @@ export default function Header() {
         </div>
       </div>
 
-      {isHovered && activeSubList && <NavItemMoreList activeSubList={activeSubList} />}
+      {isHovered && activeSubList && (
+        <NavItemMoreList activeSubList={activeSubList} showPlaceholder={showPlaceholder} />
+      )}
 
       {/* Mobile Search Overlay */}
       {isSearchOpen && !isTablet && (

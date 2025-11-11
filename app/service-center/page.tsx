@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
+import Link from 'next/link';
 import Header from '@/components/header/Header';
 import Footer from '@/components/Footer';
 import FeedbackModal from '@/components/feedback/FeedbackModal';
-import Link from 'next/link';
 
 export default function ServiceCenterPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,12 +15,13 @@ export default function ServiceCenterPage() {
 
       <main className="pt-24 bg-white">
         {/* Hero Section with Background Image */}
-        <section className="relative min-h-[500px] flex flex-col bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden">
+        <section className="relative min-h-[500px] flex flex-col bg-linear-to-br from-gray-800 to-gray-900 overflow-hidden">
           {/* Background Image */}
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: "url('https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/951aef2a-878c-43ae-fc29-ae05e5ef9900/full')",
+              backgroundImage:
+                "url('https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/951aef2a-878c-43ae-fc29-ae05e5ef9900/full')",
               opacity: 0.4,
             }}
           />
@@ -31,7 +32,10 @@ export default function ServiceCenterPage() {
           {/* Breadcrumbs - at the top of banner */}
           <div className="relative z-10 wrapper_centering px-6 lg:px-12 pt-6 pb-0">
             <div className="text-sm text-white">
-              <Link href="/" className="hover:text-green-400 transition-colors opacity-80 hover:opacity-100">
+              <Link
+                href="/"
+                className="hover:text-green-400 transition-colors opacity-80 hover:opacity-100"
+              >
                 Главная
               </Link>
               <span className="mx-2 opacity-60">→</span>
@@ -58,10 +62,6 @@ export default function ServiceCenterPage() {
                   +996 755 58 88 88
                 </a>
               </div>
-
-              <p className="text-white text-sm opacity-70">
-                * Звонок по всей территории Кыргызстана. Стоимость звонка в Казахстане и Республике Беларусь определяется по тарифу оператора.
-              </p>
             </div>
           </div>
         </section>
@@ -75,101 +75,139 @@ export default function ServiceCenterPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12">
               {/* Warranty Card 1 */}
-              <div className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#009B3E] transition-all duration-300 hover:shadow-lg">
+              <div className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-green-100 transition-all duration-300 hover:shadow-lg">
                 <div className="flex items-center justify-center w-16 h-16 bg-green-50 rounded-full mb-6">
-                  <svg className="w-8 h-8 text-[#009B3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-8 h-8 text-green-100"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  Санфарфор
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  Раковины, унитазы, биде
-                </p>
-                <p className="text-3xl font-bold text-[#009B3E]">10 лет</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Санфарфор</h3>
+                <p className="text-gray-600 mb-4">Раковины, унитазы, биде</p>
+                <p className="text-3xl font-bold text-green-100">10 лет</p>
               </div>
 
               {/* Warranty Card 2 */}
-              <div className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#009B3E] transition-all duration-300 hover:shadow-lg">
+              <div className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-green-100 transition-all duration-300 hover:shadow-lg">
                 <div className="flex items-center justify-center w-16 h-16 bg-green-50 rounded-full mb-6">
-                  <svg className="w-8 h-8 text-[#009B3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-8 h-8 text-green-100"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  Ванны
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  Все виды ванн
-                </p>
-                <p className="text-3xl font-bold text-[#009B3E]">10 лет</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Ванны</h3>
+                <p className="text-gray-600 mb-4">Все виды ванн</p>
+                <p className="text-3xl font-bold text-green-100">10 лет</p>
               </div>
 
               {/* Warranty Card 3 */}
-              <div className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#009B3E] transition-all duration-300 hover:shadow-lg">
+              <div className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-green-100 transition-all duration-300 hover:shadow-lg">
                 <div className="flex items-center justify-center w-16 h-16 bg-green-50 rounded-full mb-6">
-                  <svg className="w-8 h-8 text-[#009B3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-8 h-8 text-green-100"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  Смесители
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  Все модели смесителей
-                </p>
-                <p className="text-3xl font-bold text-[#009B3E]">3 года</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Смесители</h3>
+                <p className="text-gray-600 mb-4">Все модели смесителей</p>
+                <p className="text-3xl font-bold text-green-100">3 года</p>
               </div>
 
               {/* Warranty Card 4 */}
-              <div className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#009B3E] transition-all duration-300 hover:shadow-lg">
+              <div className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-green-100 transition-all duration-300 hover:shadow-lg">
                 <div className="flex items-center justify-center w-16 h-16 bg-green-50 rounded-full mb-6">
-                  <svg className="w-8 h-8 text-[#009B3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-8 h-8 text-green-100"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  Инсталяции
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  Системы инсталяции
-                </p>
-                <p className="text-3xl font-bold text-[#009B3E]">3 года</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Инсталяции</h3>
+                <p className="text-gray-600 mb-4">Системы инсталяции</p>
+                <p className="text-3xl font-bold text-green-100">3 года</p>
               </div>
 
               {/* Warranty Card 5 */}
-              <div className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#009B3E] transition-all duration-300 hover:shadow-lg">
+              <div className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-green-100 transition-all duration-300 hover:shadow-lg">
                 <div className="flex items-center justify-center w-16 h-16 bg-green-50 rounded-full mb-6">
-                  <svg className="w-8 h-8 text-[#009B3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-8 h-8 text-green-100"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  Водонагреватели
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  Электрические водонагреватели
-                </p>
-                <p className="text-2xl font-bold text-[#009B3E]">
-                  Бак: 3 года<br />ТЭН: 1 год
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Водонагреватели</h3>
+                <p className="text-gray-600 mb-4">Электрические водонагреватели</p>
+                <p className="text-2xl font-bold text-green-100">
+                  Бак: 3 года
+                  <br />
+                  ТЭН: 1 год
                 </p>
               </div>
 
               {/* Warranty Card 6 */}
-              <div className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#009B3E] transition-all duration-300 hover:shadow-lg">
+              <div className="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-green-100 transition-all duration-300 hover:shadow-lg">
                 <div className="flex items-center justify-center w-16 h-16 bg-green-50 rounded-full mb-6">
-                  <svg className="w-8 h-8 text-[#009B3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-8 h-8 text-green-100"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  Мебель для ванной
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  Тумбы, пеналы, зеркала
-                </p>
-                <p className="text-3xl font-bold text-[#009B3E]">2 года</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Мебель для ванной</h3>
+                <p className="text-gray-600 mb-4">Тумбы, пеналы, зеркала</p>
+                <p className="text-3xl font-bold text-green-100">2 года</p>
               </div>
             </div>
 
@@ -177,7 +215,7 @@ export default function ServiceCenterPage() {
             <div className="flex justify-center">
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="px-8 h-[40px] bg-[#009B3E] text-white text-base font-medium rounded-full hover:bg-[#007a31] transition-all duration-300 shadow-md hover:shadow-lg"
+                className="px-8 h-10 bg-green-100 text-white text-base font-medium rounded-full hover:bg-[#007a31] transition-all duration-300 shadow-md hover:shadow-lg"
               >
                 Оставить заявку в сервисный центр
               </button>

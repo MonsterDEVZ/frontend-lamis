@@ -9,7 +9,7 @@ interface PaginationControlsProps {
   itemsPerPage: string;
   onPageChange: (page: number) => void;
   onItemsPerPageChange: (value: string) => void;
-  onShowMore: () => void;
+  onShowMore?: () => void;
   className?: string;
 }
 
@@ -27,7 +27,7 @@ const PaginationControls: FC<PaginationControlsProps> = ({
   return (
     <div className={cn('flex justify-between items-center gap-5 lg:flex-row flex-col', className)}>
       {/* Блок с кнопками пагинации */}
-      <div className="flex justify-center items-center gap-2 mb-4 lg:w-auto w-full order-2 lg:order-1">
+      <div className="flex justify-center items-center gap-2 mb-4 lg:w-auto w-full lg:order-1">
         {pages.map((num) => (
           <Button
             key={num}
@@ -40,17 +40,8 @@ const PaginationControls: FC<PaginationControlsProps> = ({
         ))}
       </div>
 
-      <Button
-        className="transition-all duration-500 lg:w-auto w-full order-1 lg:order-2"
-        variant="outline"
-        size="lg"
-        onClick={onShowMore}
-      >
-        Показать ещё
-      </Button>
-
       {/* Выпадающий список для выбора количества отображаемых товаров */}
-      <div className="lg:w-48 w-full font-medium order-3">
+      <div className="lg:w-48 w-full font-medium lg:order-2">
         <Select
           placeholder="Показывать по"
           intent="outline"

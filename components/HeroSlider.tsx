@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
@@ -72,8 +72,34 @@ const autoplayDelay = 5000; // 5 seconds
 
 export default function HeroSlider() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
   const isDesktop = useMediaQuery('(min-width: 1024px)');
+
+  useEffect(() => {
+    const swiper = swiperRef.current;
+    if (!swiper) return;
+
+    const handleAutoplayTimeLeft = (_s: SwiperType, _time: number, percentage: number) => {
+      // Progress from 0 to 100% for the current slide
+      const currentProgress = (1 - percentage) * 100;
+      setProgress(currentProgress);
+    };
+
+    const handleSlideChange = () => {
+      // Reset progress when slide changes
+      setProgress(0);
+    };
+
+    swiper.on('autoplayTimeLeft', handleAutoplayTimeLeft);
+    swiper.on('slideChange', handleSlideChange);
+
+    return () => {
+      if (swiper.destroyed) return;
+      swiper.off('autoplayTimeLeft', handleAutoplayTimeLeft);
+      swiper.off('slideChange', handleSlideChange);
+    };
+  }, [swiperRef.current, activeIndex]);
 
   return (
     <section
@@ -111,7 +137,7 @@ export default function HeroSlider() {
 
             {/* Content */}
             <div className="relative z-10 h-full flex items-center w-full">
-              <div className="wrapper_centering flex items-center h-full w-full px-10">
+              <div className="wrapper_centering flex items-center justify-center lg:justify-start h-full w-full px-10">
                 <div className="inline-flex flex-col items-center lg:items-start gap-8">
                   {/* Main Heading */}
                   <h1 className="text-white font-bold text-[40px] md:text-[56px] leading-12 md:leading-[1.2] tracking-[-0.02em] mb-0 text-center lg:text-left">
@@ -140,15 +166,19 @@ export default function HeroSlider() {
       </Swiper>
 
       {/* Slider Navigation */}
-      <div className="absolute bottom-12 left-1/2 lg:left-[32%] -translate-x-1/2 z-5">
-        <SliderNavigation
-          currentSlide={activeIndex + 1}
-          totalSlides={slides.length}
-          autoplayDelay={autoplayDelay}
-          onPrev={() => swiperRef.current?.slidePrev()}
-          onNext={() => swiperRef.current?.slideNext()}
-          variant="light"
-        />
+      <div className="absolute bottom-12 left-0 right-0 z-5 w-full">
+        <div className="wrapper_centering w-full px-10">
+          <div className="flex justify-center lg:justify-start">
+            <SliderNavigation
+              currentSlide={activeIndex + 1}
+              totalSlides={slides.length}
+              progress={progress}
+              onPrev={() => swiperRef.current?.slidePrev()}
+              onNext={() => swiperRef.current?.slideNext()}
+              variant="light"
+            />
+          </div>
+        </div>
       </div>
     </section>
   );

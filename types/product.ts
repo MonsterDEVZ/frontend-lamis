@@ -11,6 +11,7 @@ export interface Product {
   category: string;
   brandId?: number; // ID of the brand (1=Lamis, 2=Caizer, 3=Blesk)
   isNew?: boolean;
+  inStock?: boolean; // Availability status (default: true)
   slug?: string;
   sku?: string;
   description?: string;

@@ -9,12 +9,13 @@ interface IProps {
     href: string;
     title: string;
   }[];
+  showPlaceholder?: boolean;
 }
 
-const NavItemMoreList: FC<IProps> = ({ activeSubList }) => {
+const NavItemMoreList: FC<IProps> = ({ activeSubList, showPlaceholder = true }) => {
   return (
     <motion.div
-      className="bg-white w-full border-t border-[#1d1d1d1a]"
+      className="bg-white w-full border-t border-dark-50"
       initial={{ opacity: 0 }}
       animate={{
         opacity: 100,
@@ -31,11 +32,11 @@ const NavItemMoreList: FC<IProps> = ({ activeSubList }) => {
                   alt={item.title}
                   width={40}
                   height={40}
-                  className="rounded-full object-cover"
+                  className="rounded-full object-cover w-10 h-10 shrink-0"
                 />
-              ) : (
+              ) : showPlaceholder ? (
                 <div className="w-10 h-10 bg-gray-100 rounded-full shrink-0"></div>
-              )}
+              ) : null}
               <span className="font-medium text-sm text-gray-800 group-hover:text-green-100 transition-colors duration-200">
                 {item.title}
               </span>

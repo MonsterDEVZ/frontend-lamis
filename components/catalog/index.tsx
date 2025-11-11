@@ -7,6 +7,8 @@ import PaginationControls from '../ui/PaginationControls';
 import { productsData } from '@/data/products';
 import { useFiltersStore } from '@/store/filtersStore';
 import CatalogCardResponsive from '../ui/CatalogCardResponsive';
+import EmptyState from '../ui/EmptyState';
+// import { useProducts } from '@/hooks/useProducts'; // Раскомментировать для использования API
 
 // Маппинг категорий к brandId
 const categoryToBrandId: Record<string, number> = {
@@ -18,14 +20,9 @@ const categoryToBrandId: Record<string, number> = {
 };
 
 const listCatalog = [
-  { label: 'Смесители для ванной' },
-  { label: 'Душевые системы' },
-  { label: 'Смесители для кухни' },
-  { label: 'Санитарный фарфор и сиденья' },
-  { label: 'Мебель и зеркала' },
-  { label: 'Аксессуары для душа' },
-  { label: 'Мойки' },
-  { label: 'Инсталляции и клавиши' },
+  { label: 'Мебель для ванн', categoryId: 'furniture' },
+  { label: 'Сантехника Caizer', categoryId: 'caizer' },
+  { label: 'Водонагреватели Blesk', categoryId: 'blesk' },
 ];
 
 const sortOptions = [
@@ -55,12 +52,18 @@ const Catalog: FC = () => {
   const searchParams = useSearchParams();
   const brandIdFromUrl = searchParams.get('brandId');
   const categoryIdFromUrl = searchParams.get('categoryId');
+  const collectionIdFromUrl = searchParams.get('collection');
 
   // Локальное состояние для пагинации
   const [itemsPerPage, setItemsPerPage] = useState('12');
   const [currentPage, setCurrentPage] = useState(1);
 
+  // TODO: Переключение на API
+  // Раскомментируйте следующую строку и закомментируйте блок с useMemo ниже
+  // const { products: allProducts, isLoading } = useProducts();
+
   // Получаем все продукты из productsData (мемоизированно)
+  // ВРЕМЕННО: используем локальные данные, в будущем заменить на API
   const allProducts = useMemo(() => {
     const products = [];
 
@@ -93,6 +96,7 @@ const Catalog: FC = () => {
           collection: collectionName,
           isNew: product.isNew,
           brandId: brandId,
+          inStock: product.inStock !== undefined ? product.inStock : true, // Default to true if not specified
         });
       }
     }
@@ -117,7 +121,17 @@ const Catalog: FC = () => {
     if (categoryIdFromUrl && brandIdFromUrl) {
       setCategoryId(categoryIdFromUrl, allProducts); // Автоматически обновляет availableCollections
     }
-  }, [brandIdFromUrl, categoryIdFromUrl, allProducts, setBrandId, setCategoryId]);
+
+    // УРОВЕНЬ 3: Устанавливаем фильтр по коллекции из URL
+    if (collectionIdFromUrl) {
+      setCollectionId(collectionIdFromUrl);
+    } else {
+      setCollectionId(null);
+    }
+
+    // Сбрасываем на первую страницу при изменении фильтров
+    setCurrentPage(1);
+  }, [brandIdFromUrl, categoryIdFromUrl, collectionIdFromUrl, allProducts, setBrandId, setCategoryId, setCollectionId]);
 
   // КРИТИЧЕСКИ ВАЖНО: useMemo для фильтрации и сортировки (ТРЕХУРОВНЕВАЯ СИСТЕМА)
   const filteredAndSortedProducts = useMemo(() => {
@@ -168,6 +182,11 @@ const Catalog: FC = () => {
     return result;
   }, [allProducts, selectedBrandId, selectedCategoryId, selectedCollectionId, sortBy]);
 
+  // Сброс страницы при изменении сортировки
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [sortBy]);
+
   // УРОВЕНЬ 2: Обработчик клика по категории
   const handleCategoryClick = (categoryValue: string) => {
     if (categoryValue === 'all') {
@@ -196,10 +215,20 @@ const Catalog: FC = () => {
     return selectedCollectionId === collectionId;
   };
 
+  // Пагинация
   const totalPages = Math.ceil(filteredAndSortedProducts.length / parseInt(itemsPerPage));
+
+  // Получаем продукты для текущей страницы
+  const paginatedProducts = useMemo(() => {
+    const startIndex = (currentPage - 1) * parseInt(itemsPerPage);
+    const endIndex = startIndex + parseInt(itemsPerPage);
+    return filteredAndSortedProducts.slice(startIndex, endIndex);
+  }, [filteredAndSortedProducts, currentPage, itemsPerPage]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+    // Прокрутка к началу каталога при смене страницы
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleItemsPerPageChange = (value: string) => {
@@ -228,29 +257,26 @@ const Catalog: FC = () => {
 
       <div className="wrapper_centering mt-8 sm:mt-12 md:mt-50 pb-8 px-4">
         {/* УРОВЕНЬ 2: ДИНАМИЧЕСКИЕ ТАБЫ для фильтрации по категориям */}
-        {selectedBrandId !== null && availableCategories.length > 0 && (
-          <div className="flex flex-wrap gap-3 md:gap-3.5 mb-8">
-            <Button
-              className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
-              variant={selectedCategoryId === null ? 'primary' : 'outline'}
-              onClick={() => handleCategoryClick('all')}
-            >
-              Все категории
-            </Button>
+        <div className="flex flex-wrap gap-3 md:gap-3.5 mb-8">
+          <Button
+            className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
+            variant={selectedCategoryId === null ? 'primary' : 'outline'}
+            onClick={() => handleCategoryClick('all')}
+          >
+            Все категории
+          </Button>
 
-            {/* Динамически генерируемые категории из store */}
-            {listCatalog.map((el, idx) => (
-              // {availableCategories.map((category) => (
-              <Button
-                key={idx}
-                variant={isCategoryActive('primary') ? 'primary' : 'outline'}
-                onClick={() => handleCategoryClick(el.label)}
-              >
-                {el.label}
-              </Button>
-            ))}
-          </div>
-        )}
+          {listCatalog.map((el, idx) => (
+            <Button
+              key={idx}
+              className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
+              variant={isCategoryActive(el.categoryId) ? 'primary' : 'outline'}
+              onClick={() => handleCategoryClick(el.categoryId)}
+            >
+              {el.label}
+            </Button>
+          ))}
+        </div>
 
         <div className="flex flex-col sm:flex-row justify-start gap-3.5 mt-4 mb-10">
           {/* Сортировка - интегрирована с Zustand store */}
@@ -270,13 +296,17 @@ const Catalog: FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 md:gap-6 divide-y divide-dark-50 md:divide-transparent border_y border-dark-50 md:border-transparent">
-          {filteredAndSortedProducts.map((product) => (
-            <div key={product.id} className="py-5 md:py-0">
-              <CatalogCardResponsive {...product} />
-            </div>
-          ))}
-        </div>
+        {paginatedProducts.length === 0 ? (
+          <EmptyState />
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 md:gap-6 divide-y divide-dark-50 md:divide-transparent border_y border-dark-50 md:border-transparent">
+            {paginatedProducts.map((product) => (
+              <div key={product.id} className="py-5 md:py-0">
+                <CatalogCardResponsive {...product} />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Секция пагинации и управления количеством отображаемых товаров */}

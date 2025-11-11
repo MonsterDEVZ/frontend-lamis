@@ -18,6 +18,7 @@ interface IProps {
   id?: string | number;
   collection?: string;
   slug?: string;
+  inStock?: boolean;
 }
 
 const CatalogCardResponsive: React.FC<IProps> = ({
@@ -30,6 +31,7 @@ const CatalogCardResponsive: React.FC<IProps> = ({
   id,
   collection = 'Caiser',
   slug,
+  inStock = true,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -134,14 +136,22 @@ const CatalogCardResponsive: React.FC<IProps> = ({
         </div>
       </Link>
 
-      {/* Status Badge (if exists) */}
-      {status && (
-        <div className="absolute top-3 left-3 z-10">
+      {/* Badges Container */}
+      <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
+        {/* Status Badge (Новинка) */}
+        {status && (
           <span className="inline-flex items-center px-3 py-0.5 ss:py-1 rounded-full text-[11px] ss:text-xs font-medium bg-[#E0398D] text-white shadow-sm">
             {status}
           </span>
-        </div>
-      )}
+        )}
+
+        {/* Out of Stock Badge (ПОД ЗАКАЗ) */}
+        {!inStock && (
+          <span className="inline-flex items-center px-3 py-0.5 ss:py-1 rounded-full text-[11px] ss:text-xs font-medium bg-orange-500 text-white shadow-sm">
+            ПОД ЗАКАЗ
+          </span>
+        )}
+      </div>
     </div>
   );
 };

@@ -218,10 +218,9 @@ import { SliderNavigation } from './ui/SliderNavigation';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 // prettier-ignore
-const MemoizedSliderNavigation: FC<{ swiper: SwiperType | null; totalSlides: number; currentSlide: number; onPrev: () => void; onNext: () => void; isBeginning: boolean; isEnd: boolean; slidesPerView: number; autoplayDelay: number; }> 
-  = ({ swiper, totalSlides, currentSlide, onPrev, onNext, isBeginning, isEnd, slidesPerView, autoplayDelay }) => {
+const MemoizedSliderNavigation: FC<{ swiper: SwiperType | null; totalSlides: number; currentSlide: number; onPrev: () => void; onNext: () => void; isBeginning: boolean; isEnd: boolean; autoplayDelay: number; }>
+  = ({ swiper, totalSlides, currentSlide, onPrev, onNext, isBeginning, isEnd, autoplayDelay }) => {
   const [progress, setProgress] = useState(0);
-  const activeIndexRef = useRef(0); // Use ref for activeIndex
 
   useEffect(() => {
     if (!swiper) {
@@ -229,31 +228,21 @@ const MemoizedSliderNavigation: FC<{ swiper: SwiperType | null; totalSlides: num
       return;
     }
 
-    const handleAutoplayTimeLeft = (s: SwiperType, time: number, percentage: number) => {
-      const pageStartIndex = (currentSlide - 1) * slidesPerView;
-      const slidesIntoPage = activeIndexRef.current - pageStartIndex;
-
-      if (slidesIntoPage < 0) {
-        setProgress(0);
-        return;
-      }
-
-      const progressPerSlide = 100 / slidesPerView;
-      const currentSlideProgress = (1 - percentage) * progressPerSlide;
-      const totalPageProgress = slidesIntoPage * progressPerSlide + currentSlideProgress;
-
-      setProgress(totalPageProgress);
+    const handleAutoplayTimeLeft = (_s: SwiperType, _time: number, percentage: number) => {
+      // Progress from 0 to 100% for the current slide
+      const currentProgress = (1 - percentage) * 100;
+      setProgress(currentProgress);
     };
 
     const handleSlideChange = () => {
-      activeIndexRef.current = swiper.activeIndex;
+      // Reset progress when slide changes
+      setProgress(0);
     };
 
     swiper.on('autoplayTimeLeft', handleAutoplayTimeLeft);
     swiper.on('slideChange', handleSlideChange);
 
-    // Initial state setup
-    activeIndexRef.current = swiper.activeIndex;
+    // Initial state
     setProgress(0);
 
     return () => {
@@ -261,7 +250,7 @@ const MemoizedSliderNavigation: FC<{ swiper: SwiperType | null; totalSlides: num
       swiper.off('autoplayTimeLeft', handleAutoplayTimeLeft);
       swiper.off('slideChange', handleSlideChange);
     };
-  }, [swiper, currentSlide, slidesPerView, autoplayDelay]);
+  }, [swiper, currentSlide]);
 
   return (
     <SliderNavigation
@@ -346,15 +335,14 @@ const PlumbingSection: FC = () => {
   }, [activeSubFilter]);
 
   const updateSwiperState = useCallback((swiper: SwiperType) => {
-    const activeSlidesPerView = swiper.params.slidesPerView as number;
-    const totalPages = Math.ceil(swiper.slides.length / activeSlidesPerView);
-    let currentPage = Math.floor(swiper.activeIndex / activeSlidesPerView) + 1;
+    const totalSlides = swiper.slides.length;
+    const slidesPerView = swiper.params.slidesPerView as number;
+    const currentSlide = swiper.activeIndex + 1;
 
-    if (swiper.isEnd) {
-      currentPage = totalPages;
-    }
+    // Рассчитываем общее количество "страниц" (свайпов) нужных чтобы увидеть все элементы
+    const totalPages = Math.max(1, totalSlides - slidesPerView + 1);
 
-    setPagination({ current: currentPage, total: totalPages > 0 ? totalPages : 1 });
+    setPagination({ current: currentSlide, total: totalPages });
     setIsBeginning(swiper.isBeginning);
     setIsEnd(swiper.isEnd);
   }, []);
@@ -379,24 +367,31 @@ const PlumbingSection: FC = () => {
 
     // Update swiper and reset its position
     swiperInstance.update();
-    swiperInstance.slideTo(0);
+    swiperInstance.slideTo(0, 0); // 0 - без анимации
 
     // Recalculate correct state and apply it
-    const activeSlidesPerView = swiperInstance.params.slidesPerView as number;
-    const totalPages = Math.ceil(filteredProducts.length / activeSlidesPerView);
-    setPagination({ current: 1, total: totalPages > 0 ? totalPages : 1 });
+    const totalSlides = filteredProducts.length;
+    const slidesPerView = swiperInstance.params.slidesPerView as number;
+    const totalPages = Math.max(1, totalSlides - slidesPerView + 1);
+
+    setPagination({ current: 1, total: totalPages });
     setIsBeginning(true);
     setIsEnd(totalPages <= 1);
 
-    // Handle autoplay logic
-    if (totalPages <= 1) {
+    // Handle autoplay logic - важно! сначала останавливаем, потом запускаем
+    if (swiperInstance.autoplay) {
       swiperInstance.autoplay.stop();
-    } else {
-      if (swiperInstance.autoplay) {
-        swiperInstance.autoplay.start();
+
+      if (totalPages > 1) {
+        // Даем время для остановки перед новым запуском
+        setTimeout(() => {
+          if (swiperInstance && swiperInstance.autoplay && !swiperInstance.destroyed) {
+            swiperInstance.autoplay.start();
+          }
+        }, 100);
       }
     }
-  }, [swiperInstance, filteredProducts]);
+  }, [swiperInstance, filteredProducts, activeSubFilter]);
 
   return (
     <div className="wrapper_centering w-full">
@@ -412,7 +407,6 @@ const PlumbingSection: FC = () => {
             onNext={handleNext}
             isBeginning={isBeginning}
             isEnd={isEnd}
-            slidesPerView={currentSlidesPerView}
             autoplayDelay={autoplayDelay}
           />
         )}

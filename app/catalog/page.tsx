@@ -1,6 +1,7 @@
 import Header from '@/components/header/Header';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import Catalog from '@/components/catalog';
+import Footer from '@/components/Footer';
 
 // Disable static generation for this page because it uses useSearchParams
 export const dynamic = 'force-dynamic';
@@ -22,6 +23,7 @@ export default function CatalogPage() {
       </div>
 
       <Catalog />
+      <Footer />
     </main>
   );
 }

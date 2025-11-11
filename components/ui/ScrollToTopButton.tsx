@@ -20,7 +20,7 @@ export default function ScrollToTopButton() {
     };
 
     // <-- Адаптивность: Проверяем размер экрана при загрузке и изменении
-    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
 
     window.addEventListener('scroll', toggleVisibility);
@@ -45,11 +45,11 @@ export default function ScrollToTopButton() {
         <button
           onClick={scrollToTop}
           // <-- Адаптивность: Стили для мобильных - базовые, для десктопа - с префиксом lg:
-          className="fixed bottom-4 right-4 z-40 w-9 h-9 rounded-full bg-green-100 text-white flex items-center justify-center shadow-lg hover:bg-green-600 transition-all lg:w-[50px] lg:h-[50px] lg:bottom-5 lg:right-5"
+          className="fixed bottom-4 right-4 z-40 w-10 h-10 rounded-full bg-green-100 text-white flex items-center justify-center shadow-lg hover:bg-green-600 transition-all lg:w-[50px] lg:h-[50px] lg:bottom-5 lg:right-5"
           aria-label="Наверх"
         >
           {/*// <-- Адаптивность: Меняем размер иконки в зависимости от экрана */}
-          <ArrowUp size={isMobile ? 22 : 30} />
+          <ArrowUp size={isMobile ? 24 : 30} />
         </button>
       )}
     </>

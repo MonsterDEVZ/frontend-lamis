@@ -10,13 +10,11 @@
  * @prop {() => void} onNext - Function to call when the next button is clicked.
  * @prop {boolean} [isBeginning] - Optional. Whether the swiper is at the beginning. Disables the prev button.
  * @prop {boolean} [isEnd] - Optional. Whether the swiper is at the end. Disables the next button for non-looping sliders.
- * @prop {number} [progress] - Optional. The progress of the autoplay timer (0-100). If not provided, an internal timer will be used based on `autoplayDelay`.
- * @prop {number} [autoplayDelay] - Optional. The delay for the autoplay in milliseconds. Used for the internal progress bar fallback.
+ * @prop {number} [progress] - Optional. The progress of the autoplay timer (0-100).
  * @prop {'light' | 'dark'} [variant='dark'] - The color variant of the component.
  * @prop {string} [className] - Optional additional class names.
  *
  * @example
- * // With external progress control (from Swiper's onAutoplayTimeLeft)
  * <SliderNavigation
  *   totalSlides={5}
  *   currentSlide={2}
@@ -27,21 +25,9 @@
  *   progress={autoplayProgress}
  *   variant="light"
  * />
- *
- * @example
- * // With internal progress fallback
- * <SliderNavigation
- *   totalSlides={5}
- *   currentSlide={activeIndex + 1}
- *   onPrev={() => swiper.slidePrev()}
- *   onNext={() => swiper.slideNext()}
- *   autoplayDelay={5000}
- *   variant="light"
- * />
  */
 'use client';
 import type { FC } from 'react';
-import { useState, useEffect } from 'react';
 import { cn } from '@/styles';
 
 const Arrow: FC<{ direction: 'left' | 'right'; disabled?: boolean }> = ({
@@ -72,7 +58,6 @@ interface SliderNavigationProps {
   isBeginning?: boolean;
   isEnd?: boolean;
   progress?: number;
-  autoplayDelay?: number;
   variant?: 'light' | 'dark';
   className?: string;
 }
@@ -84,40 +69,14 @@ export const SliderNavigation: FC<SliderNavigationProps> = ({
   onNext,
   isBeginning = false,
   isEnd = false,
-  progress: externalProgress,
-  autoplayDelay,
+  progress = 0,
   variant = 'dark',
   className,
 }) => {
-  const [internalProgress, setInternalProgress] = useState(0);
-  const progress = externalProgress ?? internalProgress;
-
   const textColor = variant === 'light' ? 'text-white' : 'text-[#505357]';
   const totalColor = variant === 'light' ? 'text-white' : 'text-[#505357]';
   const progressBg = variant === 'light' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(29, 29, 29, 0.15)';
   const progressFill = 'var(--color-green-100)';
-
-  useEffect(() => {
-    // Only run internal progress if external progress is not provided
-    if (typeof externalProgress !== 'number' && autoplayDelay) {
-      setInternalProgress(0);
-      const intervalTime = 50; // ms
-      const steps = autoplayDelay / intervalTime;
-      const increment = 100 / steps;
-
-      const interval = setInterval(() => {
-        setInternalProgress((prev) => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            return 100;
-          }
-          return prev + increment;
-        });
-      }, intervalTime);
-
-      return () => clearInterval(interval);
-    }
-  }, [currentSlide, autoplayDelay, externalProgress]);
 
   return (
     <div className={cn('flex items-center gap-6', className)}>
@@ -130,11 +89,11 @@ export const SliderNavigation: FC<SliderNavigationProps> = ({
           style={{ backgroundColor: progressBg }}
         >
           <div
-            className="h-full rounded-full transition-transform duration-100 ease-linear"
+            className="h-full rounded-full"
             style={{
               width: `${progress}%`,
               backgroundColor: progressFill,
-              
+              transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
           />
         </div>
