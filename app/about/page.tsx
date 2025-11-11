@@ -2,14 +2,11 @@
 
 import { useRef, useEffect } from 'react';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
-
 import Header from '@/components/header/Header';
 import Footer from '@/components/Footer';
 import Banner from '@/components/about/Banner';
 import AboutBrand from '@/components/about/AboutBrand';
 import InfoCardAccordion from '@/components/about/InfoCardAccordion';
-import { HistoryTimeline } from '@/components/about/HistoryTimeline';
-import { cn } from '@/styles';
 
 const card1 = {
   title: 'Ценности и преимущества',
@@ -116,44 +113,44 @@ export default function AboutPage() {
       {/*  className="wrapper_centering bg-white w-full mx-auto"*/}
       {/*  style={{ paddingBottom: '96px' }}*/}
       {/*>*/}
-        {/*<div className="overflow-hidden overflow-x-auto">*/}
-          {/*<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 py-5 border_solid border-dark-100 rounded-[18px] min-w-[1154px]">*/}
-          {/*  /!* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 divide-x divide-[#1d1d1d] py-5 border_solid border-[#1d1d1d] rounded-[18px] min-w-[1154px]"> *!/*/}
-          {/*  {metrics.map((metric, index) => (*/}
-          {/*    <div*/}
-          {/*      key={index}*/}
-          {/*      className={cn(*/}
-          {/*        'flex items-center justify-center h-36',*/}
+      {/*<div className="overflow-hidden overflow-x-auto">*/}
+      {/*<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 py-5 border_solid border-dark-100 rounded-[18px] min-w-[1154px]">*/}
+      {/*  /!* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 divide-x divide-[#1d1d1d] py-5 border_solid border-[#1d1d1d] rounded-[18px] min-w-[1154px]"> *!/*/}
+      {/*  {metrics.map((metric, index) => (*/}
+      {/*    <div*/}
+      {/*      key={index}*/}
+      {/*      className={cn(*/}
+      {/*        'flex items-center justify-center h-36',*/}
 
-          {/*        'border-r border-dark-100',*/}
-          {/*        'sm:last:border-r-0',*/}
-          {/*        'md:nth-[4n]:border-r-0'*/}
-          {/*      )}*/}
-          {/*    >*/}
-          {/*      <div className="text-center px-4">*/}
-          {/*        <p className="text-sm text-dark-100 font-medium">{metric.top}</p>*/}
-          {/*        <p className="text-[32px] leading-[30px] font-bold text-[#009B3E] my-1.5">*/}
-          {/*          {metric.middle}*/}
-          {/*          {metric.note && <sup className="text-xl font-semibold">{metric.note}</sup>}*/}
-          {/*        </p>*/}
-          {/*        <p className="text-sm text-[#1d1d1d] font-medium">{metric.bottom}</p>*/}
-          {/*      </div>*/}
-          {/*    </div>*/}
-          {/*  ))}*/}
-          {/*</div>*/}
-        {/*</div>*/}
+      {/*        'border-r border-dark-100',*/}
+      {/*        'sm:last:border-r-0',*/}
+      {/*        'md:nth-[4n]:border-r-0'*/}
+      {/*      )}*/}
+      {/*    >*/}
+      {/*      <div className="text-center px-4">*/}
+      {/*        <p className="text-sm text-dark-100 font-medium">{metric.top}</p>*/}
+      {/*        <p className="text-[32px] leading-[30px] font-bold text-[#009B3E] my-1.5">*/}
+      {/*          {metric.middle}*/}
+      {/*          {metric.note && <sup className="text-xl font-semibold">{metric.note}</sup>}*/}
+      {/*        </p>*/}
+      {/*        <p className="text-sm text-[#1d1d1d] font-medium">{metric.bottom}</p>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  ))}*/}
+      {/*</div>*/}
+      {/*</div>*/}
 
-        {/*<div className="mt-7 text-sm leading-6 text-[#1D1D1D] opacity-70">*/}
-        {/*  <p>*9 изделий из 10 000 в год; по данным аналитического центра «СКЛ».</p>*/}
-        {/*  <p>*/}
-        {/*    **исследование на знание брендов сантехники, выборка 1000 чел., компания OMI, декабрь*/}
-        {/*    2022 г.*/}
-        {/*  </p>*/}
-        {/*  <p>*/}
-        {/*    ***81,5% опрошенных готовы рекомендовать бренд LAMIS®; исследование «Мнение сантехников*/}
-        {/*    о бренде водосливной арматуры LAMIS®», агентство BCGroup, 2024 г.*/}
-        {/*  </p>*/}
-        {/*</div>*/}
+      {/*<div className="mt-7 text-sm leading-6 text-[#1D1D1D] opacity-70">*/}
+      {/*  <p>*9 изделий из 10 000 в год; по данным аналитического центра «СКЛ».</p>*/}
+      {/*  <p>*/}
+      {/*    **исследование на знание брендов сантехники, выборка 1000 чел., компания OMI, декабрь*/}
+      {/*    2022 г.*/}
+      {/*  </p>*/}
+      {/*  <p>*/}
+      {/*    ***81,5% опрошенных готовы рекомендовать бренд LAMIS®; исследование «Мнение сантехников*/}
+      {/*    о бренде водосливной арматуры LAMIS®», агентство BCGroup, 2024 г.*/}
+      {/*  </p>*/}
+      {/*</div>*/}
       {/*</section>*/}
 
       <Footer />

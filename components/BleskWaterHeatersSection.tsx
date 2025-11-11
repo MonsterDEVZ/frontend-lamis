@@ -1,5 +1,4 @@
 'use client';
-
 import Image from 'next/image';
 
 const waterHeaters = [
@@ -39,7 +38,7 @@ export default function BleskWaterHeatersSection() {
         </h2>
 
         {/* Grid of Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {waterHeaters.map((heater) => (
             <div
               key={heater.id}
@@ -64,13 +63,6 @@ export default function BleskWaterHeatersSection() {
             </div>
           ))}
         </div>
-
-        {/* CTA Button */}
-        {/*<div className="flex justify-center">*/}
-        {/*  <button className="bg-black text-white px-8 py-4 rounded-full text-base font-medium hover:bg-gray-800 transition-colors duration-300">*/}
-        {/*    Посмотреть еще*/}
-        {/*  </button>*/}
-        {/*</div>*/}
       </div>
     </section>
   );
