@@ -1,8 +1,5 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
-
 import Header from '@/components/header/Header';
 import Footer from '@/components/Footer';
 import Banner from '@/components/about/Banner';
@@ -43,19 +40,6 @@ const metrics = [
 ];
 
 export default function AboutPage() {
-  const metricsScrollRef = useRef<HTMLDivElement>(null);
-  const isMobile = useMediaQuery('(max-width: 767px)');
-
-  useEffect(() => {
-    if (isMobile) {
-      const container = metricsScrollRef.current;
-      if (container) {
-        const scrollLeftCenter = (container.scrollWidth - container.clientWidth) / 2;
-        container.scrollLeft = scrollLeftCenter;
-      }
-    }
-  }, [isMobile]);
-
   return (
     <main>
       <Header />
@@ -84,30 +68,48 @@ export default function AboutPage() {
         className="wrapper_centering bg-white w-full mx-auto"
         style={{ paddingBottom: '96px' }}
       >
-        <div className="overflow-hidden overflow-x-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 py-5 border_solid border-dark-100 rounded-[18px] min-w-[1154px]">
-            {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 divide-x divide-[#1d1d1d] py-5 border_solid border-[#1d1d1d] rounded-[18px] min-w-[1154px]"> */}
-            {metrics.map((metric, index) => (
-              <div
-                key={index}
-                className={cn(
-                  'flex items-center justify-center h-36',
-
-                  'border-r border-dark-100',
-                  'sm:last:border-r-0',
-                  'md:nth-[4n]:border-r-0'
-                )}
-              >
-                <div className="text-center px-4">
-                  <p className="text-sm text-dark-100 font-medium">{metric.top}</p>
-                  <p className="text-[32px] leading-[30px] font-bold text-[#009B3E] my-1.5">
-                    {metric.middle}
-                    {metric.note && <sup className="text-xl font-semibold">{metric.note}</sup>}
-                  </p>
-                  <p className="text-sm text-[#1d1d1d] font-medium">{metric.bottom}</p>
+        {/* Контейнер со скроллом для мобильных и малых планшетов */}
+        <div className="overflow-x-auto lg:overflow-x-visible no-scrollbar">
+          {/* Карточка с границей и скруглением */}
+          <div className="border_solid border-dark-100 rounded-2xl py-5">
+            {/* Адаптивная сетка:
+                - mobile (< 768px): 2 колонки, скролл
+                - md (768px - 1023px): 4 колонки, скролл
+                - lg (1024px - 1279px): 2 колонки, статично
+                - xl (>= 1280px): 4 колонки, статично
+            */}
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4 min-w-[600px] md:min-w-[1000px] lg:min-w-0">
+              {metrics.map((metric, index) => (
+                <div
+                  key={index}
+                  className={cn(
+                    'flex items-center justify-center h-36',
+                    'border-r border-b border-dark-100',
+                    // Правые границы для 2 колонок (mobile, lg)
+                    (index + 1) % 2 === 0 && 'max-md:border-r-0',
+                    (index + 1) % 2 === 0 && 'lg:max-xl:border-r-0',
+                    // Правые границы для 4 колонок (md, xl)
+                    (index + 1) % 4 === 0 && 'md:max-lg:border-r-0',
+                    (index + 1) % 4 === 0 && 'xl:border-r-0',
+                    // Нижние границы для 2 колонок (4 ряда) - убираем для последних 2 элементов
+                    index >= 6 && 'max-md:border-b-0',
+                    index >= 6 && 'lg:max-xl:border-b-0',
+                    // Нижние границы для 4 колонок (2 ряда) - убираем для последних 4 элементов
+                    index >= 4 && 'md:max-lg:border-b-0',
+                    index >= 4 && 'xl:border-b-0'
+                  )}
+                >
+                  <div className="text-center px-4">
+                    <p className="text-sm text-dark-100 font-medium">{metric.top}</p>
+                    <p className="text-[32px] leading-[30px] font-bold text-[#009B3E] my-1.5">
+                      {metric.middle}
+                      {metric.note && <sup className="text-xl font-semibold">{metric.note}</sup>}
+                    </p>
+                    <p className="text-sm text-[#1d1d1d] font-medium">{metric.bottom}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 

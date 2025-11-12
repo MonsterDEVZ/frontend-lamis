@@ -27,14 +27,17 @@ const FavoriteItemCard: React.FC<FavoriteItemCardProps> = ({ product, onRemove }
 
   const formattedPrice = `${product.price.toLocaleString('ru-RU')}`;
   const isHexColor = (str: string) => /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(str);
-
-  // Моковые цвета если не переданы
   const colors = product.colors || ['#FFFFFF', '#000000', '#C4A574'];
 
   return (
-    <div className="bg-white border border-gray-100 rounded-2xl p-8 flex items-center gap-8 relative hover:shadow-sm transition-shadow">
+    // --- ИЗМЕНЕНИЕ 1: Основной контейнер ---
+    // p-4 и flex-col для мобильных, p-8 и lg:flex-row для десктопов
+    <div className="bg-white border border-gray-100 rounded-2xl p-4 flex flex-col gap-4 relative hover:shadow-sm transition-shadow lg:flex-row lg:items-center lg:gap-8 lg:p-8">
+      
       {/* Image Section */}
-      <div className="relative w-64 h-64 flex-shrink-0 bg-gray-50 rounded-lg overflow-hidden">
+      {/* --- ИЗМЕНЕНИЕ 2: Адаптивный размер картинки --- */}
+      {/* w-full и h-56 для мобильных, lg:w-64 и lg:h-64 для десктопов */}
+      <div className="relative w-full h-56 flex-shrink-0 bg-gray-50 rounded-lg overflow-hidden lg:w-64 lg:h-64 lg:flex-shrink-0">
         <Image
           src={product.image}
           alt={product.name}
@@ -45,15 +48,11 @@ const FavoriteItemCard: React.FC<FavoriteItemCardProps> = ({ product, onRemove }
 
       {/* Product Info Section */}
       <div className="flex-grow flex flex-col justify-center">
-        {/* SKU */}
         <p className="text-sm text-gray-400 mb-1">
           {product.sku || 'Parker PARSBO3I68'}
         </p>
-
-        {/* Product Name */}
-        <h3 className="text-xl font-normal text-gray-900 mb-6">{product.name}</h3>
-
-        {/* Color Selection */}
+        {/* --- ИЗМЕНЕНИЕ 3: Уменьшен отступ для мобильных --- */}
+        <h3 className="text-xl font-normal text-gray-900 mb-4 lg:mb-6">{product.name}</h3>
         <div className="flex items-center gap-3">
           {colors.map((color, index) => (
             <button
@@ -86,16 +85,18 @@ const FavoriteItemCard: React.FC<FavoriteItemCardProps> = ({ product, onRemove }
       </div>
 
       {/* Price Section */}
-      <div className="flex-shrink-0">
-        <p className="text-3xl font-bold text-gray-900">
-          {formattedPrice} <span className="text-2xl font-normal">С</span>
+      {/* --- ИЗМЕНЕНИЕ 4: Адаптивное выравнивание и размер шрифта --- */}
+      <div className="w-full text-right lg:w-auto lg:text-left lg:flex-shrink-0">
+        <p className="text-2xl font-bold text-gray-900 lg:text-3xl">
+          {formattedPrice} <span className="text-xl font-normal lg:text-2xl">С</span>
         </p>
       </div>
 
-      {/* Remove Button - Positioned absolutely in top-right */}
+      {/* Remove Button */}
+      {/* --- ИЗМЕНЕНИЕ 5: Адаптивные отступы для кнопки --- */}
       <button
         onClick={() => onRemove(product.id)}
-        className="absolute top-6 right-6 p-1 text-gray-400 hover:text-gray-600 transition-colors"
+        className="absolute top-4 right-4 p-1 text-gray-400 hover:text-gray-600 transition-colors lg:top-6 lg:right-6"
         aria-label="Удалить из избранного"
       >
         <X size={20} />
