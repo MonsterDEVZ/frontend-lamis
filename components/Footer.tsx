@@ -37,6 +37,7 @@ const footerSections = [
       { title: 'Где купить', href: '/where-to-buy' },
       { title: 'Сервисный центр', href: '/service-center' },
       { title: 'Станьте нашим партнером', href: '/partnership' },
+      { title: 'Материалы для скачивания', href: '/downloads' },
     ],
   },
 ];

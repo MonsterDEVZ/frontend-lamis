@@ -26,6 +26,10 @@ const mini_nav = [
     href: '/contacts',
     title: 'Контакты',
   },
+  {
+    href: '/downloads',
+    title: 'Материалы для скачивания',
+  },
 ];
 
 const nav = [
