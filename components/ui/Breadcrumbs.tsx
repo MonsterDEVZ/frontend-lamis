@@ -3,11 +3,11 @@ import { ChevronRight } from 'lucide-react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/styles';
 
-const breadcrumbsContainerVariants = cva('container', {
+const breadcrumbsContainerVariants = cva('wrapper_centering', {
   variants: {
     resetPosition: {
       false: 'absolute top-[120px] left-1/2 -translate-x-1/2 z-10 w-full',
-      true: '',
+      true: 'px-0!',
     },
   },
   defaultVariants: {

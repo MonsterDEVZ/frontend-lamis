@@ -34,9 +34,12 @@ const TopBar: FC<ITopBarProps> = ({ mini_nav, isActive }) => {
         </div>
 
         {/* Top Right CTA */}
-        <button className="text-white font-medium hover:opacity-90 transition-all whitespace-nowrap px-5 h-8 text-sm bg-green-100">
+        <Link
+          href="/service-center"
+          className="text-white font-medium hover:opacity-90 transition-all whitespace-nowrap px-5 h-8 text-sm bg-green-100 flex items-center justify-center"
+        >
           Сервисный центр
-        </button>
+        </Link>
       </div>
     </div>
   );
@@ -47,6 +50,7 @@ interface IMainNavigationDescProps {
   nav: {
     href: string;
     title: string;
+    showPlaceholder?: boolean;
     list?: {
       img: string;
       href: string;
@@ -63,6 +67,7 @@ interface IMainNavigationDescProps {
       | undefined
     >
   ) => void;
+  setShowPlaceholder: (value: boolean) => void;
   isSearchOpen: boolean;
   setIsSearchOpen: (value: boolean) => void;
   currentSearchValue: string;
@@ -73,6 +78,7 @@ const MainNavigationDesc: FC<IMainNavigationDescProps> = ({
   isActive,
   nav,
   setActiveSubList,
+  setShowPlaceholder,
   isSearchOpen,
   setIsSearchOpen,
   currentSearchValue,
@@ -98,7 +104,10 @@ const MainNavigationDesc: FC<IMainNavigationDescProps> = ({
           <Nav
             isDarkText={isActive}
             list={nav}
-            onItemEnter={(item) => setActiveSubList(item.list)}
+            onItemEnter={(item) => {
+              setActiveSubList(item.list);
+              setShowPlaceholder(item.showPlaceholder !== false);
+            }}
           />
         </div>
       </div>
@@ -153,6 +162,7 @@ const MainNavigationDesc: FC<IMainNavigationDescProps> = ({
           aria-label="Wishlist"
         >
           <Heart size={20} />
+
           {favoritesCount > 0 && (
             <span className="absolute -top-1.5 -right-2 bg-green-100 text-white text-[10px] font-medium min-w-4 h-4 flex items-center justify-center rounded-full pointer-events-none px-0.5">
               {favoritesCount}

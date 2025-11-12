@@ -15,16 +15,36 @@ import { collections } from '@/data/collections';
  * - Exact gap specification: 20px (gap-5)
  * - "Show More" CTA button
  */
+
+// Список коллекций для отображения на главной странице в указанном порядке
+const homePageCollectionIds = [
+  'accent',
+  'palermo',
+  'lamis',
+  'sevilya',
+  'omega',
+  'deluxe',
+  'kapetown',
+  'nora',
+  'sanremo',
+  'andalusia',
+];
+
 export default function CollectionsSection() {
+  // Фильтруем и сортируем коллекции согласно списку для главной страницы
+  const homePageCollections = homePageCollectionIds
+    .map((id) => collections.find((col) => col.id === id))
+    .filter((col) => col !== undefined);
+
   return (
     <section className="py-20 bg-white">
       <div className="wrapper_centering px-6 lg:px-12">
         {/* Section Heading - Exact specification: 42px */}
-        <SectionHeading>Водонагреватели BLESK</SectionHeading>
+        <SectionHeading>Наши коллекции</SectionHeading>
 
         {/* Collections Grid - 2x2 Desktop, 1 Column Mobile */}
         <div className="grid grid-cols-2 md:grid-cols-2 mb-10" style={{ gap: '20px' }}>
-          {collections.map((collection) => (
+          {homePageCollections.map((collection) => (
             <CollectionCard key={collection.id} collection={collection} />
           ))}
         </div>

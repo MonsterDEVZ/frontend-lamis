@@ -1,4 +1,5 @@
 'use client';
+
 import { historyData } from '@/data/historyData';
 import { useHorizontalScroll } from '@/hooks/useHorizontalScroll';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
@@ -32,18 +33,16 @@ export const HistoryTimeline = () => {
     );
   }
 
-  const introItem = historyData.find(item => item.type === 'intro');
-  const eventItems = historyData.filter(item => item.type === 'event');
+  const introItem = historyData.find((item) => item.type === 'intro');
+  const eventItems = historyData.filter((item) => item.type === 'event');
 
   return (
     <div className="py-10">
-
       {introItem && (
         <div className="px-4 mb-8 text-center">
           <IntroCard title={introItem.title} description={introItem.description[0]} />
         </div>
       )}
-
 
       <div
         ref={scrollRef}

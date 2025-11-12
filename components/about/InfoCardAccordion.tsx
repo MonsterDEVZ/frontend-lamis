@@ -23,10 +23,10 @@ const InfoCardAccordion: React.FC<IProps> = ({ title, description, imageUrl }) =
 
         <div
           className="relative overflow-hidden transition-all duration-500 ease-in-out mt-5"
-          style={{ maxHeight: isExpanded ? '1000px' : '90px' }}
+          style={{ maxHeight: isExpanded ? '1000px' : '90px', whiteSpace: "pre-line"}}
         >
           <p
-            className="text-[#1d1d1d] text-sm leading-6 font-medium"
+            className="text-[#1d1d1d] text-sm leading-6 font-medium text-balance"
             dangerouslySetInnerHTML={{ __html: description }}
           />
 

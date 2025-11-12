@@ -25,8 +25,8 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
       document.body.style.overflow = 'auto';
     };
   }, [isOpen]);
-  
-  const handleSubmit = async (data: { name: string; phone: string; }) => {
+
+  const handleSubmit = async (data: { name: string; phone: string }) => {
     setIsSubmitting(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -45,7 +45,9 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
                 <CheckCircle2 className="h-6 w-6 text-white" />
               </div>
               <div className="ml-3 flex-1">
-                <p className="text-sm font-semibold text-white">Заявка принята! Мы свяжемся с вами.</p>
+                <p className="text-sm font-semibold text-white">
+                  Заявка принята! Мы свяжемся с вами.
+                </p>
               </div>
             </div>
             <div className="flex items-center">
@@ -62,7 +64,7 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
           duration: 4000,
         }
       );
-      
+
       onClose();
     } catch (error) {
       console.error('Error submitting feedback:', error);
@@ -103,7 +105,6 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
- 
   return (
     <div
       className={`fixed inset-0 z-50 transition-opacity duration-300 ${
@@ -111,10 +112,7 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
       }`}
     >
       {/* Фон-затемнение */}
-      <div
-        className="absolute inset-0 bg-black/50"
-        onClick={onClose}
-      />
+      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
 
       {/* Контейнер модального окна с анимацией */}
       <div
@@ -127,11 +125,7 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose }) => {
           onClick={(e) => e.stopPropagation()}
         >
           <div className="p-8">
-            <FeedbackForm 
-              onSubmit={handleSubmit} 
-              isSubmitting={isSubmitting}
-              onCancel={onClose}
-            />
+            <FeedbackForm onSubmit={handleSubmit} isSubmitting={isSubmitting} onCancel={onClose} />
           </div>
         </div>
       </div>

@@ -1,86 +1,105 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import CTAButton from './ui/CTAButton';
 import SliderNavigation from './ui/SliderNavigation';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 // @ts-ignore
 import 'swiper/css';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
-import {FaCommentDots, FaWhatsapp} from "react-icons/fa";
 
 const slides = [
   {
     id: 1,
-    image: '/images/water-heaters/1.png',
+    image:
+      'https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/951aef2a-878c-43ae-fc29-ae05e5ef9900/full',
     title: 'Мебель для',
     subtitle: 'ванных LAMIS',
     description:
-        'Изысканность, функциональность, дизайнерские модели. Водонепроницаемая итальянская краска Sirca, немецкая фурнитура Tallsen.',
+      'Изысканность, функциональность, дизайнерские модели. Водонепроницаемая итальянская краска Sirca, немецкая фурнитура Tallsen.',
   },
   {
     id: 2,
-    image: '/images/hero/slide_2.png',
-    title: 'Сантехника',
+    image:
+      'https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/ef0abf8c-40d2-4d04-7d85-184eaf0fc800/full',
+    title: 'Санфарфор',
     subtitle: 'CAISER',
     description:
-        'Премиальная сантехника из фарфора, камня и стали, созданная по немецкой технологии. Гарантия — 10 лет.',
+      'Премиальная сантехника из фарфора, камня и стали, созданная по немецкой технологии. Гарантия — 10 лет.',
   },
   {
     id: 3,
-    image: '/blesk_2.webp',
-    title: 'Водонагреватели',
-    subtitle: 'BLESK',
+    image:
+      'https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/ef0abf8c-40d2-4d04-7d85-184eaf0fc800/full',
+    title: 'Смесители',
+    subtitle: 'CAISER',
     description:
-        'Экономичные, долговечные, сенсорные водонагреватели с увеличенными магниевыми анодами. Гарантия — 10 лет.',
+      'Это искусство комфорта на вашей кухне и в ванной. Латунь придаёт высокую прочность, долговечность и антибактериальные свойства. Картридж Sedal делает более одного миллиона циклов, защиту от налётов и экономию воды.',
   },
   {
     id: 4,
-    image: '/hero_4-image.jpg',
-    title: 'Дизайнерские зеркала',
-    subtitle: 'LAMIS',
+    image:
+      'https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/ef0abf8c-40d2-4d04-7d85-184eaf0fc800/full',
+    title: 'Инсталяции',
+    subtitle: 'CAISER',
     description:
-        'Ваше отражение заслуживает идеального обрамления. Откройте мир эксклюзивного дизайна с нашими зеркалами и создайте свой уникальный стиль.',
+      'Скрытая элегантность вашего интерьера. Они дарят простор сниженный шум и экономию воды. Прочный металлический каркас, способным выдерживать большие нагрузки.',
+  },
+  {
+    id: 5,
+    image:
+      'https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/691db7a2-0959-458f-1aa0-fa6f77b16e00/full',
+    title: 'Водонагреватели',
+    subtitle: '(электрические)',
+    description:
+      'Экономичные, долговечные, сенсорные водонагреватели с увеличенными магниевыми анодами. Гарантия — 10 лет.',
+  },
+  {
+    id: 6,
+    image:
+      'https://imagedelivery.net/sM8MbFgFUCDLJNHppRh-0g/d42c3a2e-71fb-4818-3614-aa073bbf5d00/full',
+    title: 'Дизайнерские и умные',
+    subtitle: 'зеркала LAMIS',
+    description:
+      'Ваше отражение заслуживает идеального обрамления. Откройте мир эксклюзивного дизайна и дополнительных функций (3 вида подсветки холодный-тёплый-нейтральный), сенсорные датчики на движение, подогрев-антипар.',
   },
 ];
-
-// const actionButtons = [
-//   {
-//     icon: FaWhatsapp,
-//     name: 'WhatsApp',
-//     url: 'https://wa.me/ВАШ_НОМЕР_WHATSAPP?text=Здравствуйте, пишу с сайта LAMIS',
-//   },
-//   { icon: FaCommentDots, name: 'Chat' },
-//   /* // Телефон закомментирован
-//   {
-//     icon: FaPhoneAlt,
-//     name: "Call",
-//     url: "tel:ВАШ_НОМЕР_ТЕЛЕФОНА",
-//   },
-//   */
-// ];
 
 const autoplayDelay = 5000; // 5 seconds
 
 export default function HeroSlider() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
   const isDesktop = useMediaQuery('(min-width: 1024px)');
 
-  // const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    const swiper = swiperRef.current;
+    if (!swiper) return;
 
-  // const handleSubButtonClick = (button: (typeof actionButtons)[0]) => {
-  //   setIsOpen(false);
-  //   if (button.url) {
-  //     window.open(button.url, '_blank');
-  //   } else if (button.name === 'Chat') {
-  //     onOpenChat();
-  //     if (isTooltipVisible) setIsTooltipVisible(false);
-  //   }
-  // };
+    const handleAutoplayTimeLeft = (_s: SwiperType, _time: number, percentage: number) => {
+      // Progress from 0 to 100% for the current slide
+      const currentProgress = (1 - percentage) * 100;
+      setProgress(currentProgress);
+    };
+
+    const handleSlideChange = () => {
+      // Reset progress when slide changes
+      setProgress(0);
+    };
+
+    swiper.on('autoplayTimeLeft', handleAutoplayTimeLeft);
+    swiper.on('slideChange', handleSlideChange);
+
+    return () => {
+      if (swiper.destroyed) return;
+      swiper.off('autoplayTimeLeft', handleAutoplayTimeLeft);
+      swiper.off('slideChange', handleSlideChange);
+    };
+  }, [swiperRef.current, activeIndex]);
 
   return (
     <section
@@ -118,7 +137,7 @@ export default function HeroSlider() {
 
             {/* Content */}
             <div className="relative z-10 h-full flex items-center w-full">
-              <div className="wrapper_centering flex items-center h-full w-full px-10">
+              <div className="wrapper_centering flex items-center justify-center lg:justify-start h-full w-full px-10">
                 <div className="inline-flex flex-col items-center lg:items-start gap-8">
                   {/* Main Heading */}
                   <h1 className="text-white font-bold text-[40px] md:text-[56px] leading-12 md:leading-[1.2] tracking-[-0.02em] mb-0 text-center lg:text-left">
@@ -134,9 +153,11 @@ export default function HeroSlider() {
 
                   {/* CTA Button */}
                   <CTAButton
-                      className="w-40 md:w-48 px-0!"
-                      // onClick={() => handleSubButtonClick(actionButtons[1])}
-                  >Подробнее</CTAButton>
+                    className="w-40 md:w-48 px-0!"
+                    // onClick={() => handleSubButtonClick(actionButtons[1])}
+                  >
+                    Подробнее
+                  </CTAButton>
                 </div>
               </div>
             </div>
@@ -145,15 +166,19 @@ export default function HeroSlider() {
       </Swiper>
 
       {/* Slider Navigation */}
-      <div className="absolute bottom-12 left-1/2 lg:left-[32%] -translate-x-1/2 z-5">
-        <SliderNavigation
-          currentSlide={activeIndex + 1}
-          totalSlides={slides.length}
-          autoplayDelay={autoplayDelay}
-          onPrev={() => swiperRef.current?.slidePrev()}
-          onNext={() => swiperRef.current?.slideNext()}
-          variant="light"
-        />
+      <div className="absolute bottom-12 left-0 right-0 z-5 w-full">
+        <div className="wrapper_centering w-full px-10">
+          <div className="flex justify-center lg:justify-start">
+            <SliderNavigation
+              currentSlide={activeIndex + 1}
+              totalSlides={slides.length}
+              progress={progress}
+              onPrev={() => swiperRef.current?.slidePrev()}
+              onNext={() => swiperRef.current?.slideNext()}
+              variant="light"
+            />
+          </div>
+        </div>
       </div>
     </section>
   );
