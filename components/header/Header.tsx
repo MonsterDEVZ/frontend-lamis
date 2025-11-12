@@ -91,8 +91,8 @@ const nav = [
     showPlaceholder: true,
     list: [
       {
-        img: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-sink.webp',
-        href: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-sink.webp',
+        img: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-SINK%20(2).webp',
+        href: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-SINK%20(2).webp',
         title: 'Раковины',
       },
       {
