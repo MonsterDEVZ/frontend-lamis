@@ -38,21 +38,25 @@ export default function BleskWaterHeatersSection() {
           Водонагреватели <br /> (электрические)
         </h2>
 
-        {/* Grid of Cards */}
-        <SlideshowLightbox
-          theme="lightbox"
-          lightboxIdentifier="blesk-gallery"
-          framework="next"
-          images={waterHeaters.map(h => ({ src: h.image, alt: h.alt }))}
-          showThumbnails={true}
-          licenseKey="F64F-4934-51B8-1B2F"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {waterHeaters.map((heater) => (
+        {/* --- ИЗМЕНЕНИЕ: Убрали общий SlideshowLightbox отсюда --- */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {waterHeaters.map((heater) => (
+            // --- ИЗМЕНЕНИЕ: Теперь SlideshowLightbox находится внутри .map() для каждой карточки ---
+            <SlideshowLightbox
+              key={heater.id}
+              theme="lightbox"
+              // Создаем уникальный идентификатор для каждой галереи
+              lightboxIdentifier={`blesk-gallery-${heater.id}`}
+              framework="next"
+              // В галерею передаем массив из ОДНОЙ картинки, принадлежащей этой карточке
+              images={[{ src: heater.image, alt: heater.alt }]}
+              showThumbnails={true}
+              licenseKey="F64F-4934-51B8-1B2F"
+            >
               <div
-                key={heater.id}
                 className="relative aspect-4/3 rounded-2xl overflow-hidden group cursor-pointer"
-                data-lightboxjs="blesk-gallery"
+                // Указываем data-атрибут с тем же уникальным идентификатором
+                data-lightboxjs={`blesk-gallery-${heater.id}`}
               >
                 {/* Image */}
                 <Image
@@ -71,9 +75,9 @@ export default function BleskWaterHeatersSection() {
                   <span className="text-white font-semibold text-2xl">{heater.name}</span>
                 </div>
               </div>
-            ))}
-          </div>
-        </SlideshowLightbox>
+            </SlideshowLightbox>
+          ))}
+        </div>
       </div>
     </section>
   );

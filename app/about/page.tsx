@@ -72,19 +72,6 @@ const metrics = [
 ];
 
 export default function AboutPage() {
-  const metricsScrollRef = useRef<HTMLDivElement>(null);
-  const isMobile = useMediaQuery('(max-width: 767px)');
-
-  useEffect(() => {
-    if (isMobile) {
-      const container = metricsScrollRef.current;
-      if (container) {
-        const scrollLeftCenter = (container.scrollWidth - container.clientWidth) / 2;
-        container.scrollLeft = scrollLeftCenter;
-      }
-    }
-  }, [isMobile]);
-
   return (
     <main>
       <Header />

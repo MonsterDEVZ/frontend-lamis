@@ -35,7 +35,9 @@ const NavItemMoreList: FC<IProps> = ({ activeSubList, showPlaceholder = true }) 
                   className="rounded-full object-cover w-10 h-10 shrink-0"
                 />
               ) : showPlaceholder ? (
-                <div className="w-10 h-10 bg-gray-100 rounded-full shrink-0"></div>
+                <div className="w-10 h-10 rounded-full shrink-0">
+                  <img src={item.img} alt="" />
+                </div>
               ) : null}
               <span className="font-medium text-sm text-gray-800 group-hover:text-green-100 transition-colors duration-200">
                 {item.title}

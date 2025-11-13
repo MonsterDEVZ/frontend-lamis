@@ -13,7 +13,7 @@ export default function CTAButton({ children, onClick, className = '' }: CTAButt
       className={`text-white font-medium hover:opacity-90 transition-all bg-green-100 ${className}`}
       style={{
         fontSize: '14px',
-        padding: '14px 48px',
+        padding: '16px 48px',
         borderRadius: '100px',
         border: 'none',
         cursor: 'pointer',

@@ -14,7 +14,7 @@ export const HistoryTimeline = () => {
     return (
       <div
         ref={scrollRef}
-        className="flex overflow-x-auto cursor-grab space-x-8 py-10 pl-10 pr-20 no-scrollbar container"
+        className="flex overflow-x-auto cursor-grab space-x-8 py-10 pl-46 pr-20 no-scrollbar xl:pl-100 2xl:pl-[25%]"
       >
         {historyData.map((item, index) =>
           item.type === 'intro' ? (

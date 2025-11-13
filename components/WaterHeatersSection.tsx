@@ -14,6 +14,7 @@ const waterHeaters = [
       '/catalog/Lamis/Lamis/LAMIS-Grey-900x450x700-2017-2024.2.22-3DDD3DSKY.png',
       '/catalog/Lamis/Lamis/LAMIS-Black-1000x450x700-2017-2024.2.21-3DDD3DSKY.png',
       '/catalog/Lamis/Lamis/LAMIS-White-800x450x700-2017-2024.2.21-3DDD3DSKY.png',
+      '/catalog/Lamis/Lamis/LAMIS-Black-600x450x700-2017-2024.5.17-3DDD3DSKY.png',
     ],
   },
   {
@@ -23,8 +24,8 @@ const waterHeaters = [
     alt: 'Мебель для ванны LAMIS - коллекция Nora',
     gallery: [
       '/catalog/Lamis/Accent/AKTSENT-Grey-600x450x600-2017-2024.2.22-3DDD3DSKY.png',
-      '/catalog/Lamis/Accent/AKTSENT-Black-800x450x800-2017-2024.2.22-3DDD3DSKY.png',
-      '/catalog/Lamis/Accent/AKTSENT-White-700x450x700-2017-2024.2.22-3DDD3DSKY.png',
+      '/catalog/Lamis/Accent/1/AKTSENT-Black-800x450x800-2017-2024.2.22-3DDD3DSKY.png',
+      '/catalog/Lamis/Accent/AKTSENT-White-1000x450x800-2017-2024.2.23-3DDD3DSKY.png',
     ],
   },
   {
@@ -35,6 +36,7 @@ const waterHeaters = [
     gallery: [
       '/catalog/Lamis/Accent/1/AKTSENT-Black-800x450x800-2017-2024.2.22-3DDD3DSKY.png',
       '/catalog/Lamis/Accent/AKTSENT-Grey-600x450x600-2017-2024.2.22-3DDD3DSKY.png',
+      '/catalog/Lamis/Accent/1/AKTSENT-White-1000x450x800-2017-2024.2.23-3DDD3DSKY.png',
       '/catalog/Lamis/Accent/2/example_for_2_image.jpg',
     ],
   },
@@ -68,7 +70,7 @@ export default function WaterHeatersSection() {
               theme="lightbox"
               lightboxIdentifier={`furniture-gallery-${heater.id}`}
               framework="next"
-              images={heater.gallery.map(img => ({ src: img, alt: `${heater.name} коллекция` }))}
+              images={heater.gallery.map((img) => ({ src: img, alt: `${heater.name} коллекция` }))}
               showThumbnails={true}
               licenseKey="F64F-4934-51B8-1B2F"
             >

@@ -98,7 +98,7 @@ export default function FavoritesPage() {
             <>
               {/* Header with title and counter */}
               <div className="flex justify-between items-center mb-12">
-                <h1 className="text-5xl font-bold text-gray-900">Избранное</h1>
+                <h1 className="text-3xl md:text-5xl font-bold text-gray-900">Избранное</h1>
                 <span className="text-gray-600">
                   Выбрано:{' '}
                   <span className="font-semibold text-gray-900">{favoriteProducts.length}</span>

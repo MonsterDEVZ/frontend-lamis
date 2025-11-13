@@ -22,6 +22,7 @@ import MobileSearchOverlay from './MobileSearchOverlay';
 import SearchModal from '../search/SearchModal';
 import { useSearchModalStore } from '@/store/searchModalStore';
 
+
 /**
  * Utility function to merge new query parameters with existing ones
  * @param currentParams - Current URLSearchParams
@@ -54,6 +55,10 @@ const mini_nav = [
     href: '/contacts',
     title: 'Контакты',
   },
+  {
+    href: '/downloads',
+    title: 'Материалы',
+  },
 ];
 
 // Initial navigation without collections (will be loaded dynamically)
@@ -70,23 +75,23 @@ const initialNav = [
     showPlaceholder: true,
     list: [
       {
-        img: '',
-        href: '',
+        img: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-SINK%20(2).webp',
+        href: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-SINK%20(2).webp',
         title: 'Раковины',
       },
       {
-        img: '',
-        href: '',
+        img: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-toilet.webp',
+        href: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-toilet.webp',
         title: 'Унитазы',
       },
       {
-        img: '',
-        href: '',
+        img: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-urinal.webp',
+        href: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-urinal.webp',
         title: 'Писсуары',
       },
       {
-        img: '',
-        href: '',
+        img: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-Bidet.webp',
+        href: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-Bidet.webp',
         title: 'Биде',
       },
     ],
