@@ -1,8 +1,5 @@
-// app/contacts/page.tsx
-
 'use client';
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Header from '@/components/header/Header';
 import Footer from '@/components/Footer';
 import MainOfficeSection from '@/components/contacts/MainOfficeSection';

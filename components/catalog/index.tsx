@@ -2,122 +2,149 @@
 import { useState, useMemo, useEffect, type FC } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
-import { Select, SelectOption } from '../ui/Select';
 import PaginationControls from '../ui/PaginationControls';
+import FilterSection from '../ui/FilterSection';
+import SkeletonLoader from '../ui/SkeletonLoader';
 import { useFiltersStore } from '@/store/filtersStore';
 import CatalogCardResponsive from '../ui/CatalogCardResponsive';
 import EmptyState from '../ui/EmptyState';
-import { fetchProducts, PaginatedResponse } from '@/services/api/products';
-import { Product } from '@/types/product';
-
-const sortOptions = [
-  { value: 'default', label: 'По умолчанию' },
-  { value: 'newest', label: 'Новинки' },
-  { value: 'price_asc', label: 'Сначала дешёвые' },
-  { value: 'price_desc', label: 'Сначала дорогие' },
-  { value: 'sale', label: 'Товары по акции' },
-];
+import { fetchProducts, fetchSections, PaginatedResponse } from '@/services/api/products';
+import { Product, Section } from '@/types/product';
 
 const Catalog: FC = () => {
-  // Подключаемся к Zustand store для фильтров (ЧЕТЫРЕХУРОВНЕВАЯ СИСТЕМА)
+  // Подключаемся к Zustand store для фильтров (ПЯТИУРОВНЕВАЯ СИСТЕМА)
   const {
-    // Новая четырехуровневая система
+    // Новая пятиуровневая система: Section → Brand → Category → Collection/Type
     selectedSectionId,
+    selectedBrandId, // НОВОЕ! Level 2
     selectedCategoryId,
     selectedCollectionId,
     selectedTypeId,
+    availableBrands, // НОВОЕ! Level 2
     availableCategories,
     availableCollections,
     availableTypes,
+    isLoading, // НОВОЕ! Глобальный loading
     setSectionId,
+    setBrandId, // НОВОЕ! Level 2
     setCategoryId,
     setCollectionId,
     setTypeId,
-    sortBy,
-    setSortBy,
+    setIsLoading, // НОВОЕ! Управление loading состоянием
   } = useFiltersStore();
 
-  // Получаем параметры из URL
+  // Получаем параметры из URL (ПЯТИУРОВНЕВАЯ СИСТЕМА)
   const searchParams = useSearchParams();
-  const sectionIdFromUrl = searchParams.get('sectionId') || searchParams.get('brandId'); // Support both
+  const sectionIdFromUrl = searchParams.get('sectionId');
+  const brandIdFromUrl = searchParams.get('brandId'); // НОВОЕ! Level 2
   const categoryIdFromUrl = searchParams.get('categoryId');
   const collectionIdFromUrl = searchParams.get('collectionId');
   const typeIdFromUrl = searchParams.get('typeId');
 
   // Локальное состояние для пагинации
-  const [itemsPerPage, setItemsPerPage] = useState('12');
+  const itemsPerPage = 20; // ФИКСИРОВАНО: всегда 20 товаров на странице
   const [currentPage, setCurrentPage] = useState(1);
 
   // API state
   const [apiProducts, setApiProducts] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingProducts, setIsLoadingProducts] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [totalProducts, setTotalProducts] = useState(0);
 
-  // НОВОЕ: Инициализация фильтров из URL (ЧЕТЫРЕХУРОВНЕВАЯ СИСТЕМА)
+  // Section description state
+  const [currentSection, setCurrentSection] = useState<Section | null>(null);
+
+  // НОВОЕ: Инициализация фильтров из URL (ПЯТИУРОВНЕВАЯ СИСТЕМА)
   useEffect(() => {
     const initializeFilters = async () => {
-      // УРОВЕНЬ 1: Устанавливаем фильтр по секции из URL
-      if (sectionIdFromUrl) {
-        const sectionId = parseInt(sectionIdFromUrl, 10);
-        if (!isNaN(sectionId)) {
-          await setSectionId(sectionId); // Автоматически загружает availableCategories из API
-        }
-      } else {
-        // Если нет фильтра по секции, сбрасываем всё
-        await setSectionId(null);
-      }
+      // Показываем loading при инициализации фильтров из URL (например, при переходе из Header)
+      setIsLoading(true);
 
-      // УРОВЕНЬ 2: Устанавливаем фильтр по категории из URL (только если есть секция)
-      if (categoryIdFromUrl && sectionIdFromUrl) {
-        const categoryId = parseInt(categoryIdFromUrl, 10);
-        if (!isNaN(categoryId)) {
-          await setCategoryId(categoryId); // Автоматически загружает availableCollections и availableTypes из API
+      try {
+        // УРОВЕНЬ 1: Устанавливаем фильтр по секции из URL
+        if (sectionIdFromUrl) {
+          const sectionId = parseInt(sectionIdFromUrl, 10);
+          if (!isNaN(sectionId)) {
+            await setSectionId(sectionId); // Автоматически загружает availableBrands из API
+          }
+        } else {
+          // Если нет фильтра по секции, сбрасываем всё
+          await setSectionId(null);
         }
-      }
 
-      // УРОВЕНЬ 3a: Устанавливаем фильтр по коллекции из URL
-      if (collectionIdFromUrl) {
-        const collectionId = parseInt(collectionIdFromUrl, 10);
-        if (!isNaN(collectionId)) {
-          setCollectionId(collectionId);
+        // УРОВЕНЬ 2: Устанавливаем фильтр по бренду из URL (НОВОЕ! только если есть секция)
+        if (brandIdFromUrl && sectionIdFromUrl) {
+          const brandId = parseInt(brandIdFromUrl, 10);
+          if (!isNaN(brandId)) {
+            await setBrandId(brandId); // Автоматически загружает availableCategories из API
+          }
         }
-      } else {
-        setCollectionId(null);
-      }
 
-      // УРОВЕНЬ 3b: Устанавливаем фильтр по типу из URL
-      if (typeIdFromUrl) {
-        const typeId = parseInt(typeIdFromUrl, 10);
-        if (!isNaN(typeId)) {
-          setTypeId(typeId);
+        // УРОВЕНЬ 3: Устанавливаем фильтр по категории из URL (только если есть секция и бренд)
+        if (categoryIdFromUrl && sectionIdFromUrl && brandIdFromUrl) {
+          const categoryId = parseInt(categoryIdFromUrl, 10);
+          if (!isNaN(categoryId)) {
+            await setCategoryId(categoryId); // Автоматически загружает availableCollections и availableTypes из API
+          }
         }
-      } else {
-        setTypeId(null);
-      }
 
-      // Сбрасываем на первую страницу при изменении фильтров
-      setCurrentPage(1);
+        // УРОВЕНЬ 4a: Устанавливаем фильтр по коллекции из URL
+        if (collectionIdFromUrl) {
+          const collectionId = parseInt(collectionIdFromUrl, 10);
+          if (!isNaN(collectionId)) {
+            setCollectionId(collectionId);
+          }
+        } else {
+          setCollectionId(null);
+        }
+
+        // УРОВЕНЬ 4b: Устанавливаем фильтр по типу из URL
+        if (typeIdFromUrl) {
+          const typeId = parseInt(typeIdFromUrl, 10);
+          if (!isNaN(typeId)) {
+            setTypeId(typeId);
+          }
+        } else {
+          setTypeId(null);
+        }
+
+        // Сбрасываем на первую страницу при изменении фильтров
+        setCurrentPage(1);
+      } finally {
+        // Скрываем loading после завершения инициализации
+        setIsLoading(false);
+      }
     };
 
     initializeFilters();
-  }, [sectionIdFromUrl, categoryIdFromUrl, collectionIdFromUrl, typeIdFromUrl, setSectionId, setCategoryId, setCollectionId, setTypeId]);
+  }, [
+    sectionIdFromUrl,
+    brandIdFromUrl,
+    categoryIdFromUrl,
+    collectionIdFromUrl,
+    typeIdFromUrl,
+    setSectionId,
+    setBrandId,
+    setCategoryId,
+    setCollectionId,
+    setTypeId,
+  ]);
 
   // Fetch products from API
   useEffect(() => {
     const loadProducts = async () => {
-      setIsLoading(true);
+      setIsLoadingProducts(true);
       setError(null);
 
       try {
         const response = await fetchProducts({
           sectionId: selectedSectionId,
+          brandId: selectedBrandId, // НОВОЕ! Level 2
           categoryId: selectedCategoryId,
           collectionId: selectedCollectionId,
           typeId: selectedTypeId,
-          sortBy: sortBy,
           page: currentPage,
-          itemsPerPage: parseInt(itemsPerPage, 10),
+          itemsPerPage: itemsPerPage,
         });
 
         setApiProducts(response.data);
@@ -128,39 +155,89 @@ const Catalog: FC = () => {
         setApiProducts([]);
         setTotalProducts(0);
       } finally {
-        setIsLoading(false);
+        setIsLoadingProducts(false);
       }
     };
 
     loadProducts();
-  }, [selectedSectionId, selectedCategoryId, selectedCollectionId, selectedTypeId, sortBy, currentPage, itemsPerPage]);
+  }, [
+    selectedSectionId,
+    selectedBrandId,
+    selectedCategoryId,
+    selectedCollectionId,
+    selectedTypeId,
+    currentPage,
+    itemsPerPage,
+  ]);
+
+  // Load section data for description
+  useEffect(() => {
+    const loadSectionData = async () => {
+      if (selectedSectionId) {
+        try {
+          const sections = await fetchSections();
+          const section = sections.find((s) => s.id === selectedSectionId);
+          setCurrentSection(section || null);
+        } catch (err) {
+          console.error('Error fetching section data:', err);
+          setCurrentSection(null);
+        }
+      } else {
+        setCurrentSection(null);
+      }
+    };
+
+    loadSectionData();
+  }, [selectedSectionId]);
 
   // Products now come from API - no client-side filtering needed
   const filteredAndSortedProducts = useMemo(() => {
     return apiProducts;
   }, [apiProducts]);
 
-  // Сброс страницы при изменении сортировки
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [sortBy]);
+  // УРОВЕНЬ 2: Обработчик клика по бренду (НОВОЕ!)
+  const handleBrandClick = async (brandId: number | null) => {
+    setIsLoading(true); // Показываем глобальный loading
+    try {
+      await setBrandId(brandId); // Автоматически загружает категории из API
+      setCurrentPage(1);
+    } finally {
+      setIsLoading(false); // Скрываем глобальный loading
+    }
+  };
 
-  // УРОВЕНЬ 2: Обработчик клика по категории
+  // УРОВЕНЬ 3: Обработчик клика по категории
   const handleCategoryClick = async (categoryId: number | null) => {
-    await setCategoryId(categoryId); // Автоматически загружает коллекции из API
-    setCurrentPage(1);
+    setIsLoading(true); // Показываем глобальный loading
+    try {
+      await setCategoryId(categoryId); // Автоматически загружает коллекции из API
+      setCurrentPage(1);
+    } finally {
+      setIsLoading(false); // Скрываем глобальный loading
+    }
   };
 
-  // УРОВЕНЬ 3a: Обработчик клика по коллекции
+  // УРОВЕНЬ 4a: Обработчик клика по коллекции
   const handleCollectionClick = (collectionId: number | null) => {
-    setCollectionId(collectionId);
-    setCurrentPage(1);
+    setIsLoading(true); // Показываем глобальный loading
+    try {
+      setCollectionId(collectionId);
+      setCurrentPage(1);
+    } finally {
+      // Задержка перед скрытием loading, чтобы дать время на загрузку товаров
+      setTimeout(() => setIsLoading(false), 300);
+    }
   };
 
-  // УРОВЕНЬ 3b: Обработчик клика по типу
+  // УРОВЕНЬ 4b: Обработчик клика по типу
   const handleTypeClick = (typeId: number | null) => {
     setTypeId(typeId);
     setCurrentPage(1);
+  };
+
+  // Проверяем, активен ли бренд (НОВОЕ!)
+  const isBrandActive = (brandId: number | null) => {
+    return selectedBrandId === brandId;
   };
 
   // Проверяем, активна ли категория
@@ -179,7 +256,7 @@ const Catalog: FC = () => {
   };
 
   // Пагинация - now using API total count
-  const totalPages = Math.ceil(totalProducts / parseInt(itemsPerPage, 10));
+  const totalPages = Math.ceil(totalProducts / itemsPerPage);
 
   // Получаем продукты для текущей страницы - API already returns paginated results
   const paginatedProducts = filteredAndSortedProducts;
@@ -190,146 +267,137 @@ const Catalog: FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleItemsPerPageChange = (value: string) => {
-    setItemsPerPage(value);
-    setCurrentPage(1);
-  };
-
-  const handleShowMore = () => {
-    // логика для "показать еще"
-  };
-
   return (
     <div className="pb-24">
-      {/* Hero */}
+      {/* Глобальный Loading Overlay */}
+      <SkeletonLoader isLoading={isLoading} text="Применяем фильтр..." />
 
+      {/* Hero Section с динамическим заголовком и описанием */}
       <div
-        className="w-full h-[350px] md:h-[400px] bg-cover bg-center pb-8 sm:pb-16 md:pb-24 flex items-end"
+        className="w-full min-h-[550px] md:min-h-[650px] lg:min-h-[750px] bg-cover bg-center relative flex items-center"
         style={{ backgroundImage: "url('/images/hero/screen_1.png')" }}
       >
-        <div className="wrapper_centering px-4">
-          <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold">
-            Каталог товаров
-          </h1>
+        {/* Затемняющий оверлей для лучшей читаемости текста */}
+        <div className="absolute inset-0 bg-linear-to-br from-black/70 to-black/50" />
+
+        {/* Контент Hero */}
+        <div className="wrapper_centering px-6 md:px-10 lg:px-20 pt-20 md:pt-100 pb-0 md:pb-5 lg:pb-24 relative z-10">
+          <div className="max-w-4xl">
+            {/* Динамический заголовок */}
+            <h1
+              className="text-white text-[28px] md:text-[32px] lg:text-[44px]! font-bold mb-6 leading-tight text-balance"
+              style={{
+                textShadow: '0 2px 12px rgba(0, 0, 0, 0.5)',
+                letterSpacing: '-0.5px',
+              }}
+              dangerouslySetInnerHTML={{
+                __html: `${currentSection?.title || 'Каталог товаров'}`,
+              }}
+            />
+
+            {/* Динамическое описание */}
+            {currentSection?.description && (
+              <div className="text-white/95 text-[13px] md:text-[14px] lg:text-[15px] space-y-3 md:space-y-4">
+                {currentSection.description
+                  .split('\n\n')
+                  .filter((p: string) => p.trim())
+                  .map((paragraph: string, index: number) => (
+                    <p
+                      key={index}
+                      className="leading-normal md:leading-[1.6] lg:leading-[1.65]"
+                      style={{
+                        textShadow: '0 1px 8px rgba(0, 0, 0, 0.4)',
+                      }}
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
       <div className="wrapper_centering mt-8 sm:mt-12 md:mt-50 pb-8 px-4">
-        {/* УРОВЕНЬ 2: ДИНАМИЧЕСКИЕ ТАБЫ для фильтрации по категориям */}
-        {selectedSectionId !== null && availableCategories.length > 0 && (
-          <div className="flex flex-wrap gap-3 md:gap-3.5 mb-8">
-            <Button
-              className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
-              variant={selectedCategoryId === null ? 'primary' : 'outline'}
-              onClick={() => handleCategoryClick(null)}
-            >
-              Все категории
-            </Button>
+        <>
+          {/* УРОВЕНЬ 2: Фильтрация по брендам (НОВОЕ!) */}
+          {selectedSectionId !== null && availableBrands.length > 0 && (
+            <FilterSection
+              title="Все бренды"
+              items={availableBrands}
+              selectedId={selectedBrandId}
+              onSelect={handleBrandClick}
+              allLabel="Все бренды"
+            />
+          )}
 
-            {availableCategories.map((category) => (
-              <Button
-                key={category.id}
-                className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
-                variant={isCategoryActive(category.id) ? 'primary' : 'outline'}
-                onClick={() => handleCategoryClick(category.id)}
-              >
-                {category.name}
-              </Button>
-            ))}
-          </div>
-        )}
+          {/* УРОВЕНЬ 3: Фильтрация по категориям */}
+          {selectedBrandId !== null && availableCategories.length > 0 && (
+            <FilterSection
+              title="Все категории"
+              items={availableCategories}
+              selectedId={selectedCategoryId}
+              onSelect={handleCategoryClick}
+              allLabel="Все категории"
+            />
+          )}
 
-        {/* УРОВЕНЬ 3a: ДИНАМИЧЕСКИЕ ТАБЫ для фильтрации по коллекциям */}
-        {selectedCategoryId !== null && availableCollections.length > 0 && (
-          <div className="flex flex-wrap gap-3 md:gap-3.5 mb-8">
-            <Button
-              className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
-              variant={selectedCollectionId === null && selectedTypeId === null ? 'primary' : 'outline'}
-              onClick={() => handleCollectionClick(null)}
-            >
-              Все коллекции
-            </Button>
+          {/* УРОВЕНЬ 4a: Фильтрация по коллекциям */}
+          {selectedCategoryId !== null && availableCollections.length > 0 && (
+            <FilterSection
+              title="Все коллекции"
+              items={availableCollections}
+              selectedId={selectedCollectionId}
+              onSelect={handleCollectionClick}
+              allLabel="Все коллекции"
+            />
+          )}
 
-            {availableCollections.map((collection) => (
-              <Button
-                key={collection.id}
-                className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
-                variant={isCollectionActive(collection.id) ? 'primary' : 'outline'}
-                onClick={() => handleCollectionClick(collection.id)}
-              >
-                {collection.name}
-              </Button>
-            ))}
-          </div>
-        )}
+          {/* УРОВЕНЬ 4b: Фильтрация по типам */}
+          {selectedCategoryId !== null && availableTypes.length > 0 && (
+            <FilterSection
+              title="Все виды"
+              items={availableTypes}
+              selectedId={selectedTypeId}
+              onSelect={handleTypeClick}
+              allLabel="Все виды"
+            />
+          )}
+        </>
 
-        {/* УРОВЕНЬ 3b: ДИНАМИЧЕСКИЕ ТАБЫ для фильтрации по типам */}
-        {selectedCategoryId !== null && availableTypes.length > 0 && (
-          <div className="flex flex-wrap gap-3 md:gap-3.5 mb-8">
-            <Button
-              className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
-              variant={selectedTypeId === null && selectedCollectionId === null ? 'primary' : 'outline'}
-              onClick={() => handleTypeClick(null)}
-            >
-              Все типы
-            </Button>
-
-            {availableTypes.map((type) => (
-              <Button
-                key={type.id}
-                className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
-                variant={isTypeActive(type.id) ? 'primary' : 'outline'}
-                onClick={() => handleTypeClick(type.id)}
-              >
-                {type.name}
-              </Button>
-            ))}
-          </div>
-        )}
-
-        <div className="flex flex-col sm:flex-row justify-start gap-3.5 mt-4 mb-10">
-          {/* Сортировка - интегрирована с Zustand store */}
-          <div className="w-48">
-            <Select
-              placeholder="Сортировка"
-              intent="filled"
-              value={sortBy}
-              onChange={(val) => setSortBy(val as string)}
-            >
-              {sortOptions.map((option) => (
-                <SelectOption key={option.value} value={option.value}>
-                  {option.label}
-                </SelectOption>
+        {/* Секция с товарами */}
+        <>
+          {isLoadingProducts ? (
+            <div className="flex justify-center items-center py-16">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-100"></div>
+            </div>
+          ) : error ? (
+            <div className="flex flex-col items-center justify-center py-16 px-4">
+              <p className="text-red-600 text-lg mb-4">Ошибка загрузки товаров</p>
+              <p className="text-gray-600">{error}</p>
+            </div>
+          ) : paginatedProducts.length === 0 ? (
+            <EmptyState />
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 md:gap-6 divide-y divide-dark-50 md:divide-transparent border_y border-dark-50 md:border-transparent mt-7 md:mt-0">
+              {paginatedProducts.map((product) => (
+                <div key={product.id} className="py-5 md:py-0">
+                  <CatalogCardResponsive
+                    {...product}
+                    collection={product.collection_name || product.brand_name || 'Без коллекции'}
+                    image={product.main_image_url || product.image || '/placeholder.webp'}
+                    hoverImage={
+                      product.hover_image_url ||
+                      product.main_image_url ||
+                      product.image ||
+                      '/placeholder.webp'
+                    }
+                  />
+                </div>
               ))}
-            </Select>
-          </div>
-        </div>
-
-        {isLoading ? (
-          <div className="flex justify-center items-center py-16">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-100"></div>
-          </div>
-        ) : error ? (
-          <div className="flex flex-col items-center justify-center py-16 px-4">
-            <p className="text-red-600 text-lg mb-4">Ошибка загрузки товаров</p>
-            <p className="text-gray-600">{error}</p>
-          </div>
-        ) : paginatedProducts.length === 0 ? (
-          <EmptyState />
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 md:gap-6 divide-y divide-dark-50 md:divide-transparent border_y border-dark-50 md:border-transparent">
-            {paginatedProducts.map((product) => (
-              <div key={product.id} className="py-5 md:py-0">
-                <CatalogCardResponsive
-                  {...product}
-                  collection={product.collection_name || product.brand_name || 'Без коллекции'}
-                  image={product.main_image_url || product.image || '/placeholder.webp'}
-                  hoverImage={product.hover_image_url || product.main_image_url || product.image || '/placeholder.webp'}
-                />
-              </div>
-            ))}
-          </div>
-        )}
+            </div>
+          )}
+        </>
       </div>
 
       {/* Секция пагинации и управления количеством отображаемых товаров */}
@@ -339,10 +407,7 @@ const Catalog: FC = () => {
             className="w-full"
             currentPage={currentPage}
             totalPages={totalPages}
-            itemsPerPage={itemsPerPage}
             onPageChange={handlePageChange}
-            onItemsPerPageChange={handleItemsPerPageChange}
-            onShowMore={handleShowMore}
           />
         </div>
       </div>

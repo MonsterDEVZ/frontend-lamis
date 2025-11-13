@@ -1,58 +1,35 @@
 import type { FC } from 'react';
 import { Button } from './Button';
-import { Select, SelectOption } from './Select';
 import { cn } from '@/styles';
 
 interface PaginationControlsProps {
   currentPage: number;
   totalPages: number;
-  itemsPerPage: string;
   onPageChange: (page: number) => void;
-  onItemsPerPageChange: (value: string) => void;
-  onShowMore?: () => void;
   className?: string;
 }
 
 const PaginationControls: FC<PaginationControlsProps> = ({
   currentPage,
   totalPages,
-  itemsPerPage,
   onPageChange,
-  onItemsPerPageChange,
-  onShowMore,
   className,
 }) => {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <div className={cn('flex justify-between items-center gap-5 lg:flex-row flex-col', className)}>
+    <div className={cn('flex justify-center items-center gap-2', className)}>
       {/* Блок с кнопками пагинации */}
-      <div className="flex justify-center items-center gap-2 mb-4 lg:w-auto w-full lg:order-1">
-        {pages.map((num) => (
-          <Button
-            key={num}
-            variant={num === currentPage ? 'primary' : 'outline'}
-            size="icon"
-            onClick={() => onPageChange(num)}
-          >
-            {num}
-          </Button>
-        ))}
-      </div>
-
-      {/* Выпадающий список для выбора количества отображаемых товаров */}
-      <div className="lg:w-48 w-full font-medium lg:order-2">
-        <Select
-          placeholder="Показывать по"
-          intent="outline"
-          center={true}
-          value={itemsPerPage}
-          onChange={(val) => onItemsPerPageChange(val as string)}
+      {pages.map((num) => (
+        <Button
+          key={num}
+          variant={num === currentPage ? 'primary' : 'outline'}
+          size="icon"
+          onClick={() => onPageChange(num)}
         >
-          <SelectOption value="12">Показывать по 12</SelectOption>
-          <SelectOption value="48">Показывать по 48</SelectOption>
-        </Select>
-      </div>
+          {num}
+        </Button>
+      ))}
     </div>
   );
 };

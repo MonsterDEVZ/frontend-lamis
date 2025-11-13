@@ -10,7 +10,14 @@ import BurgerMenu from './BurgerMenu';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { MainNavigationDesc, TopBar } from './IsDesktop';
 import { MainNavigationMob } from './IsMobile';
-import { fetchCollections } from '@/services/api/products';
+import {
+  fetchBrands,
+  fetchCollections,
+  fetchCategories,
+  getFirstBrandForCollection,
+  getFirstCategoryForCollection,
+  getFirstBrandForCategory
+} from '@/services/api/products';
 import MobileSearchOverlay from './MobileSearchOverlay';
 
 
@@ -127,32 +134,79 @@ export default function Header() {
 
   const { scrollY, scrollDirection } = useScroll();
 
-  // Load collections from API on mount
+  // НОВАЯ АРХИТЕКТУРА: Load dynamic navigation items
   useEffect(() => {
-    const loadCollections = async () => {
+    const loadNavigationData = async () => {
       try {
-        // Load collections for "Мебель для ванной" (sectionId=1)
-        const collections = await fetchCollections(1, null);
+        // Load collections for Section 1 "Мебель для ванной" (sectionId=1)
+        const collections = await fetchCollections(1);
+        const collectionItems = await Promise.all(
+          collections.map(async (collection) => {
+            try {
+              // Get first brand and category for auto-selection
+              const brand = await getFirstBrandForCollection(collection.id);
+              const category = await getFirstCategoryForCollection(collection.id);
 
-        // Transform collections to navigation list items
-        const collectionItems = collections.map((collection) => ({
-          img: collection.image || '/placeholder.webp',
-          href: `/catalog?sectionId=1&collectionId=${collection.id}`,
-          title: collection.name,
-        }));
+              return {
+                img: collection.image || '/placeholder.webp',
+                href: `/catalog?sectionId=1&brandId=${brand.id}&categoryId=${category.id}&collectionId=${collection.id}`,
+                title: collection.name,
+              };
+            } catch (error) {
+              console.error(`Failed to get auto-selection data for collection ${collection.id}:`, error);
+              // Fallback to simple URL without auto-selection
+              return {
+                img: collection.image || '/placeholder.webp',
+                href: `/catalog?sectionId=1&collectionId=${collection.id}`,
+                title: collection.name,
+              };
+            }
+          })
+        );
 
-        // Update nav with loaded collections
+        // Load categories for Section 2 "Санфарфор" (sectionId=2)
+        const categories = await fetchCategories(2);
+        const categoryItems = await Promise.all(
+          categories.map(async (category) => {
+            try {
+              // Get first brand for auto-selection
+              const brand = await getFirstBrandForCategory(category.id);
+
+              return {
+                img: category.image || '/placeholder.webp',
+                href: `/catalog?sectionId=2&brandId=${brand.id}&categoryId=${category.id}`,
+                title: category.name,
+              };
+            } catch (error) {
+              console.error(`Failed to get auto-selection data for category ${category.id}:`, error);
+              // Fallback to simple URL without auto-selection
+              return {
+                img: category.image || '/placeholder.webp',
+                href: `/catalog?sectionId=2&categoryId=${category.id}`,
+                title: category.name,
+              };
+            }
+          })
+        );
+
+        // Update nav with loaded data
         setNav((prevNav) =>
-          prevNav.map((item) =>
-            item.href === '/catalog?sectionId=1' ? { ...item, list: collectionItems } : item
-          )
+          prevNav.map((item) => {
+            if (item.href === '/catalog?sectionId=1') {
+              return { ...item, list: collectionItems };
+            }
+            if (item.href === '/catalog?sectionId=2') {
+              return { ...item, list: categoryItems, showPlaceholder: false };
+            }
+            return item;
+          })
         );
       } catch (error) {
-        console.error('Failed to load collections:', error);
+        console.error('Failed to load navigation data:', error);
       }
     };
 
-    loadCollections();
+    loadNavigationData();
   }, []);
 
   // Transform activeSubList to preserve existing query parameters
