@@ -34,7 +34,7 @@ const footerSections = [
     title: 'Информация',
     links: [
       { title: 'О нас', href: '/about' },
-      { title: 'Где купить', href: '/where-to-buy' },
+      { title: 'Где купить', href: '/contacts' },
       { title: 'Сервисный центр', href: '/service-center' },
       { title: 'Станьте нашим партнером', href: '/partnership' },
     ],

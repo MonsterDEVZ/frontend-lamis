@@ -1,64 +1,73 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { fetchCategories, fetchCollections, fetchTypes } from '@/services/api/products';
+import type { Category, Collection, Type } from '@/types/product';
 
-// Типы для категорий, коллекций и продуктов
-export interface Category {
-  id: string;
-  label: string;
-  brandId?: number;
-}
-
-export interface Collection {
-  id: string;
-  name: string;
-  brandId: number;
-  categoryId: string;
-  slug?: string;
-}
+// Re-export types for convenience
+export type { Category, Collection, Type };
 
 export interface Product {
   id: string;
   categoryKey?: string; // deprecated, используем categoryId
   categoryId?: string;
   collectionId?: string;
-  brandId: number;
+  typeId?: string; // NEW: Type ID
+  sectionId: number; // Renamed from brandId
   [key: string]: any;
+
+  // Deprecated (for backward compatibility)
+  brandId?: number; // Use sectionId instead
 }
 
 interface FiltersState {
-  // ===== ТРЕХУРОВНЕВОЕ СОСТОЯНИЕ =====
-  selectedBrandId: number | null;      // Уровень 1: Бренд (одиночный выбор)
-  selectedCategoryId: string | null;   // Уровень 2: Категория (одиночный выбор)
-  selectedCollectionId: string | null; // Уровень 3: Коллекция (одиночный выбор)
+  // ===== ЧЕТЫРЕХУРОВНЕВОЕ СОСТОЯНИЕ =====
+  selectedSectionId: number | null; // Уровень 1: Section (одиночный выбор)
+  selectedCategoryId: number | null; // Уровень 2: Категория (одиночный выбор)
+  selectedCollectionId: number | null; // Уровень 3a: Коллекция (одиночный выбор)
+  selectedTypeId: number | null; // Уровень 3b: Type (одиночный выбор)
 
   // Доступные опции для каждого уровня
-  availableCategories: Category[];     // Категории, доступные для выбранного бренда
-  availableCollections: Collection[];  // Коллекции, доступные для бренда+категории
+  availableCategories: Category[]; // Категории, доступные для выбранной секции
+  availableCollections: Collection[]; // Коллекции, доступные для секции+категории
+  availableTypes: Type[]; // Типы, доступные для секции+категории
+
+  // Loading states
+  categoriesLoading: boolean;
+  collectionsLoading: boolean;
+  typesLoading: boolean;
 
   // Дополнительные фильтры
   sortBy: string;
   selectedColors: string[];
 
   // ===== ДЕЙСТВИЯ =====
-  // Уровень 1: Установка бренда (сбрасывает категорию и коллекцию)
-  setBrandId: (brandId: number | null, allProducts: Product[]) => void;
+  // Уровень 1: Установка секции (сбрасывает категорию, коллекцию и тип)
+  setSectionId: (sectionId: number | null) => Promise<void>;
 
-  // Уровень 2: Установка категории (сбрасывает коллекцию)
-  setCategoryId: (categoryId: string | null, allProducts: Product[]) => void;
+  // Уровень 2: Установка категории (сбрасывает коллекцию и тип)
+  setCategoryId: (categoryId: number | null) => Promise<void>;
 
-  // Уровень 3: Установка коллекции
-  setCollectionId: (collectionId: string | null) => void;
+  // Уровень 3a: Установка коллекции (сбрасывает тип)
+  setCollectionId: (collectionId: number | null) => void;
+
+  // Уровень 3b: Установка типа (сбрасывает коллекцию)
+  setTypeId: (typeId: number | null) => void;
+
+  // Загрузка данных из API
+  loadCategories: (sectionId: number | null) => Promise<void>;
+  loadCollections: (sectionId: number | null, categoryId: number | null) => Promise<void>;
+  loadTypes: (sectionId: number | null, categoryId: number | null) => Promise<void>;
 
   // Вспомогательные действия
-  updateAvailableCategories: (allProducts: Product[], brandId: number) => void;
-  updateAvailableCollections: (allProducts: Product[], brandId: number, categoryId: string) => void;
   setSortBy: (sort: string) => void;
   toggleColor: (color: string) => void;
   clearFilters: () => void;
 
   // DEPRECATED (для обратной совместимости)
+  selectedBrandId: number | null; // Use selectedSectionId instead
   selectedCategories: string[];
   selectedBrandIds: number[];
+  setBrandId: (brandId: number | null) => Promise<void>; // Use setSectionId instead
   toggleCategory: (category: string) => void;
   toggleBrandId: (brandId: number) => void;
   setBrandIds: (brandIds: number[]) => void;
@@ -69,131 +78,140 @@ export const useFiltersStore = create<FiltersState>()(
   persist(
     (set, get) => ({
       // ===== НАЧАЛЬНОЕ СОСТОЯНИЕ =====
-      selectedBrandId: null,
+      selectedSectionId: null,
       selectedCategoryId: null,
       selectedCollectionId: null,
+      selectedTypeId: null,
       availableCategories: [],
       availableCollections: [],
+      availableTypes: [],
+      categoriesLoading: false,
+      collectionsLoading: false,
+      typesLoading: false,
       sortBy: 'default',
       selectedColors: [],
 
       // Deprecated fields (для обратной совместимости)
+      selectedBrandId: null, // Mirrors selectedSectionId
       selectedCategories: [],
       selectedBrandIds: [],
 
-      // ===== УРОВЕНЬ 1: УСТАНОВКА БРЕНДА =====
-      setBrandId: (brandId: number | null, allProducts: Product[]) => {
-        console.log('🔹 [Level 1] setBrandId:', brandId);
+      // ===== ЗАГРУЗКА КАТЕГОРИЙ ИЗ API =====
+      loadCategories: async (sectionId: number | null) => {
+        console.log('🔄 loadCategories for sectionId:', sectionId);
+        set({ categoriesLoading: true });
 
-        // Сбрасываем категорию и коллекцию
+        try {
+          const categories = await fetchCategories(sectionId);
+          console.log('✓ Loaded categories:', categories);
+          set({ availableCategories: categories });
+        } catch (error) {
+          console.error('❌ Failed to load categories:', error);
+          set({ availableCategories: [] });
+        } finally {
+          set({ categoriesLoading: false });
+        }
+      },
+
+      // ===== ЗАГРУЗКА КОЛЛЕКЦИЙ ИЗ API =====
+      loadCollections: async (sectionId: number | null, categoryId: number | null) => {
+        console.log('🔄 loadCollections for section:', sectionId, 'category:', categoryId);
+        set({ collectionsLoading: true });
+
+        try {
+          const collections = await fetchCollections(sectionId, categoryId);
+          console.log('✓ Loaded collections:', collections);
+          set({ availableCollections: collections });
+        } catch (error) {
+          console.error('❌ Failed to load collections:', error);
+          set({ availableCollections: [] });
+        } finally {
+          set({ collectionsLoading: false });
+        }
+      },
+
+      // ===== ЗАГРУЗКА ТИПОВ ИЗ API =====
+      loadTypes: async (sectionId: number | null, categoryId: number | null) => {
+        console.log('🔄 loadTypes for section:', sectionId, 'category:', categoryId);
+        set({ typesLoading: true });
+
+        try {
+          const types = await fetchTypes(sectionId, categoryId);
+          console.log('✓ Loaded types:', types);
+          set({ availableTypes: types });
+        } catch (error) {
+          console.error('❌ Failed to load types:', error);
+          set({ availableTypes: [] });
+        } finally {
+          set({ typesLoading: false });
+        }
+      },
+
+      // ===== УРОВЕНЬ 1: УСТАНОВКА СЕКЦИИ =====
+      setSectionId: async (sectionId: number | null) => {
+        console.log('🔹 [Level 1] setSectionId:', sectionId);
+
+        // Сбрасываем категорию, коллекцию и тип
         set({
-          selectedBrandId: brandId,
+          selectedSectionId: sectionId,
+          selectedBrandId: sectionId, // Mirror for backward compatibility
           selectedCategoryId: null,
           selectedCollectionId: null,
+          selectedTypeId: null,
           availableCollections: [],
+          availableTypes: [],
         });
 
-        // Обновляем доступные категории для выбранного бренда
-        if (brandId !== null) {
-          get().updateAvailableCategories(allProducts, brandId);
+        // Загружаем категории для выбранной секции
+        if (sectionId !== null) {
+          await get().loadCategories(sectionId);
         } else {
           set({ availableCategories: [] });
         }
       },
 
       // ===== УРОВЕНЬ 2: УСТАНОВКА КАТЕГОРИИ =====
-      setCategoryId: (categoryId: string | null, allProducts: Product[]) => {
+      setCategoryId: async (categoryId: number | null) => {
         console.log('🔹 [Level 2] setCategoryId:', categoryId);
 
         const state = get();
 
-        // Сбрасываем коллекцию
+        // Сбрасываем коллекцию и тип
         set({
           selectedCategoryId: categoryId,
           selectedCollectionId: null,
+          selectedTypeId: null,
         });
 
-        // Обновляем доступные коллекции для выбранного бренда и категории
-        if (categoryId !== null && state.selectedBrandId !== null) {
-          get().updateAvailableCollections(allProducts, state.selectedBrandId, categoryId);
+        // Загружаем коллекции и типы для выбранной секции и категории
+        if (categoryId !== null && state.selectedSectionId !== null) {
+          await Promise.all([
+            get().loadCollections(state.selectedSectionId, categoryId),
+            get().loadTypes(state.selectedSectionId, categoryId),
+          ]);
         } else {
-          set({ availableCollections: [] });
+          set({ availableCollections: [], availableTypes: [] });
         }
       },
 
-      // ===== УРОВЕНЬ 3: УСТАНОВКА КОЛЛЕКЦИИ =====
-      setCollectionId: (collectionId: string | null) => {
-        console.log('🔹 [Level 3] setCollectionId:', collectionId);
-        set({ selectedCollectionId: collectionId });
+      // ===== УРОВЕНЬ 3a: УСТАНОВКА КОЛЛЕКЦИИ =====
+      setCollectionId: (collectionId: number | null) => {
+        console.log('🔹 [Level 3a] setCollectionId:', collectionId);
+        // Если выбираем коллекцию, сбрасываем тип (взаимоисключающие)
+        set({
+          selectedCollectionId: collectionId,
+          selectedTypeId: collectionId !== null ? null : get().selectedTypeId
+        });
       },
 
-      // ===== ОБНОВЛЕНИЕ ДОСТУПНЫХ КАТЕГОРИЙ =====
-      updateAvailableCategories: (allProducts: Product[], brandId: number) => {
-        console.log('🔄 updateAvailableCategories for brandId:', brandId);
-
-        // Фильтруем продукты по выбранному бренду
-        const filteredProducts = allProducts.filter(product => product.brandId === brandId);
-        console.log(`  ✓ Filtered ${filteredProducts.length} products for brand ${brandId}`);
-
-        // Собираем уникальные категории
-        const categoryIdsSet = new Set<string>();
-        filteredProducts.forEach(product => {
-          const catId = product.categoryId || product.categoryKey;
-          if (catId) {
-            categoryIdsSet.add(catId);
-          }
+      // ===== УРОВЕНЬ 3b: УСТАНОВКА ТИПА =====
+      setTypeId: (typeId: number | null) => {
+        console.log('🔹 [Level 3b] setTypeId:', typeId);
+        // Если выбираем тип, сбрасываем коллекцию (взаимоисключающие)
+        set({
+          selectedTypeId: typeId,
+          selectedCollectionId: typeId !== null ? null : get().selectedCollectionId
         });
-
-        // Маппинг categoryId к читаемым названиям
-        const categoryLabels: Record<string, string> = {
-          furniture: 'Мебель для ванн',
-          mirrors: 'Зеркала',
-          heaters: 'Водонагреватели',
-          caizer: 'Сантехника Caizer',
-          blesk: 'Водонагреватели Blesk',
-        };
-
-        const categories: Category[] = Array.from(categoryIdsSet).map(id => ({
-          id,
-          label: categoryLabels[id] || id,
-          brandId,
-        }));
-
-        console.log('  ✓ Available categories:', categories);
-        set({ availableCategories: categories });
-      },
-
-      // ===== ОБНОВЛЕНИЕ ДОСТУПНЫХ КОЛЛЕКЦИЙ =====
-      updateAvailableCollections: (allProducts: Product[], brandId: number, categoryId: string) => {
-        console.log('🔄 updateAvailableCollections for brand:', brandId, 'category:', categoryId);
-
-        // Фильтруем продукты по бренду и категории
-        const filteredProducts = allProducts.filter(product => {
-          const prodCatId = product.categoryId || product.categoryKey;
-          return product.brandId === brandId && prodCatId === categoryId;
-        });
-
-        console.log(`  ✓ Filtered ${filteredProducts.length} products`);
-
-        // Собираем уникальные коллекции
-        const collectionsMap = new Map<string, Collection>();
-        filteredProducts.forEach(product => {
-          if (product.collectionId) {
-            if (!collectionsMap.has(product.collectionId)) {
-              collectionsMap.set(product.collectionId, {
-                id: product.collectionId,
-                name: product.collectionId.charAt(0).toUpperCase() + product.collectionId.slice(1).replace(/-/g, ' '),
-                brandId,
-                categoryId,
-                slug: product.collectionId,
-              });
-            }
-          }
-        });
-
-        const collections = Array.from(collectionsMap.values());
-        console.log('  ✓ Available collections:', collections);
-        set({ availableCollections: collections });
       },
 
       // ===== ВСПОМОГАТЕЛЬНЫЕ ДЕЙСТВИЯ =====
@@ -209,11 +227,14 @@ export const useFiltersStore = create<FiltersState>()(
       clearFilters: () => {
         console.log('🧹 clearFilters');
         set({
-          selectedBrandId: null,
+          selectedSectionId: null,
+          selectedBrandId: null, // Mirror for backward compatibility
           selectedCategoryId: null,
           selectedCollectionId: null,
+          selectedTypeId: null,
           availableCategories: [],
           availableCollections: [],
+          availableTypes: [],
           sortBy: 'default',
           selectedColors: [],
           selectedCategories: [],
@@ -222,6 +243,11 @@ export const useFiltersStore = create<FiltersState>()(
       },
 
       // ===== DEPRECATED METHODS (для обратной совместимости) =====
+      setBrandId: async (brandId: number | null) => {
+        console.log('⚠️ [DEPRECATED] setBrandId called, using setSectionId instead');
+        await get().setSectionId(brandId);
+      },
+
       toggleCategory: (category: string) =>
         set((state) => ({
           selectedCategories: state.selectedCategories.includes(category)
@@ -247,7 +273,7 @@ export const useFiltersStore = create<FiltersState>()(
       },
     }),
     {
-      name: 'filters-storage-v3', // Новый ключ для новой версии
+      name: 'filters-storage-v4', // V4: Added Type support and renamed Brand → Section
     }
   )
 );

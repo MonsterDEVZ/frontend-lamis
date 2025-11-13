@@ -2,9 +2,24 @@
 
 import Link from 'next/link';
 import type { SetStateAction, FC } from 'react';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import Image from 'next/image';
+import { useSearchParams, usePathname } from 'next/navigation';
+
+/**
+ * Utility function to merge new query parameters with existing ones
+ */
+function mergeQueryParams(currentParams: URLSearchParams, newParamsString: string): string {
+  const newParams = new URLSearchParams(newParamsString);
+  const merged = new URLSearchParams(currentParams);
+
+  newParams.forEach((value, key) => {
+    merged.set(key, value);
+  });
+
+  return `/catalog?${merged.toString()}`;
+}
 
 interface IProps {
   setIsMobileMenuOpen: (value: SetStateAction<boolean>) => void;
@@ -29,12 +44,33 @@ type NavItem = IProps['nav'][0];
 
 const BurgerMenu: FC<IProps> = ({ setIsMobileMenuOpen, nav, mini_nav }) => {
   const [activeSubMenu, setActiveSubMenu] = useState<NavItem | null>(null);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   const handleLinkClick = () => {
     setIsMobileMenuOpen(false);
   };
 
-  if (activeSubMenu) {
+  // Transform submenu items to preserve query parameters
+  const transformedSubMenu = useMemo(() => {
+    if (!activeSubMenu || pathname !== '/catalog') return activeSubMenu;
+
+    return {
+      ...activeSubMenu,
+      list: activeSubMenu.list?.map((item) => {
+        if (item.href.startsWith('/catalog?')) {
+          const queryString = item.href.split('?')[1];
+          return {
+            ...item,
+            href: mergeQueryParams(searchParams, queryString),
+          };
+        }
+        return item;
+      }),
+    };
+  }, [activeSubMenu, searchParams, pathname]);
+
+  if (transformedSubMenu) {
     // Sub-menu View
     return (
       <div className="bg-white py-6 min-h-screen border-t border-[#1d1d1d1a]">
@@ -47,12 +83,12 @@ const BurgerMenu: FC<IProps> = ({ setIsMobileMenuOpen, nav, mini_nav }) => {
           <button className="p-2 -ml-2 transition-colors" aria-label="Go back">
             <ChevronLeft size={24} className="text-green-100" />
           </button>
-          <h2 className="text-lg font-bold text-green-100 ml-2">{activeSubMenu.title}</h2>
+          <h2 className="text-lg font-bold text-green-100 ml-2">{transformedSubMenu.title}</h2>
         </div>
 
         {/* Sub-menu List */}
         <div className="flex flex-col gap-5 border-t border-[#1d1d1d1a] px-5 pt-6">
-          {activeSubMenu.list?.map((item) => (
+          {transformedSubMenu.list?.map((item) => (
             <Link
               key={item.href + item.title}
               href={item.href}

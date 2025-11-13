@@ -34,6 +34,14 @@ const CatalogCardResponsive: React.FC<IProps> = ({
   inStock = true,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [mainImageError, setMainImageError] = useState(false);
+  const [hoverImageError, setHoverImageError] = useState(false);
+
+  const placeholderImage = '/placeholder.webp';
+  const finalMainImage = mainImageError ? placeholderImage : image || placeholderImage;
+  const finalHoverImage = hoverImageError
+    ? placeholderImage
+    : hoverImage || image || placeholderImage;
 
   const { toggleFavorite, isFavorite, isHydrated } = useFavoritesStoreHydrated();
   const productId = String(id || `${category}-${name}`);
@@ -60,7 +68,7 @@ const CatalogCardResponsive: React.FC<IProps> = ({
         <div className="relative w-full h-[260px] bg-transparent overflow-hidden">
           {/* Hover Image */}
           <Image
-            src={hoverImage}
+            src={finalHoverImage}
             alt={`${name} - вид 2`}
             fill
             sizes="260px"
@@ -68,10 +76,11 @@ const CatalogCardResponsive: React.FC<IProps> = ({
               'object-cover p-0 transition-opacity duration-300 ease-in-out',
               isHovered ? 'opacity-100' : 'opacity-0'
             )}
+            onError={() => setHoverImageError(true)}
           />
           {/* Main Image */}
           <Image
-            src={image}
+            src={finalMainImage}
             alt={name}
             fill
             sizes="260px"
@@ -79,6 +88,7 @@ const CatalogCardResponsive: React.FC<IProps> = ({
               'object-contain p-4 transition-opacity duration-300 ease-in-out',
               isHovered ? 'opacity-0' : 'opacity-100'
             )}
+            onError={() => setMainImageError(true)}
           />
         </div>
 
