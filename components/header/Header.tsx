@@ -28,7 +28,7 @@ const mini_nav = [
   },
   {
     href: '/downloads',
-    title: 'Материалы для скачивания',
+    title: 'Материалы',
   },
 ];
 
