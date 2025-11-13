@@ -4,7 +4,7 @@ import { use } from 'react';
 import { notFound } from 'next/navigation';
 import { useFavoritesStore } from '@/store/favoritesStore';
 import { productsData } from '@/data/products';
-import Header from '@/components/header/Header';
+import HeaderWithSuspense from '@/components/header/HeaderWithSuspense';
 import Footer from '@/components/Footer';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import ProductGallery from '@/components/product/ProductGallery';
@@ -98,7 +98,7 @@ export default function ProductPage({ params }: ProductPageProps) {
 
   return (
     <>
-      <Header />
+      <HeaderWithSuspense />
 
       <main className="min-h-screen bg-white pt-24">
         {/* Product Detail Section */}

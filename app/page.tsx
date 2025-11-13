@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Header from '@/components/header/Header';
+import HeaderWithSuspense from '@/components/header/HeaderWithSuspense';
 import HeroSlider from '@/components/HeroSlider';
 import WaterHeatersSection from '@/components/WaterHeatersSection';
 import BleskWaterHeatersSection from '@/components/BleskWaterHeatersSection';
@@ -19,7 +19,7 @@ export default function HomePage() {
 
   return (
     <main>
-      <Header />
+      <HeaderWithSuspense />
       <HeroSlider />
       <WaterHeatersSection />
       <PlumbingSection />

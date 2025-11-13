@@ -1,10 +1,10 @@
-import Header from '@/components/header/Header';
+import HeaderWithSuspense from '@/components/header/HeaderWithSuspense';
 import Footer from '@/components/Footer';
 
 export default function PrivacyPolicyPage() {
   return (
     <>
-      <Header />
+      <HeaderWithSuspense />
       <div className="container">
         <div className="pt-45 pb-10">
           <h1 className="text-4xl font-bold">Политика конфиденциальности</h1>

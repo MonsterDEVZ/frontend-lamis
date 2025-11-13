@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Header from '@/components/header/Header';
+import HeaderWithSuspense from '@/components/header/HeaderWithSuspense';
 import Footer from '@/components/Footer';
 import FeedbackModal from '@/components/feedback/FeedbackModal';
 import { HeroSection } from '@/components/service-center/HeroSection';
@@ -15,7 +15,7 @@ export default function ServiceCenterPage() {
 
   return (
     <div>
-      <Header />
+      <HeaderWithSuspense />
 
       <main className="pt-24 bg-white">
         <HeroSection />

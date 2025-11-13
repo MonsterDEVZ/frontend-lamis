@@ -379,7 +379,7 @@ const Catalog: FC = () => {
           ) : paginatedProducts.length === 0 ? (
             <EmptyState />
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 md:gap-6 divide-y divide-dark-50 md:divide-transparent border_y border-dark-50 md:border-transparent mt-7 md:mt-0">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 md:gap-6 divide-y divide-dark-50 md:divide-transparent border_y border-dark-50 md:border-transparent mt-8">
               {paginatedProducts.map((product) => (
                 <div key={product.id} className="py-5 md:py-0">
                   <CatalogCardResponsive

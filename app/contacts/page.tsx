@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import Header from '@/components/header/Header';
+import HeaderWithSuspense from '@/components/header/HeaderWithSuspense';
 import Footer from '@/components/Footer';
 import MainOfficeSection from '@/components/contacts/MainOfficeSection';
 import RepresentativesSection from '@/components/contacts/RepresentativesSection';
@@ -12,7 +12,7 @@ export default function ContactsPage() {
 
   return (
     <div>
-      <Header />
+      <HeaderWithSuspense />
 
       <main className="pt-24">
         <div className="wrapper_centering md:px-10 lg:px-15 xl:px-30 mx-auto px-4 py-8">

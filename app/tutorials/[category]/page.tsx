@@ -2,7 +2,7 @@
 
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import Header from '@/components/header/Header';
+import HeaderWithSuspense from '@/components/header/HeaderWithSuspense';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import Footer from '@/components/Footer';
 import EmbeddedVideoPlayer from '@/components/videos/EmbeddedVideoPlayer';
@@ -69,7 +69,7 @@ export default async function TutorialsCategoryPage({ params }: PageProps) {
 
   return (
     <main>
-      <Header />
+      <HeaderWithSuspense />
 
       <div className="absolute z-10 top-24 md:top-32 w-full">
         <div className="wrapper_centering">

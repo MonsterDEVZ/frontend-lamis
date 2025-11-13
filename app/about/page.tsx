@@ -2,7 +2,7 @@
 
 import { useRef, useEffect } from 'react';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
-import Header from '@/components/header/Header';
+import HeaderWithSuspense from '@/components/header/HeaderWithSuspense';
 import Footer from '@/components/Footer';
 import Banner from '@/components/about/Banner';
 import AboutBrand from '@/components/about/AboutBrand';
@@ -74,7 +74,7 @@ const metrics = [
 export default function AboutPage() {
   return (
     <main>
-      <Header />
+      <HeaderWithSuspense />
       <Banner />
       <AboutBrand />
       {/*<HistoryTimeline />*/}

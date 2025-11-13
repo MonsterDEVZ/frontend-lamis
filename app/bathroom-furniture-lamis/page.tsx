@@ -1,4 +1,4 @@
-import Header from '@/components/header/Header';
+import HeaderWithSuspense from '@/components/header/HeaderWithSuspense';
 import Footer from '@/components/Footer';
 import Catalog from '@/components/catalog';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 export default function BathroomFurnitureLamisPage() {
   return (
     <main>
-      <Header />
+      <HeaderWithSuspense />
       <Breadcrumbs
         items={[{ label: 'Главная', href: '/' }, { label: 'Каталог товаров' }]}
         variant="light"

@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import Header from '@/components/header/Header';
+import HeaderWithSuspense from '@/components/header/HeaderWithSuspense';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/Button';
 
 export default function NotFound() {
   return (
     <main>
-      <Header />
+      <HeaderWithSuspense />
       <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
         {/* Large semi-transparent "404" */}
         <div className="text-[200px] font-bold text-gray-200 leading-none mb-4">
