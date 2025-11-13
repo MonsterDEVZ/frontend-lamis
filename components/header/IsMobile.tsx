@@ -4,6 +4,7 @@ import { cn } from '@/styles';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useFavoritesStore } from '@/store/favoritesStore';
+import { useSearchModalStore } from '@/store/searchModalStore';
 
 interface IMainNavigationMobProps {
   setIsMobileMenuOpen: (value: SetStateAction<boolean>) => void;
@@ -22,6 +23,7 @@ const MainNavigationMob: FC<IMainNavigationMobProps> = ({
 }) => {
   const { favorites } = useFavoritesStore();
   const favoritesCount = favorites.length;
+  const { openModal } = useSearchModalStore();
 
   return (
     <div className="flex justify-between items-center w-full">
@@ -37,7 +39,7 @@ const MainNavigationMob: FC<IMainNavigationMobProps> = ({
 
       <div className="flex gap-8 items-center">
         <button
-          onClick={() => setIsSearchOpen(!isSearchOpen)}
+          onClick={() => openModal()}
           className={cn(
             'hover:opacity-80 transition-opacity flex items-center gap-2',
             isActive ? 'text-gray-900 hover:text-gray-700' : 'text-white'

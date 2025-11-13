@@ -19,6 +19,8 @@ import {
   getFirstBrandForCategory
 } from '@/services/api/products';
 import MobileSearchOverlay from './MobileSearchOverlay';
+import SearchModal from '../search/SearchModal';
+import { useSearchModalStore } from '@/store/searchModalStore';
 
 /**
  * Utility function to merge new query parameters with existing ones
@@ -126,6 +128,8 @@ export default function Header() {
   const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const { isOpen: isModalOpen, initialQuery, closeModal } = useSearchModalStore();
 
   const { scrollY, scrollDirection } = useScroll();
 
@@ -319,6 +323,9 @@ export default function Header() {
       {!isTablet && isMobileMenuOpen ? (
         <BurgerMenu setIsMobileMenuOpen={setIsMobileMenuOpen} mini_nav={mini_nav} nav={nav} />
       ) : null}
+
+      {/* Search Modal */}
+      <SearchModal isOpen={isModalOpen} onClose={closeModal} initialQuery={initialQuery} />
     </motion.header>
   );
 }
