@@ -13,6 +13,7 @@ import { MainNavigationMob } from './IsMobile';
 import { fetchCollections } from '@/services/api/products';
 import MobileSearchOverlay from './MobileSearchOverlay';
 
+
 /**
  * Utility function to merge new query parameters with existing ones
  * @param currentParams - Current URLSearchParams

@@ -1,4 +1,5 @@
 // Путь к файлу: components/Footer.js (или где он у вас лежит)
+'use client';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -23,11 +24,11 @@ const footerSections = [
   {
     title: 'Профессионалам',
     links: [
-      { title: 'Установка мебели', href: '/installation/furniture' },
-      { title: 'Установка раковины', href: '/installation/sink' },
-      { title: 'Установка ванн', href: '/installation/bath' },
-      { title: 'Установка смесителей', href: '/installation/faucet' },
-      { title: 'Установка водонагревателей', href: '/installation/water-heater' },
+      { title: 'Установка мебели', href: '/tutorials/furniture-installation' },
+      { title: 'Установка раковины', href: '/tutorials/sink-installation' },
+      { title: 'Установка ванн', href: '/tutorials/bath-installation' },
+      { title: 'Установка смесителей', href: '/tutorials/faucet-installation' },
+      { title: 'Установка водонагревателей', href: '/tutorials/water-heater-installation' },
     ],
   },
   {
