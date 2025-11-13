@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { useState, useRef, useEffect, useMemo } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useScroll } from '@/hooks/useScroll';
 import { cn } from '@/styles';
@@ -10,7 +10,26 @@ import BurgerMenu from './BurgerMenu';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { MainNavigationDesc, TopBar } from './IsDesktop';
 import { MainNavigationMob } from './IsMobile';
+import { fetchCollections } from '@/services/api/products';
 import MobileSearchOverlay from './MobileSearchOverlay';
+
+/**
+ * Utility function to merge new query parameters with existing ones
+ * @param currentParams - Current URLSearchParams
+ * @param newParamsString - New parameters as a query string (e.g., "collection=akcent")
+ * @returns Complete URL with merged parameters
+ */
+function mergeQueryParams(currentParams: URLSearchParams, newParamsString: string): string {
+  const newParams = new URLSearchParams(newParamsString);
+  const merged = new URLSearchParams(currentParams);
+
+  // Add or update parameters from the new URL
+  newParams.forEach((value, key) => {
+    merged.set(key, value);
+  });
+
+  return `/catalog?${merged.toString()}`;
+}
 
 const mini_nav = [
   {
@@ -32,65 +51,16 @@ const mini_nav = [
   },
 ];
 
-const nav = [
+// Initial navigation without collections (will be loaded dynamically)
+// TODO: Consider using SEO-friendly URLs like /catalog/{section_slug} in the future
+const initialNav = [
   {
-    href: '/catalog?brandId=1',
+    href: '/catalog?sectionId=1',
     title: 'Мебель для ванной',
-    list: [
-      {
-        img: '/catalog/Lamis/Accent/1/example_for_2_image.jpg',
-        href: '/catalog?collection=akcent',
-        title: 'Akcent',
-      },
-      {
-        img: '',
-        href: '/catalog?collection=palermo',
-        title: 'Palermo',
-      },
-      {
-        img: '/catalog/Lamis/Lamis/for_example_1.jpg',
-        href: '/catalog?collection=lamis',
-        title: 'Lamis',
-      },
-      {
-        img: '',
-        href: '/catalog?collection=sevilya',
-        title: 'Sevilya',
-      },
-      {
-        img: '',
-        href: '/catalog?collection=omega',
-        title: 'Omega',
-      },
-      {
-        img: '/catalog/Lamis/Deluxe/for_example.jpg',
-        href: '/catalog?collection=deluxe',
-        title: 'Deluxe',
-      },
-      {
-        img: '/catalog/Lamis/Kapetown/1/for_example.jpg',
-        href: '/catalog?collection=capetown',
-        title: 'Capetown',
-      },
-      {
-        img: '',
-        href: '/catalog?collection=nora',
-        title: 'Nora',
-      },
-      {
-        img: '',
-        href: '/catalog?collection=sanremo',
-        title: 'Sanremo',
-      },
-      {
-        img: '/catalog/Lamis/Andalusia/example_for_all.jpg',
-        href: '/catalog?collection=andalusia',
-        title: 'Andalusia',
-      },
-    ],
+    list: [], // Will be populated from API
   },
   {
-    href: '/catalog?brandId=2',
+    href: '/catalog?sectionId=2',
     title: 'Санфарфор',
     showPlaceholder: true,
     list: [
@@ -117,19 +87,19 @@ const nav = [
     ],
   },
   {
-    href: '/catalog?brandId=3',
+    href: '/catalog?sectionId=3',
     title: 'Смесители',
   },
   {
-    href: '/catalog?brandId=4',
+    href: '/catalog?sectionId=4',
     title: 'Инсталяции',
   },
   {
-    href: '/catalog?brandId=5',
+    href: '/catalog?sectionId=5',
     title: 'Водонагреватили (электрические)',
   },
   {
-    href: '/catalog?brandId=6',
+    href: '/catalog?sectionId=6',
     title: 'Дизайнерские и умные зеркала',
   },
 ];
@@ -140,8 +110,6 @@ interface IActiveSubList {
   title: string;
 }
 
-const transparentHeaderPaths = ['/', '/bathroom-furniture-lamis', '/about'];
-
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -149,12 +117,59 @@ export default function Header() {
   const [showPlaceholder, setShowPlaceholder] = useState(true);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [currentSearchValue, setCurrentSearchValue] = useState('');
+  const [nav, setNav] = useState(initialNav);
   const isTablet = useMediaQuery('(min-width: 1024px)');
 
   const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const { scrollY, scrollDirection } = useScroll();
+
+  // Load collections from API on mount
+  useEffect(() => {
+    const loadCollections = async () => {
+      try {
+        // Load collections for "Мебель для ванной" (sectionId=1)
+        const collections = await fetchCollections(1, null);
+
+        // Transform collections to navigation list items
+        const collectionItems = collections.map((collection) => ({
+          img: collection.image || '/placeholder.webp',
+          href: `/catalog?sectionId=1&collectionId=${collection.id}`,
+          title: collection.name,
+        }));
+
+        // Update nav with loaded collections
+        setNav((prevNav) =>
+          prevNav.map((item) =>
+            item.href === '/catalog?sectionId=1' ? { ...item, list: collectionItems } : item
+          )
+        );
+      } catch (error) {
+        console.error('Failed to load collections:', error);
+      }
+    };
+
+    loadCollections();
+  }, []);
+
+  // Transform activeSubList to preserve existing query parameters
+  const transformedActiveSubList = useMemo(() => {
+    if (!activeSubList || pathname !== '/catalog') return activeSubList;
+
+    return activeSubList.map((item) => {
+      // Only transform catalog links with query params
+      if (item.href.startsWith('/catalog?')) {
+        const queryString = item.href.split('?')[1];
+        return {
+          ...item,
+          href: mergeQueryParams(searchParams, queryString),
+        };
+      }
+      return item;
+    });
+  }, [activeSubList, searchParams, pathname]);
 
   // Paths that should have a transparent header when at the top of the page.
   const transparentHeaderPaths = ['/'];
@@ -234,8 +249,11 @@ export default function Header() {
         </div>
       </div>
 
-      {isHovered && activeSubList && (
-        <NavItemMoreList activeSubList={activeSubList} showPlaceholder={showPlaceholder} />
+      {isHovered && transformedActiveSubList && (
+        <NavItemMoreList
+          activeSubList={transformedActiveSubList}
+          showPlaceholder={showPlaceholder}
+        />
       )}
 
       {/* Mobile Search Overlay */}

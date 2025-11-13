@@ -4,26 +4,11 @@ import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Select, SelectOption } from '../ui/Select';
 import PaginationControls from '../ui/PaginationControls';
-import { productsData } from '@/data/products';
 import { useFiltersStore } from '@/store/filtersStore';
 import CatalogCardResponsive from '../ui/CatalogCardResponsive';
 import EmptyState from '../ui/EmptyState';
-// import { useProducts } from '@/hooks/useProducts'; // Раскомментировать для использования API
-
-// Маппинг категорий к brandId
-const categoryToBrandId: Record<string, number> = {
-  furniture: 1, // Lamis
-  mirrors: 1, // Lamis
-  heaters: 1, // Lamis
-  caizer: 2, // Caizer
-  blesk: 3, // Blesk
-};
-
-const listCatalog = [
-  { label: 'Мебель для ванн', categoryId: 'furniture' },
-  { label: 'Сантехника Caizer', categoryId: 'caizer' },
-  { label: 'Водонагреватели Blesk', categoryId: 'blesk' },
-];
+import { fetchProducts, PaginatedResponse } from '@/services/api/products';
+import { Product } from '@/types/product';
 
 const sortOptions = [
   { value: 'default', label: 'По умолчанию' },
@@ -34,153 +19,126 @@ const sortOptions = [
 ];
 
 const Catalog: FC = () => {
-  // Подключаемся к Zustand store для фильтров (НОВАЯ ТРЕХУРОВНЕВАЯ СИСТЕМА)
+  // Подключаемся к Zustand store для фильтров (ЧЕТЫРЕХУРОВНЕВАЯ СИСТЕМА)
   const {
-    // Новая трехуровневая система
-    selectedBrandId,
+    // Новая четырехуровневая система
+    selectedSectionId,
     selectedCategoryId,
     selectedCollectionId,
+    selectedTypeId,
     availableCategories,
-    setBrandId,
+    availableCollections,
+    availableTypes,
+    setSectionId,
     setCategoryId,
     setCollectionId,
+    setTypeId,
     sortBy,
     setSortBy,
   } = useFiltersStore();
 
   // Получаем параметры из URL
   const searchParams = useSearchParams();
-  const brandIdFromUrl = searchParams.get('brandId');
+  const sectionIdFromUrl = searchParams.get('sectionId') || searchParams.get('brandId'); // Support both
   const categoryIdFromUrl = searchParams.get('categoryId');
-  const collectionIdFromUrl = searchParams.get('collection');
+  const collectionIdFromUrl = searchParams.get('collectionId');
+  const typeIdFromUrl = searchParams.get('typeId');
 
   // Локальное состояние для пагинации
   const [itemsPerPage, setItemsPerPage] = useState('12');
   const [currentPage, setCurrentPage] = useState(1);
 
-  // TODO: Переключение на API
-  // Раскомментируйте следующую строку и закомментируйте блок с useMemo ниже
-  // const { products: allProducts, isLoading } = useProducts();
+  // API state
+  const [apiProducts, setApiProducts] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [totalProducts, setTotalProducts] = useState(0);
 
-  // Получаем все продукты из productsData (мемоизированно)
-  // ВРЕМЕННО: используем локальные данные, в будущем заменить на API
-  const allProducts = useMemo(() => {
-    const products = [];
-
-    for (const category in productsData) {
-      const categoryProducts = productsData[category];
-      for (const product of categoryProducts) {
-        const priceNumber = parseInt(product.price.replace(/[^\d]/g, ''), 10);
-        // Определяем brandId на основе категории
-        const brandId = product.brandId || categoryToBrandId[category] || 1;
-        // Определяем имя бренда на основе brandId
-        const brandNames: Record<number, string> = {
-          1: 'Lamis',
-          2: 'Caizer',
-          3: 'Blesk',
-        };
-        const collectionName = brandNames[brandId] || 'Lamis';
-
-        products.push({
-          id: product.id,
-          category: product.category,
-          categoryKey: category, // Добавляем ключ категории для фильтрации (deprecated)
-          categoryId: product.categoryId || category, // НОВОЕ: categoryId из данных
-          collectionId: product.collectionId, // НОВОЕ: collectionId из данных
-          name: product.name,
-          price: priceNumber,
-          status: product.isNew ? 'Новинка' : undefined,
-          image: product.image,
-          hoverImage: product.images?.[1] || product.image,
-          slug: product.slug,
-          collection: collectionName,
-          isNew: product.isNew,
-          brandId: brandId,
-          inStock: product.inStock !== undefined ? product.inStock : true, // Default to true if not specified
-        });
-      }
-    }
-
-    return products;
-  }, []);
-
-  // НОВОЕ: Инициализация фильтров из URL (ТРЕХУРОВНЕВАЯ СИСТЕМА)
+  // НОВОЕ: Инициализация фильтров из URL (ЧЕТЫРЕХУРОВНЕВАЯ СИСТЕМА)
   useEffect(() => {
-    // УРОВЕНЬ 1: Устанавливаем фильтр по бренду из URL
-    if (brandIdFromUrl) {
-      const brandId = parseInt(brandIdFromUrl, 10);
-      if (!isNaN(brandId)) {
-        setBrandId(brandId, allProducts); // Автоматически обновляет availableCategories
+    const initializeFilters = async () => {
+      // УРОВЕНЬ 1: Устанавливаем фильтр по секции из URL
+      if (sectionIdFromUrl) {
+        const sectionId = parseInt(sectionIdFromUrl, 10);
+        if (!isNaN(sectionId)) {
+          await setSectionId(sectionId); // Автоматически загружает availableCategories из API
+        }
+      } else {
+        // Если нет фильтра по секции, сбрасываем всё
+        await setSectionId(null);
       }
-    } else {
-      // Если нет фильтра по бренду, сбрасываем всё
-      setBrandId(null, allProducts);
-    }
 
-    // УРОВЕНЬ 2: Устанавливаем фильтр по категории из URL (только если есть бренд)
-    if (categoryIdFromUrl && brandIdFromUrl) {
-      setCategoryId(categoryIdFromUrl, allProducts); // Автоматически обновляет availableCollections
-    }
+      // УРОВЕНЬ 2: Устанавливаем фильтр по категории из URL (только если есть секция)
+      if (categoryIdFromUrl && sectionIdFromUrl) {
+        const categoryId = parseInt(categoryIdFromUrl, 10);
+        if (!isNaN(categoryId)) {
+          await setCategoryId(categoryId); // Автоматически загружает availableCollections и availableTypes из API
+        }
+      }
 
-    // УРОВЕНЬ 3: Устанавливаем фильтр по коллекции из URL
-    if (collectionIdFromUrl) {
-      setCollectionId(collectionIdFromUrl);
-    } else {
-      setCollectionId(null);
-    }
+      // УРОВЕНЬ 3a: Устанавливаем фильтр по коллекции из URL
+      if (collectionIdFromUrl) {
+        const collectionId = parseInt(collectionIdFromUrl, 10);
+        if (!isNaN(collectionId)) {
+          setCollectionId(collectionId);
+        }
+      } else {
+        setCollectionId(null);
+      }
 
-    // Сбрасываем на первую страницу при изменении фильтров
-    setCurrentPage(1);
-  }, [brandIdFromUrl, categoryIdFromUrl, collectionIdFromUrl, allProducts, setBrandId, setCategoryId, setCollectionId]);
+      // УРОВЕНЬ 3b: Устанавливаем фильтр по типу из URL
+      if (typeIdFromUrl) {
+        const typeId = parseInt(typeIdFromUrl, 10);
+        if (!isNaN(typeId)) {
+          setTypeId(typeId);
+        }
+      } else {
+        setTypeId(null);
+      }
 
-  // КРИТИЧЕСКИ ВАЖНО: useMemo для фильтрации и сортировки (ТРЕХУРОВНЕВАЯ СИСТЕМА)
-  const filteredAndSortedProducts = useMemo(() => {
-    let result = [...allProducts];
+      // Сбрасываем на первую страницу при изменении фильтров
+      setCurrentPage(1);
+    };
 
-    // УРОВЕНЬ 1: ФИЛЬТРАЦИЯ ПО БРЕНДУ
-    if (selectedBrandId !== null) {
-      result = result.filter((product) => product.brandId === selectedBrandId);
-    }
+    initializeFilters();
+  }, [sectionIdFromUrl, categoryIdFromUrl, collectionIdFromUrl, typeIdFromUrl, setSectionId, setCategoryId, setCollectionId, setTypeId]);
 
-    // УРОВЕНЬ 2: ФИЛЬТРАЦИЯ ПО КАТЕГОРИИ
-    if (selectedCategoryId !== null) {
-      result = result.filter((product) => {
-        const prodCatId = product.categoryId || product.categoryKey;
-        return prodCatId === selectedCategoryId;
-      });
-    }
+  // Fetch products from API
+  useEffect(() => {
+    const loadProducts = async () => {
+      setIsLoading(true);
+      setError(null);
 
-    // УРОВЕНЬ 3: ФИЛЬТРАЦИЯ ПО КОЛЛЕКЦИИ
-    if (selectedCollectionId !== null) {
-      result = result.filter((product) => product.collectionId === selectedCollectionId);
-    }
-
-    // СОРТИРОВКА
-    switch (sortBy) {
-      case 'price_asc':
-        result.sort((a, b) => a.price - b.price);
-        break;
-      case 'price_desc':
-        result.sort((a, b) => b.price - a.price);
-        break;
-      case 'newest':
-        result.sort((a, b) => {
-          if (a.isNew && !b.isNew) return -1;
-          if (!a.isNew && b.isNew) return 1;
-          return 0;
+      try {
+        const response = await fetchProducts({
+          sectionId: selectedSectionId,
+          categoryId: selectedCategoryId,
+          collectionId: selectedCollectionId,
+          typeId: selectedTypeId,
+          sortBy: sortBy,
+          page: currentPage,
+          itemsPerPage: parseInt(itemsPerPage, 10),
         });
-        break;
-      case 'sale':
-        // Пока нет данных о скидках, оставляем как есть
-        break;
-      case 'default':
-      default:
-        // Без сортировки
-        break;
-    }
 
-    return result;
-  }, [allProducts, selectedBrandId, selectedCategoryId, selectedCollectionId, sortBy]);
+        setApiProducts(response.data);
+        setTotalProducts(response.pagination.totalItems);
+      } catch (err) {
+        console.error('Error fetching products:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load products');
+        setApiProducts([]);
+        setTotalProducts(0);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, [selectedSectionId, selectedCategoryId, selectedCollectionId, selectedTypeId, sortBy, currentPage, itemsPerPage]);
+
+  // Products now come from API - no client-side filtering needed
+  const filteredAndSortedProducts = useMemo(() => {
+    return apiProducts;
+  }, [apiProducts]);
 
   // Сброс страницы при изменении сортировки
   useEffect(() => {
@@ -188,42 +146,43 @@ const Catalog: FC = () => {
   }, [sortBy]);
 
   // УРОВЕНЬ 2: Обработчик клика по категории
-  const handleCategoryClick = (categoryValue: string) => {
-    if (categoryValue === 'all') {
-      // Если выбрали "Все", сбрасываем фильтр по категории
-      setCategoryId(null, allProducts);
-    } else {
-      // Устанавливаем выбранную категорию (автоматически обновит availableCollections)
-      setCategoryId(categoryValue, allProducts);
-    }
+  const handleCategoryClick = async (categoryId: number | null) => {
+    await setCategoryId(categoryId); // Автоматически загружает коллекции из API
+    setCurrentPage(1);
+  };
+
+  // УРОВЕНЬ 3a: Обработчик клика по коллекции
+  const handleCollectionClick = (collectionId: number | null) => {
+    setCollectionId(collectionId);
+    setCurrentPage(1);
+  };
+
+  // УРОВЕНЬ 3b: Обработчик клика по типу
+  const handleTypeClick = (typeId: number | null) => {
+    setTypeId(typeId);
     setCurrentPage(1);
   };
 
   // Проверяем, активна ли категория
-  const isCategoryActive = (categoryValue: string) => {
-    if (categoryValue === 'all') {
-      return selectedCategoryId === null;
-    }
-    return selectedCategoryId === categoryValue;
+  const isCategoryActive = (categoryId: number | null) => {
+    return selectedCategoryId === categoryId;
   };
 
   // Проверяем, активна ли коллекция
-  const isCollectionActive = (collectionId: string) => {
-    if (collectionId === 'all') {
-      return selectedCollectionId === null;
-    }
+  const isCollectionActive = (collectionId: number | null) => {
     return selectedCollectionId === collectionId;
   };
 
-  // Пагинация
-  const totalPages = Math.ceil(filteredAndSortedProducts.length / parseInt(itemsPerPage));
+  // Проверяем, активен ли тип
+  const isTypeActive = (typeId: number | null) => {
+    return selectedTypeId === typeId;
+  };
 
-  // Получаем продукты для текущей страницы
-  const paginatedProducts = useMemo(() => {
-    const startIndex = (currentPage - 1) * parseInt(itemsPerPage);
-    const endIndex = startIndex + parseInt(itemsPerPage);
-    return filteredAndSortedProducts.slice(startIndex, endIndex);
-  }, [filteredAndSortedProducts, currentPage, itemsPerPage]);
+  // Пагинация - now using API total count
+  const totalPages = Math.ceil(totalProducts / parseInt(itemsPerPage, 10));
+
+  // Получаем продукты для текущей страницы - API already returns paginated results
+  const paginatedProducts = filteredAndSortedProducts;
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -257,26 +216,76 @@ const Catalog: FC = () => {
 
       <div className="wrapper_centering mt-8 sm:mt-12 md:mt-50 pb-8 px-4">
         {/* УРОВЕНЬ 2: ДИНАМИЧЕСКИЕ ТАБЫ для фильтрации по категориям */}
-        <div className="flex flex-wrap gap-3 md:gap-3.5 mb-8">
-          <Button
-            className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
-            variant={selectedCategoryId === null ? 'primary' : 'outline'}
-            onClick={() => handleCategoryClick('all')}
-          >
-            Все категории
-          </Button>
-
-          {listCatalog.map((el, idx) => (
+        {selectedSectionId !== null && availableCategories.length > 0 && (
+          <div className="flex flex-wrap gap-3 md:gap-3.5 mb-8">
             <Button
-              key={idx}
               className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
-              variant={isCategoryActive(el.categoryId) ? 'primary' : 'outline'}
-              onClick={() => handleCategoryClick(el.categoryId)}
+              variant={selectedCategoryId === null ? 'primary' : 'outline'}
+              onClick={() => handleCategoryClick(null)}
             >
-              {el.label}
+              Все категории
             </Button>
-          ))}
-        </div>
+
+            {availableCategories.map((category) => (
+              <Button
+                key={category.id}
+                className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
+                variant={isCategoryActive(category.id) ? 'primary' : 'outline'}
+                onClick={() => handleCategoryClick(category.id)}
+              >
+                {category.name}
+              </Button>
+            ))}
+          </div>
+        )}
+
+        {/* УРОВЕНЬ 3a: ДИНАМИЧЕСКИЕ ТАБЫ для фильтрации по коллекциям */}
+        {selectedCategoryId !== null && availableCollections.length > 0 && (
+          <div className="flex flex-wrap gap-3 md:gap-3.5 mb-8">
+            <Button
+              className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
+              variant={selectedCollectionId === null && selectedTypeId === null ? 'primary' : 'outline'}
+              onClick={() => handleCollectionClick(null)}
+            >
+              Все коллекции
+            </Button>
+
+            {availableCollections.map((collection) => (
+              <Button
+                key={collection.id}
+                className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
+                variant={isCollectionActive(collection.id) ? 'primary' : 'outline'}
+                onClick={() => handleCollectionClick(collection.id)}
+              >
+                {collection.name}
+              </Button>
+            ))}
+          </div>
+        )}
+
+        {/* УРОВЕНЬ 3b: ДИНАМИЧЕСКИЕ ТАБЫ для фильтрации по типам */}
+        {selectedCategoryId !== null && availableTypes.length > 0 && (
+          <div className="flex flex-wrap gap-3 md:gap-3.5 mb-8">
+            <Button
+              className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
+              variant={selectedTypeId === null && selectedCollectionId === null ? 'primary' : 'outline'}
+              onClick={() => handleTypeClick(null)}
+            >
+              Все типы
+            </Button>
+
+            {availableTypes.map((type) => (
+              <Button
+                key={type.id}
+                className="h-8 md:h-10 py-1 md:py-2 px-3 md:px-4"
+                variant={isTypeActive(type.id) ? 'primary' : 'outline'}
+                onClick={() => handleTypeClick(type.id)}
+              >
+                {type.name}
+              </Button>
+            ))}
+          </div>
+        )}
 
         <div className="flex flex-col sm:flex-row justify-start gap-3.5 mt-4 mb-10">
           {/* Сортировка - интегрирована с Zustand store */}
@@ -296,13 +305,27 @@ const Catalog: FC = () => {
           </div>
         </div>
 
-        {paginatedProducts.length === 0 ? (
+        {isLoading ? (
+          <div className="flex justify-center items-center py-16">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-100"></div>
+          </div>
+        ) : error ? (
+          <div className="flex flex-col items-center justify-center py-16 px-4">
+            <p className="text-red-600 text-lg mb-4">Ошибка загрузки товаров</p>
+            <p className="text-gray-600">{error}</p>
+          </div>
+        ) : paginatedProducts.length === 0 ? (
           <EmptyState />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 md:gap-6 divide-y divide-dark-50 md:divide-transparent border_y border-dark-50 md:border-transparent">
             {paginatedProducts.map((product) => (
               <div key={product.id} className="py-5 md:py-0">
-                <CatalogCardResponsive {...product} />
+                <CatalogCardResponsive
+                  {...product}
+                  collection={product.collection_name || product.brand_name || 'Без коллекции'}
+                  image={product.main_image_url || product.image || '/placeholder.webp'}
+                  hoverImage={product.hover_image_url || product.main_image_url || product.image || '/placeholder.webp'}
+                />
               </div>
             ))}
           </div>
