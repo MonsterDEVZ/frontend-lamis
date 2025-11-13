@@ -1,9 +1,10 @@
 /**
  * Products API Service
+ * НОВАЯ АРХИТЕКТУРА: Section → Brand → Category → Collection/Type → Product
  * Сервис для работы с API продуктов
  */
 
-import { Product, Section, Category, Collection, Type } from '@/types/product';
+import { Product, Section, Brand, Category, Collection, Type } from '@/types/product';
 
 // API Response types - Django REST Framework format
 export interface ApiResponse<T> {
@@ -30,17 +31,16 @@ export interface PaginatedResponse<T> {
 }
 
 export interface ProductsFilters {
-  sectionId?: number | null; // Renamed from brandId
-  categoryId?: number | null;
-  collectionId?: number | null;
-  typeId?: number | null; // NEW: Type filter
+  // НОВАЯ АРХИТЕКТУРА: 5-уровневая фильтрация
+  sectionId?: number | null; // Level 1: Section
+  brandId?: number | null; // Level 2: Brand (НОВОЕ!)
+  categoryId?: number | null; // Level 3: Category
+  collectionId?: number | null; // Level 4a: Collection
+  typeId?: number | null; // Level 4b: Type
   sortBy?: string;
   page?: number;
   itemsPerPage?: number;
   inStock?: boolean;
-
-  // Deprecated (for backward compatibility)
-  brandId?: number | null; // Use sectionId instead
 }
 
 // API URL configuration
@@ -48,6 +48,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/a
 
 /**
  * Получить список продуктов с фильтрами и пагинацией
+ * НОВАЯ АРХИТЕКТУРА: Поддержка 5-уровневой фильтрации
  */
 export async function fetchProducts(
   filters: ProductsFilters = {}
@@ -55,10 +56,12 @@ export async function fetchProducts(
   const params = new URLSearchParams();
 
   // Django backend uses snake_case parameters
-  // Support both sectionId (new) and brandId (deprecated)
-  const sectionId = filters.sectionId ?? filters.brandId;
-  if (sectionId !== null && sectionId !== undefined) {
-    params.append('section_id', sectionId.toString());
+  // НОВАЯ АРХИТЕКТУРА: section_id И brand_id оба поддерживаются
+  if (filters.sectionId !== null && filters.sectionId !== undefined) {
+    params.append('section_id', filters.sectionId.toString());
+  }
+  if (filters.brandId !== null && filters.brandId !== undefined) {
+    params.append('brand_id', filters.brandId.toString());
   }
   if (filters.categoryId !== null && filters.categoryId !== undefined) {
     params.append('category_id', filters.categoryId.toString());
@@ -131,13 +134,43 @@ export async function fetchSections(): Promise<Section[]> {
 }
 
 /**
- * Получить все категории (опционально фильтрация по секции)
+ * Получить все бренды (Level 2)
+ * НОВАЯ АРХИТЕКТУРА: Brand - второй уровень после Section
+ * @param sectionId - опционально фильтрация по section_id
  */
-export async function fetchCategories(sectionId?: number | null): Promise<Category[]> {
+export async function fetchBrands(sectionId?: number | null): Promise<Brand[]> {
   const params = new URLSearchParams();
 
   if (sectionId !== null && sectionId !== undefined) {
     params.append('section_id', sectionId.toString());
+  }
+
+  const url = `${API_BASE_URL}/brands/${params.toString() ? '?' + params.toString() : ''}`;
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch brands: ${response.statusText}`);
+  }
+
+  const data: DjangoPage<Brand> = await response.json();
+  return data.results;
+}
+
+/**
+ * Получить все категории (Level 3)
+ * НОВАЯ АРХИТЕКТУРА: Category фильтруется по section_id И brand_id
+ */
+export async function fetchCategories(
+  sectionId?: number | null,
+  brandId?: number | null
+): Promise<Category[]> {
+  const params = new URLSearchParams();
+
+  if (sectionId !== null && sectionId !== undefined) {
+    params.append('section_id', sectionId.toString());
+  }
+  if (brandId !== null && brandId !== undefined) {
+    params.append('brand_id', brandId.toString());
   }
 
   const url = `${API_BASE_URL}/categories/${params.toString() ? '?' + params.toString() : ''}`;
@@ -152,16 +185,24 @@ export async function fetchCategories(sectionId?: number | null): Promise<Catego
 }
 
 /**
- * Получить все коллекции (опционально фильтрация по секции и категории)
+ * Получить все коллекции (Level 4a)
+ * НОВАЯ АРХИТЕКТУРА: Collection фильтруется по section_id, brand_id, category_id
+ * @param sectionId - фильтр по секции (для header navigation)
+ * @param brandId - фильтр по бренду
+ * @param categoryId - фильтр по категории
  */
 export async function fetchCollections(
   sectionId?: number | null,
+  brandId?: number | null,
   categoryId?: number | null
 ): Promise<Collection[]> {
   const params = new URLSearchParams();
 
   if (sectionId !== null && sectionId !== undefined) {
     params.append('section_id', sectionId.toString());
+  }
+  if (brandId !== null && brandId !== undefined) {
+    params.append('brand_id', brandId.toString());
   }
   if (categoryId !== null && categoryId !== undefined) {
     params.append('category_id', categoryId.toString());
@@ -179,17 +220,12 @@ export async function fetchCollections(
 }
 
 /**
- * Получить все типы (опционально фильтрация по секции и категории)
+ * Получить все типы (Level 4b)
+ * НОВАЯ АРХИТЕКТУРА: Type фильтруется ТОЛЬКО по category_id (sectionId убрали!)
  */
-export async function fetchTypes(
-  sectionId?: number | null,
-  categoryId?: number | null
-): Promise<Type[]> {
+export async function fetchTypes(categoryId?: number | null): Promise<Type[]> {
   const params = new URLSearchParams();
 
-  if (sectionId !== null && sectionId !== undefined) {
-    params.append('section_id', sectionId.toString());
-  }
   if (categoryId !== null && categoryId !== undefined) {
     params.append('category_id', categoryId.toString());
   }
@@ -299,4 +335,76 @@ export async function fetchCatalogBrowse(): Promise<{ catalog: CatalogStructure[
   }
 
   return response.json();
+}
+
+// ===== HELPER FUNCTIONS FOR AUTO-SELECTING FILTERS =====
+
+/**
+ * Получить первый бренд для коллекции (для автовыбора фильтров в header)
+ * GET /collections/{collectionId}/first_brand/
+ */
+export async function getFirstBrandForCollection(collectionId: number): Promise<Brand> {
+  const response = await fetch(`${API_BASE_URL}/collections/${collectionId}/first_brand/`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch first brand for collection: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Получить первую категорию для коллекции (для автовыбора фильтров в header)
+ * GET /collections/{collectionId}/first_category/
+ */
+export async function getFirstCategoryForCollection(collectionId: number): Promise<Category> {
+  const response = await fetch(`${API_BASE_URL}/collections/${collectionId}/first_category/`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch first category for collection: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Получить первый бренд для категории (для автовыбора фильтров в header)
+ * GET /categories/{categoryId}/first_brand/
+ */
+export async function getFirstBrandForCategory(categoryId: number): Promise<Brand> {
+  const response = await fetch(`${API_BASE_URL}/categories/${categoryId}/first_brand/`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch first brand for category: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Search across all product-related entities
+ * GET /search/?q=query
+ *
+ * @param query - Search query string
+ * @returns SearchResponse with unified results from Products, Collections, Categories, and Brands
+ */
+export async function searchProducts(query: string): Promise<import('@/types/product').SearchResponse> {
+  if (!query || query.trim().length < 2) {
+    return {
+      results: [],
+      total: 0
+    };
+  }
+
+  const params = new URLSearchParams();
+  params.append('q', query.trim());
+
+  const response = await fetch(`${API_BASE_URL}/search/?${params.toString()}`);
+
+  if (!response.ok) {
+    throw new Error(`Search failed: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  return data;
 }

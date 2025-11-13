@@ -5,6 +5,7 @@ import { Search, Heart } from 'lucide-react';
 import Nav from './Nav';
 import { cn } from '@/styles';
 import { useFavoritesStore } from '@/store/favoritesStore';
+import SearchInput from './SearchInput';
 
 interface ITopBarProps {
   isActive: boolean;
@@ -114,30 +115,11 @@ const MainNavigationDesc: FC<IMainNavigationDescProps> = ({
 
       <div className="flex items-center justify-end gap-4">
         {isSearchOpen ? (
-          <div className="relative w-60">
-            <input
-              type="text"
-              value={currentSearchValue}
-              onChange={(e) => onSearchValueChange(e.target.value)}
-              placeholder="Поиск..."
-              className={cn(
-                'w-full h-10 pl-4 pr-10 rounded-full border transition-colors duration-300',
-                'focus:outline-none focus:ring-2 focus:ring-green-100',
-                isActive
-                  ? 'bg-white border-gray-300 text-gray-900'
-                  : 'bg-transparent border-white/50 text-white placeholder:text-white/70'
-              )}
+          <div className="w-80">
+            <SearchInput
+              className="w-full"
+              onClose={() => setIsSearchOpen(false)}
             />
-            <button
-              onClick={() => setIsSearchOpen(false)}
-              className={cn(
-                'absolute right-1 top-1/2 -translate-y-1/2 p-2 rounded-full transition-colors',
-                isActive ? 'text-gray-600 hover:bg-gray-100' : 'text-white/80 hover:bg-white/20'
-              )}
-              aria-label="Close search"
-            >
-              <Search size={20} />
-            </button>
           </div>
         ) : (
           <button
