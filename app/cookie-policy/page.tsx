@@ -5,7 +5,7 @@ export default function CookiePolicyPage() {
   return (
     <>
       <Header />
-      <div className="container">
+      <div className="container mx-auto">
         <div className="pt-45 pb-10">
           <h1 className="text-4xl font-bold">Политика в отношении куки</h1>
         </div>
