@@ -141,7 +141,7 @@ export default function Footer() {
               <Link href="/cookie-policy" className="hover:text-white transition-colors">
                 Политика использования файлов Cookie
               </Link>
-              <Link href="/confidentiality" className="hover:text-white transition-colors">
+              <Link href="/privacy-policy" className="hover:text-white transition-colors">
                 Политика конфиденциальности
               </Link>
             </div>
