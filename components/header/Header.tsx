@@ -154,7 +154,7 @@ export default function Header() {
 
         const collectionItems = collections.map((collection) => ({
           img: collection.image || 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/catalog/lamis-solo-1-main.webp',
-          href: `/catalog?sectionId=1&collectionId=${collection.id}`,
+          href: `/catalog?sectionId=${collection.section}&brandId=${collection.brand}&categoryId=${collection.category}&collectionId=${collection.id}`,
           title: collection.name,
         }));
 
@@ -164,7 +164,7 @@ export default function Header() {
 
         const categoryItems = categories.map((category) => ({
           img: imageSecTwo[category.slug] || 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-SINK%20(2).webp',
-          href: `/catalog?sectionId=2&categoryId=${category.id}`,
+          href: `/catalog?sectionId=${category.section}&brandId=${category.brand}&categoryId=${category.id}`,
           title: category.name,
         }));
 
