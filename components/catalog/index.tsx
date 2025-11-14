@@ -191,48 +191,46 @@ const Catalog: FC = () => {
   }, [apiProducts]);
 
   // LEVEL 2: Category click handler
-  const handleCategoryClick = async (categoryId: number | null) => {
-    setIsLoading(true);
-    try {
-      await setCategoryId(categoryId); // Auto-loads collections and types from API
-      setCurrentPage(1);
+  const handleCategoryClick = (categoryId: number | null) => {
+    // IMPORTANT: Don't call setCategoryId here!
+    // Only update URL → useEffect will handle state update
+    // This prevents double-firing and flickering
 
-      // Update URL with new filters
-      const params = new URLSearchParams();
-      if (selectedSectionId) params.append('sectionId', selectedSectionId.toString());
-      if (categoryId) params.append('categoryId', categoryId.toString());
-      // Note: collectionId and typeId are reset when category changes
+    setCurrentPage(1);
 
-      router.push(`/catalog?${params.toString()}`);
-    } finally {
-      setIsLoading(false);
-    }
+    // Update URL with new filters
+    const params = new URLSearchParams();
+    if (selectedSectionId) params.append('sectionId', selectedSectionId.toString());
+    if (categoryId) params.append('categoryId', categoryId.toString());
+    // Note: collectionId and typeId are reset when category changes
+
+    router.push(`/catalog?${params.toString()}`);
   };
 
   // LEVEL 3a: Collection click handler
   const handleCollectionClick = (collectionId: number | null) => {
-    setIsLoading(true);
-    try {
-      setCollectionId(collectionId);
-      setCurrentPage(1);
+    // IMPORTANT: Don't call setCollectionId here!
+    // Only update URL → useEffect will handle state update
+    // This prevents double-firing and flickering
 
-      // Update URL with new filters
-      const params = new URLSearchParams();
-      if (selectedSectionId) params.append('sectionId', selectedSectionId.toString());
-      if (selectedCategoryId) params.append('categoryId', selectedCategoryId.toString());
-      if (collectionId) params.append('collectionId', collectionId.toString());
-      // Note: typeId is reset when collection is selected (mutually exclusive)
+    setCurrentPage(1);
 
-      router.push(`/catalog?${params.toString()}`);
-    } finally {
-      // Delay before hiding loading to give time for products to load
-      setTimeout(() => setIsLoading(false), 300);
-    }
+    // Update URL with new filters
+    const params = new URLSearchParams();
+    if (selectedSectionId) params.append('sectionId', selectedSectionId.toString());
+    if (selectedCategoryId) params.append('categoryId', selectedCategoryId.toString());
+    if (collectionId) params.append('collectionId', collectionId.toString());
+    // Note: typeId is reset when collection is selected (mutually exclusive)
+
+    router.push(`/catalog?${params.toString()}`);
   };
 
   // LEVEL 3b: Type click handler
   const handleTypeClick = (typeId: number | null) => {
-    setTypeId(typeId);
+    // IMPORTANT: Don't call setTypeId here!
+    // Only update URL → useEffect will handle state update
+    // This prevents double-firing and flickering
+
     setCurrentPage(1);
 
     // Update URL with new filters
