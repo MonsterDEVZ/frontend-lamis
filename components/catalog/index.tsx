@@ -12,31 +12,27 @@ import { fetchProducts, fetchSections, PaginatedResponse } from '@/services/api/
 import { Product, Section } from '@/types/product';
 
 const Catalog: FC = () => {
-  // Подключаемся к Zustand store для фильтров (ПЯТИУРОВНЕВАЯ СИСТЕМА)
+  // Connect to Zustand store for filters (4-LEVEL FILTERING)
   const {
-    // Новая пятиуровневая система: Section → Brand → Category → Collection/Type
+    // 4-level filtering: Section → Category → Collection/Type
     selectedSectionId,
-    selectedBrandId, // НОВОЕ! Level 2
     selectedCategoryId,
     selectedCollectionId,
     selectedTypeId,
-    availableBrands, // НОВОЕ! Level 2
     availableCategories,
     availableCollections,
     availableTypes,
-    isLoading, // НОВОЕ! Глобальный loading
+    isLoading,
     setSectionId,
-    setBrandId, // НОВОЕ! Level 2
     setCategoryId,
     setCollectionId,
     setTypeId,
-    setIsLoading, // НОВОЕ! Управление loading состоянием
+    setIsLoading,
   } = useFiltersStore();
 
-  // Получаем параметры из URL (ПЯТИУРОВНЕВАЯ СИСТЕМА)
+  // Get URL parameters (4-LEVEL FILTERING)
   const searchParams = useSearchParams();
   const sectionIdFromUrl = searchParams.get('sectionId');
-  const brandIdFromUrl = searchParams.get('brandId'); // НОВОЕ! Level 2
   const categoryIdFromUrl = searchParams.get('categoryId');
   const collectionIdFromUrl = searchParams.get('collectionId');
   const typeIdFromUrl = searchParams.get('typeId');
@@ -54,41 +50,33 @@ const Catalog: FC = () => {
   // Section description state
   const [currentSection, setCurrentSection] = useState<Section | null>(null);
 
-  // НОВОЕ: Инициализация фильтров из URL (ПЯТИУРОВНЕВАЯ СИСТЕМА)
+  // Initialize filters from URL (4-LEVEL FILTERING)
   useEffect(() => {
     const initializeFilters = async () => {
-      // Показываем loading при инициализации фильтров из URL (например, при переходе из Header)
+      // Show loading when initializing filters from URL
       setIsLoading(true);
 
       try {
-        // УРОВЕНЬ 1: Устанавливаем фильтр по секции из URL
+        // LEVEL 1: Set section filter from URL
         if (sectionIdFromUrl) {
           const sectionId = parseInt(sectionIdFromUrl, 10);
           if (!isNaN(sectionId)) {
-            await setSectionId(sectionId); // Автоматически загружает availableBrands из API
+            await setSectionId(sectionId); // Auto-loads availableCategories from API
           }
         } else {
-          // Если нет фильтра по секции, сбрасываем всё
+          // If no section filter, reset everything
           await setSectionId(null);
         }
 
-        // УРОВЕНЬ 2: Устанавливаем фильтр по бренду из URL (НОВОЕ! только если есть секция)
-        if (brandIdFromUrl && sectionIdFromUrl) {
-          const brandId = parseInt(brandIdFromUrl, 10);
-          if (!isNaN(brandId)) {
-            await setBrandId(brandId); // Автоматически загружает availableCategories из API
-          }
-        }
-
-        // УРОВЕНЬ 3: Устанавливаем фильтр по категории из URL (только если есть секция и бренд)
-        if (categoryIdFromUrl && sectionIdFromUrl && brandIdFromUrl) {
+        // LEVEL 2: Set category filter from URL (only if section exists)
+        if (categoryIdFromUrl && sectionIdFromUrl) {
           const categoryId = parseInt(categoryIdFromUrl, 10);
           if (!isNaN(categoryId)) {
-            await setCategoryId(categoryId); // Автоматически загружает availableCollections и availableTypes из API
+            await setCategoryId(categoryId); // Auto-loads availableCollections and availableTypes from API
           }
         }
 
-        // УРОВЕНЬ 4a: Устанавливаем фильтр по коллекции из URL
+        // LEVEL 3a: Set collection filter from URL
         if (collectionIdFromUrl) {
           const collectionId = parseInt(collectionIdFromUrl, 10);
           if (!isNaN(collectionId)) {
@@ -98,7 +86,7 @@ const Catalog: FC = () => {
           setCollectionId(null);
         }
 
-        // УРОВЕНЬ 4b: Устанавливаем фильтр по типу из URL
+        // LEVEL 3b: Set type filter from URL
         if (typeIdFromUrl) {
           const typeId = parseInt(typeIdFromUrl, 10);
           if (!isNaN(typeId)) {
@@ -108,10 +96,10 @@ const Catalog: FC = () => {
           setTypeId(null);
         }
 
-        // Сбрасываем на первую страницу при изменении фильтров
+        // Reset to first page when filters change
         setCurrentPage(1);
       } finally {
-        // Скрываем loading после завершения инициализации
+        // Hide loading after initialization
         setIsLoading(false);
       }
     };
@@ -119,12 +107,10 @@ const Catalog: FC = () => {
     initializeFilters();
   }, [
     sectionIdFromUrl,
-    brandIdFromUrl,
     categoryIdFromUrl,
     collectionIdFromUrl,
     typeIdFromUrl,
     setSectionId,
-    setBrandId,
     setCategoryId,
     setCollectionId,
     setTypeId,
@@ -139,7 +125,6 @@ const Catalog: FC = () => {
       try {
         const response = await fetchProducts({
           sectionId: selectedSectionId,
-          brandId: selectedBrandId, // НОВОЕ! Level 2
           categoryId: selectedCategoryId,
           collectionId: selectedCollectionId,
           typeId: selectedTypeId,
@@ -162,7 +147,6 @@ const Catalog: FC = () => {
     loadProducts();
   }, [
     selectedSectionId,
-    selectedBrandId,
     selectedCategoryId,
     selectedCollectionId,
     selectedTypeId,
@@ -195,62 +179,46 @@ const Catalog: FC = () => {
     return apiProducts;
   }, [apiProducts]);
 
-  // УРОВЕНЬ 2: Обработчик клика по бренду (НОВОЕ!)
-  const handleBrandClick = async (brandId: number | null) => {
-    setIsLoading(true); // Показываем глобальный loading
-    try {
-      await setBrandId(brandId); // Автоматически загружает категории из API
-      setCurrentPage(1);
-    } finally {
-      setIsLoading(false); // Скрываем глобальный loading
-    }
-  };
-
-  // УРОВЕНЬ 3: Обработчик клика по категории
+  // LEVEL 2: Category click handler
   const handleCategoryClick = async (categoryId: number | null) => {
-    setIsLoading(true); // Показываем глобальный loading
+    setIsLoading(true);
     try {
-      await setCategoryId(categoryId); // Автоматически загружает коллекции из API
+      await setCategoryId(categoryId); // Auto-loads collections from API
       setCurrentPage(1);
     } finally {
-      setIsLoading(false); // Скрываем глобальный loading
+      setIsLoading(false);
     }
   };
 
-  // УРОВЕНЬ 4a: Обработчик клика по коллекции
+  // LEVEL 3a: Collection click handler
   const handleCollectionClick = (collectionId: number | null) => {
-    setIsLoading(true); // Показываем глобальный loading
+    setIsLoading(true);
     try {
       setCollectionId(collectionId);
       setCurrentPage(1);
     } finally {
-      // Задержка перед скрытием loading, чтобы дать время на загрузку товаров
+      // Delay before hiding loading to give time for products to load
       setTimeout(() => setIsLoading(false), 300);
     }
   };
 
-  // УРОВЕНЬ 4b: Обработчик клика по типу
+  // LEVEL 3b: Type click handler
   const handleTypeClick = (typeId: number | null) => {
     setTypeId(typeId);
     setCurrentPage(1);
   };
 
-  // Проверяем, активен ли бренд (НОВОЕ!)
-  const isBrandActive = (brandId: number | null) => {
-    return selectedBrandId === brandId;
-  };
-
-  // Проверяем, активна ли категория
+  // Check if category is active
   const isCategoryActive = (categoryId: number | null) => {
     return selectedCategoryId === categoryId;
   };
 
-  // Проверяем, активна ли коллекция
+  // Check if collection is active
   const isCollectionActive = (collectionId: number | null) => {
     return selectedCollectionId === collectionId;
   };
 
-  // Проверяем, активен ли тип
+  // Check if type is active
   const isTypeActive = (typeId: number | null) => {
     return selectedTypeId === typeId;
   };
@@ -320,19 +288,8 @@ const Catalog: FC = () => {
 
       <div className="wrapper_centering mt-8 sm:mt-12 md:mt-50 pb-8 px-4">
         <>
-          {/* УРОВЕНЬ 2: Фильтрация по брендам (НОВОЕ!) */}
-          {selectedSectionId !== null && availableBrands.length > 0 && (
-            <FilterSection
-              title="Все бренды"
-              items={availableBrands}
-              selectedId={selectedBrandId}
-              onSelect={handleBrandClick}
-              allLabel="Все бренды"
-            />
-          )}
-
-          {/* УРОВЕНЬ 3: Фильтрация по категориям */}
-          {selectedBrandId !== null && availableCategories.length > 0 && (
+          {/* LEVEL 2: Category filtering */}
+          {selectedSectionId !== null && availableCategories.length > 0 && (
             <FilterSection
               title="Все категории"
               items={availableCategories}
@@ -342,7 +299,7 @@ const Catalog: FC = () => {
             />
           )}
 
-          {/* УРОВЕНЬ 4a: Фильтрация по коллекциям */}
+          {/* LEVEL 3a: Collection filtering */}
           {selectedCategoryId !== null && availableCollections.length > 0 && (
             <FilterSection
               title="Все коллекции"
@@ -353,7 +310,7 @@ const Catalog: FC = () => {
             />
           )}
 
-          {/* УРОВЕНЬ 4b: Фильтрация по типам */}
+          {/* LEVEL 3b: Type filtering */}
           {selectedCategoryId !== null && availableTypes.length > 0 && (
             <FilterSection
               title="Все виды"

@@ -17,8 +17,6 @@ import {
   getFirstBrandForCollection,
   getFirstCategoryForCollection,
   getFirstBrandForCategory,
-  getFirstBrandWithProducts,
-  getFirstBrandCategoryWithProducts,
 } from '@/services/api/products';
 import MobileSearchOverlay from './MobileSearchOverlay';
 import SearchModal from '../search/SearchModal';
@@ -66,7 +64,7 @@ const imageSecTwo = {
   bide: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-Bidet.webp',
   rakoviny: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-SINK%20(2).webp',
   unitazy: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-toilet.webp',
-  urinal: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-urinal.webp',
+  pissuary: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-urinal.webp',
 };
 
 // Initial navigation without collections (will be loaded dynamically)
@@ -146,7 +144,7 @@ export default function Header() {
 
   const { scrollY, scrollDirection } = useScroll();
 
-  // НОВАЯ АРХИТЕКТУРА: Load dynamic navigation items
+  // Load dynamic navigation items
   useEffect(() => {
     const loadNavigationData = async () => {
       try {
@@ -154,57 +152,25 @@ export default function Header() {
         const collections = await fetchCollections(1);
         console.log('Loaded collections for section 1:', collections);
 
-        // НОВОЕ: Для каждой коллекции получаем brand+category с товарами
-        const collectionItems = await Promise.all(
-          collections.map(async (collection) => {
-            try {
-              // Получаем ПЕРВЫЙ brand+category который ИМЕЕТ товары в этой коллекции
-              const brandCategory = await getFirstBrandCategoryWithProducts(collection.id, 1);
-
-              return {
-                img: collection.image || 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/catalog/lamis-solo-1-main.webp',
-                href: `/catalog?sectionId=1&brandId=${brandCategory.brand_id}&categoryId=${brandCategory.category_id}&collectionId=${collection.id}`,
-                title: collection.name,
-              };
-            } catch (error) {
-              // Если нет товаров - используем fallback (первый brand+category)
-              console.warn(`No products found for collection ${collection.name}, using fallback`);
-              return {
-                img: collection.image || 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/catalog/lamis-solo-1-main.webp',
-                href: `/catalog?sectionId=${collection.section}&brandId=${collection.brand}&categoryId=${collection.category}&collectionId=${collection.id}`,
-                title: collection.name,
-              };
-            }
-          })
-        );
+        const collectionItems = collections.map((collection) => ({
+          img:
+            collection.image ||
+            'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/catalog/lamis-solo-1-main.webp',
+          href: `/catalog?sectionId=${collection.section}&categoryId=${collection.category}&collectionId=${collection.id}`,
+          title: collection.name,
+        }));
 
         // Load categories for Section 2 "Санфарфор" (sectionId=2)
         const categories = await fetchCategories(2);
         console.log('Loaded categories for section 2:', categories);
 
-        // НОВОЕ: Для каждой категории получаем brand с товарами
-        const categoryItems = await Promise.all(
-          categories.map(async (category) => {
-            try {
-              // Получаем ПЕРВЫЙ бренд который ИМЕЕТ товары в этой категории
-              const brand = await getFirstBrandWithProducts(category.id, 2);
-
-              return {
-                img: imageSecTwo[category.slug] || 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-SINK%20(2).webp',
-                href: `/catalog?sectionId=2&brandId=${brand.id}&categoryId=${category.id}`,
-                title: category.name,
-              };
-            } catch (error) {
-              // Если нет товаров - используем fallback (первый brand)
-              console.warn(`No products found for category ${category.name}, using fallback`);
-              return {
-                img: imageSecTwo[category.slug] || 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-SINK%20(2).webp',
-                href: `/catalog?sectionId=${category.section}&brandId=${category.brand}&categoryId=${category.id}`,
-                title: category.name,
-              };
-            }
-          })
-        );
+        const categoryItems = categories.map((category) => ({
+          img:
+            imageSecTwo[category.slug] ||
+            'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-SINK%20(2).webp',
+          href: `/catalog?sectionId=${category.section}&categoryId=${category.id}`,
+          title: category.name,
+        }));
 
         // Update nav with loaded data
         setNav((prevNav) =>

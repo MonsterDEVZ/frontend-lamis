@@ -13,56 +13,48 @@ export interface Product {
   collectionId?: string;
   typeId?: string;
   sectionId: number; // Level 1
-  brandId: number; // Level 2 (НОВОЕ! ОБЯЗАТЕЛЬНО)
   [key: string]: any;
 }
 
 interface FiltersState {
-  // ===== ПЯТИУРОВНЕВОЕ СОСТОЯНИЕ (НОВАЯ АРХИТЕКТУРА) =====
-  selectedSectionId: number | null; // Уровень 1: Section (одиночный выбор)
-  selectedBrandId: number | null; // Уровень 2: Brand (НОВОЕ! одиночный выбор)
-  selectedCategoryId: number | null; // Уровень 3: Категория (одиночный выбор)
-  selectedCollectionId: number | null; // Уровень 4a: Коллекция (одиночный выбор)
-  selectedTypeId: number | null; // Уровень 4b: Type (одиночный выбор)
+  // ===== 4-LEVEL FILTERING =====
+  selectedSectionId: number | null; // Level 1: Section
+  selectedCategoryId: number | null; // Level 2: Category
+  selectedCollectionId: number | null; // Level 3a: Collection
+  selectedTypeId: number | null; // Level 3b: Type
 
-  // Доступные опции для каждого уровня
-  availableBrands: Brand[]; // НОВОЕ! Бренды, доступные для выбранной секции
-  availableCategories: Category[]; // Категории, доступные для секции+бренда
-  availableCollections: Collection[]; // Коллекции, доступные для бренда+категории
-  availableTypes: Type[]; // Типы, доступные для категории
+  // Available options for each level
+  availableCategories: Category[]; // Categories available for selected section
+  availableCollections: Collection[]; // Collections available for selected category
+  availableTypes: Type[]; // Types available for selected category
 
   // Loading states
-  brandsLoading: boolean; // НОВОЕ!
   categoriesLoading: boolean;
   collectionsLoading: boolean;
   typesLoading: boolean;
-  isLoading: boolean; // НОВОЕ! Глобальный loading для UI
+  isLoading: boolean; // Global loading for UI
 
-  // Дополнительные фильтры
+  // Additional filters
   sortBy: string;
   selectedColors: string[];
 
-  // ===== ДЕЙСТВИЯ (НОВАЯ АРХИТЕКТУРА) =====
-  // Уровень 1: Установка секции (сбрасывает бренд, категорию, коллекцию и тип)
+  // ===== ACTIONS =====
+  // Level 1: Set section (resets category, collection, type)
   setSectionId: (sectionId: number | null) => Promise<void>;
 
-  // Уровень 2: Установка бренда (НОВОЕ! сбрасывает категорию, коллекцию и тип)
-  setBrandId: (brandId: number | null) => Promise<void>;
-
-  // Уровень 3: Установка категории (сбрасывает коллекцию и тип)
+  // Level 2: Set category (resets collection and type)
   setCategoryId: (categoryId: number | null) => Promise<void>;
 
-  // Уровень 4a: Установка коллекции (сбрасывает тип)
+  // Level 3a: Set collection (resets type)
   setCollectionId: (collectionId: number | null) => void;
 
-  // Уровень 4b: Установка типа (сбрасывает коллекцию)
+  // Level 3b: Set type (resets collection)
   setTypeId: (typeId: number | null) => void;
 
-  // Загрузка данных из API
-  loadBrands: (sectionId: number | null) => Promise<void>; // НОВОЕ!
-  loadCategories: (sectionId: number | null, brandId: number | null) => Promise<void>; // Изменено!
-  loadCollections: (brandId: number | null, categoryId: number | null) => Promise<void>; // Изменено!
-  loadTypes: (categoryId: number | null) => Promise<void>; // Изменено!
+  // Load data from API
+  loadCategories: (sectionId: number | null) => Promise<void>;
+  loadCollections: (categoryId: number | null) => Promise<void>;
+  loadTypes: (categoryId: number | null) => Promise<void>;
 
   // Вспомогательные действия
   setSortBy: (sort: string) => void;
@@ -82,21 +74,18 @@ interface FiltersState {
 export const useFiltersStore = create<FiltersState>()(
   persist(
     (set, get) => ({
-      // ===== НАЧАЛЬНОЕ СОСТОЯНИЕ (НОВАЯ АРХИТЕКТУРА) =====
+      // ===== INITIAL STATE (4-LEVEL FILTERING) =====
       selectedSectionId: null,
-      selectedBrandId: null, // НОВОЕ! Теперь это настоящий Level 2
       selectedCategoryId: null,
       selectedCollectionId: null,
       selectedTypeId: null,
-      availableBrands: [], // НОВОЕ!
       availableCategories: [],
       availableCollections: [],
       availableTypes: [],
-      brandsLoading: false, // НОВОЕ!
       categoriesLoading: false,
       collectionsLoading: false,
       typesLoading: false,
-      isLoading: false, // НОВОЕ! Глобальный loading
+      isLoading: false,
       sortBy: 'default',
       selectedColors: [],
 
@@ -104,30 +93,13 @@ export const useFiltersStore = create<FiltersState>()(
       selectedCategories: [],
       selectedBrandIds: [],
 
-      // ===== ЗАГРУЗКА БРЕНДОВ ИЗ API (НОВОЕ!) =====
-      loadBrands: async (sectionId: number | null) => {
-        console.log('🔄 [Level 2] loadBrands for sectionId:', sectionId);
-        set({ brandsLoading: true });
-
-        try {
-          const brands = await fetchBrands(sectionId);
-          console.log('✓ Loaded brands:', brands);
-          set({ availableBrands: brands });
-        } catch (error) {
-          console.error('❌ Failed to load brands:', error);
-          set({ availableBrands: [] });
-        } finally {
-          set({ brandsLoading: false });
-        }
-      },
-
-      // ===== ЗАГРУЗКА КАТЕГОРИЙ ИЗ API (ОБНОВЛЕНО!) =====
-      loadCategories: async (sectionId: number | null, brandId: number | null) => {
-        console.log('🔄 [Level 3] loadCategories for section:', sectionId, 'brand:', brandId);
+      // ===== LOAD CATEGORIES FROM API =====
+      loadCategories: async (sectionId: number | null) => {
+        console.log('🔄 [Level 2] loadCategories for section:', sectionId);
         set({ categoriesLoading: true });
 
         try {
-          const categories = await fetchCategories(sectionId, brandId);
+          const categories = await fetchCategories(sectionId);
           console.log('✓ Loaded categories:', categories);
           set({ availableCategories: categories });
         } catch (error) {
@@ -138,13 +110,13 @@ export const useFiltersStore = create<FiltersState>()(
         }
       },
 
-      // ===== ЗАГРУЗКА КОЛЛЕКЦИЙ ИЗ API (ОБНОВЛЕНО!) =====
-      loadCollections: async (brandId: number | null, categoryId: number | null) => {
-        console.log('🔄 [Level 4a] loadCollections for brand:', brandId, 'category:', categoryId);
+      // ===== LOAD COLLECTIONS FROM API =====
+      loadCollections: async (categoryId: number | null) => {
+        console.log('🔄 [Level 3a] loadCollections for category:', categoryId);
         set({ collectionsLoading: true });
 
         try {
-          const collections = await fetchCollections(null, brandId, categoryId);
+          const collections = await fetchCollections(null, null, categoryId);
           console.log('✓ Loaded collections:', collections);
           set({ availableCollections: collections });
         } catch (error) {
@@ -155,9 +127,9 @@ export const useFiltersStore = create<FiltersState>()(
         }
       },
 
-      // ===== ЗАГРУЗКА ТИПОВ ИЗ API (ОБНОВЛЕНО!) =====
+      // ===== LOAD TYPES FROM API =====
       loadTypes: async (categoryId: number | null) => {
-        console.log('🔄 [Level 4b] loadTypes for category:', categoryId);
+        console.log('🔄 [Level 3b] loadTypes for category:', categoryId);
         set({ typesLoading: true });
 
         try {
@@ -172,71 +144,43 @@ export const useFiltersStore = create<FiltersState>()(
         }
       },
 
-      // ===== УРОВЕНЬ 1: УСТАНОВКА СЕКЦИИ (ОБНОВЛЕНО!) =====
+      // ===== LEVEL 1: SET SECTION =====
       setSectionId: async (sectionId: number | null) => {
         console.log('🔹 [Level 1] setSectionId:', sectionId);
 
-        // Сбрасываем ВСЕ нижние уровни (brand, category, collection, type)
+        // Reset all lower levels (category, collection, type)
         set({
           selectedSectionId: sectionId,
-          selectedBrandId: null, // Сбрасываем бренд!
           selectedCategoryId: null,
           selectedCollectionId: null,
           selectedTypeId: null,
-          availableCategories: [],
           availableCollections: [],
           availableTypes: [],
         });
 
-        // Загружаем бренды для выбранной секции
+        // Load categories for selected section
         if (sectionId !== null) {
-          await get().loadBrands(sectionId);
-        } else {
-          set({ availableBrands: [] });
-        }
-      },
-
-      // ===== УРОВЕНЬ 2: УСТАНОВКА БРЕНДА (НОВОЕ!) =====
-      setBrandId: async (brandId: number | null) => {
-        console.log('🔹 [Level 2] setBrandId:', brandId);
-
-        const state = get();
-
-        // Сбрасываем категорию, коллекцию и тип
-        set({
-          selectedBrandId: brandId,
-          selectedCategoryId: null,
-          selectedCollectionId: null,
-          selectedTypeId: null,
-          availableCollections: [],
-          availableTypes: [],
-        });
-
-        // Загружаем категории для выбранной секции и бренда
-        if (brandId !== null && state.selectedSectionId !== null) {
-          await get().loadCategories(state.selectedSectionId, brandId);
+          await get().loadCategories(sectionId);
         } else {
           set({ availableCategories: [] });
         }
       },
 
-      // ===== УРОВЕНЬ 3: УСТАНОВКА КАТЕГОРИИ (ОБНОВЛЕНО!) =====
+      // ===== LEVEL 2: SET CATEGORY =====
       setCategoryId: async (categoryId: number | null) => {
-        console.log('🔹 [Level 3] setCategoryId:', categoryId);
+        console.log('🔹 [Level 2] setCategoryId:', categoryId);
 
-        const state = get();
-
-        // Сбрасываем коллекцию и тип
+        // Reset collection and type
         set({
           selectedCategoryId: categoryId,
           selectedCollectionId: null,
           selectedTypeId: null,
         });
 
-        // Загружаем коллекции и типы для выбранного бренда и категории
-        if (categoryId !== null && state.selectedBrandId !== null) {
+        // Load collections and types for selected category
+        if (categoryId !== null) {
           await Promise.all([
-            get().loadCollections(state.selectedBrandId, categoryId),
+            get().loadCollections(categoryId),
             get().loadTypes(categoryId),
           ]);
         } else {
@@ -244,20 +188,20 @@ export const useFiltersStore = create<FiltersState>()(
         }
       },
 
-      // ===== УРОВЕНЬ 4a: УСТАНОВКА КОЛЛЕКЦИИ =====
+      // ===== LEVEL 3a: SET COLLECTION =====
       setCollectionId: (collectionId: number | null) => {
-        console.log('🔹 [Level 4a] setCollectionId:', collectionId);
-        // Если выбираем коллекцию, сбрасываем тип (взаимоисключающие)
+        console.log('🔹 [Level 3a] setCollectionId:', collectionId);
+        // If selecting collection, reset type (mutually exclusive)
         set({
           selectedCollectionId: collectionId,
           selectedTypeId: collectionId !== null ? null : get().selectedTypeId
         });
       },
 
-      // ===== УРОВЕНЬ 4b: УСТАНОВКА ТИПА =====
+      // ===== LEVEL 3b: SET TYPE =====
       setTypeId: (typeId: number | null) => {
-        console.log('🔹 [Level 4b] setTypeId:', typeId);
-        // Если выбираем тип, сбрасываем коллекцию (взаимоисключающие)
+        console.log('🔹 [Level 3b] setTypeId:', typeId);
+        // If selecting type, reset collection (mutually exclusive)
         set({
           selectedTypeId: typeId,
           selectedCollectionId: typeId !== null ? null : get().selectedCollectionId
@@ -280,11 +224,9 @@ export const useFiltersStore = create<FiltersState>()(
         console.log('🧹 clearFilters');
         set({
           selectedSectionId: null,
-          selectedBrandId: null,
           selectedCategoryId: null,
           selectedCollectionId: null,
           selectedTypeId: null,
-          availableBrands: [],
           availableCategories: [],
           availableCollections: [],
           availableTypes: [],
@@ -322,7 +264,7 @@ export const useFiltersStore = create<FiltersState>()(
       },
     }),
     {
-      name: 'filters-storage-v5', // V5: НОВАЯ АРХИТЕКТУРА с Brand как Level 2
+      name: 'filters-storage-v6', // V6: Removed brand filtering (4-level)
     }
   )
 );
