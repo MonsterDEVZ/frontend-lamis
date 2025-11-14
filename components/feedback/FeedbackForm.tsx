@@ -11,10 +11,11 @@ interface FeedbackFormProps {
 const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmit, isSubmitting, onCancel }) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [isAgreed, setIsAgreed] = useState(false);
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !phone) {
+    if (!name || !phone || !isAgreed) {
       return;
     }
     onSubmit({ name, phone });
@@ -64,6 +65,27 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmit, isSubmitting, onC
         />
       </div>
 
+      {/* Чекбокс согласия */}
+      <div className="flex items-start gap-3">
+        <input
+          id="feedback-agreement"
+          type="checkbox"
+          checked={isAgreed}
+          onChange={(e) => setIsAgreed(e.target.checked)}
+          className="mt-1 h-4 w-4 accent-green-600 cursor-pointer"
+        />
+        <label htmlFor="feedback-agreement" className="text-sm text-gray-600 cursor-pointer">
+          Я согласен с{' '}
+          <a
+            href="/privacy-policy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-green-600 underline hover:text-green-700"
+          >
+            Политикой конфиденциальности
+          </a>
+        </label>
+      </div>
 
       <div className="flex items-center gap-4 mt-4">
         <button
@@ -75,8 +97,8 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmit, isSubmitting, onC
         </button>
         <button
           type="submit"
-          disabled={isSubmitting}
-          className="w-full py-3 px-4 bg-green-600 text-white rounded-full text-center font-semibold hover:bg-green-700 disabled:bg-gray-400 transition"
+          disabled={isSubmitting || !isAgreed}
+          className="w-full py-3 px-4 bg-green-600 text-white rounded-full text-center font-semibold hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
         >
           {isSubmitting ? 'Отправка...' : 'Отправить заказ'}
         </button>
