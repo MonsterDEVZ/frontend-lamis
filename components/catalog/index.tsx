@@ -180,11 +180,17 @@ const Catalog: FC = () => {
   }, [allProducts, selectedCategoryId, selectedCollectionId, selectedTypeId]);
 
   // ===== COMPUTE AVAILABLE FILTERS =====
-  // Extract unique categories from all products
+  // Extract unique categories from products
+  // If collection is selected, show only categories from that collection
   const availableCategories = useMemo(() => {
     const categoryMap = new Map<number, { id: number; name: string }>();
 
-    allProducts.forEach((product) => {
+    // If collection is selected, compute categories from collection products only
+    const productsToCheck = selectedCollectionId !== null
+      ? allProducts.filter((p) => p.collection === selectedCollectionId)
+      : allProducts;
+
+    productsToCheck.forEach((product) => {
       if (product.category && product.category_name) {
         categoryMap.set(product.category, {
           id: product.category,
@@ -194,7 +200,7 @@ const Catalog: FC = () => {
     });
 
     return Array.from(categoryMap.values()).sort((a, b) => a.name.localeCompare(b.name));
-  }, [allProducts]);
+  }, [allProducts, selectedCollectionId]);
 
   // Extract unique collections from products in selected category
   const availableCollections = useMemo(() => {

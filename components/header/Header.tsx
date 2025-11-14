@@ -156,7 +156,8 @@ export default function Header() {
           img:
             collection.image ||
             'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/catalog/lamis-solo-1-main.webp',
-          href: `/catalog?sectionId=${collection.section}&categoryId=${collection.category}&collectionId=${collection.id}`,
+          // Don't pass categoryId - let frontend determine categories from collection products
+          href: `/catalog?sectionId=${collection.section}&collectionId=${collection.id}`,
           title: collection.name,
         }));
 
