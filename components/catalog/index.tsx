@@ -332,7 +332,7 @@ const Catalog: FC = () => {
 
       {/* Filters and Products */}
       <div className="wrapper_centering mt-8 sm:mt-12 md:mt-50 pb-8 px-4">
-        {/* LEVEL 2: Category filtering */}
+        {/* LEVEL 2: Category filtering - ALWAYS show when section selected */}
         {selectedSectionId !== null && availableCategories.length > 0 && (
           <FilterSection
             title="Все категории"
@@ -343,8 +343,8 @@ const Catalog: FC = () => {
           />
         )}
 
-        {/* LEVEL 3a: Collection filtering */}
-        {selectedCategoryId !== null && availableCollections.length > 0 && (
+        {/* LEVEL 3a: Collection filtering - show when collections available */}
+        {availableCollections.length > 0 && (
           <FilterSection
             title="Все коллекции"
             items={availableCollections}
@@ -354,8 +354,8 @@ const Catalog: FC = () => {
           />
         )}
 
-        {/* LEVEL 3b: Type filtering */}
-        {selectedCategoryId !== null && availableTypes.length > 0 && (
+        {/* LEVEL 3b: Type filtering - show when types available */}
+        {availableTypes.length > 0 && (
           <FilterSection
             title="Все виды"
             items={availableTypes}

@@ -34,7 +34,7 @@ export default function ProductPage({ params }: ProductPageProps) {
         setLoading(true);
         // Fetch all products and find by slug
         // TODO: Add API endpoint to get product by slug directly
-        const response = await fetchProducts({});
+        const response = await fetchProducts({ itemsPerPage: 500 });
         const foundProduct = response.data.find((p) => p.slug === slug);
 
         if (!foundProduct) {
@@ -44,15 +44,32 @@ export default function ProductPage({ params }: ProductPageProps) {
 
         setProduct(foundProduct);
 
-        // Load related products from same category
-        if (foundProduct.category_id) {
-          const relatedResponse = await fetchProducts({
-            sectionId: foundProduct.section_id,
-            brandId: foundProduct.brand_id,
-            categoryId: foundProduct.category_id,
-            itemsPerPage: 8,
+        // Load related products - client-side filtering!
+        // NEW ARCHITECTURE: Load ALL products for section, filter in memory
+        if (foundProduct.section) {
+          const sectionResponse = await fetchProducts({
+            sectionId: foundProduct.section,
+            itemsPerPage: 500,
           });
-          setRelatedProducts(relatedResponse.data.filter((p) => p.id !== foundProduct.id));
+
+          // Filter related products in memory
+          let related = sectionResponse.data;
+
+          // Filter by same category
+          if (foundProduct.category) {
+            related = related.filter((p) => p.category === foundProduct.category);
+          }
+
+          // Filter by same type (if product has type)
+          if (foundProduct.type) {
+            related = related.filter((p) => p.type === foundProduct.type);
+          }
+
+          // Exclude current product
+          related = related.filter((p) => p.id !== foundProduct.id);
+
+          // Take first 8
+          setRelatedProducts(related.slice(0, 8));
         }
       } catch (error) {
         console.error('Error loading product:', error);
@@ -160,7 +177,7 @@ export default function ProductPage({ params }: ProductPageProps) {
         {sliderProducts.length > 0 && (
           <section className="wrapper_centering px-4 sm:px-6 lg:px-8 pb-16">
             <ProductSlider
-              title="Коллекция Bild"
+              title={`Похожие товары${product.category_name ? ` из категории "${product.category_name}"` : ''}`}
               products={sliderProducts}
               slidesPerView={4}
               autoplayDelay={5000}
