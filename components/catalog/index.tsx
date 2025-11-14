@@ -1,6 +1,6 @@
 'use client';
 import { useState, useMemo, useEffect, type FC } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import PaginationControls from '../ui/PaginationControls';
 import FilterSection from '../ui/FilterSection';
@@ -32,6 +32,7 @@ const Catalog: FC = () => {
 
   // Get URL parameters (4-LEVEL FILTERING)
   const searchParams = useSearchParams();
+  const router = useRouter();
   const sectionIdFromUrl = searchParams.get('sectionId');
   const categoryIdFromUrl = searchParams.get('categoryId');
   const collectionIdFromUrl = searchParams.get('collectionId');
@@ -74,6 +75,9 @@ const Catalog: FC = () => {
           if (!isNaN(categoryId)) {
             await setCategoryId(categoryId); // Auto-loads availableCollections and availableTypes from API
           }
+        } else if (sectionIdFromUrl) {
+          // If section exists but no category, reset category filter
+          await setCategoryId(null);
         }
 
         // LEVEL 3a: Set collection filter from URL
@@ -183,8 +187,16 @@ const Catalog: FC = () => {
   const handleCategoryClick = async (categoryId: number | null) => {
     setIsLoading(true);
     try {
-      await setCategoryId(categoryId); // Auto-loads collections from API
+      await setCategoryId(categoryId); // Auto-loads collections and types from API
       setCurrentPage(1);
+
+      // Update URL with new filters
+      const params = new URLSearchParams();
+      if (selectedSectionId) params.append('sectionId', selectedSectionId.toString());
+      if (categoryId) params.append('categoryId', categoryId.toString());
+      // Note: collectionId and typeId are reset when category changes
+
+      router.push(`/catalog?${params.toString()}`);
     } finally {
       setIsLoading(false);
     }
@@ -196,6 +208,15 @@ const Catalog: FC = () => {
     try {
       setCollectionId(collectionId);
       setCurrentPage(1);
+
+      // Update URL with new filters
+      const params = new URLSearchParams();
+      if (selectedSectionId) params.append('sectionId', selectedSectionId.toString());
+      if (selectedCategoryId) params.append('categoryId', selectedCategoryId.toString());
+      if (collectionId) params.append('collectionId', collectionId.toString());
+      // Note: typeId is reset when collection is selected (mutually exclusive)
+
+      router.push(`/catalog?${params.toString()}`);
     } finally {
       // Delay before hiding loading to give time for products to load
       setTimeout(() => setIsLoading(false), 300);
@@ -206,6 +227,15 @@ const Catalog: FC = () => {
   const handleTypeClick = (typeId: number | null) => {
     setTypeId(typeId);
     setCurrentPage(1);
+
+    // Update URL with new filters
+    const params = new URLSearchParams();
+    if (selectedSectionId) params.append('sectionId', selectedSectionId.toString());
+    if (selectedCategoryId) params.append('categoryId', selectedCategoryId.toString());
+    if (typeId) params.append('typeId', typeId.toString());
+    // Note: collectionId is reset when type is selected (mutually exclusive)
+
+    router.push(`/catalog?${params.toString()}`);
   };
 
   // Check if category is active
