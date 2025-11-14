@@ -16,12 +16,11 @@ import {
   fetchCategories,
   getFirstBrandForCollection,
   getFirstCategoryForCollection,
-  getFirstBrandForCategory
+  getFirstBrandForCategory,
 } from '@/services/api/products';
 import MobileSearchOverlay from './MobileSearchOverlay';
 import SearchModal from '../search/SearchModal';
 import { useSearchModalStore } from '@/store/searchModalStore';
-
 
 /**
  * Utility function to merge new query parameters with existing ones
@@ -60,6 +59,13 @@ const mini_nav = [
     title: 'Материалы',
   },
 ];
+
+const imageSecTwo = {
+  bide: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-Bidet.webp',
+  rakoviny: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-SINK%20(2).webp',
+  unitazy: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-toilet.webp',
+  urinal: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-urinal.webp',
+};
 
 // Initial navigation without collections (will be loaded dynamically)
 // TODO: Consider using SEO-friendly URLs like /catalog/{section_slug} in the future
@@ -157,7 +163,10 @@ export default function Header() {
                 title: collection.name,
               };
             } catch (error) {
-              console.error(`Failed to get auto-selection data for collection ${collection.id}:`, error);
+              console.error(
+                `Failed to get auto-selection data for collection ${collection.id}:`,
+                error
+              );
               // Fallback to simple URL without auto-selection
               return {
                 img: collection.image || '/placeholder.webp',
@@ -177,15 +186,18 @@ export default function Header() {
               const brand = await getFirstBrandForCategory(category.id);
 
               return {
-                img: category.image || '/placeholder.webp',
+                img: imageSecTwo[category.slug] || '/placeholder.webp',
                 href: `/catalog?sectionId=2&brandId=${brand.id}&categoryId=${category.id}`,
                 title: category.name,
               };
             } catch (error) {
-              console.error(`Failed to get auto-selection data for category ${category.id}:`, error);
+              console.error(
+                `Failed to get auto-selection data for category ${category.id}:`,
+                error
+              );
               // Fallback to simple URL without auto-selection
               return {
-                img: category.image || '/placeholder.webp',
+                img: imageSecTwo[category.slug] || '/placeholder.webp',
                 href: `/catalog?sectionId=2&categoryId=${category.id}`,
                 title: category.name,
               };
