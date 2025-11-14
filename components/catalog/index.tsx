@@ -1,5 +1,5 @@
 'use client';
-import { useState, useMemo, useEffect, type FC } from 'react';
+import { useState, useMemo, useEffect, useRef, type FC } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import PaginationControls from '../ui/PaginationControls';
@@ -30,6 +30,9 @@ const Catalog: FC = () => {
     setIsLoading,
   } = useFiltersStore();
 
+  // Prevent double-initialization in React 18 Development mode
+  const isInitializingRef = useRef(false);
+
   // Get URL parameters (4-LEVEL FILTERING)
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -53,6 +56,10 @@ const Catalog: FC = () => {
 
   // Initialize filters from URL (4-LEVEL FILTERING)
   useEffect(() => {
+    // Prevent double initialization in React 18 Development mode
+    if (isInitializingRef.current) return;
+    isInitializingRef.current = true;
+
     const initializeFilters = async () => {
       // Show loading when initializing filters from URL
       setIsLoading(true);
@@ -105,19 +112,19 @@ const Catalog: FC = () => {
       } finally {
         // Hide loading after initialization
         setIsLoading(false);
+        // Allow re-initialization when URL changes
+        isInitializingRef.current = false;
       }
     };
 
     initializeFilters();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     sectionIdFromUrl,
     categoryIdFromUrl,
     collectionIdFromUrl,
     typeIdFromUrl,
-    setSectionId,
-    setCategoryId,
-    setCollectionId,
-    setTypeId,
+    // NOTE: Zustand setter functions are stable and don't need to be in deps
   ]);
 
   // Fetch products from API
