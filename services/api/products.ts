@@ -382,6 +382,64 @@ export async function getFirstBrandForCategory(categoryId: number): Promise<Bran
 }
 
 /**
+ * НОВОЕ: Получить первый бренд который ИМЕЕТ товары для категории
+ * GET /categories/{categoryId}/first-brand-with-products/?section_id=1
+ */
+export async function getFirstBrandWithProducts(
+  categoryId: number,
+  sectionId?: number
+): Promise<{ id: number; name: string; slug: string; product_count: number }> {
+  const params = new URLSearchParams();
+  if (sectionId !== null && sectionId !== undefined) {
+    params.append('section_id', sectionId.toString());
+  }
+
+  const url = `${API_BASE_URL}/categories/${categoryId}/first-brand-with-products/${
+    params.toString() ? '?' + params.toString() : ''
+  }`;
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch first brand with products: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * НОВОЕ: Получить первые brand + category которые ИМЕЮТ товары для коллекции
+ * GET /collections/{collectionId}/first-brand-category-with-products/?section_id=1
+ */
+export async function getFirstBrandCategoryWithProducts(
+  collectionId: number,
+  sectionId?: number
+): Promise<{
+  brand_id: number;
+  brand_name: string;
+  brand_slug: string;
+  category_id: number;
+  category_name: string;
+  category_slug: string;
+  product_count: number;
+}> {
+  const params = new URLSearchParams();
+  if (sectionId !== null && sectionId !== undefined) {
+    params.append('section_id', sectionId.toString());
+  }
+
+  const url = `${API_BASE_URL}/collections/${collectionId}/first-brand-category-with-products/${
+    params.toString() ? '?' + params.toString() : ''
+  }`;
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch first brand+category with products: ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+/**
  * Search across all product-related entities
  * GET /search/?q=query
  *
