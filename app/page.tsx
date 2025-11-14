@@ -28,8 +28,6 @@ export default function HomePage() {
       <AboutSection />
       <ServiceCardsSection />
       <MaterialsSection />
-      {/* <CooperationForm /> */}
-
       <Footer />
       <FeedbackModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </main>
