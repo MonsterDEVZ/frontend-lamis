@@ -19,7 +19,7 @@ export default function CookiePolicyPage() {
               rel="noopener noreferrer"
               className="text-green-600 font-medium ml-1"
             >
-              https://www.lamis.ru
+              https://www.lamis
             </a>
             , я даю свое согласие Обществу с ограниченной ответственностью «СКЛ» (ИНН 7805442438,
             ОГРН 1077847638549) на автоматизированную обработку моих персональных данных (файлы
