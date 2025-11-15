@@ -16,10 +16,11 @@ import {
   fetchCategories,
   getFirstBrandForCollection,
   getFirstCategoryForCollection,
-  getFirstBrandForCategory
+  getFirstBrandForCategory,
 } from '@/services/api/products';
 import MobileSearchOverlay from './MobileSearchOverlay';
-
+import SearchModal from '../search/SearchModal';
+import { useSearchModalStore } from '@/store/searchModalStore';
 
 /**
  * Utility function to merge new query parameters with existing ones
@@ -58,6 +59,13 @@ const mini_nav = [
     title: 'Материалы',
   },
 ];
+
+const imageSecTwo = {
+  bide: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-Bidet.webp',
+  rakoviny: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-SINK%20(2).webp',
+  unitazy: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-toilet.webp',
+  pissuary: 'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-urinal.webp',
+};
 
 // Initial navigation without collections (will be loaded dynamically)
 // TODO: Consider using SEO-friendly URLs like /catalog/{section_slug} in the future
@@ -132,62 +140,38 @@ export default function Header() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const { isOpen: isModalOpen, initialQuery, closeModal } = useSearchModalStore();
+
   const { scrollY, scrollDirection } = useScroll();
 
-  // НОВАЯ АРХИТЕКТУРА: Load dynamic navigation items
+  // Load dynamic navigation items
   useEffect(() => {
     const loadNavigationData = async () => {
       try {
         // Load collections for Section 1 "Мебель для ванной" (sectionId=1)
         const collections = await fetchCollections(1);
-        const collectionItems = await Promise.all(
-          collections.map(async (collection) => {
-            try {
-              // Get first brand and category for auto-selection
-              const brand = await getFirstBrandForCollection(collection.id);
-              const category = await getFirstCategoryForCollection(collection.id);
+        console.log('Loaded collections for section 1:', collections);
 
-              return {
-                img: collection.image || '/placeholder.webp',
-                href: `/catalog?sectionId=1&brandId=${brand.id}&categoryId=${category.id}&collectionId=${collection.id}`,
-                title: collection.name,
-              };
-            } catch (error) {
-              console.error(`Failed to get auto-selection data for collection ${collection.id}:`, error);
-              // Fallback to simple URL without auto-selection
-              return {
-                img: collection.image || '/placeholder.webp',
-                href: `/catalog?sectionId=1&collectionId=${collection.id}`,
-                title: collection.name,
-              };
-            }
-          })
-        );
+        const collectionItems = collections.map((collection) => ({
+          img:
+            collection.image ||
+            'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/catalog/lamis-solo-1-main.webp',
+          // Don't pass categoryId - let frontend determine categories from collection products
+          href: `/catalog?sectionId=${collection.section}&collectionId=${collection.id}`,
+          title: collection.name,
+        }));
 
         // Load categories for Section 2 "Санфарфор" (sectionId=2)
         const categories = await fetchCategories(2);
-        const categoryItems = await Promise.all(
-          categories.map(async (category) => {
-            try {
-              // Get first brand for auto-selection
-              const brand = await getFirstBrandForCategory(category.id);
+        console.log('Loaded categories for section 2:', categories);
 
-              return {
-                img: category.image || '/placeholder.webp',
-                href: `/catalog?sectionId=2&brandId=${brand.id}&categoryId=${category.id}`,
-                title: category.name,
-              };
-            } catch (error) {
-              console.error(`Failed to get auto-selection data for category ${category.id}:`, error);
-              // Fallback to simple URL without auto-selection
-              return {
-                img: category.image || '/placeholder.webp',
-                href: `/catalog?sectionId=2&categoryId=${category.id}`,
-                title: category.name,
-              };
-            }
-          })
-        );
+        const categoryItems = categories.map((category) => ({
+          img:
+            imageSecTwo[category.slug] ||
+            'https://pub-abbe62b0e52d438ea38505b6a2c733d7.r2.dev/images/NvCl-SINK%20(2).webp',
+          href: `/catalog?sectionId=${category.section}&categoryId=${category.id}`,
+          title: category.name,
+        }));
 
         // Update nav with loaded data
         setNav((prevNav) =>
@@ -324,6 +308,9 @@ export default function Header() {
       {!isTablet && isMobileMenuOpen ? (
         <BurgerMenu setIsMobileMenuOpen={setIsMobileMenuOpen} mini_nav={mini_nav} nav={nav} />
       ) : null}
+
+      {/* Search Modal */}
+      <SearchModal isOpen={isModalOpen} onClose={closeModal} initialQuery={initialQuery} />
     </motion.header>
   );
 }

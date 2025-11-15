@@ -31,12 +31,11 @@ export interface PaginatedResponse<T> {
 }
 
 export interface ProductsFilters {
-  // НОВАЯ АРХИТЕКТУРА: 5-уровневая фильтрация
+  // 4-level filtering: Section → Category → Collection/Type → Product
   sectionId?: number | null; // Level 1: Section
-  brandId?: number | null; // Level 2: Brand (НОВОЕ!)
-  categoryId?: number | null; // Level 3: Category
-  collectionId?: number | null; // Level 4a: Collection
-  typeId?: number | null; // Level 4b: Type
+  categoryId?: number | null; // Level 2: Category
+  collectionId?: number | null; // Level 3a: Collection
+  typeId?: number | null; // Level 3b: Type
   sortBy?: string;
   page?: number;
   itemsPerPage?: number;
@@ -48,7 +47,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/a
 
 /**
  * Получить список продуктов с фильтрами и пагинацией
- * НОВАЯ АРХИТЕКТУРА: Поддержка 5-уровневой фильтрации
+ * 4-level filtering: Section → Category → Collection/Type → Product
  */
 export async function fetchProducts(
   filters: ProductsFilters = {}
@@ -56,12 +55,8 @@ export async function fetchProducts(
   const params = new URLSearchParams();
 
   // Django backend uses snake_case parameters
-  // НОВАЯ АРХИТЕКТУРА: section_id И brand_id оба поддерживаются
   if (filters.sectionId !== null && filters.sectionId !== undefined) {
     params.append('section_id', filters.sectionId.toString());
-  }
-  if (filters.brandId !== null && filters.brandId !== undefined) {
-    params.append('brand_id', filters.brandId.toString());
   }
   if (filters.categoryId !== null && filters.categoryId !== undefined) {
     params.append('category_id', filters.categoryId.toString());

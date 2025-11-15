@@ -1,4 +1,4 @@
-import Header from '@/components/header/Header';
+import HeaderWithSuspense from '@/components/header/HeaderWithSuspense';
 import Footer from '@/components/Footer';
 import MaterialCard from '@/components/MaterialCard';
 import SectionHeading from '@/components/SectionHeading';
@@ -51,7 +51,7 @@ const allMaterials = [
 export default function DownloadsPage() {
   return (
     <main>
-      <Header />
+      <HeaderWithSuspense />
       <div className="bg-white pt-32 pb-20">
         <div className="wrapper_centering">
           <SectionHeading>Материалы для скачивания</SectionHeading>

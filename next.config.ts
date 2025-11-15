@@ -25,7 +25,15 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'imagedelivery.net',
-      }
+      },
+      {
+        protocol: 'https',
+        hostname: 'static.iddis.ru', // IDDIS product images
+      },
+      {
+        protocol: 'https',
+        hostname: 'img.youtube.com', // IDDIS product images
+      },
     ],
   },
   webpack(config) {

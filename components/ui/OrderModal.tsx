@@ -23,6 +23,7 @@ interface OrderModalProps {
 const OrderModal: React.FC<OrderModalProps> = ({ isOpen, onClose, items, onSubmit }) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [isAgreed, setIsAgreed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
 
@@ -55,7 +56,7 @@ const OrderModal: React.FC<OrderModalProps> = ({ isOpen, onClose, items, onSubmi
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateForm()) {
+    if (!validateForm() || !isAgreed) {
       return;
     }
     setIsSubmitting(true);
@@ -67,6 +68,7 @@ const OrderModal: React.FC<OrderModalProps> = ({ isOpen, onClose, items, onSubmi
       });
       setName('');
       setPhone('');
+      setIsAgreed(false);
       setErrors({});
       onClose();
     } catch (error) {
@@ -212,6 +214,28 @@ const OrderModal: React.FC<OrderModalProps> = ({ isOpen, onClose, items, onSubmi
                 </div>
               </div>
 
+              {/* Чекбокс согласия */}
+              <div className="flex items-start gap-3">
+                <input
+                  id="order-agreement"
+                  type="checkbox"
+                  checked={isAgreed}
+                  onChange={(e) => setIsAgreed(e.target.checked)}
+                  className="mt-1 h-4 w-4 accent-green-600 cursor-pointer"
+                />
+                <label htmlFor="order-agreement" className="text-sm text-gray-600 cursor-pointer">
+                  Я согласен с{' '}
+                  <a
+                    href="/privacy-policy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-green-600 underline hover:text-green-700"
+                  >
+                    Политикой конфиденциальности
+                  </a>
+                </label>
+              </div>
+
               {/* Buttons */}
               <div className="flex gap-3 mt-6">
                 <Button
@@ -228,6 +252,7 @@ const OrderModal: React.FC<OrderModalProps> = ({ isOpen, onClose, items, onSubmi
                   variant="primary"
                   size="lg"
                   isLoading={isSubmitting}
+                  disabled={!isAgreed}
                   className="flex-1"
                 >
                   {isSubmitting ? 'Отправка...' : 'Отправить заказ'}

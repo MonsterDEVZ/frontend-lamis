@@ -41,13 +41,13 @@ export default function CookieConsentBanner() {
             О ФАЙЛАХ COOKIE НА САЙТЕ LAMIS
           </h3>
           <p className="text-xs text-gray-600">
-            На нашем сайте используются
+            На нашем сайте используются{' '}
             <Link href="/cookie-policy" className="text-green-600 hover:underline">
               файлы cookie
-            </Link>
+            </Link>{' '}
             и другие технологии, которые позволяют нам и нашим партнерам идентифицировать вас, а
             также изучать, как вы используете веб-сайт. Дальнейшее использование этого сайта
-            подразумевает ваше согласие на использование этих технологий, а также с
+            подразумевает ваше согласие на использование этих технологий, а также с{' '}
             <Link href="/privacy-policy" className="text-green-600 hover:underline">
               политикой конфиденциальности
             </Link>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Header from '@/components/header/Header';
+import HeaderWithSuspense from '@/components/header/HeaderWithSuspense';
 import HeroSlider from '@/components/HeroSlider';
 import WaterHeatersSection from '@/components/WaterHeatersSection';
 import BleskWaterHeatersSection from '@/components/BleskWaterHeatersSection';
@@ -9,6 +9,7 @@ import FeaturesSection from '@/components/FeaturesSection';
 import AboutSection from '@/components/AboutSection';
 import ServiceCardsSection from '@/components/ServiceCardsSection';
 import MaterialsSection from '@/components/MaterialsSection';
+import ClientsSection from '@/components/ClientsSection';
 import Footer from '@/components/Footer';
 import PlumbingSection from '@/components/PlumbingSection';
 import FeedbackModal from '@/components/feedback/FeedbackModal';
@@ -19,7 +20,7 @@ export default function HomePage() {
 
   return (
     <main>
-      <Header />
+      <HeaderWithSuspense />
       <HeroSlider />
       <WaterHeatersSection />
       <PlumbingSection />
@@ -28,8 +29,7 @@ export default function HomePage() {
       <AboutSection />
       <ServiceCardsSection />
       <MaterialsSection />
-      {/* <CooperationForm /> */}
-
+      <ClientsSection />
       <Footer />
       <FeedbackModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </main>

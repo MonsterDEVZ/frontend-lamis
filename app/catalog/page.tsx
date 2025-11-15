@@ -1,4 +1,4 @@
-import Header from '@/components/header/Header';
+import HeaderWithSuspense from '@/components/header/HeaderWithSuspense';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import Catalog from '@/components/catalog';
 import Footer from '@/components/Footer';
@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 export default function CatalogPage() {
   return (
     <main>
-      <Header />
+      <HeaderWithSuspense />
 
       <div className="absolute z-10 top-[90px] md:top-[120px] w-full">
         <div className="wrapper_centering">

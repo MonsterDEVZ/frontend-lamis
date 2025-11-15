@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import Header from '@/components/header/Header';
+import HeaderWithSuspense from '@/components/header/HeaderWithSuspense';
 import Footer from '@/components/Footer';
 import FavoriteItemCard from '@/components/ui/FavoriteItemCard';
 import { Button } from '@/components/ui/Button';
@@ -53,7 +53,7 @@ export default function FavoritesPage() {
 
   return (
     <main className="min-h-screen flex flex-col bg-white">
-      <Header />
+      <HeaderWithSuspense />
 
       <div className="flex-grow pb-24 pt-32">
         {/* Main Container with max-width and centered */}

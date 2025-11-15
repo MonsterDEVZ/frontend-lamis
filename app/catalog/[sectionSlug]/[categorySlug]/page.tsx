@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import Header from '@/components/header/Header';
+import HeaderWithSuspense from '@/components/header/HeaderWithSuspense';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import Footer from '@/components/Footer';
 import { fetchCatalogCategory } from '@/services/api/products';
@@ -75,7 +75,7 @@ export default async function CatalogCategoryPage({ params }: PageProps) {
 
   return (
     <main>
-      <Header />
+      <HeaderWithSuspense />
 
       <div className="absolute z-10 top-24 md:top-32 w-full">
         <div className="wrapper_centering">

@@ -8,6 +8,7 @@ import { searchProducts } from '@/services/api/products';
 import type { SearchResult } from '@/types/product';
 import SearchResults from '../search/SearchResults';
 import { useFiltersStore } from '@/store/filtersStore';
+import { useSearchModalStore } from '@/store/searchModalStore';
 
 interface SearchInputProps {
   className?: string;
@@ -33,6 +34,7 @@ const SearchInput: FC<SearchInputProps> = ({ className, onClose }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { setSectionId, setBrandId, setCategoryId, setCollectionId, setTypeId, setIsLoading: setGlobalLoading } = useFiltersStore();
+  const { openModal } = useSearchModalStore();
 
   // Perform search when debounced query changes
   useEffect(() => {
@@ -59,17 +61,19 @@ const SearchInput: FC<SearchInputProps> = ({ className, onClose }) => {
     performSearch();
   }, [debouncedQuery]);
 
-  // Close on ESC key
+  // Handle keyboard events (ESC and Enter)
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         handleClose();
+      } else if (e.key === 'Enter' && query.trim().length >= 2) {
+        handleShowAll();
       }
     };
 
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
-  }, []);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [query]);
 
   // Close on click outside
   useEffect(() => {
@@ -136,7 +140,7 @@ const SearchInput: FC<SearchInputProps> = ({ className, onClose }) => {
   };
 
   const handleShowAll = () => {
-    router.push(`/search?q=${encodeURIComponent(query)}`);
+    openModal(query);
     handleClose();
   };
 
@@ -148,20 +152,22 @@ const SearchInput: FC<SearchInputProps> = ({ className, onClose }) => {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Поиск товаров..."
-          className="w-full h-10 pl-10 pr-10 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+          placeholder="Унитаз, Omega, Caizer..."
+          className="w-full h-12 pl-12 pr-12 text-base border-2 border-gray-200 rounded-lg bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-green-100 transition-colors duration-200"
+          autoComplete="off"
         />
 
         {/* Search icon */}
-        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-          <Search size={18} />
+        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">
+          <Search size={20} />
         </div>
 
         {/* Clear button */}
         {query && (
           <button
             onClick={handleClose}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+            aria-label="Очистить поиск"
           >
             <X size={18} />
           </button>

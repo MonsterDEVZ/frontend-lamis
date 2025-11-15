@@ -1,82 +1,103 @@
-// app/tutorials/[category]/page.tsx
+'use client';
 
+import { useState, useEffect } from 'react';
 import { notFound } from 'next/navigation';
-import type { Metadata } from 'next';
-import Header from '@/components/header/Header';
+import HeaderWithSuspense from '@/components/header/HeaderWithSuspense';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import Footer from '@/components/Footer';
-import EmbeddedVideoPlayer from '@/components/videos/EmbeddedVideoPlayer';
-import { MOCK_TUTORIALS_DATA } from '@/data/mock-tutorials';
+import VideoCard from '@/components/videos/VideoCard';
+
+interface Video {
+  id: number;
+  title: string;
+  videoId: string;
+}
+
+interface Tutorial {
+  id: number;
+  title: string;
+  slug: string;
+  pageTitle: string;
+  pageBannerUrl: string;
+  videos: Video[];
+}
 
 interface PageProps {
-  params: {
+  params: Promise<{
     category: string;
-  };
+  }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  // --- ИСПРАВЛЕНО: Дожидаемся получения параметров ---
-  const resolvedParams = await params;
-  const data = MOCK_TUTORIALS_DATA[resolvedParams.category];
+export default function TutorialsCategoryPage({ params }: PageProps) {
+  const [tutorial, setTutorial] = useState<Tutorial | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [category, setCategory] = useState<string>('');
 
-  if (!data) {
-    return {
-      title: 'Категория не найдена | LAMIS',
-      description: 'Запрашиваемая категория обучающих видео не найдена',
-    };
+  useEffect(() => {
+    // Получить category из params
+    params.then((resolvedParams) => {
+      setCategory(resolvedParams.category);
+      fetchTutorial(resolvedParams.category);
+    });
+  }, [params]);
+
+  const fetchTutorial = async (categorySlug: string) => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/tutorials/${categorySlug}/`
+      );
+
+      if (!response.ok) {
+        throw new Error('Tutorial not found');
+      }
+
+      const data = await response.json();
+      setTutorial(data);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching tutorial:', err);
+      setError('Видео не найдено');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Loading состояние
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-gray-50">
+        <HeaderWithSuspense />
+        <div className="flex items-center justify-center h-[600px]">
+          <div className="text-center">
+            <div className="inline-block">
+              <div className="w-16 h-16 border-4 border-gray-200 border-t-green-500 rounded-full animate-spin"></div>
+            </div>
+            <p className="mt-4 text-gray-600 text-lg">Загрузка видео...</p>
+          </div>
+        </div>
+        <Footer />
+      </main>
+    );
   }
 
-  return {
-    title: `${data.pageTitle} - Обучающие видео | LAMIS`,
-    description: `Обучающие видео по теме: ${data.pageTitle}. ${data.videos.length} видео.`,
-    keywords: `${data.pageTitle}, обучение, видео, инструкции, LAMIS`,
-    openGraph: {
-      title: `${data.pageTitle} - Обучающие видео`,
-      description: `Обучающие видео по теме: ${data.pageTitle}`,
-      url: `https://lamis.ru/tutorials/${resolvedParams.category}`,
-      siteName: 'LAMIS',
-      type: 'website',
-      images: data.pageBannerUrl
-        ? [
-            {
-              url: data.pageBannerUrl,
-              width: 1200,
-              height: 630,
-              alt: data.pageTitle,
-            },
-          ]
-        : [],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${data.pageTitle} - Обучающие видео`,
-      description: `Обучающие видео по теме: ${data.pageTitle}`,
-    },
-    alternates: {
-      canonical: `https://lamis.ru/tutorials/${resolvedParams.category}`,
-    },
-  };
-}
-
-export default async function TutorialsCategoryPage({ params }: PageProps) {
-  // --- ИСПРАВЛЕНО: Дожидаемся получения параметров ---
-  const resolvedParams = await params;
-  const data = MOCK_TUTORIALS_DATA[resolvedParams.category];
-
-  if (!data) {
-    notFound();
+  // Ошибка или не найдено
+  if (error || !tutorial) {
+    return notFound();
   }
 
   return (
-    <main>
-      <Header />
+    <main className="bg-gray-50">
+      <HeaderWithSuspense />
 
+      {/* Breadcrumbs - поверх Hero */}
       <div className="absolute z-10 top-24 md:top-32 w-full">
         <div className="wrapper_centering">
           <Breadcrumbs
             items={[
               { label: 'Главная', href: '/' },
-              { label: data.pageTitle },
+              { label: tutorial.pageTitle },
             ]}
             variant="light"
             resetPosition
@@ -85,32 +106,57 @@ export default async function TutorialsCategoryPage({ params }: PageProps) {
         </div>
       </div>
 
-      <div
-        className="w-full h-[350px] md:h-[400px] bg-cover bg-center pb-8 sm:pb-16 md:pb-24 flex items-end"
-        style={{ backgroundImage: `url('${data.pageBannerUrl}')` }}
+      {/* HERO SECTION с overlay и центрированным текстом */}
+      <section
+        className="relative w-full min-h-[400px] md:min-h-[500px] bg-cover bg-center flex items-center justify-center"
+        style={{ backgroundImage: `url('${tutorial.pageBannerUrl}')` }}
       >
-        <div className="wrapper_centering px-4">
-          <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold">
-            {data.pageTitle}
+        {/* Dark Overlay для читаемости текста */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/70" />
+
+        {/* Hero Content */}
+        <div className="relative z-10 wrapper_centering px-4 text-center py-20 md:py-24">
+          <h1 className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+            {tutorial.pageTitle}
           </h1>
+          <p className="text-white/95 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+            Обучающие видео по установке и монтажу
+          </p>
+          <p className="text-white/80 text-sm md:text-base mt-2">
+            {tutorial.videos.length} видео{tutorial.videos.length > 1 ? '' : ''}
+          </p>
         </div>
-      </div>
+      </section>
 
-      <div className="wrapper_centering mt-8 sm:mt-12 md:mt-50 pb-16 px-4">
-        <h2 className="text-2xl md:text-3xl font-bold mb-8">Обучающие видео</h2>
+      {/* VIDEOS GRID - 3 КОЛОНКИ */}
+      <section className="wrapper_centering mt-12 md:mt-16 pb-16 px-4">
+        {/* Section Header */}
+        <div className="mb-8 md:mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+            Видео уроки
+          </h2>
+          <p className="text-gray-600 text-lg">
+            Пошаговые инструкции для профессионального монтажа
+          </p>
+        </div>
 
-        {data.videos.length === 0 ? (
+        {tutorial.videos.length === 0 ? (
           <div className="text-center py-16">
             <p className="text-gray-600 text-lg">Видео не найдены</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {data.videos.map((video) => (
-              <EmbeddedVideoPlayer key={video.id} videoId={video.videoId} title={video.title} />
+          /* GRID 3 КОЛОНКИ */
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {tutorial.videos.map((video) => (
+              <VideoCard
+                key={video.id}
+                videoId={video.videoId}
+                title={video.title}
+              />
             ))}
           </div>
         )}
-      </div>
+      </section>
 
       <Footer />
     </main>

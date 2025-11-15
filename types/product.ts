@@ -50,17 +50,19 @@ export interface Category {
 
 /**
  * Collection (Коллекция) - Level 4a (parallel with Type)
- * НОВАЯ АРХИТЕКТУРА: Collection зависит от Brand + Category (section убрали!)
+ * НОВАЯ АРХИТЕКТУРА: Collection зависит от Brand + Category (через category получаем section)
  */
 export interface Collection {
   id: number;
   name: string;
   slug: string;
   description?: string;
-  brand: number; // ИЗМЕНЕНО! Теперь brand вместо section
-  brand_name?: string; // НОВОЕ!
+  brand: number;
+  brand_name?: string;
   category: number;
   category_name?: string;
+  section: number; // Section ID через category.section
+  section_name?: string;
   image?: string;
   created_at?: string;
 }
