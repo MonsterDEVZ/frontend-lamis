@@ -1,13 +1,20 @@
 // Путь к файлу: components/Footer.js (или где он у вас лежит)
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Instagram, Send, Youtube } from 'lucide-react';
 import AccordionItem from './AccordionItem'; // Убедитесь, что путь к AccordionItem.js верный
 
-// Объединенная структура данных для навигационных ссылок футера
-const footerSections = [
+interface Tutorial {
+  id: number;
+  title: string;
+  slug: string;
+}
+
+// Статические секции footer
+const staticFooterSections = [
   {
     title: 'Продукция',
     links: [
@@ -19,16 +26,6 @@ const footerSections = [
       { title: 'Дизайнерские и умные зеркала', href: '/smart-mirrors' },
       { title: 'Каталоги', href: '/catalogs' },
       { title: 'Сертификаты качества', href: '/certificates' },
-    ],
-  },
-  {
-    title: 'Профессионалам',
-    links: [
-      { title: 'Установка мебели', href: '/tutorials/furniture-installation' },
-      { title: 'Установка раковины', href: '/tutorials/sink-installation' },
-      { title: 'Установка ванн', href: '/tutorials/bath-installation' },
-      { title: 'Установка смесителей', href: '/tutorials/faucet-installation' },
-      { title: 'Установка водонагревателей', href: '/tutorials/water-heater-installation' },
     ],
   },
   {
@@ -44,6 +41,37 @@ const footerSections = [
 ];
 
 export default function Footer() {
+  const [tutorials, setTutorials] = useState<Tutorial[]>([]);
+  const [loadingTutorials, setLoadingTutorials] = useState(true);
+
+  useEffect(() => {
+    const fetchTutorials = async () => {
+      try {
+        setLoadingTutorials(true);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/tutorials/`
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          // API возвращает { count, results } - берем массив results
+          setTutorials(Array.isArray(data) ? data : (data.results || []));
+        } else {
+          // Если ошибка - показать пустой массив
+          setTutorials([]);
+        }
+      } catch (error) {
+        console.error('Error fetching tutorials:', error);
+        // Если ошибка - показать пустой массив
+        setTutorials([]);
+      } finally {
+        setLoadingTutorials(false);
+      }
+    };
+
+    fetchTutorials();
+  }, []);
+
   return (
     <footer className="bg-black text-white">
       {/* Основной контент футера */}
@@ -90,8 +118,8 @@ export default function Footer() {
             </a>
           </div>
 
-          {/* Адаптивные колонки со ссылками */}
-          {footerSections.map((section) => (
+          {/* Статические секции */}
+          {staticFooterSections.map((section) => (
             <div key={section.title}>
               {/* ВЕРСИЯ ДЛЯ ДЕСКТОПА (видна на экранах md и больше) */}
               <div className="hidden md:block">
@@ -129,6 +157,63 @@ export default function Footer() {
               </div>
             </div>
           ))}
+
+          {/* ПРОФЕССИОНАЛАМ СЕКЦИЯ - Динамическая загрузка */}
+          <div>
+            {/* ВЕРСИЯ ДЛЯ ДЕСКТОПА */}
+            <div className="hidden md:block">
+              <h3 className="text-lg font-semibold mb-4">Профессионалам</h3>
+
+              {/* Loading скелетон */}
+              {loadingTutorials ? (
+                <ul className="space-y-2">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <li key={i} className="h-5 bg-white/10 rounded animate-pulse w-48"></li>
+                  ))}
+                </ul>
+              ) : (
+                /* Список ссылок */
+                <ul className="space-y-2">
+                  {tutorials.map((tutorial) => (
+                    <li key={tutorial.id}>
+                      <Link
+                        href={`/tutorials/${tutorial.slug}`}
+                        className="text-sm text-white/80 hover:text-white transition-colors"
+                      >
+                        {tutorial.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            {/* ВЕРСИЯ ДЛЯ МОБИЛЬНЫХ */}
+            <div className="block md:hidden">
+              <AccordionItem title="Профессионалам">
+                {loadingTutorials ? (
+                  <ul className="space-y-4 mt-5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <li key={i} className="h-5 bg-white/10 rounded animate-pulse w-48"></li>
+                    ))}
+                  </ul>
+                ) : (
+                  <ul className="space-y-4 mt-5">
+                    {tutorials.map((tutorial) => (
+                      <li key={tutorial.id}>
+                        <Link
+                          href={`/tutorials/${tutorial.slug}`}
+                          className="text-sm text-white/80 hover:text-white transition-colors"
+                        >
+                          {tutorial.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </AccordionItem>
+            </div>
+          </div>
         </div>
       </div>
 

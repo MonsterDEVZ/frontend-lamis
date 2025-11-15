@@ -9,6 +9,7 @@ import FeaturesSection from '@/components/FeaturesSection';
 import AboutSection from '@/components/AboutSection';
 import ServiceCardsSection from '@/components/ServiceCardsSection';
 import MaterialsSection from '@/components/MaterialsSection';
+import ClientsSection from '@/components/ClientsSection';
 import Footer from '@/components/Footer';
 import PlumbingSection from '@/components/PlumbingSection';
 import FeedbackModal from '@/components/feedback/FeedbackModal';
@@ -28,6 +29,7 @@ export default function HomePage() {
       <AboutSection />
       <ServiceCardsSection />
       <MaterialsSection />
+      <ClientsSection />
       <Footer />
       <FeedbackModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </main>
